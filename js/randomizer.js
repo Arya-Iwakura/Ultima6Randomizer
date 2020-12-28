@@ -15,6 +15,7 @@ function randomizeROM(buffer, seed)
 	if (crc32rom != BASE_CHECKSUM)
 	{
 		var errorText = 'Base rom is not valid. Expected checksum ' + BASE_CHECKSUM.toPrintHex(8) + " and we got " + crc32rom.toPrintHex(8);
+		$('#modal-error-win #modal-error-list').text("");
 		$('#modal-error-win #modal-error-list').append($('<li>').text(errorText));
 		$('#modal-error-win').modal('show');
 		$('#original-rom-result').toggleClass('glyphicon-remove', true);
