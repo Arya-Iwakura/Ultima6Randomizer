@@ -34,7 +34,7 @@ function doRandomize(buffer, seed)
 		$('body').append($('<div id="generation-time">').html('&Delta;' + (+new Date() - __start) + "ms"));
 
 		//var issuebody = encodeURIComponent('ROM: ' + url + ' (' + result.checksum + ')');
-		//$('#bugreport').attr('href', 'http://github.com/authorblues/smwrandomizer/issues/new?body=' + issuebody);
+		//$('#bugreport').attr('href', 'https://github.com/Arya-Iwakura/Ultima6Randomizer/issues/new?body=' + issuebody);
 
 		if ($('#display_spoiler_log').is(':checked'))
 		{
