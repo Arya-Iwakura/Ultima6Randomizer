@@ -13,8 +13,15 @@ function randomizeROM(buffer, seed)
 
 	var crc32rom = crc32(rom);
 	if (crc32rom != BASE_CHECKSUM)
-		throw new Error('Base rom incorrect. Expected checksum ' +
-			BASE_CHECKSUM.toPrintHex(8) + ", got " + crc32rom.toPrintHex(8));
+	{
+		var errorText = 'Base rom is not valid. Expected checksum ' + BASE_CHECKSUM.toPrintHex(8) + " and we got " + crc32rom.toPrintHex(8);
+		$('#modal-error-win #modal-error-list').append($('<li>').text(errorText));
+		$('#modal-error-win').modal('show');
+		$('#original-rom-result').toggleClass('glyphicon-remove', true);
+		$('#generate-randomized-rom').prop('disabled', true);
+
+		throw new Error(errorText);
+	}
 
 	var random = new Random(seed);
 	var vseed = random.seed.toHex(8);
