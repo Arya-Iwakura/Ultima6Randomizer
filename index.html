@@ -1,0 +1,591 @@
+<!doctype html>
+<html class="no-js" lang="">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>Ultima 6 Randomizer</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@">
+		<meta name="twitter:creator" content="@_squibbons">
+		<meta name="twitter:title" content="Ultima VI SNES Randomizer">
+		<meta name="twitter:description" content="Generate fully-customizable randomized Ultima 6 SNES roms.">
+		<!--<meta name="twitter:image" content="http://authorblues.github.io/smwrandomizer/img/twitter-card.png?1">-->
+		<meta name="twitter:image" content="">
+
+		<link rel="icon" type="image/x-icon" href="shield.ico">
+		<link rel="icon" type="image/png" href="shield.png">
+
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<style>
+			body {
+				padding-top: 50px;
+				padding-bottom: 20px;
+			}
+		</style>
+		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css">
+
+		<script src="js/vendor/modernizr-2.8.3.min.js"></script>
+	</head>
+	<body>
+
+		<!-- Main  -->
+		<div class="container">
+			<div class="float-left">
+				<h2 class="header">Ultima 6 SNES Randomizer
+					<span class="version-number"></span> <span class="beta">ALPHA</span></h2>
+					<p>by <span id="squibbons"><a href="https://twitter.com/squibbons">squibbons</a></span></p>
+			</div>
+
+			<div class="float-right">
+				<button class="btn btn-info btn-lg" id="view-information">
+					<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+					View Information
+				</button>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<input type="file" id="original-rom" accept=".sfc,.smc">
+					<button id="select-original-rom" class="btn btn-default btn-full-width">
+						<span class="glyphicon glyphicon-question-sign" aria-hidden="true" id="original-rom-result"></span>
+						Select Original NTSC-U (English) ROM
+					</button>
+
+					<div class="input-group top-spaced">
+						<div class="input-group-addon">
+							Randomizer Preset</span>
+						</div>
+						<select class="form-control" id="preset">
+							<option value="0">&lt;Custom&gt;</option>
+							<option value="1">Townsfolk (Light)</option>
+							<option value="2">Explorer</option>
+							<option value="3">Adventurer (Standard)</option>
+							<option value="4">Avatar</option>
+							<option value="5">Guardian (Difficult)</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="input-group" id="gen-group-container">
+						<input type="text" class="form-control mono"
+							placeholder="(Optional) Custom Seed" id="custom-seed">
+						<span class="input-group-btn" id="gen-btn-container">
+							<button id="generate-randomized-rom" class="btn btn-default btn-full-width" type="button" disabled>
+								<span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+								Generate ROM
+							</button>
+						</span>
+					</div>
+
+					<div class="form-group top-spaced">
+						<input type="text" class="form-control mono"
+							placeholder="No rom currently generated" id="setgoal-text">
+					</div>
+				</div>
+
+				<div class="col-md-12">
+					<div class="input-group" id="download-last-group-container">
+						<span class="input-group-btn" id="download-last-btn-container">
+							<button id="download-last-generated-rom" class="btn btn-default btn-full-width" type="button" disabled>
+								<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+								Download Last Generated
+							</button>
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<hr />
+
+			<div class="row">
+				<div class="col-md-6">
+
+					<h3>Randomize Items</h3>
+					<h5><i>Recommend Main Items combined with Overworld and/or Underground Chests.</i></h5>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="randomize_core_items" class="presetoption" checked>
+							Include Main Items <i>(Moonstones, Runes, Vortex Cube, Etc)</i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="randomize_chests_overworld" class="presetoption" checked>
+							Include Overworld Chests <i>(Castles, Houses, Shops, and Basements)</i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="randomize_chests_dungeons" class="presetoption">
+							Include Underground Chests <i>(Caves, Dungeons, and Crypts)</i>
+						</label>
+					</div>
+
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="randomize_moonorb" class="presetoption">
+							Include Moon Orb <i>(Adds more physical travel to the game)</i>
+						</label>
+					</div>
+
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="randomize_spellbook" class="presetoption">
+							Include Spellbook <i>(Adds more difficulty as you will start with no spells)</i>
+						</label>
+					</div>
+
+					<div class="checkbox hidden">
+						<label>
+							<input type="checkbox" id="randomize_add_chests" class="presetoption">
+							Add New Chests <i>(Add chests to expand the total locations randomized)</i>
+						</label>
+					</div>
+
+					<div class="checkbox hidden">
+						<label>
+							<input type="checkbox" id="randomize_chest_locks" class="presetoption">
+							Randomize Chest Magical Locks
+						</label>
+					</div>
+
+					<h3 class="hidden">World</h3>
+					<div class="checkbox hidden">
+						<label>
+							<input type="checkbox" id="randomize_world_map" class="presetoption">
+							Randomize World Map <i>(Coming Soon)</i>
+						</label>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<h3>Randomize Enemies</h3>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="randomize_enemy_monsters" class="presetoption">
+							Randomize Monsters <i>(Dragons, Cyclops, Gazers)</i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="randomize_enemy_wild" class="presetoption">
+							Randomize Wild Animals <i>(Alligators, Wolves, Spiders)</i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="randomize_enemy_animals" class="presetoption">
+							Randomize Friendly Animals <i>(Cows, Sheep, Birds)</i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="randomize_enemy_people" class="presetoption">
+							Randomize Non-Important People <i>(Enemy People, Non-Dialog Persons, Guards)</i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="randomize_enemy_mix" class="presetoption" disabled>
+							Randomly Mix <i>(Any selected options are mixed together)</i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="randomize_enemy_aggression" class="presetoption">
+							Randomize Aggression <i>(Warning this may be difficult)</i>
+						</label>
+					</div>
+
+					<h3>Other</h3>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="display_symbol_hash" class="presetoption">
+							Show Symbol Identifier <i>(Replaces displaying randomizer seed and flags)</i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="display_spoiler_log" class="presetoption">
+							Enable Spoiler Log <i>(Allows you to see where everything has been placed)</i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="display_hints" class="presetoption">
+							Enable Hints <i>(Replaces some scroll and book text with hints about main items)</i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="hide_filename_spoiler" class="">
+							Remove Seed & Flags from Filename <i>(Use with Show Symbol Identifier and No-Spoiler Log for a Race Seed)</i>
+						</label>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<hr />
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="input-group" id="spoiler-group-container">
+						<span class="input-group-btn" id="spoiler-btn-container">
+							<button id="view-spoiler-list" class="btn btn-default btn-full-width" type="button" disabled>
+								<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+								View Spoiler Log
+							</button>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<hr />
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<div>
+						<a class="btn btn-info btn-full-width" id="view-changelog">
+							<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+							View Changelog
+						</a>
+
+						<!--<a class="btn btn-default btn-full-width" href="http://github.com/authorblues/smwrandomizer/issues" id="bugreport">-->
+						<a class="btn btn-default btn-full-width top-spaced" href="" id="bugreport">
+							<span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+							Report a Bug
+						</a>
+
+						<!--<a class="btn btn-default btn-full-width top-spaced" href="http://github.com/authorblues/smwrandomizer">-->
+						<a class="btn btn-default btn-full-width top-spaced" href="">
+							<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+							Contribute
+						</a>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<h3>Testers</h3>
+					<p>The following people helped to test out the initial versions of the <span data-en_us="randomizer" data-en_gb="randomiser">randomizer</span>, and helped it to reach the stability it has today: <span id="tester-list"></span></p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="modal-download-win" tabindex="-1" role="dialog" aria-labelledby="modal-download-label" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="modal-download-label">
+							Quick Download
+						</h4>
+					</div>
+					<div class="modal-body">
+						<p>
+							You have been directed here to download the <strong class="version-number"></strong> rom with a seed of <strong class="seed"></strong> using
+							the <strong class="preset"></strong> preset. If this is not correct, close this window to access the customization tools to generate the rom
+							of your choosing. If you would like to download this specific rom, please click the button labelled with the seed + preset below.
+						</p>
+
+						<button type="button" id="generate-param-rom" class="btn btn-primary btn-full-width" data-dismiss="modal">
+							<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+							Download <span class="preset"></span> <span class="version-number"></span> (<span class="seed"></span>)
+						</button>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="modal-generated-win" tabindex="-1" role="dialog" aria-labelledby="modal-generated-label" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h3 class="modal-title" id="modal-generated-label">
+							Download
+						</h3>
+					</div>
+					<div class="modal-body">
+						<p>
+							Generation successful with a seed of <strong id="modal-seed-text"></strong> using the <strong id="modal-flags-text"></strong> flag set!
+							You may now select some personalized customization options for your rom that will not affect your randomization.
+						</p>
+
+						<h4>Choose Sprite</h4>
+						<select class="form-control" id="select-avatar-sprite">
+							<option value="2">Avatar (Default)</option>
+							<option value="0">Random (All)</option>
+							<option value="1">Random (Realistic People Only)</option>
+							<option value="3">Avatar (Dark)</option>
+							<option value="4">Bard</option>
+							<option value="5">Bard (Blue)</option>
+							<option value="6">Child</option>
+							<option value="7">Child (Completely Pink)</option>
+							<option value="8">Daemon (Brown)</option>
+							<option value="9">Daemon (Green)</option>
+							<option value="10">Daemon (Red)</option>
+							<option value="11">Dress Wearer (Blue)</option>
+							<option value="12">Dress Wearer (Red)</option>
+							<option value="13">Farmer</option>
+							<option value="14">Fighter (Silver)</option>
+							<option value="15">Fighter (Bronze)</option>
+							<option value="16">Gargoyle (Green)</option>
+							<option value="17">Gargoyle (Red)</option>
+							<option value="18">Gargoyle (Tan)</option>
+							<option value="19">Guard</option>
+							<option value="20">Jester</option>
+							<option value="21">Lord British</option>
+							<option value="22">Mage (Blue)</option>
+							<option value="23">Mage (Red)</option>
+							<option value="24">Mage (Tan)</option>
+							<option value="25">Merchant</option>
+							<option value="26">Mongbat</option>
+							<option value="27">Noble</option>
+							<option value="28">Peasant</option>
+							<option value="29">Peasant (Blue)</option>
+							<option value="30">Peasant (Tan)</option>
+							<option value="31">Ranger</option>
+							<option value="32">Ranger (Dark)</option>
+							<option value="33">Skeleton</option>
+							<option value="34">Troll</option>
+							<option value="35">Troll (Pink)</option>
+						</select>
+
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" id="avatar-sprite-fire-flag">
+								Enable fire variant of sprite <i>(Selected character will be made of fire!)</i>
+							</label>
+						</div>
+						<button type="button" id="download-generated-rom" class="btn btn-primary btn-full-width top-spaced">
+							<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+							Download U6R <span class="version-number"></span> (<span id="modal-seed-text"></span> + <span id="modal-flags-text"></span>)
+						</button>
+						<button type="button" id="download-spoiler-log" class="btn btn-primary btn-full-width top-spaced">
+							<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+							Download Spoiler Log
+						</button>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="modal-error-win" tabindex="-1" role="dialog" aria-labelledby="modal-error-label" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="modal-error-label">
+							An Error Has Occurred
+						</h4>
+					</div>
+					<div class="modal-body">
+						<p id="modal-error-text"></p>
+						<ul id="modal-error-list"></ul>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="modal-changelog-win" tabindex="-1" role="dialog" aria-labelledby="modal-changelog-label" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="modal-changelog-label">
+							Ultima 6 Randomizer Changelog
+						</h4>
+					</div>
+					<div class="modal-body">
+						<span class="badge">v0.3</span>
+						<ul>
+							<li>Added option to download spoiler log as a text file</li>
+							<li>Added option to remove seed and flags from filename</li>
+							<li>Added hints option and changed Lord British's book text to give flavor to the randomizer</li>
+							<li>Added fire palette option for sprites</li>
+							<li>Sleeping sprite now changes based on selected character</li>
+							<li>Adjusted how much Sherry can carry allowing more items into the Rune of Valor location</li>
+							<li>Adjusted in game text to be more accurate (For example: You find a Moonstone at shrines is now You find an Item)</li>
+						</ul>
+						<span class="badge">v0.2</span>
+						<ul>
+							<li>Added underground chests randomization</li>
+							<li>Added seed and flag display to the start sequence</li>
+							<li>Added credits text to the final credits screens</li>
+							<li>Added option to change Avatar sprite</li>
+							<li>Added spoiler list flag</li>
+							<li>Added flag to show symbol identifier instead of seed value in game</li>
+							<li>Added monster randomization</li>
+							<li>Added wild animal randomization</li>
+							<li>Added friendly animal randomization</li>
+							<li>Added people randomization</li>
+							<li>Added enemy mix flag</li>
+							<li>Added random aggression flag</li>
+						</ul>
+						<span class="badge">v0.1</span>
+						<ul>
+							<li>Added main item randomization</li>
+							<li>Added overworld chests randomization</li>
+							<li>Added inventory randomization of moonorb and spellbook</li>
+						</ul>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="modal-information-win" tabindex="-1" role="dialog" aria-labelledby="modal-information-label" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="modal-information-label">
+							Ultima 6 Randomizer Information
+						</h4>
+					</div>
+					<div class="modal-body">
+						The Ultima 6 SNES Randomizer allows you to randomize a number of different elements to Ultima 6, giving you a endless amount of unqiue replays of the game.
+						</br></br>
+						<span class="badge">Overview</span>
+						<ul>
+							<!--<li>The Character Randomizer allows you to play as other characters as well as randomize how characters in the world appear.</li>-->
+							<li>The Item Randomizer allows you to randomly shuffle items around in the world for when you want to enjoy an item hunt and more exploration.</li>
+							<li>The Enemy Randomizer allows you to shuffle enemies and their properties creating new combat experiences and challenges.</li>
+							<!--<li>The World Randomizer allows you to randomize the layout of the world creating new worlds to explore.</li>-->
+						</ul>
+						<span class="badge">Item Randomization Details</span></br>
+							The Item Randomizer will randomly shuffle all selected items between one another.
+							If Main Items and Overworld Chests are selected, then Runes and Moonstones could be placed in any overworld chest!</br></br>
+							The Item Randomizer will attempt to prevent any placement of items which would result in them being unreachable. 
+							If there are multiple items in a chest, the randomizer will choose to randomize only one item per chest. </br></br>
+							You may choose to add the Moon Orb and/or Spellbook to the item randomizer pool, which will result in you starting with a random item from the item pool in their spot in your inventory.</br></br>
+						<span class="badge">Main Items</span>
+						</br>
+						<i>These are what items are considered Main Items.</i>
+						<ul>
+							<li>All 8 Runes</li>
+							<li>All 8 Moonstones</li>
+							<li>Vortex Cube</li>
+							<li>Balloon Plans</li>
+							<li>Broken Gargoyle Lens</li>
+						</ul>
+						<span class="badge">Main Item Locations</span>
+						</br>
+						<i>The main item locations are in the following areas.</i>
+						<ul>
+							<li>1x Britain</li>
+							<li>1x Gargoyle City</li>
+							<li>1x Jhelom</li>
+							<li>1x Minoc</li>
+							<li>1x Moonglow</li>
+							<li>1x New Magincia</li>
+							<li>1x Skara Brae</li>
+							<li>1x Trinsic</li>
+							<li>1x Yew</li>
+							<li>8x Shrines</li>
+							<li>1x Stonegate</li>
+							<li>1x Sutek's Castle</li>
+						</ul>
+						<span class="badge">Overworld Chest Locations</span>
+						</br>
+						<i>This list does not include any locations from the Main Item Locations List.</i>
+						<ul>
+							<li>8x Britain</li>
+							<li>2x Buccaneer's Den</li>
+							<li>3x Castle Britannia</li>
+							<li>3x Dagger Island</li>
+							<li>2x Deep Forest</li>
+							<li>2x Jhelom</li>
+							<li>3x Minoc</li>
+							<li>2x Moonglow</li>
+							<li>3x Paws</li>
+							<li>4x Serpent's Hold</li>
+							<li>2x Trinsic</li>
+						</ul>
+						<span class="badge">Underground Chests</span>
+						<ul>
+							<li>4x Britain Sewers / Buccaneer's Cave</li>
+							<li>1x Cyclops Cave</li>
+							<li>1x Destard</li>
+							<li>1x Hythloth</li>
+							<li>1x Moonglow Crypts</li>
+							<li>5x Pirate Cave</li>
+							<li>1x Wrong</li>
+						</ul>
+						<span class="badge">Enemy Randomization Details</span></br>
+						The Enemy Randomizer allows you to randomize enemy and creature spawns.</br></br>
+						If Randomly Mix is NOT selected, then creatures will only randomize with their own type, so monsters can only appear where other monsters could appear.</br></br>
+						If Randomly Mix IS selected then all selected creature types are mixed together. Monsters can now appear where anything else selected could appear!</br></br>
+						You can also Randomize Aggression, which will shuffle the aggression of all spawns around. Sheep or guards in town could now attack you!
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="modal-spoiler-win" tabindex="-1" role="dialog" aria-labelledby="modal-spoiler-label" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="modal-spoiler-label">
+							Spoiler List
+						</h4>
+					</div>
+					<div class="modal-body">
+						<p id="modal-spoiler-text"></p>
+						<ul id="modal-spoiler-list"></ul>
+					</div>
+					<button type="button" id="download-spoiler-log" class="btn btn-primary btn-full-width" data-dismiss="modal">
+						<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+						Download Spoiler Log
+					</button>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>-->
+		<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+		<!--<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>-->
+
+		<script src="js/randomizer.js"></script>
+		<script src="js/randomizer.base.js"></script>
+		<script src="js/randomizer.character.js"></script>
+		<script src="js/randomizer.item.js"></script>
+		<script src="js/randomizer.enemy.js"></script>
+		<script src="js/randomizer.preset.js"></script>
+		<script src="js/randomizer.text.js"></script>
+		<script src="js/randomizer.world.js"></script>
+		<script src="js/vendor/bootstrap.min.js"></script>
+		<script src="js/vendor/FileSaver.min.js"></script>
+		<script src="js/main.js"></script>
+	</body>
+</html>
