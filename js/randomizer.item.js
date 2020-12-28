@@ -190,12 +190,12 @@ function placeItemsInLocations(rom, random, items, locations, restrictions, spoi
 					//if we are attempting to place a stacked item at a shrine then flag as not allowed to place here
 					if(locations[iLocation].type == "shrine" && items[iItem].type == "stack")
 					{
-						console.log('STACK NOT ALLOWED - ITEM ' + items[iItem].name + ' #' + itemHex + ' IS NOT ALLOWED IN LOCATION ' + locations[iLocation].name);
+						//console.log('STACK NOT ALLOWED - ITEM ' + items[iItem].name + ' #' + itemHex + ' IS NOT ALLOWED IN LOCATION ' + locations[iLocation].name);
 						isItemAllowed = 0;
 					}
 					else if(locations[iLocation].id == ITEM_RUNE_VALOR && items[iItem].type == "stack")
 					{
-						console.log('STACK NOT ALLOWED - ITEM ' + items[iItem].name + ' #' + itemHex + ' IS NOT ALLOWED IN LOCATION ' + locations[iLocation].name);
+						//console.log('STACK NOT ALLOWED - ITEM ' + items[iItem].name + ' #' + itemHex + ' IS NOT ALLOWED IN LOCATION ' + locations[iLocation].name);
 						isItemAllowed = 0;
 					}
 					else
@@ -205,7 +205,7 @@ function placeItemsInLocations(rom, random, items, locations, restrictions, spoi
 						{
 							if(rArray[iRA] == itemHex)
 							{
-								console.log('FAILED PLACEMENT - ITEM ' + items[iItem].name + ' #' + itemHex + ' IS NOT ALLOWED IN LOCATION ' + locations[iLocation].name);
+								//console.log('FAILED PLACEMENT - ITEM ' + items[iItem].name + ' #' + itemHex + ' IS NOT ALLOWED IN LOCATION ' + locations[iLocation].name);
 								isItemAllowed = 0;
 							}
 						}
@@ -236,7 +236,7 @@ function placeItemsInLocations(rom, random, items, locations, restrictions, spoi
 							}
 						}
 						spoilers.push(items[iItem].item + ' located in ' + locations[iLocation].location);
-						console.log('PLACED - ITEM ' + items[iItem].name + ' #' + itemHex + ' IN INVENTORY LOCATION ' + locations[iLocation].name + ' #' + locHex.toHex(3));
+						//console.log('PLACED - ITEM ' + items[iItem].name + ' #' + itemHex + ' IN INVENTORY LOCATION ' + locations[iLocation].name + ' #' + locHex.toHex(3));
 					}
 					items.splice(iItem, 1);
 					locations.splice(iLocation, 1);
@@ -257,7 +257,7 @@ function placeItemsInLocations(rom, random, items, locations, restrictions, spoi
 							}
 						}
 						spoilers.push(items[iItem].item + ' located in ' + locations[iLocation].location);
-						console.log('PLACED - ITEM ' + items[iItem].name + ' #' + itemHex + ' IN DIALOG LOCATION ' + locations[iLocation].name + ' #' + locHex.toHex(3));
+						//console.log('PLACED - ITEM ' + items[iItem].name + ' #' + itemHex + ' IN DIALOG LOCATION ' + locations[iLocation].name + ' #' + locHex.toHex(3));
 					}
 					items.splice(iItem, 1);
 					locations.splice(iLocation, 1);
@@ -301,7 +301,7 @@ function placeItemsInLocations(rom, random, items, locations, restrictions, spoi
 							}
 						}
 						spoilers.push(items[iItem].item + ' located in ' + locations[iLocation].location);
-						console.log('PLACED - ITEM ' + items[iItem].name + ' #' + itemHex + ' IN LOCATION ' + locations[iLocation].name + ' #' + locHex.toHex(3) + " with flags " + flagHex.toHex(1));
+						//console.log('PLACED - ITEM ' + items[iItem].name + ' #' + itemHex + ' IN LOCATION ' + locations[iLocation].name + ' #' + locHex.toHex(3) + " with flags " + flagHex.toHex(1));
 					}
 					items.splice(iItem, 1);
 					locations.splice(iLocation, 1);
@@ -312,7 +312,7 @@ function placeItemsInLocations(rom, random, items, locations, restrictions, spoi
 			{
 				if(items.length == 1 || locations.length == 1)
 				{
-					console.log('ERROR - LAST ITEM WAS NOT ALLOWED IN LAST LOCATION - RANDOMIZING AGAIN');
+					//console.log('ERROR - LAST ITEM WAS NOT ALLOWED IN LAST LOCATION - RANDOMIZING AGAIN');
 					wasSuccessful = false;
 					return wasSuccessful;
 				}
@@ -337,7 +337,7 @@ function placeItemsInLocations(rom, random, items, locations, restrictions, spoi
 
 	if(wasSuccessful == false)
 	{
-		console.log('=== ERROR - ITEM RANDOMIZATION FAILED - RANDOMIZING AGAIN ===');
+		//console.log('=== ERROR - ITEM RANDOMIZATION FAILED - RANDOMIZING AGAIN ===');
 	}
 	return wasSuccessful;
 }
