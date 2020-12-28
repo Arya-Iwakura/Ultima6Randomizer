@@ -1,4 +1,4 @@
-var VERSION_STRING = 'v0.1';
+var VERSION_STRING = 'v0.3';
 
 function randomizeROM(buffer, seed)
 {
