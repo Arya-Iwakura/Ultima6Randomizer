@@ -144,7 +144,7 @@ function setCharacterSprite(buffer, seed, character_sprite, fire_flag)
 		case 21:
 			selectedCharacterHex = 0x0E; //Lord British
 			selectedSpriteHex = 0x0F; //Lord British
-            selectedPaletteHex = 0x02; //Lord British
+            selectedPaletteHex = 0x01; //Lord British
             selectedSleepingHex = 0x02;
 			break;
 		case 22:
