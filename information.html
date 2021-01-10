@@ -3,16 +3,16 @@ The Ultima 6 SNES Randomizer allows you to randomize a number of different eleme
 <span class="badge">Overview</span>
 <ul>
     <!--<li>The Character Randomizer allows you to play as other characters as well as randomize how characters in the world appear.</li>-->
-    <li>The Item Randomizer allows you to randomly shuffle items around in the world for when you want to enjoy an item hunt and more exploration.</li>
-    <li>The Enemy Randomizer allows you to shuffle enemies and their properties creating new combat experiences and challenges.</li>
+    <li>The Item Shuffler allows you to randomly shuffle items around in the world for when you want to enjoy an item hunt and more exploration.</li>
+    <li>The Spawn Randomizer allows you to shuffle enemies and their properties creating new combat experiences and challenges.</li>
     <!--<li>The World Randomizer allows you to randomize the layout of the world creating new worlds to explore.</li>-->
 </ul>
-<span class="badge">Item Randomization Details</span></br>
-    The Item Randomizer will randomly shuffle all selected items between one another.
-    If Main Items and Overworld Chests are selected, then Runes and Moonstones could be placed in any overworld chest!</br></br>
-    The Item Randomizer will attempt to prevent any placement of items which would result in them being unreachable. 
-    If there are multiple items in a chest, the randomizer will choose to randomize only one item per chest. </br></br>
-    You may choose to add the Moon Orb and/or Spellbook to the item randomizer pool, which will result in you starting with a random item from the item pool in their spot in your inventory.</br></br>
+<span class="badge">Item Shuffle Details</span></br>
+    The Item Shuffler will randomly shuffle all of the selected items between one another.
+    If "Main Items" and "Overworld Chests" are selected, then Runes and Moonstones could be placed in any overworld chest!</br></br>
+    The Item Shuffler will attempt to prevent any placement of items which would result in them being unreachable. 
+    If there are multiple items in a chest, the shuffler will choose to randomize only one item per chest. </br></br>
+    You may choose to add the Moon Orb and/or Spellbook to the item shuffle pool, which will result in you starting with a random item from the item pool in their spot in your inventory.</br></br>
 <span class="badge">Main Items</span>
 </br>
 <i>These are what items are considered Main Items.</i>
@@ -34,11 +34,11 @@ The Ultima 6 SNES Randomizer allows you to randomize a number of different eleme
     <li>1x Moonglow</li>
     <li>1x New Magincia</li>
     <li>1x Skara Brae</li>
-    <li>1x Trinsic</li>
-    <li>1x Yew</li>
     <li>8x Shrines</li>
     <li>1x Stonegate</li>
     <li>1x Sutek's Castle</li>
+    <li>1x Trinsic</li>
+    <li>1x Yew</li>
 </ul>
 <span class="badge">Overworld Chest Locations</span>
 </br>
@@ -64,10 +64,51 @@ The Ultima 6 SNES Randomizer allows you to randomize a number of different eleme
     <li>1x Hythloth</li>
     <li>1x Moonglow Crypts</li>
     <li>5x Pirate Cave</li>
-    <li>1x Wrong</li>
+    <li>1x Wrong / Covetous</li>
 </ul>
-<span class="badge">Enemy Randomization Details</span></br>
-The Enemy Randomizer allows you to randomize enemy and creature spawns.</br></br>
-If Randomly Mix is NOT selected, then creatures will only randomize with their own type, so monsters can only appear where other monsters could appear.</br></br>
-If Randomly Mix IS selected then all selected creature types are mixed together. Monsters can now appear where anything else selected could appear!</br></br>
-You can also Randomize Aggression, which will shuffle the aggression of all spawns around. Sheep or guards in town could now attack you!
+<span class="badge">Spawn Randomization Details</span></br>
+The Spawn Randomizer allows you to randomize enemy and creature spawns.</br></br>
+If "Randomly Mix" is NOT selected, then creatures will only randomize with their own type, so monsters can only appear where other monsters could appear.</br></br>
+If "Randomly Mix" IS selected then all selected creature types are mixed together. Monsters can now appear where anything else selected could appear!</br></br>
+
+<span class="badge">Spawn Number Details</span></br>
+Each creature spawn point in the game has settings on how many creatures appear from their at once. If default is selected, the original spawn point numbers are used.</br></br>
+You can choose to Shuffle the Spawn Numbers which will take all spawn numbers from every spawner in the game and then shuffle them and reassign them.</br></br>
+It is also possible to completely randomize the spawn numbers by selecting "Random Spawn Numbers".</br></br>
+
+<span class="badge">Aggression Details</span></br>
+Aggression is assigned to creatures based on the spawn point they spawn at. This is the default setting.</br></br>
+When randomly mixing creatures, you may find character types no longer have the aggression you would expect. The "Intuitive Aggression" option assigns aggression based on creature type and not from the spawn point.</br></br>
+You can choose to "Shuffle Aggression", which will shuffle the aggression of all spawns. Sheep or guards in town could now attack you!</br></br>
+For those who want to not worry about being attacked randomly, you can select "Passive" and all creatures will now ignore you unless you attack first.</br></br>
+
+<span class="badge">Gameplay Adjustment Details</span></br>
+If you select "Add Missing Enemies from PC Version" then the Silver Serpent and Zu Flower will be added back to the game. These were unfinished in the SNES port. Due to limitiations the recreated versions are not identical to the PC version.</br></br>
+"Add Missing Spells to AI" fixes a bug that prevents the AI from using all assigned spells. With this, AI can now cast all the spells they could on the PC version as well.</br></br>
+Enable Expanded Button Mapping puts actions onto additional controller buttons beyond only the original A(open menu) and D-Pad(move) buttons.
+<ul>
+    <li>D-Pad - Move</li>
+    <li>A - Open Menu</li>
+    <li>B - Cancel Action / Close Menu</li>
+    <li>Y - Look</li>
+    <li>X - Talk</li>
+    <li>L - Cast</li>
+    <li>R - Attack</li>
+    <li>Start - Inventory</li>
+</ul>
+<span class="badge">Time Adjustment Details</span></br>
+In Ultima 6, 1 minute of in game time passes for every step you take. Full daylight hours are between 06:00 and 19:00 and are when most NPCs are awake.</br></br>
+You can choose to lengthen the daylight hours by 2x / 3x which means that 1 minute of in game time during daylight hours will pass only after 2 steps / 3 steps taken. Night hour time passing still occurs at 1 minute per step taken.</br></br>
+If you choose to "Use PC Version Day and Night Lengths" then both the day and night will be 2x as long.</br></br>
+
+<span class="badge">Karma Adjustment Details</span></br>
+You can choose to make Karma less difficult or more difficult.</br></br>
+When "Easy Karma Mode" is selected, all penalities are reduced to 1 karma loss, you start at 100 karma instead of 75, and all karma rewards are doubled.</br></br>
+When "Hard Karma Mode" is selected, all penalities are doubled and you start at 60 instead of 75 karma.</br></br>
+
+<span class="badge">Other Details</span></br>
+"Enable Spoiler Log" grants you access to seeing where all the items were placed. This can be good to reference if you get completely stuck.</br></br>
+"Enable Hints" will replace text in various scrolls and books to give vague hints about the locations of any Main Items.</br></br>
+"Show Symbol Indentifier" replaces the text that tells you what seed number and flags you have selected with a short series of symbols.</br></br>
+"Remove Seed & Flags from Filename" will generate a random value for the filename.</br></br>
+Combining "Show Symbol Indentifier" and "Remove Seed & Flags from Filename" allows you to create hidden seeds for the purposes of races, tournaments, or simply surprises for others.</br></br>

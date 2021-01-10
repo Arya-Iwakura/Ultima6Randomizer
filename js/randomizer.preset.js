@@ -8,104 +8,167 @@ function updatePreset(val)
 	switch(preset)
 	{
 		case 1: //Very Easy
-			$('#randomize_core_items').prop('checked', true);
-			$('#randomize_chests_overworld').prop('checked', true);
-			
-			$('#randomize_moonorb').prop('disabled', false);
-			$('#randomize_spellbook').prop('disabled', false);
-			
-			$('#randomize_enemy_animals').prop('checked', true);
-			
-			$('#randomize_enemy_mix').prop('disabled', true);
-			$('#randomize_enemy_mix').prop('checked', false);
-
-			$('#display_hints').prop('disabled', false);
+			preset_townsfolk();
 			break;
 		case 2: //Easy
-			$('#randomize_core_items').prop('checked', true);
-			$('#randomize_chests_overworld').prop('checked', true);
-			$('#randomize_moonorb').prop('checked', true);
-			
-			$('#randomize_moonorb').prop('disabled', false);
-			$('#randomize_spellbook').prop('disabled', false);
-
-			$('#randomize_enemy_wild').prop('checked', true);
-			$('#randomize_enemy_animals').prop('checked', true);
-
-			$('#randomize_enemy_mix').prop('disabled', false);
-
-			$('#display_hints').prop('disabled', false);
+			preset_explorer();
 			break;
 		case 3: //Standard
-			$('#randomize_core_items').prop('checked', true);
-			$('#randomize_chests_overworld').prop('checked', true);
-			$('#randomize_chests_dungeons').prop('checked', true);
-			$('#randomize_moonorb').prop('checked', true);
-			$('#randomize_spellbook').prop('checked', true);
-
-			$('#randomize_moonorb').prop('disabled', false);
-			$('#randomize_spellbook').prop('disabled', false);
-
-			$('#randomize_enemy_animals').prop('checked', true);
-			$('#randomize_enemy_wild').prop('checked', true);
-			$('#randomize_enemy_mix').prop('checked', true);
-
-			$('#randomize_enemy_mix').prop('disabled', false);
-
-			$('#display_hints').prop('disabled', false);
+			preset_adventurer();
 			break;
 		case 4: //Difficult
-			$('#randomize_core_items').prop('checked', true);
-			$('#randomize_chests_overworld').prop('checked', true);
-			$('#randomize_chests_dungeons').prop('checked', true);
-			$('#randomize_moonorb').prop('checked', true);
-			$('#randomize_spellbook').prop('checked', true);
-
-			$('#randomize_moonorb').prop('disabled', false);
-			$('#randomize_spellbook').prop('disabled', false);
-
-			$('#randomize_enemy_monsters').prop('checked', true);
-			$('#randomize_enemy_wild').prop('checked', true);
-			$('#randomize_enemy_animals').prop('checked', true);
-			$('#randomize_enemy_people').prop('checked', true);
-
-			$('#randomize_enemy_mix').prop('disabled', false);
-
-			$('#display_hints').prop('disabled', false);
+			preset_avatar();
 			break;
 		case 5: //Very Difficult
-			$('#randomize_core_items').prop('checked', true);
-			$('#randomize_chests_overworld').prop('checked', true);
-			$('#randomize_chests_dungeons').prop('checked', true);
-			$('#randomize_moonorb').prop('checked', true);
-			$('#randomize_spellbook').prop('checked', true);
-
-			$('#randomize_moonorb').prop('disabled', false);
-			$('#randomize_spellbook').prop('disabled', false);
-
-			$('#randomize_enemy_monsters').prop('checked', true);
-			$('#randomize_enemy_wild').prop('checked', true);
-			$('#randomize_enemy_animals').prop('checked', true);
-			$('#randomize_enemy_people').prop('checked', true);
-			$('#randomize_enemy_mix').prop('checked', true);
-			$('#randomize_enemy_aggression').prop('checked', true);
-
-			$('#randomize_enemy_mix').prop('disabled', false);
-
-			$('#display_hints').prop('disabled', false);
+			preset_guardian();
 			break;
 		default:
-			$('#randomize_core_items').prop('checked', true);
-			$('#randomize_chests_overworld').prop('checked', true);
-
-			$('#randomize_moonorb').prop('disabled', false);
-			$('#randomize_spellbook').prop('disabled', false);
-
-			$('#randomize_enemy_mix').prop('disabled', true);
-
-			$('#display_hints').prop('disabled', false);
+			preset_townsfolk();
 			break;
 	}
+}
+
+function preset_townsfolk()
+{
+	$('#randomize_core_items').prop('checked', true);
+	$('#randomize_chests_overworld').prop('checked', true);
+	
+	$('#randomize_moonorb').prop('disabled', false);
+	$('#randomize_spellbook').prop('disabled', false);
+	
+	$('#randomize_enemy_animals').prop('checked', true);
+	
+	$('#randomize_enemy_mix').prop('disabled', true);
+	$('#randomize_enemy_mix').prop('checked', false);
+
+	$('#default_spawn_numbers').prop('checked', true);
+	$('#enemy_aggression_default').prop('checked', true);
+
+	$('#add_missing_enemies').prop('checked', true);			
+	$('#add_missing_ai_spells').prop('checked', true);
+	$('#day_length_3x').prop('checked', true);
+	$('#karma_options_easy').prop('checked', true);
+
+	$('#display_spoiler_log').prop('checked', true);
+	$('#display_hints').prop('disabled', false);
+	$('#display_hints').prop('checked', true);
+}
+
+function preset_explorer()
+{
+	$('#randomize_core_items').prop('checked', true);
+	$('#randomize_chests_overworld').prop('checked', true);
+	$('#randomize_moonorb').prop('checked', true);
+	
+	$('#randomize_moonorb').prop('disabled', false);
+	$('#randomize_spellbook').prop('disabled', false);
+
+	$('#randomize_enemy_wild').prop('checked', true);
+	$('#randomize_enemy_animals').prop('checked', true);
+	$('#randomize_enemy_mix').prop('disabled', false);
+
+	$('#default_spawn_numbers').prop('checked', true);
+	$('#enemy_aggression_default').prop('checked', true);
+
+	$('#add_missing_enemies').prop('checked', true);
+	$('#add_missing_ai_spells').prop('checked', true);			
+	$('#day_length_2x').prop('checked', true);
+	$('#karma_options_easy').prop('checked', true);
+
+	$('#display_spoiler_log').prop('checked', true);
+	$('#display_hints').prop('disabled', false);
+	$('#display_hints').prop('checked', true);
+}
+
+function preset_adventurer()
+{
+	$('#randomize_core_items').prop('checked', true);
+	$('#randomize_chests_overworld').prop('checked', true);
+	$('#randomize_chests_dungeons').prop('checked', true);
+	$('#randomize_moonorb').prop('checked', true);
+	$('#randomize_spellbook').prop('checked', true);
+
+	$('#randomize_moonorb').prop('disabled', false);
+	$('#randomize_spellbook').prop('disabled', false);
+
+	$('#randomize_enemy_animals').prop('checked', true);
+	$('#randomize_enemy_wild').prop('checked', true);
+	$('#add_missing_enemies').prop('checked', true);
+	$('#randomize_enemy_mix').prop('checked', true);
+
+	$('#randomize_enemy_mix').prop('disabled', false);
+
+	$('#default_spawn_numbers').prop('checked', true);
+	$('#enemy_aggression_intuitive').prop('checked', true);
+
+	$('#add_missing_ai_spells').prop('checked', true);
+	$('#day_length_default').prop('checked', true);
+	$('#karma_options_default').prop('checked', true);
+
+	$('#display_spoiler_log').prop('checked', true);
+	$('#display_hints').prop('disabled', false);
+	$('#display_hints').prop('checked', true);	
+}
+
+function preset_avatar()
+{
+	$('#randomize_core_items').prop('checked', true);
+	$('#randomize_chests_overworld').prop('checked', true);
+	$('#randomize_chests_dungeons').prop('checked', true);
+	$('#randomize_moonorb').prop('checked', true);
+	$('#randomize_spellbook').prop('checked', true);
+
+	$('#randomize_moonorb').prop('disabled', false);
+	$('#randomize_spellbook').prop('disabled', false);
+
+	$('#randomize_enemy_monsters').prop('checked', true);
+	$('#randomize_enemy_wild').prop('checked', true);
+	$('#randomize_enemy_animals').prop('checked', true);
+	$('#randomize_enemy_people').prop('checked', true);
+	$('#randomize_enemy_mix').prop('disabled', false);
+
+	$('#shuffle_spawn_numbers').prop('checked', true);
+	$('#enemy_aggression_default').prop('checked', true);
+
+	$('#add_missing_enemies').prop('checked', true);
+	$('#add_missing_ai_spells').prop('checked', true);
+	$('#day_length_default').prop('checked', true);
+	$('#karma_options_hard').prop('checked', true);
+
+	$('#display_spoiler_log').prop('checked', true);
+	$('#display_hints').prop('disabled', false);
+	$('#display_hints').prop('checked', true);	
+}
+
+function preset_guardian()
+{
+	$('#randomize_core_items').prop('checked', true);
+	$('#randomize_chests_overworld').prop('checked', true);
+	$('#randomize_chests_dungeons').prop('checked', true);
+	$('#randomize_moonorb').prop('checked', true);
+	$('#randomize_spellbook').prop('checked', true);
+
+	$('#randomize_moonorb').prop('disabled', false);
+	$('#randomize_spellbook').prop('disabled', false);
+
+	$('#randomize_enemy_monsters').prop('checked', true);
+	$('#randomize_enemy_wild').prop('checked', true);
+	$('#randomize_enemy_animals').prop('checked', true);
+	$('#randomize_enemy_people').prop('checked', true);
+
+	$('#randomize_enemy_mix').prop('checked', true);
+	$('#randomize_enemy_mix').prop('disabled', false);
+	$('#random_spawn_numbers').prop('checked', true);
+	$('#enemy_aggression_shuffle').prop('checked', true);
+
+	$('#add_missing_enemies').prop('checked', true);
+	$('#add_missing_ai_spells').prop('checked', true);
+	$('#day_length_default').prop('checked', true);
+	$('#karma_options_hard').prop('checked', true);
+
+	$('#display_spoiler_log').prop('checked', true);
+	$('#display_hints').prop('disabled', false);
+	$('#display_hints').prop('checked', true);	
 }
 
 $('#preset').change(updatePreset);
@@ -120,22 +183,13 @@ var PRESET_NAMES =
 [
 	"Custom",
 	"TownsFolk",
-	"Stranger",
-	"Standard",
+	//"Trader",
+	"Explorer",
+	"Adventurer",
+	//"",
 	"Avatar",
 	"Guardian",
 ];
-/*
-var PRESET_NAMES =
-[
-	"Custom",
-	"TownsFolk",
-	"Stranger",
-	"Standard",
-	"Avatar",
-	"Guardian",
-];
-*/
 
 function getPresetName(n)
 {

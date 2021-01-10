@@ -1,3 +1,5 @@
+//TODO : Add characters with less sprites, such as the boat and mouse
+
 function setCharacterSprite(buffer, seed, character_sprite, fire_flag)
 {
 	var rom = new Uint8Array(buffer);
@@ -251,7 +253,6 @@ function setCharacterSprite(buffer, seed, character_sprite, fire_flag)
         rom[paletteAddress] = selectedPaletteHex;
     }
 
-	fixChecksum(rom);
-
+    fixChecksum(rom);
 	return rom;
 }

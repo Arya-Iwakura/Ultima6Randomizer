@@ -119,45 +119,45 @@
 			<div class="row">
 				<div class="col-md-6">
 
-					<h3>Randomize Items</h3>
+					<h3>Shuffle Items</h3>
 					<h5><i>Recommend Main Items combined with Overworld and/or Underground Chests.</i></h5>
 					<div class="checkbox">
 						<label>
 							<input type="checkbox" id="randomize_core_items" class="presetoption" checked>
-							Include Main Items <i>(Moonstones, Runes, Vortex Cube, Etc)</i>
+							Include Main Items <i><small>(Moonstones, Runes, Vortex Cube, Etc)</small></i>
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
 							<input type="checkbox" id="randomize_chests_overworld" class="presetoption" checked>
-							Include Overworld Chests <i>(Castles, Houses, Shops, and Basements)</i>
+							Include Overworld Chests <i><small>(Castles, Houses, Shops, and Basements)</small></i>
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
 							<input type="checkbox" id="randomize_chests_dungeons" class="presetoption">
-							Include Underground Chests <i>(Caves, Dungeons, and Crypts)</i>
+							Include Underground Chests <i><small>(Caves, Dungeons, and Crypts)</small></i>
 						</label>
 					</div>
 
 					<div class="checkbox">
 						<label>
 							<input type="checkbox" id="randomize_moonorb" class="presetoption">
-							Include Moon Orb <i>(Adds more physical travel to the game)</i>
+							Include Moon Orb <i><small>(Adds more physical travel to the game)</small></i>
 						</label>
 					</div>
 
 					<div class="checkbox">
 						<label>
 							<input type="checkbox" id="randomize_spellbook" class="presetoption">
-							Include Spellbook <i>(Adds more difficulty as you will start with no spells)</i>
+							Include Spellbook <i><small>(Adds more difficulty as you will start with no spells)</small></i>
 						</label>
 					</div>
 
 					<div class="checkbox hidden">
 						<label>
 							<input type="checkbox" id="randomize_add_chests" class="presetoption">
-							Add New Chests <i>(Add chests to expand the total locations randomized)</i>
+							Add New Chests <i><small>(Add chests to expand the total locations randomized)</small></i>
 						</label>
 					</div>
 
@@ -168,79 +168,186 @@
 						</label>
 					</div>
 
-					<h3 class="hidden">World</h3>
-					<div class="checkbox hidden">
-						<label>
-							<input type="checkbox" id="randomize_world_map" class="presetoption">
-							Randomize World Map <i>(Coming Soon)</i>
-						</label>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<h3>Randomize Enemies</h3>
+					<h3>Randomize Spawns</h3>
 					<div class="checkbox">
 						<label>
 							<input type="checkbox" id="randomize_enemy_monsters" class="presetoption">
-							Randomize Monsters <i>(Dragons, Cyclops, Gazers)</i>
+							Randomize Monsters <i><small>(Dragons, Cyclops, Gazers)</small></i>
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
 							<input type="checkbox" id="randomize_enemy_wild" class="presetoption">
-							Randomize Wild Animals <i>(Alligators, Wolves, Spiders)</i>
+							Randomize Wild Animals <i><small>(Alligators, Wolves, Spiders)</small></i>
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
 							<input type="checkbox" id="randomize_enemy_animals" class="presetoption">
-							Randomize Friendly Animals <i>(Cows, Sheep, Birds)</i>
+							Randomize Friendly Animals <i><small>(Cows, Sheep, Birds)</small></i>
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
 							<input type="checkbox" id="randomize_enemy_people" class="presetoption">
-							Randomize Non-Important People <i>(Enemy People, Non-Dialog Persons, Guards)</i>
+							Randomize Non-Important People <i><small>(Enemy People, Non-Dialog Persons, Guards)</small></i>
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
 							<input type="checkbox" id="randomize_enemy_mix" class="presetoption" disabled>
-							Randomly Mix <i>(Any selected options are mixed together)</i>
+							Randomly Mix <i><small>(Any selected options are mixed together)</small></i>
+						</label>
+					</div>
+
+					<h3>Creature Spawn Numbers</h3>
+					<div class="radio">
+						<label>
+							<input type="radio" name="spawn_numbers" id="default_spawn_numbers" class="presetoption" checked>
+							Default <i><small>(The base game number of creatures per spawner is unchanged)</small></i>
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="spawn_numbers" id="shuffle_spawn_numbers" class="presetoption">
+							Shuffle Spawn Numbers <i><small>(Spawners shuffle their creature numbers between themselves)</small></i>
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="spawn_numbers" id="random_spawn_numbers" class="presetoption">
+							Random Spawn Numbers <i><small>(All spawn numbers are random! Warning this may be diffuclt!)</small></i>
+						</label>
+					</div>
+					
+					<h3>Creature Aggression</h3>
+					<div class="radio">
+						<label>
+							<input type="radio" name="enemy_aggression" id="enemy_aggression_default" class="presetoption" checked>
+							Default Aggression <i><small>(Creatures are assigned aggression based on the spawner they spawn from)</small></i>
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="enemy_aggression" id="enemy_aggression_intuitive" class="presetoption">
+							Intuitive Aggression <i><small>(Creatures are assigned aggression based on the type of creature)</small></i>
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="enemy_aggression" id="enemy_aggression_shuffle" class="presetoption">
+							Shuffle Aggression <i><small>(All aggression is shuffled! Warning this may be difficult!)</small></i>
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="enemy_aggression" id="enemy_aggression_passive" class="presetoption">
+							Passive <i><small>(All creature aggression is set to neutral or passive)</small></i>
+						</label>
+					</div>
+
+				</div>
+				<div class="col-md-6">
+			
+					<h3 class="hidden">World</h3>
+					<div class="checkbox hidden">
+						<label>
+							<input type="checkbox" id="randomize_world_map" class="presetoption">
+							Randomize World Map <i><small>(Coming Soon)</small></i>
+						</label>
+					</div>
+
+					<h3>Gameplay Adjustments</h3>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="add_missing_enemies" class="presetoption" checked>
+							Add Missing Enemies from PC Version <i><small>(Adds Silver Serpents and Zu Flowers / Tangle Vines)</small></i>
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" id="randomize_enemy_aggression" class="presetoption">
-							Randomize Aggression <i>(Warning this may be difficult)</i>
+							<input type="checkbox" id="add_missing_ai_spells" class="presetoption" checked>
+							Add Missing Spells to AI <i><small>(Fixes a bug that prevents AI from using all of their assigned spells)</small></i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="enable_fast_button_mapping" class="presetoption">
+							Enable Expanded Button Mapping <i><small>(Adds common game commands to gamepad buttons X,Y,L,R,Start)</small></i>
+						</label>
+					</div>
+
+					<h3>Time Adjustments</h3>
+					<div class="radio">
+						<label>
+							<input type="radio" name="day_length" id="day_length_default" class="presetoption" checked>
+							Default Day and Night Cycle <small><i>(Unchanged from base game)</small></i>
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="day_length" id="day_length_2x" class="presetoption">
+							Day Light Hours Last 2x Longer <i><small>(Hours between 6:00-19:00)</small></i>
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="day_length" id="day_length_3x" class="presetoption">
+							Day Light Hours Last 3x Longer <i><small>(Hours between 6:00-19:00)</small></i>
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="day_length" id="day_length_pc" class="presetoption">
+							Use PC Version Day and Night Lengths<i><small>(2x longer days and nights)</small></i>
+						</label>
+					</div>
+
+					<h3>Karma Adjustments</h3>
+					<div class="radio">
+						<label>
+							<input type="radio" name="karma_options" id="karma_options_default" class="presetoption" checked>
+							Default Karma <small><i>(Unchanged from base game)</small></i>
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="karma_options" id="karma_options_easy" class="presetoption">
+							Easy Karma Mode <small><i>(Karma penalties lowered. Higher starting karma. Higher karma rewards.)</small></i>
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="karma_options" id="karma_options_hard" class="presetoption">
+							Hard Karma Mode <small><i>(Karma penalties raised. Lower starting karma.)</small></i>
 						</label>
 					</div>
 
 					<h3>Other</h3>
 					<div class="checkbox">
 						<label>
+							<input type="checkbox" id="display_spoiler_log" class="presetoption" checked>
+							Enable Spoiler Log <i><small>(Enables viewing a list of all random item locations)</small></i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="display_hints" class="presetoption" checked>
+							Enable Hints <i><small>(Replaces some scroll and book text with hints about main items)</small></i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
 							<input type="checkbox" id="display_symbol_hash" class="presetoption">
-							Show Symbol Identifier <i>(Replaces displaying randomizer seed and flags)</i>
+							Show Symbol Identifier <i><small>(Replaces displaying randomizer seed and flags)</small></i>
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" id="display_spoiler_log" class="presetoption">
-							Enable Spoiler Log <i>(Allows you to see where everything has been placed)</i>
+							<input type="checkbox" id="hide_filename_spoiler" class="presetoption">
+							Remove Seed & Flags from Filename <i><small>(Generates a random value for the filename)</small></i>
 						</label>
 					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="display_hints" class="presetoption">
-							Enable Hints <i>(Replaces some scroll and book text with hints about main items)</i>
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="hide_filename_spoiler" class="">
-							Remove Seed & Flags from Filename <i>(Use with Show Symbol Identifier and No-Spoiler Log for a Race Seed)</i>
-						</label>
-					</div>
-
 				</div>
 			</div>
 		</div>
@@ -340,7 +447,7 @@
 							You may now select some personalized customization options for your rom that will not affect your randomization.
 						</p>
 
-						<h4>Choose Sprite</h4>
+						<h4>Choose Avatar Sprite</h4>
 						<select class="form-control" id="select-avatar-sprite">
 							<option value="2">Avatar (Default)</option>
 							<option value="0">Random (All)</option>
@@ -383,9 +490,17 @@
 						<div class="checkbox">
 							<label>
 								<input type="checkbox" id="avatar-sprite-fire-flag">
-								Enable fire variant of sprite <i>(Selected character will be made of fire!)</i>
+								Enable fire variant of sprite <small><i>(Selected character will be made of fire!)</i></small>
 							</label>
 						</div>
+
+						<h4>Poison Flash Adjustments</h4>
+						<select class="form-control" id="poison_flash_options">
+							<option value="0">Default Flash <small><i>(Unchanged from base game)</small></i></option>
+							<option value="1">Reduced Flash <small><i>(Far less bright and more faint flashing)</small></i></option>
+							<option value="2">Remove Flash <small><i>(Completely remove the poison flash effect)</small></i></option>
+						</select>
+
 						<button type="button" id="download-generated-rom" class="btn btn-primary btn-full-width top-spaced">
 							<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
 							Download U6R <span class="version-number"></span> (<span id="modal-seed-text"></span> + <span id="modal-flags-text"></span>)
@@ -432,6 +547,22 @@
 						</h4>
 					</div>
 					<div class="modal-body">
+						<span class="badge">v0.4</span>
+						<ul>
+							<li>Added error reporting dialog box</li>
+							<li>Added system to isolate randomization systems from one another(changes in one system will no longer cascade into the others)</li>
+							<li>Fixed sprites with incorrectly assigned palettes</li>
+							<li>Added the Zu Flower (Tangle Vine) back to the game as the port of the enemy was never finished for the SNES port</li>
+							<li>Added the Silver Serpent back to the game as the port of the enemy was never finished for the SNES port (thanks BinarySplit!)</li>
+							<li>Added option for additional controller buttons assigned to actions other than only D-Pad and A (thanks BinarySplit!)</li>
+							<li>Added Easy Karma and Hard Karma options</li>
+							<li>Added option to allow day light hours to last 2x or 3x as long or to be equal to the PC version (2x longer days and nights)</li>
+							<li>Added option reducing or removing the screen flash while poisoned</li>
+							<li>Added Intuitive and Passive options for creature aggression</li>
+							<li>Added options to allow randomizing or shuffling creature spawn numbers</li>
+							<li>Added new character sprite options</li>
+							<li>Updated credits</li>
+						</ul>
 						<span class="badge">v0.3</span>
 						<ul>
 							<li>Added option to download spoiler log as a text file</li>
@@ -486,16 +617,16 @@
 						<span class="badge">Overview</span>
 						<ul>
 							<!--<li>The Character Randomizer allows you to play as other characters as well as randomize how characters in the world appear.</li>-->
-							<li>The Item Randomizer allows you to randomly shuffle items around in the world for when you want to enjoy an item hunt and more exploration.</li>
-							<li>The Enemy Randomizer allows you to shuffle enemies and their properties creating new combat experiences and challenges.</li>
+							<li>The Item Shuffler allows you to randomly shuffle items around in the world for when you want to enjoy an item hunt and more exploration.</li>
+							<li>The Spawn Randomizer allows you to shuffle enemies and their properties creating new combat experiences and challenges.</li>
 							<!--<li>The World Randomizer allows you to randomize the layout of the world creating new worlds to explore.</li>-->
 						</ul>
-						<span class="badge">Item Randomization Details</span></br>
-							The Item Randomizer will randomly shuffle all selected items between one another.
-							If Main Items and Overworld Chests are selected, then Runes and Moonstones could be placed in any overworld chest!</br></br>
-							The Item Randomizer will attempt to prevent any placement of items which would result in them being unreachable. 
-							If there are multiple items in a chest, the randomizer will choose to randomize only one item per chest. </br></br>
-							You may choose to add the Moon Orb and/or Spellbook to the item randomizer pool, which will result in you starting with a random item from the item pool in their spot in your inventory.</br></br>
+						<span class="badge">Item Shuffle Details</span></br>
+							The Item Shuffler will randomly shuffle all of the selected items between one another.
+							If "Main Items" and "Overworld Chests" are selected, then Runes and Moonstones could be placed in any overworld chest!</br></br>
+							The Item Shuffler will attempt to prevent any placement of items which would result in them being unreachable. 
+							If there are multiple items in a chest, the shuffler will choose to randomize only one item per chest. </br></br>
+							You may choose to add the Moon Orb and/or Spellbook to the item shuffle pool, which will result in you starting with a random item from the item pool in their spot in your inventory.</br></br>
 						<span class="badge">Main Items</span>
 						</br>
 						<i>These are what items are considered Main Items.</i>
@@ -517,11 +648,11 @@
 							<li>1x Moonglow</li>
 							<li>1x New Magincia</li>
 							<li>1x Skara Brae</li>
-							<li>1x Trinsic</li>
-							<li>1x Yew</li>
 							<li>8x Shrines</li>
 							<li>1x Stonegate</li>
 							<li>1x Sutek's Castle</li>
+							<li>1x Trinsic</li>
+							<li>1x Yew</li>
 						</ul>
 						<span class="badge">Overworld Chest Locations</span>
 						</br>
@@ -547,13 +678,54 @@
 							<li>1x Hythloth</li>
 							<li>1x Moonglow Crypts</li>
 							<li>5x Pirate Cave</li>
-							<li>1x Wrong</li>
+							<li>1x Wrong / Covetous</li>
 						</ul>
-						<span class="badge">Enemy Randomization Details</span></br>
-						The Enemy Randomizer allows you to randomize enemy and creature spawns.</br></br>
-						If Randomly Mix is NOT selected, then creatures will only randomize with their own type, so monsters can only appear where other monsters could appear.</br></br>
-						If Randomly Mix IS selected then all selected creature types are mixed together. Monsters can now appear where anything else selected could appear!</br></br>
-						You can also Randomize Aggression, which will shuffle the aggression of all spawns around. Sheep or guards in town could now attack you!
+						<span class="badge">Spawn Randomization Details</span></br>
+						The Spawn Randomizer allows you to randomize enemy and creature spawns.</br></br>
+						If "Randomly Mix" is NOT selected, then creatures will only randomize with their own type, so monsters can only appear where other monsters could appear.</br></br>
+						If "Randomly Mix" IS selected then all selected creature types are mixed together. Monsters can now appear where anything else selected could appear!</br></br>
+
+						<span class="badge">Spawn Number Details</span></br>
+						Each creature spawn point in the game has settings on how many creatures appear from their at once. If default is selected, the original spawn point numbers are used.</br></br>
+						You can choose to Shuffle the Spawn Numbers which will take all spawn numbers from every spawner in the game and then shuffle them and reassign them.</br></br>
+						It is also possible to completely randomize the spawn numbers by selecting "Random Spawn Numbers".</br></br>
+
+						<span class="badge">Aggression Details</span></br>
+						Aggression is assigned to creatures based on the spawn point they spawn at. This is the default setting.</br></br>
+						When randomly mixing creatures, you may find character types no longer have the aggression you would expect. The "Intuitive Aggression" option assigns aggression based on creature type and not from the spawn point.</br></br>
+						You can choose to "Shuffle Aggression", which will shuffle the aggression of all spawns. Sheep or guards in town could now attack you!</br></br>
+						For those who want to not worry about being attacked randomly, you can select "Passive" and all creatures will now ignore you unless you attack first.</br></br>
+
+						<span class="badge">Gameplay Adjustment Details</span></br>
+						If you select "Add Missing Enemies from PC Version" then the Silver Serpent and Zu Flower will be added back to the game. These were unfinished in the SNES port. Due to limitiations the recreated versions are not identical to the PC version.</br></br>
+						"Add Missing Spells to AI" fixes a bug that prevents the AI from using all assigned spells. With this, AI can now cast all the spells they could on the PC version as well.</br></br>
+						Enable Expanded Button Mapping puts actions onto additional controller buttons beyond only the original A(open menu) and D-Pad(move) buttons.
+						<ul>
+							<li>D-Pad - Move</li>
+							<li>A - Open Menu</li>
+							<li>B - Cancel Action / Close Menu</li>
+							<li>Y - Look</li>
+							<li>X - Talk</li>
+							<li>L - Cast</li>
+							<li>R - Attack</li>
+							<li>Start - Inventory</li>
+						</ul>
+						<span class="badge">Time Adjustment Details</span></br>
+						In Ultima 6, 1 minute of in game time passes for every step you take. Full daylight hours are between 06:00 and 19:00 and are when most NPCs are awake.</br></br>
+						You can choose to lengthen the daylight hours by 2x / 3x which means that 1 minute of in game time during daylight hours will pass only after 2 steps / 3 steps taken. Night hour time passing still occurs at 1 minute per step taken.</br></br>
+						If you choose to "Use PC Version Day and Night Lengths" then both the day and night will be 2x as long.</br></br>
+						
+						<span class="badge">Karma Adjustment Details</span></br>
+						You can choose to make Karma less difficult or more difficult.</br></br>
+						When "Easy Karma Mode" is selected, all penalities are reduced to 1 karma loss, you start at 100 karma instead of 75, and all karma rewards are doubled.</br></br>
+						When "Hard Karma Mode" is selected, all penalities are doubled and you start at 60 instead of 75 karma.</br></br>
+
+						<span class="badge">Other Details</span></br>
+						"Enable Spoiler Log" grants you access to seeing where all the items were placed. This can be good to reference if you get completely stuck.</br></br>
+						"Enable Hints" will replace text in various scrolls and books to give vague hints about the locations of any Main Items.</br></br>
+						"Show Symbol Indentifier" replaces the text that tells you what seed number and flags you have selected with a short series of symbols.</br></br>
+						"Remove Seed & Flags from Filename" will generate a random value for the filename.</br></br>
+						Combining "Show Symbol Indentifier" and "Remove Seed & Flags from Filename" allows you to create hidden seeds for the purposes of races, tournaments, or simply surprises for others.</br></br>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -586,6 +758,18 @@
 			</div>
 		</div>
 
+		<hr />
+		<div class="container hidden">
+			<div class="row">
+				<div class="col-md-12">
+					<h3>World Map</h3>
+					<div id="canvasParent">
+						<canvas id="worldMapCanvas" width="512" height="512" style="border:1px solid #000000;"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>-->
 		<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
 		<!--<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>-->
@@ -595,8 +779,12 @@
 		<script src="js/randomizer.character.js"></script>
 		<script src="js/randomizer.item.js"></script>
 		<script src="js/randomizer.enemy.js"></script>
+		<script src="js/randomizer.gameplay.js"></script>
 		<script src="js/randomizer.preset.js"></script>
 		<script src="js/randomizer.text.js"></script>
+		<script src="js/randomizer-perlin.js"></script>
+		<script src="js/randomizer-voronoi.js"></script>
+		<script src="js/randomizer-quadtree.js"></script>
 		<script src="js/randomizer.world.js"></script>
 		<script src="js/vendor/bootstrap.min.js"></script>
 		<script src="js/vendor/FileSaver.min.js"></script>

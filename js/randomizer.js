@@ -1,4 +1,14 @@
-var VERSION_STRING = 'v0.3';
+var VERSION_STRING = 'v0.4';
+
+const SUBSYSTEM_ITEMS = 0;
+const SUBSYSTEM_SPAWNERS = 1;
+const SUBSYSTEM_SPAWNERS_MIX = 2;
+const SUBSYSTEM_AGGRESSION = 3;
+const SUBSYSTEM_WORLD = 4;
+const SUBSYSTEM_CREDITS = 5;
+const SUBSYSTEM_HINTS = 6;
+const SUBSYSTEM_NEW_ENEMIES = 7; 
+const SUBSYSTEM_SPAWN_NUMBERS = 8; 
 
 function randomizeROM(buffer, seed)
 {
@@ -24,19 +34,66 @@ function randomizeROM(buffer, seed)
 		throw new Error(errorText);
 	}
 
+	//TODO : Ensure seed is affected by flags
+
 	var random = new Random(seed);
 	var vseed = random.seed.toHex(8);
-	
+	var subSystemSeeds = getSubystemSeeds(seed);
+
 	//prepare for randomization
 	fixPickupGraphics(rom);
 	prepareLocations(rom);
 	fixChests(rom);
 	increaseSherryPickupWeight(rom);
 	bookLordBritishRandomizerBook(rom);
+	
+	//adjustCamping(rom);
+
+	if ($('#day_length_2x').is(':checked'))
+	{
+		adjustDayLength(rom, 2);
+	}
+	else if ($('#day_length_3x').is(':checked'))
+	{
+		adjustDayLength(rom, 3);
+	}
+	else if ($('#day_length_pc').is(':checked'))
+	{
+		adjustDayLength(rom, 1);
+	}
+
+	if ($('#karma_options_easy').is(':checked'))
+	{
+		easyKarmaMode(rom);
+	}
+	else if ($('#karma_options_hard').is(':checked'))
+	{
+		hardKarmaMode(rom);
+	}
+
+	var addEnemiesFlag = false;
+	if ($('#add_missing_enemies').is(':checked'))
+	{
+		addZuFlower(rom);
+		addSilverSerpent(rom);
+		addNewEnemySpawns(rom, subSystemSeeds[SUBSYSTEM_NEW_ENEMIES]);
+		addEnemiesFlag = true;
+	}
+	
+	if ($('#add_missing_ai_spells').is(':checked'))
+	{
+		fixAISpellListBug(rom);
+		fixSpiders(rom);
+	}
+
+	if ($('#enable_fast_button_mapping').is(':checked'))
+	{
+		fastActionButtonBinding(rom);
+	}
 
 	if ($('#display_hints').is(':checked'))
 	{
-		prepareHintText(rom,random);
+		prepareHintText(rom, subSystemSeeds[SUBSYSTEM_HINTS]);
 	}
 
 	//perform randomization
@@ -44,7 +101,7 @@ function randomizeROM(buffer, seed)
 	var randomizeItemsDone = false;
 	do
 	{
-		randomizeItemsDone = randomizeItems(rom, random, spoilers);	
+		randomizeItemsDone = randomizeItems(rom, subSystemSeeds[SUBSYSTEM_ITEMS], spoilers);	
 	}
 	while (randomizeItemsDone == false);
 	
@@ -71,20 +128,39 @@ function randomizeROM(buffer, seed)
 	{
 		if ($('#randomize_enemy_mix').is(':checked'))
 		{
-			randomizeEnemySpawnersMix(rom, random, monsterFlag, wildFlag, animalFlag, peopleFlag);
+			randomizeEnemySpawnersMix(rom, subSystemSeeds[SUBSYSTEM_SPAWNERS_MIX], monsterFlag, wildFlag, animalFlag, peopleFlag, addEnemiesFlag);
 		}
 		else
 		{
-			randomizeEnemySpawners(rom, random, monsterFlag, wildFlag, animalFlag, peopleFlag);
+			randomizeEnemySpawners(rom, subSystemSeeds[SUBSYSTEM_SPAWNERS], monsterFlag, wildFlag, animalFlag, peopleFlag, addEnemiesFlag);
 		}
 	}
-	
-	if ($('#randomize_enemy_aggression').is(':checked'))
-		randomizeEnemyAggression(rom, random);
+
+	if ($('#enemy_aggression_intuitive').is(':checked'))
+	{
+		intuitiveEnemyAggression(rom, subSystemSeeds[SUBSYSTEM_AGGRESSION]);
+	}
+	else if ($('#enemy_aggression_shuffle').is(':checked'))
+	{
+		shuffleEnemyAggression(rom, subSystemSeeds[SUBSYSTEM_AGGRESSION]);
+	}
+	else if ($('#enemy_aggression_passive').is(':checked'))
+	{
+		passiveEnemyAggression(rom, subSystemSeeds[SUBSYSTEM_AGGRESSION]);
+	}
+
+	if ($('#shuffle_spawn_numbers').is(':checked'))
+	{
+		shuffleSpawnNumbers(rom, subSystemSeeds[SUBSYSTEM_SPAWN_NUMBERS]);
+	}
+	else if ($('#random_spawn_numbers').is(':checked'))
+	{
+		randomSpawnNumbers(rom, subSystemSeeds[SUBSYSTEM_SPAWN_NUMBERS]);
+	}
 
 	if ($('#randomize_world_map').is(':checked'))
 	{
-		randomizeWorld(rom, random);
+		randomizeWorld(rom, subSystemSeeds[SUBSYSTEM_WORLD]);
 	}
 
 	//wrap it up
@@ -104,9 +180,9 @@ function randomizeROM(buffer, seed)
 	if ($('#display_symbol_hash').is(':checked'))
 		writeSymbolHash(rom, random);
 	
-	writeCredits(rom, random);
-	fixText(rom, random);
-	
+	writeCredits(rom, subSystemSeeds[SUBSYSTEM_CREDITS]);
+	fixText(rom);
+
 	// fix the checksum (not necessary, but good to do!)
 	fixChecksum(rom);
 
@@ -135,6 +211,26 @@ function addDataToDataPool(inPool, inData, grepValue)
 	return outPool;
 }
 
+function getSubystemSeeds(seed)
+{
+	var subSystemSeeds = [];
+	var numSeeds = 10;
+	for (var i = 0; i < numSeeds; ++i)
+	{
+		subSystemSeeds.push(new Random(seed+i));
+	}
+	return subSystemSeeds;
+}
+
+function dev(rom)
+{
+	console.log("=========DEV CODE FOR TESTING=========")
+	//74 - skiff : A8 - balloon
+	rom.set([0x6F],0x19898); //gargoyles in throne room flags
+	rom.set([0x24],0x19899); //gargoyles in throne room
+	//rom.set([0xB4],0x19899); //gargoyles in throne room
+	//rom.set([0xB7],0x1989B); //enemies after gargoyles in throne room
+}
 
 //=================================================================================
 //=================================================================================

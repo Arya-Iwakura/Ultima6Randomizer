@@ -97,6 +97,8 @@ function increaseSherryPickupWeight(rom)
 
 function randomizeItems(rom, random, spoilers)
 {
+	console.log("RANDOMIZING ITEMS");
+	
 	var items = [];
 	var locations = [];
 	var restrictions = [];
@@ -344,9 +346,11 @@ function placeItemsInLocations(rom, random, items, locations, restrictions, spoi
 
 function fixShrines(rom)
 {
+	var codeOffset = 0x17080;
+	
 	//shrines are hardcoded to compare against item 5F which needs to change for the shrines to function with random items
 	//branch to new injected function
-	rom.set([0x20, 0x00, 0xF0],0x14153);
+	rom.set([0x20, 0x80, 0xF0],0x14153); //20-jump sub routine to address F080
 	
 	//inject new function to fix shrine item checks
 	rom.set(
@@ -357,7 +361,7 @@ function fixShrines(rom)
 			0x60, 0x38, 0xE9, 0x5F, 0x60, 0x38, 0xE9, 0x5F, 0x60, 0x38, 0xE9, 0x5F, 0x60, 0x38, 0xE9, 0x5F,
 			0x60
 		],
-		0x17000);
+		codeOffset);
 
 	var honestyItem      = rom[SHRINE_HONESTY+3];
 	var compassionItem   = rom[SHRINE_COMPASSION+3];
@@ -368,23 +372,21 @@ function fixShrines(rom)
 	var spiritualityItem = rom[SHRINE_SPIRITUALITY+3];
 	var humilityItem     = rom[SHRINE_HUMILTY+3];
 
-	rom[0x17001] = honestyItem;
-	rom[0x17005] = compassionItem;
-	rom[0x17009] = valorItem;
-	rom[0x1700D] = justiceItem;
-	rom[0x17011] = sacrificeItem;
-	rom[0x17015] = honorItem;
-	rom[0x17019] = spiritualityItem;
-	rom[0x1701D] = humilityItem;
+	rom[codeOffset+0x01] = honestyItem;
+	rom[codeOffset+0x05] = compassionItem;
+	rom[codeOffset+0x09] = valorItem;
+	rom[codeOffset+0x0D] = justiceItem;
+	rom[codeOffset+0x11] = sacrificeItem;
+	rom[codeOffset+0x15] = honorItem;
+	rom[codeOffset+0x19] = spiritualityItem;
+	rom[codeOffset+0x1D] = humilityItem;
 
-	rom[0x17023] = honestyItem;
-	rom[0x17027] = compassionItem-1;
-	rom[0x1702B] = valorItem-2;
-	rom[0x1702F] = justiceItem-3;
-	rom[0x17033] = sacrificeItem-4;
-	rom[0x17037] = honorItem-5;
-	rom[0x1703B] = spiritualityItem-6;
-	rom[0x1703F] = humilityItem-7;
-
-	//humilty 5th?
+	rom[codeOffset+0x23] = honestyItem;
+	rom[codeOffset+0x27] = compassionItem-1;
+	rom[codeOffset+0x2B] = valorItem-2;
+	rom[codeOffset+0x2F] = justiceItem-3;
+	rom[codeOffset+0x33] = sacrificeItem-4;
+	rom[codeOffset+0x37] = honorItem-5;
+	rom[codeOffset+0x3B] = spiritualityItem-6;
+	rom[codeOffset+0x3F] = humilityItem-7;
 }

@@ -10,3 +10,5 @@ The Ultima 6 SNES Randomizer allows you to randomize a number of different eleme
 The Item Randomizer allows you to randomly shuffle items around in the world for when you want to enjoy an item hunt and more exploration.
 
 The Enemy Randomizer allows you to shuffle enemies and their properties creating new combat experiences and challenges.
+
+Many other options are available which allow you to tune various properties of the game, including how difficult Karma is, Day length, as well as introducing removed creatures and spells from the PC version back into the game.

@@ -74,6 +74,9 @@ $('#download-generated-rom').click(function(e)
 	var fire_flag = ($('#avatar-sprite-fire-flag').is(':checked'));
 	result.buffer = setCharacterSprite(result.buffer, result.seed, avatar_sprite, fire_flag);
 
+	var poison_flash = +$('#poison_flash_options').val();
+	result.buffer = setPoisionFlash(result.buffer, poison_flash);
+
 	var fileName = "";
 	fileName = prefix + '-' + result.seed + '-' + result.preset + result.type;
 	if ($('#hide_filename_spoiler').is(':checked'))
@@ -678,6 +681,8 @@ $(document).ready(function()
 var TESTERS =
 {
 	'squibbons': 'squibbons',
+	'synthpopisback': 'synthpopisback',
+	'chadriden': 'chadriden',
 }
 
 $('#tester-list').html(
