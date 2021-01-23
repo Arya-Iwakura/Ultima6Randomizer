@@ -27,13 +27,11 @@ function setPoisionFlash(buffer, flashSelection)
         rom.set([0x62, 0x00],0x1B5A0); //reduced per step poison flash
         rom.set([0x62, 0x00],0xB523); //reduced initial poison flash
         rom.set([0x05, 0x00],0xB53B); //reduced initial lava flash
-        rom.set([0xEA, 0xEA, 0xEA, 0xEA],0xB5C1); //remove big poison flash
     }
     else if(flashSelection == 2)
     {
         rom.set([0x00, 0x00],0x1B5A0); //removed constant poison flash
         rom.set([0xEA, 0xEA, 0xEA, 0xEA],0xB590); //remove big lava and fire flash
-        rom.set([0xEA, 0xEA, 0xEA, 0xEA],0xB5C1); //remove big poison flash
     }
 
     fixChecksum(rom);
