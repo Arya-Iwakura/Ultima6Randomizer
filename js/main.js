@@ -70,11 +70,11 @@ function doRandomize(buffer, seed)
 
 $('#download-generated-rom').click(function(e)
 {
-	var avatar_sprite = +$('#select-avatar-sprite').val();
+	var avatar_sprite = $('#select-avatar-sprite').val();
 	var fire_flag = ($('#avatar-sprite-fire-flag').is(':checked'));
 	result.buffer = setCharacterSprite(result.buffer, result.seed, avatar_sprite, fire_flag);
 
-	var poison_flash = +$('#poison_flash_options').val();
+	var poison_flash = $('#poison_flash_options').val();
 	result.buffer = setPoisionFlash(result.buffer, poison_flash);
 
 	var fileName = "";
@@ -321,6 +321,473 @@ function checkEnemyMixFlagStatus()
 		$('#randomize_enemy_mix').prop('checked', false);
 	}
 }
+
+//=================================================================================
+
+function updateAllSelectionTooltips()
+{
+	checkAISpawnNumberStatus();
+	checkAIAggressionStatus();
+	checkAIStatDifficultyStatus();
+	checkAISpellDifficultyStatus();
+	checkAISpellsStatus();
+	checkAIEquipmentStatus();
+	checkStartingInventoryStatus();
+	checkStartingGoldStatus();
+	checkKarmaDifficultyStatus();
+	checkDayNightCycleStatus();
+}
+
+$('#select-ai-spawn-numbers').click(function(e)
+{
+	checkAISpawnNumberStatus();
+});
+
+$('#select-ai-spawn-numbers').keyup(function(e)
+{
+	checkAISpawnNumberStatus();
+});
+
+function checkAISpawnNumberStatus()
+{
+	var selection = +$('#select-ai-spawn-numbers').val();
+	if (selection == 0)
+	{
+		$('#ai-spawn-numbers-tooltip-1').prop('hidden', false);
+		$('#ai-spawn-numbers-tooltip-2').prop('hidden', true);
+		$('#ai-spawn-numbers-tooltip-3').prop('hidden', true);
+	}
+	else if (selection == 1)
+	{
+		$('#ai-spawn-numbers-tooltip-1').prop('hidden', true);
+		$('#ai-spawn-numbers-tooltip-2').prop('hidden', false);
+		$('#ai-spawn-numbers-tooltip-3').prop('hidden', true);
+	}
+	else if (selection == 2)
+	{
+		$('#ai-spawn-numbers-tooltip-1').prop('hidden', true);
+		$('#ai-spawn-numbers-tooltip-2').prop('hidden', true);
+		$('#ai-spawn-numbers-tooltip-3').prop('hidden', false);
+	}
+}
+
+$('#select-ai-aggression').click(function(e)
+{
+	checkAIAggressionStatus();
+});
+
+$('#select-ai-aggression').keyup(function(e)
+{
+	checkAIAggressionStatus();
+});
+
+function checkAIAggressionStatus()
+{
+	var selection = +$('#select-ai-aggression').val();
+	if (selection == 0)
+	{
+		$('#ai-aggression-tooltip-1').prop('hidden', false);
+		$('#ai-aggression-tooltip-2').prop('hidden', true);
+		$('#ai-aggression-tooltip-3').prop('hidden', true);
+		$('#ai-aggression-tooltip-4').prop('hidden', true);
+	}
+	else if (selection == 1)
+	{
+		$('#ai-aggression-tooltip-1').prop('hidden', true);
+		$('#ai-aggression-tooltip-2').prop('hidden', false);
+		$('#ai-aggression-tooltip-3').prop('hidden', true);
+		$('#ai-aggression-tooltip-4').prop('hidden', true);
+	}
+	else if (selection == 2)
+	{
+		$('#ai-aggression-tooltip-1').prop('hidden', true);
+		$('#ai-aggression-tooltip-2').prop('hidden', true);
+		$('#ai-aggression-tooltip-3').prop('hidden', false);
+		$('#ai-aggression-tooltip-4').prop('hidden', true);
+	}
+	else if (selection == 3)
+	{
+		$('#ai-aggression-tooltip-1').prop('hidden', true);
+		$('#ai-aggression-tooltip-2').prop('hidden', true);
+		$('#ai-aggression-tooltip-3').prop('hidden', true);
+		$('#ai-aggression-tooltip-4').prop('hidden', false);
+		
+	}
+}
+
+$('#select-ai-stat-difficulty').click(function(e)
+{
+	checkAIStatDifficultyStatus();
+});
+
+$('#select-ai-stat-difficulty').keyup(function(e)
+{
+	checkAIStatDifficultyStatus();
+});
+
+function checkAIStatDifficultyStatus()
+{
+	var selection = +$('#select-ai-stat-difficulty').val();
+	if (selection == 0)
+	{
+		$('#ai-stat-difficulty-tooltip-1').prop('hidden', false);
+		$('#ai-stat-difficulty-tooltip-2').prop('hidden', true);
+		$('#ai-stat-difficulty-tooltip-3').prop('hidden', true);
+		$('#ai-stat-difficulty-tooltip-4').prop('hidden', true);
+		$('#ai-stat-difficulty-tooltip-5').prop('hidden', true);
+
+	}
+	else if (selection == 1)
+	{
+		$('#ai-stat-difficulty-tooltip-1').prop('hidden', true);
+		$('#ai-stat-difficulty-tooltip-2').prop('hidden', false);
+		$('#ai-stat-difficulty-tooltip-3').prop('hidden', true);
+		$('#ai-stat-difficulty-tooltip-4').prop('hidden', true);
+		$('#ai-stat-difficulty-tooltip-5').prop('hidden', true);
+	}
+	else if (selection == 2)
+	{
+		$('#ai-stat-difficulty-tooltip-1').prop('hidden', true);
+		$('#ai-stat-difficulty-tooltip-2').prop('hidden', true);
+		$('#ai-stat-difficulty-tooltip-3').prop('hidden', false);
+		$('#ai-stat-difficulty-tooltip-4').prop('hidden', true);
+		$('#ai-stat-difficulty-tooltip-5').prop('hidden', true);
+	}
+	else if (selection == 3)
+	{
+		$('#ai-stat-difficulty-tooltip-1').prop('hidden', true);
+		$('#ai-stat-difficulty-tooltip-2').prop('hidden', true);
+		$('#ai-stat-difficulty-tooltip-3').prop('hidden', true);
+		$('#ai-stat-difficulty-tooltip-4').prop('hidden', false);
+		$('#ai-stat-difficulty-tooltip-5').prop('hidden', true);
+	}
+	else if (selection == 4)
+	{
+		$('#ai-stat-difficulty-tooltip-1').prop('hidden', true);
+		$('#ai-stat-difficulty-tooltip-2').prop('hidden', true);
+		$('#ai-stat-difficulty-tooltip-3').prop('hidden', true);
+		$('#ai-stat-difficulty-tooltip-4').prop('hidden', true);
+		$('#ai-stat-difficulty-tooltip-5').prop('hidden', false);
+	}
+}
+
+$('#select-ai-spell-difficulty').click(function(e)
+{
+	checkAISpellDifficultyStatus();
+});
+
+$('#select-ai-spell-difficulty').keyup(function(e)
+{
+	checkAISpellDifficultyStatus();
+});
+
+function checkAISpellDifficultyStatus()
+{
+	var selection = +$('#select-ai-spell-difficulty').val();
+	if (selection == 0)
+	{
+		$('#ai-spell-difficulty-tooltip-1').prop('hidden', false);
+		$('#ai-spell-difficulty-tooltip-2').prop('hidden', true);
+		$('#ai-spell-difficulty-tooltip-3').prop('hidden', true);
+	}
+	else if (selection == 1)
+	{
+		$('#ai-spell-difficulty-tooltip-1').prop('hidden', true);
+		$('#ai-spell-difficulty-tooltip-2').prop('hidden', false);
+		$('#ai-spell-difficulty-tooltip-3').prop('hidden', true);
+	}
+	else if (selection == 2)
+	{
+		$('#ai-spell-difficulty-tooltip-1').prop('hidden', true);
+		$('#ai-spell-difficulty-tooltip-2').prop('hidden', true);
+		$('#ai-spell-difficulty-tooltip-3').prop('hidden', false);
+	}
+}
+
+$('#select-ai-spells').click(function(e)
+{
+	checkAISpellsStatus();
+});
+
+$('#select-ai-spells').keyup(function(e)
+{
+	checkAISpellsStatus();
+});
+
+function checkAISpellsStatus()
+{
+	var selection = +$('#select-ai-spells').val();
+	if (selection == 0)
+	{
+		$('#ai-spells-tooltip-1').prop('hidden', false);
+		$('#ai-spells-tooltip-2').prop('hidden', true);
+		$('#ai-spells-tooltip-3').prop('hidden', true);
+	}
+	else if (selection == 1)
+	{
+		$('#ai-spells-tooltip-1').prop('hidden', true);
+		$('#ai-spells-tooltip-2').prop('hidden', false);
+		$('#ai-spells-tooltip-3').prop('hidden', true);
+	}
+	else if (selection == 2)
+	{
+		$('#ai-spells-tooltip-1').prop('hidden', true);
+		$('#ai-spells-tooltip-2').prop('hidden', true);
+		$('#ai-spells-tooltip-3').prop('hidden', false);
+	}
+}
+
+$('#select-ai-equipment').click(function(e)
+{
+	checkAIEquipmentStatus();
+});
+
+$('#select-ai-equipment').keyup(function(e)
+{
+	checkAIEquipmentStatus();
+});
+
+function checkAIEquipmentStatus()
+{
+	var selection = +$('#select-ai-equipment').val();
+	if (selection == 0)
+	{
+		$('#ai-equipment-tooltip-1').prop('hidden', false);
+		$('#ai-equipment-tooltip-2').prop('hidden', true);
+		$('#ai-equipment-tooltip-3').prop('hidden', true);
+	}
+	else if (selection == 1)
+	{
+		$('#ai-equipment-tooltip-1').prop('hidden', true);
+		$('#ai-equipment-tooltip-2').prop('hidden', false);
+		$('#ai-equipment-tooltip-3').prop('hidden', true);
+	}
+	else if (selection == 2)
+	{
+		$('#ai-equipment-tooltip-1').prop('hidden', true);
+		$('#ai-equipment-tooltip-2').prop('hidden', true);
+		$('#ai-equipment-tooltip-3').prop('hidden', false);
+	}
+}
+
+$('#select-starting-inventory').click(function(e)
+{
+	checkStartingInventoryStatus();
+});
+
+$('#select-starting-inventory').keyup(function(e)
+{
+	checkStartingInventoryStatus();
+});
+
+function checkStartingInventoryStatus()
+{
+	var selection = +$('#select-starting-inventory').val();
+	if (selection == 0)
+	{
+		$('#starting-inventory-tooltip-1').prop('hidden', false);
+		$('#starting-inventory-tooltip-2').prop('hidden', true);
+		$('#starting-inventory-tooltip-3').prop('hidden', true);
+		$('#starting-inventory-tooltip-4').prop('hidden', true);
+		$('#starting-inventory-tooltip-5').prop('hidden', true);
+		$('#starting-inventory-tooltip-6').prop('hidden', true);
+		$('#starting-inventory-tooltip-7').prop('hidden', true);
+	}
+	else if (selection == 1)
+	{
+		$('#starting-inventory-tooltip-1').prop('hidden', true);
+		$('#starting-inventory-tooltip-2').prop('hidden', false);
+		$('#starting-inventory-tooltip-3').prop('hidden', true);
+		$('#starting-inventory-tooltip-4').prop('hidden', true);
+		$('#starting-inventory-tooltip-5').prop('hidden', true);
+		$('#starting-inventory-tooltip-6').prop('hidden', true);
+		$('#starting-inventory-tooltip-7').prop('hidden', true);
+	}
+	else if (selection == 2)
+	{
+		$('#starting-inventory-tooltip-1').prop('hidden', true);
+		$('#starting-inventory-tooltip-2').prop('hidden', true);
+		$('#starting-inventory-tooltip-3').prop('hidden', false);
+		$('#starting-inventory-tooltip-4').prop('hidden', true);
+		$('#starting-inventory-tooltip-5').prop('hidden', true);
+		$('#starting-inventory-tooltip-6').prop('hidden', true);
+		$('#starting-inventory-tooltip-7').prop('hidden', true);
+	}
+	else if (selection == 3)
+	{
+		$('#starting-inventory-tooltip-1').prop('hidden', true);
+		$('#starting-inventory-tooltip-2').prop('hidden', true);
+		$('#starting-inventory-tooltip-3').prop('hidden', true);
+		$('#starting-inventory-tooltip-4').prop('hidden', false);
+		$('#starting-inventory-tooltip-5').prop('hidden', true);
+		$('#starting-inventory-tooltip-6').prop('hidden', true);
+		$('#starting-inventory-tooltip-7').prop('hidden', true);
+	}
+	else if (selection == 4)
+	{
+		$('#starting-inventory-tooltip-1').prop('hidden', true);
+		$('#starting-inventory-tooltip-2').prop('hidden', true);
+		$('#starting-inventory-tooltip-3').prop('hidden', true);
+		$('#starting-inventory-tooltip-4').prop('hidden', true);
+		$('#starting-inventory-tooltip-5').prop('hidden', false);
+		$('#starting-inventory-tooltip-6').prop('hidden', true);
+		$('#starting-inventory-tooltip-7').prop('hidden', true);
+	}
+	else if (selection == 5)
+	{
+		$('#starting-inventory-tooltip-1').prop('hidden', true);
+		$('#starting-inventory-tooltip-2').prop('hidden', true);
+		$('#starting-inventory-tooltip-3').prop('hidden', true);
+		$('#starting-inventory-tooltip-4').prop('hidden', true);
+		$('#starting-inventory-tooltip-5').prop('hidden', true);
+		$('#starting-inventory-tooltip-6').prop('hidden', false);
+		$('#starting-inventory-tooltip-7').prop('hidden', true);
+	}
+	else if (selection == 6)
+	{
+		$('#starting-inventory-tooltip-1').prop('hidden', true);
+		$('#starting-inventory-tooltip-2').prop('hidden', true);
+		$('#starting-inventory-tooltip-3').prop('hidden', true);
+		$('#starting-inventory-tooltip-4').prop('hidden', true);
+		$('#starting-inventory-tooltip-5').prop('hidden', true);
+		$('#starting-inventory-tooltip-6').prop('hidden', true);
+		$('#starting-inventory-tooltip-7').prop('hidden', false);
+	}
+}
+
+$('#select-starting-gold').click(function(e)
+{
+	checkStartingGoldStatus();
+});
+
+$('#select-starting-gold').keyup(function(e)
+{
+	checkStartingGoldStatus();
+});
+
+function checkStartingGoldStatus()
+{
+	var selection = +$('#select-starting-gold').val();
+	if (selection == 0)
+	{
+		$('#starting-gold-tooltip-1').prop('hidden', false);
+		$('#starting-gold-tooltip-2').prop('hidden', true);
+		$('#starting-gold-tooltip-3').prop('hidden', true);
+		$('#starting-gold-tooltip-4').prop('hidden', true);
+		$('#starting-gold-tooltip-5').prop('hidden', true);
+	}
+	else if (selection == 1)
+	{
+		$('#starting-gold-tooltip-1').prop('hidden', true);
+		$('#starting-gold-tooltip-2').prop('hidden', false);
+		$('#starting-gold-tooltip-3').prop('hidden', true);
+		$('#starting-gold-tooltip-4').prop('hidden', true);
+		$('#starting-gold-tooltip-5').prop('hidden', true);
+	}
+	else if (selection == 2)
+	{
+		$('#starting-gold-tooltip-1').prop('hidden', true);
+		$('#starting-gold-tooltip-2').prop('hidden', true);
+		$('#starting-gold-tooltip-3').prop('hidden', false);
+		$('#starting-gold-tooltip-4').prop('hidden', true);
+		$('#starting-gold-tooltip-5').prop('hidden', true);
+	}
+	else if (selection == 3)
+	{
+		$('#starting-gold-tooltip-1').prop('hidden', true);
+		$('#starting-gold-tooltip-2').prop('hidden', true);
+		$('#starting-gold-tooltip-3').prop('hidden', true);
+		$('#starting-gold-tooltip-4').prop('hidden', false);
+		$('#starting-gold-tooltip-5').prop('hidden', true);
+	}
+	else if (selection == 4)
+	{
+		$('#starting-gold-tooltip-1').prop('hidden', true);
+		$('#starting-gold-tooltip-2').prop('hidden', true);
+		$('#starting-gold-tooltip-3').prop('hidden', true);
+		$('#starting-gold-tooltip-4').prop('hidden', true);
+		$('#starting-gold-tooltip-5').prop('hidden', false);
+	}
+}
+
+$('#select-day-night-cycle').click(function(e)
+{
+	checkDayNightCycleStatus();
+});
+
+$('#select-day-night-cycle').keyup(function(e)
+{
+	checkDayNightCycleStatus();
+});
+
+function checkDayNightCycleStatus()
+{
+	var selection = +$('#select-day-night-cycle').val();
+	if (selection == 0)
+	{
+		$('#day-night-cycle-tooltip-1').prop('hidden', false);
+		$('#day-night-cycle-tooltip-2').prop('hidden', true);
+		$('#day-night-cycle-tooltip-3').prop('hidden', true);
+		$('#day-night-cycle-tooltip-4').prop('hidden', true);
+	}
+	else if (selection == 1)
+	{
+		$('#day-night-cycle-tooltip-1').prop('hidden', true);
+		$('#day-night-cycle-tooltip-2').prop('hidden', false);
+		$('#day-night-cycle-tooltip-3').prop('hidden', true);
+		$('#day-night-cycle-tooltip-4').prop('hidden', true);
+	}
+	else if (selection == 2)
+	{
+		$('#day-night-cycle-tooltip-1').prop('hidden', true);
+		$('#day-night-cycle-tooltip-2').prop('hidden', true);
+		$('#day-night-cycle-tooltip-3').prop('hidden', false);
+		$('#day-night-cycle-tooltip-4').prop('hidden', true);
+	}
+	else if (selection == 3)
+	{
+		$('#day-night-cycle-tooltip-1').prop('hidden', true);
+		$('#day-night-cycle-tooltip-2').prop('hidden', true);
+		$('#day-night-cycle-tooltip-3').prop('hidden', true);
+		$('#day-night-cycle-tooltip-4').prop('hidden', false);
+	}
+}
+
+
+$('#select-karma-difficulty').click(function(e)
+{
+	checkKarmaDifficultyStatus();
+});
+
+$('#select-karma-difficulty').keyup(function(e)
+{
+	checkKarmaDifficultyStatus();
+});
+
+function checkKarmaDifficultyStatus()
+{
+	var selection = +$('#select-karma-difficulty').val();
+	if (selection == 0)
+	{
+		$('#karma-tooltip-1').prop('hidden', false);
+		$('#karma-tooltip-2').prop('hidden', true);
+		$('#karma-tooltip-3').prop('hidden', true);
+	}
+	else if (selection == 1)
+	{
+		$('#karma-tooltip-1').prop('hidden', true);
+		$('#karma-tooltip-2').prop('hidden', false);
+		$('#karma-tooltip-3').prop('hidden', true);
+	}
+	else if (selection == 2)
+	{
+		$('#karma-tooltip-1').prop('hidden', true);
+		$('#karma-tooltip-2').prop('hidden', true);
+		$('#karma-tooltip-3').prop('hidden', false);
+	}
+}
+
+//=================================================================================
 
 function cleanCustomSeed(seed)
 { return seed.replace(/[^a-fA-F0-9]+/g, '').substr(0, 8); }
@@ -683,6 +1150,7 @@ var TESTERS =
 	'squibbons': 'squibbons',
 	'synthpopisback': 'synthpopisback',
 	'chadriden': 'chadriden',
+	'cloudyshoe': 'cloudyshoe',
 }
 
 $('#tester-list').html(

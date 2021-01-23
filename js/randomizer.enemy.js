@@ -1,8 +1,7 @@
-//TODO : Add pascifist option to make all enemies not aggressive
-
 const TABLE_SPAWNER_START = 0x19804;
 const TABLE_SPAWNER_END = 0x19A02;
 const TABLE_SPAWNER_ENTRIES = 256;
+const TABLE_STATS_ENTRIES = 58;
 
 function randomizeEnemySpawners(rom, random, monsterFlag, wildFlag, animalFlag, peopleFlag, addEnemiesFlag)
 {
@@ -791,16 +790,947 @@ function randomSpawnNumbers(rom, random)
 
 //=================================================================================
 
-function adjustEnemyStats()
+function getEnemyStatsDifficultyAdjusted(enemyStats, difficulty)
 {
-    //easy - reduce all stats, armor, and damage (remove strongest spells from enemies)
-    //hard - increase all stats, armor, damage, and health (add stronger spells to enemies)
-    //percentage tough monsters like U4 has which also give more XP?
+    if(difficulty == 1)
+    {
+        enemyStats = enemyStatAdjust(enemyStats, 0.5); //super squish those stats
+    }
+    else if(difficulty == 2)
+    {
+        enemyStats = enemyStatAdjust(enemyStats, 0.75); //squish those stats
+    }
+    else if(difficulty == 3)
+    {
+        enemyStats = enemyStatAdjust(enemyStats, 1.25); //expand those stats
+    }
+    else if(difficulty == 4)
+    {
+        enemyStats = enemyStatAdjust(enemyStats, 1.5); //super expand those stats
+    }
+    return enemyStats;
+}
+
+function changeEnemyStatDifficulty(rom, difficulty)
+{
     //shuffle all stats / armor / dmg / health values
-    //shuffle & randomize spells enemies can cast (between spell casters or all)
-    //shuffle & randomize which enemies can cast spells (between spell casters or all)
-    //shuffle & randomize drops
-    //shuffle & randomize equipment enemies have
+    console.log("ADJUSTING ENEMY STAT DIFFICULTY");
+
+    //gather stats
+    var enemyStats = gatherEnemyStats(rom);
+    enemyStats = getEnemyStatsDifficultyAdjusted(enemyStats, difficulty);
+
+    enemyStats.reverse(); //reverse the list so that the stats are in the correct order
+
+    //reassign stats
+    var numEntries = TABLE_STATS_ENTRIES+1; //add one for the extra zu flower
+    for(var i = 0; i < numEntries; ++i)
+    {
+        var statAddress = 0x7A11+(i*6);
+
+        //skip entries - Avatar, Lord British, Glitch
+        if(statAddress != 0x7A5F && statAddress != 0x7A65 && statAddress != 0x7A71 )
+        {
+            var statEntry = enemyStats.pop();
+            rom[statAddress]   = statEntry.str;
+            rom[statAddress+1] = statEntry.dex;
+            rom[statAddress+2] = statEntry.int;
+            rom[statAddress+3] = statEntry.arm;
+            rom[statAddress+4] = statEntry.dmg;
+            rom[statAddress+5] = statEntry.hp;
+        }
+    }
+}
+
+function enemyStatAdjust(enemyStats, adjustMult)
+{
+    for(var i = 0; i < enemyStats.length; ++i)
+    {
+        //strength needs to be split out as it stores other flags in the upper bits
+        var strStat = enemyStats[i].str;
+        var strFlags = 0x00;
+        var maxValue = 0xFF;
+        if(strStat > 0xC0)
+        {
+            strStat = enemyStats[i].str - 0xC0;
+            strFlags = 0xC0;
+            maxValue = 0x3F;
+        }
+        else if(strStat > 0x80)
+        {
+            strStat = enemyStats[i].str - 0x80;
+            strFlags = 0x80;
+            maxValue = 0x7F;
+        }
+        else if(strStat > 0x40)
+        {
+            strStat = enemyStats[i].str - 0x40;
+            strFlags = 0x40;
+            maxValue = 0xBF;
+        }
+
+        strStat = adjustIndividualEnemyStat(strStat, adjustMult, 0x00, maxValue)
+        enemyStats[i].str = strStat + strFlags;
+
+        enemyStats[i].dex = adjustIndividualEnemyStat(enemyStats[i].dex, adjustMult, 0x00, 0xFF);
+        enemyStats[i].int = adjustIndividualEnemyStat(enemyStats[i].int, adjustMult, 0x00, 0xFF);
+        enemyStats[i].arm = adjustIndividualEnemyStat(enemyStats[i].arm, adjustMult, 0x00, 0xFF);
+        enemyStats[i].dmg = adjustIndividualEnemyStat(enemyStats[i].dmg, adjustMult, 0x00, 0xFF);
+        enemyStats[i].hp = adjustIndividualEnemyStat(enemyStats[i].hp, adjustMult, 0x00, 0xFF);
+    }
+    
+    return enemyStats;
+}
+
+function adjustIndividualEnemyStat(stat, adjustMult, minValue, maxValue)
+{
+    stat = Math.ceil(stat*adjustMult);
+    if(stat>maxValue) stat=maxValue;
+    else if(stat<minValue) stat=minValue;
+    return stat;
+}
+
+function shuffleEnemyStats(rom, random, difficulty)
+{
+    //shuffle all stats / armor / dmg / health values
+    console.log("SHUFFLING ENEMY STATS");
+
+    //gather stats
+    var enemyStats = gatherEnemyStats(rom);
+    enemyStats = getEnemyStatsDifficultyAdjusted(enemyStats, difficulty);
+
+    //shuffle stats
+    enemyStats.shuffle(random);
+
+    //reassign stats
+    var numEntries = TABLE_STATS_ENTRIES+1; //add one for the extra zu flower
+    for(var i = 0; i < numEntries; ++i)
+    {
+        var statAddress = 0x7A11+(i*6);
+
+        //skip entries - Avatar, Lord British, Glitch
+        if(statAddress != 0x7A5F && statAddress != 0x7A65 && statAddress != 0x7A71 )
+        {
+            var statEntry = enemyStats.pop();
+            rom[statAddress]   = statEntry.str;
+            rom[statAddress+1] = statEntry.dex;
+            rom[statAddress+2] = statEntry.int;
+            rom[statAddress+3] = statEntry.arm;
+            rom[statAddress+4] = statEntry.dmg;
+            rom[statAddress+5] = statEntry.hp;
+        }
+    }
+}
+
+function randomizeEnemyStats()
+{
+    //percentage tough monsters like U4 has which also give more XP?
+    //randomize all stats / armor / dmg / health values
+}
+
+function gatherEnemyStats(rom)
+{
+    //gather stats (first entry at 007A11, last entry at 007B57, each entry is 6 bytes long)
+    var enemyStats = [];
+    var numEntries = TABLE_STATS_ENTRIES+1; //add one for the extra zu flower
+
+    for(var i = 0; i < numEntries; ++i)
+    {
+        var statAddress = 0x7A11+(i*6);
+
+        //skip entries - Lord British, Avatar, Glitch
+        if(statAddress != 0x7A5F && statAddress != 0x7A65 && statAddress != 0x7A71)
+        {
+            var statEntry = {   "str":rom[statAddress], "dex":rom[statAddress+1], "int":rom[statAddress+2],
+                                "arm":rom[statAddress+3], "dmg":rom[statAddress+4], "hp":rom[statAddress+5]};
+            enemyStats.push(statEntry);
+
+            //console.log("ENTRY at " + statAddress + " - str:" + statEntry.str + ", dex:" + statEntry.dex + ", int:" + statEntry.int + ", arm:" + statEntry.arm + ", dmg:" + statEntry.dmg + ", hp:" + statSet.hp);
+        }
+    }
+    return enemyStats;
+}
+
+function gatherEnemyData(rom)
+{
+    //gather data for spells/equipment/drops (first entry at 16440, last entry at 16608, each entry is 8 bytes long)
+    var enemyData = [];
+    var numEntries = TABLE_STATS_ENTRIES;
+
+    for(var i = 0; i < numEntries; ++i)
+    {
+        var dataAddress = 0x16440+(i*8);
+
+        //skip entries - Lord British, Avatar, Glitch
+        if(dataAddress != 0x164A8 && dataAddress != 0x0164B0 && dataAddress != 0x164C0)
+        {
+            var statEntry = {   "spells":[rom[dataAddress], rom[dataAddress+1]],
+                                "weapons":[rom[dataAddress+2], rom[dataAddress+3]],
+                                "armor":[rom[dataAddress+4], rom[dataAddress+5]],
+                                "drops":[rom[dataAddress+6], rom[dataAddress+7]],
+                                "entryNum":i
+                            };
+            enemyData.push(statEntry);
+        }
+    }
+    return enemyData;
+}
+
+function shuffleEnemySpellCasters(rom, random)
+{
+    //shuffle which enemies can cast spells
+    console.log("SHUFFLING ENEMY SPELLCASTERS");
+
+    //gather spell casters
+    var enemyData = gatherEnemyData(rom);
+    
+    //shuffle data
+    enemyData.shuffle(random);
+
+    var numEntries = TABLE_STATS_ENTRIES;
+
+    //reassign spellcasters
+    for(var i = 0; i < numEntries; ++i)
+    {
+        var dataAddress = 0x16440+(i*8);
+
+        //skip entries - Lord British, Avatar, Glitch
+        if(dataAddress != 0x164A8 && dataAddress != 0x0164B0 && dataAddress != 0x164C0)
+        {
+            var statEntry = enemyData.pop();
+            rom[dataAddress]   = statEntry.spells[0];
+            rom[dataAddress+1] = statEntry.spells[1];
+        }
+    }
+}
+
+function shuffleEnemySpellCastersBelievable(rom, random)
+{
+    //shuffle which enemies can cast spells
+    console.log("SHUFFLING ENEMY SPELLCASTERS - BELIEVABLE");
+
+    //gather spell casters
+    var enemyData = gatherEnemyData(rom);
+    
+    //shuffle data
+    enemyData.shuffle(random);
+
+    var casterData = [];
+    var nonCasterData = [];
+
+    var dataLength = enemyData.length;
+    for(var i = 0; i < dataLength; ++i)
+    {
+        var dataEntry = enemyData.pop();
+
+        var dropClass = DATA_ENEMY_DROP_CLASSES[dataEntry.entryNum];
+
+        if(dropClass < 3) //if not humanoid, check if this slot was already a spellcaster
+        {
+            if(dataEntry.spells[0] > 0x00 || dataEntry.spells[1] > 0x00)
+            {
+                casterData.push(dataEntry);
+            }
+            else
+            {
+                nonCasterData.push(dataEntry);
+            }
+        }
+        else //all others can be spellcasters
+        {
+            casterData.push(dataEntry);
+        }
+    }
+
+    var numEntries = TABLE_STATS_ENTRIES;
+
+    //reassign spellcasters
+    for(var i = 0; i < numEntries; ++i)
+    {
+        var dataAddress = 0x16440+(i*8);
+
+        //skip entries - Lord British, Avatar, Glitch
+        if(dataAddress != 0x164A8 && dataAddress != 0x0164B0 && dataAddress != 0x164C0)
+        {
+            var dropClass = DATA_ENEMY_DROP_CLASSES[i]; //get the current drop class
+            
+            if(dropClass < 3)
+            {
+                if(rom[dataAddress] > 0x00 || rom[dataAddress+1] > 0x00)
+                {
+                    var statEntry = casterData.pop();
+                    rom[dataAddress]   = statEntry.spells[0];
+                    rom[dataAddress+1] = statEntry.spells[1];
+                }
+                else
+                {
+                    var statEntry = nonCasterData.pop();
+                    rom[dataAddress]   = statEntry.spells[0];
+                    rom[dataAddress+1] = statEntry.spells[1];
+                }
+            }
+            else
+            {
+                var statEntry = casterData.pop();
+                rom[dataAddress]   = statEntry.spells[0];
+                rom[dataAddress+1] = statEntry.spells[1];
+            }
+        }
+    }
+}
+
+function gatherEnemySpells(rom)
+{
+    var spells = [];
+    for(var i = 0; i < DATA_ENEMY_SPELL_LISTS.length; ++i)
+    {
+        var spellList = DATA_ENEMY_SPELL_LISTS[i].spells;
+
+        for(var j = 0; j < spellList.length; j++)
+        {
+            var spellID = spellList[j];
+            spells.push(spellID);
+        }
+    }
+    return spells;
+}
+
+function shuffleEnemySpells(rom, random, difficulty)
+{
+    //shuffle spells enemies can cast (between spell casters or all)
+    console.log("SHUFFLING ENEMY SPELLS");
+
+    //gather the spell data
+    var spells = gatherEnemySpells(rom);
+
+    //shuffle data
+    spells.shuffle(random);
+
+    //if we are on different difficulties, we should randomly replace spells
+    if(difficulty == 1)
+    {
+        //replace spells with easier spells
+        for(var i = 0; i < spells.length; ++i)
+        {
+            for(var j = 0; j < DATA_ENEMY_SPELLS_MEDIUM.length; ++j)
+            {
+                if(spells[i] == DATA_ENEMY_SPELLS_MEDIUM[j])
+                {
+                    var replacement = random.from(DATA_ENEMY_SPELLS_EASY);
+                    spells[i] = replacement;
+                }
+            }
+            for(var j = 0; j < DATA_ENEMY_SPELLS_HARD.length; ++j)
+            {
+                if(spells[i] == DATA_ENEMY_SPELLS_HARD[j])
+                {
+                    var replacement = random.from(DATA_ENEMY_SPELLS_EASY);
+                    spells[i] = replacement;
+                }
+            }
+        }
+    }
+
+    //reassign spells
+    for(var i = 0; i < DATA_ENEMY_SPELL_LISTS.length; ++i)
+    {
+        var dataAddress = DATA_ENEMY_SPELL_LISTS[i].address + 1;
+        var numEntries = DATA_ENEMY_SPELL_LISTS[i].slots;
+
+        for(var j = 0; j < numEntries; ++j)
+        {
+            var replacement = spells.pop();
+
+            if(j == numEntries-1) //check if we are the last entry
+            {
+                if(difficulty == 2) //if this is hard spell mode then replace the last entry in each list
+                {
+                    var replacement = random.from(DATA_ENEMY_SPELLS_HARD);
+                }
+            }
+
+            rom[dataAddress+j] = replacement;
+        }
+    }
+}
+
+function randomizeEnemySpells(rom, random, difficulty)
+{
+    //randomize spells enemies can cast
+    console.log("RANDOMIZING ENEMY SPELLS");
+
+    //gather the spell data
+    var spells = [];
+    spells = spells.concat(DATA_ENEMY_SPELLS_EASY);
+    
+    if(difficulty != 1)
+    {
+        spells = spells.concat(DATA_ENEMY_SPELLS_MEDIUM);
+        if(difficulty == 2)
+        {
+            spells = spells.concat(DATA_ENEMY_SPELLS_HARD);
+        }
+    }
+
+    //shuffle data
+    spells.shuffle(random);
+
+    //reassign spells
+    for(var i = 0; i < DATA_ENEMY_SPELL_LISTS.length; ++i)
+    {
+        var dataAddress = DATA_ENEMY_SPELL_LISTS[i].address + 1;
+        var numEntries = DATA_ENEMY_SPELL_LISTS[i].slots;
+
+        for(var j = 0; j < numEntries; ++j)
+        {
+            var replacement = random.from(spells);
+            rom[dataAddress+j] = replacement;
+        }
+    }
+}
+
+function shuffleEnemyDropPossessors(rom, random)
+{
+    //shuffle which enemies possess drops
+    console.log("SHUFFLING ENEMY DROP POSSESSORS");
+
+    //gather enemy data
+    var enemyData = gatherEnemyData(rom);
+    
+    //shuffle data
+    enemyData.shuffle(random);
+
+    //spell drops must be dropped from casters as they pull from the casters spell pool on drop
+    var casterData = [];
+    var nonCasterData = [];
+    var dataLength = enemyData.length;
+    for(var i = 0; i < dataLength; ++i)
+    {
+        var dataEntry = enemyData.pop();
+
+        if(dataEntry.spells[0] > 0x00 || dataEntry.spells[1] > 0x00)
+        {
+            casterData.push(dataEntry);
+        }
+        else
+        {
+            nonCasterData.push(dataEntry);
+        }
+    }
+
+    var numEntries = TABLE_STATS_ENTRIES;
+
+    //reassign drops
+    for(var i = 0; i < numEntries; ++i)
+    {
+        var dataAddress = 0x16440+(i*8);
+
+        //skip entries - Lord British, Avatar, Glitch
+        if(dataAddress != 0x164A8 && dataAddress != 0x0164B0 && dataAddress != 0x164C0)
+        {
+            var dataEntry;
+            if(rom[dataAddress] > 0x00 || rom[dataAddress+1] > 0x00) //assign from caster pool
+            {
+                dataEntry = casterData.pop();
+            }
+            else //assign from regular pool
+            {
+                dataEntry = nonCasterData.pop();
+            }
+
+            rom[dataAddress+6] = dataEntry.drops[0];
+            rom[dataAddress+7] = dataEntry.drops[1];
+        }
+    }
+}
+
+function shuffleEnemyDropPossessorsBelievable(rom, random)
+{
+    //shuffle which enemies possess drops
+    console.log("SHUFFLING ENEMY DROP POSSESSORS - BELIEVABLE");
+
+    //gather enemy data
+    var enemyData = gatherEnemyData(rom);
+    
+    //shuffle data
+    enemyData.shuffle(random);
+
+    //spell drops must be dropped from casters as they pull from the casters spell pool on drop
+    var casterData = [];
+    var nonCasterData = [];
+    var noneData = [];
+    var animalData = [];
+    var creatureData = [];
+    var dataLength = enemyData.length;
+    for(var i = 0; i < dataLength; ++i)
+    {
+        var dataEntry = enemyData.pop();
+
+        var dropClass = DATA_ENEMY_DROP_CLASSES[dataEntry.entryNum];
+        if(dropClass == 0)
+        {
+            noneData.push(dataEntry);
+        }
+        else if(dropClass == 1)
+        {
+            animalData.push(dataEntry);
+        }
+        else if(dropClass == 2)
+        {
+            creatureData.push(dataEntry);
+        }
+        else if(dropClass == 3)
+        {
+            if(dataEntry.spells[0] > 0x00 || dataEntry.spells[1] > 0x00)
+            {
+                casterData.push(dataEntry);
+            }
+            else
+            {
+                nonCasterData.push(dataEntry);
+            }
+        }
+    }
+
+    var numEntries = TABLE_STATS_ENTRIES;
+
+    //reassign drops
+    for(var i = 0; i < numEntries; ++i)
+    {
+        var dataAddress = 0x16440+(i*8);
+
+        //skip entries - Lord British, Avatar, Glitch
+        if(dataAddress != 0x164A8 && dataAddress != 0x0164B0 && dataAddress != 0x164C0)
+        {
+            var dataEntry;
+            var dropClass = DATA_ENEMY_DROP_CLASSES[i]; //get the current drop class
+            if(dropClass == 0)
+            {
+                dataEntry = noneData.pop();
+            }
+            else if(dropClass == 1)
+            {
+                dataEntry = animalData.pop();
+            }
+            else if(dropClass == 2)
+            {
+                dataEntry = creatureData.pop();
+            }
+            else if(dropClass == 3)
+            {
+                if(rom[dataAddress] > 0x00 || rom[dataAddress+1] > 0x00)
+                {
+                    dataEntry = casterData.pop();
+                }
+                else
+                {
+                    dataEntry = nonCasterData.pop();
+                }
+            }
+
+            rom[dataAddress+6] = dataEntry.drops[0];
+            rom[dataAddress+7] = dataEntry.drops[1];
+        }
+    }
+}
+
+function randomizeEnemyDropsBelievable(rom, random)
+{
+    //randomize drops
+    console.log("RANDOMIZING ENEMY DROPS - BELIEVABLE");
+
+    var numEntries = TABLE_STATS_ENTRIES;
+
+    //reassign drops
+    for(var i = 0; i < numEntries; ++i)
+    {
+        var dataAddress = 0x16440+(i*8);
+
+        //skip entries - Lord British, Avatar, Glitch
+        if(dataAddress != 0x164A8 && dataAddress != 0x0164B0 && dataAddress != 0x164C0)
+        {
+            if(rom[dataAddress+6] > 0x00 || rom[dataAddress+7] > 0x00) //only randomize drops if this entry has drops
+            {
+                var dropClass = DATA_ENEMY_DROP_CLASSES[i];
+                if(dropClass == 1)
+                {
+                    rom[dataAddress+6] = getRandomAIBelievableAnimalDrop(random);
+                    rom[dataAddress+7] = getRandomAIBelievableAnimalDrop(random);
+                }
+                else if(dropClass == 2)
+                {
+                    rom[dataAddress+6] = getRandomAIBelievableCreatureDrop(random);
+                    rom[dataAddress+7] = getRandomAIBelievableCreatureDrop(random);
+                }
+                else if(dropClass == 3)
+                {
+                    if(rom[dataAddress] > 0x00 || rom[dataAddress+1] > 0x00) //assign from caster pool
+                    {
+                        rom[dataAddress+6] = getRandomAICasterDrop(random);
+                        rom[dataAddress+7] = getRandomAICasterDrop(random);
+                    }
+                    else //assign from regular pool
+                    {
+                        rom[dataAddress+6] = getRandomAINonCasterDrop(random);
+                        rom[dataAddress+7] = getRandomAINonCasterDrop(random);
+                    }
+                }
+            }
+        }
+    }
+}
+
+function randomizeEnemyDrops(rom, random)
+{
+    //randomize drops
+    console.log("RANDOMIZING ENEMY DROPS");
+
+    var numEntries = TABLE_STATS_ENTRIES;
+
+    //reassign drops
+    for(var i = 0; i < numEntries; ++i)
+    {
+        var dataAddress = 0x16440+(i*8);
+
+        //skip entries - Lord British, Avatar, Glitch
+        if(dataAddress != 0x164A8 && dataAddress != 0x0164B0 && dataAddress != 0x164C0)
+        {
+            if(rom[dataAddress+6] > 0x00 || rom[dataAddress+7] > 0x00) //only randomize drops if this entry has drops
+            {
+                if(rom[dataAddress] > 0x00 || rom[dataAddress+1] > 0x00) //assign from caster pool
+                {
+                    rom[dataAddress+6] = getRandomAICasterDrop(random);
+                    rom[dataAddress+7] = getRandomAICasterDrop(random);
+                }
+                else //assign from regular pool
+                {
+                    rom[dataAddress+6] = getRandomAINonCasterDrop(random);
+                    rom[dataAddress+7] = getRandomAINonCasterDrop(random);
+                }
+            }
+        }
+    }
+}
+
+function getRandomAICasterDrop(random)
+{
+    var dropList = [];
+    dropList = dropList.concat(DATA_ENEMY_INVENTORY_DROPS_CASTERS);
+    dropList.push(random.from(DATA_ENEMY_INVENTORY_DROPS_POTIONS));
+    dropList.push(random.from(DATA_ENEMY_INVENTORY_DROPS_REAGENTS));
+    var item = 0xB3; //gold
+    if(random.flipCoin(0.5)) //50% of drops should be gold
+    {
+        item = random.from(dropList);
+    }
+    return item;
+}
+
+function getRandomAINonCasterDrop(random, dropList)
+{
+    var dropList = [];
+    dropList = dropList.concat(DATA_ENEMY_INVENTORY_DROPS);
+    dropList.push(random.from(DATA_ENEMY_INVENTORY_DROPS_FOOD));
+    dropList.push(random.from(DATA_ENEMY_INVENTORY_DROPS_POTIONS));
+    var item = 0xB3; //gold
+    if(random.flipCoin(0.5)) //50% of drops should be gold
+    {
+        item = random.from(dropList);
+    }
+    return item;
+}
+
+function getRandomAIBelievableCreatureDrop(random, dropList)
+{
+    var dropList = [];
+    dropList = dropList.concat(DATA_ENEMY_INVENTORY_DROPS_ANIMALS);
+    var item = 0xB3; //gold
+    if(random.flipCoin(0.5)) //50% of drops should be gold
+    {
+        item = random.from(dropList);
+    }
+    return item;
+}
+
+function getRandomAIBelievableAnimalDrop(random, dropList)
+{
+    var dropList = [];
+    dropList = dropList.concat(DATA_ENEMY_INVENTORY_DROPS_ANIMALS);
+    var item = random.from(dropList);
+    return item;
+}
+
+function shuffleEnemyEquipmentUsers(rom, random)
+{
+    //shuffle which enemies use equipment
+    console.log("SHUFFLING ENEMY EQUIPMENT USERS");
+
+    //gather enemy data
+    var enemyData = gatherEnemyData(rom);
+    
+    //shuffle data
+    enemyData.shuffle(random);
+
+    //reassign equipment
+    var numEntries = TABLE_STATS_ENTRIES;
+    for(var i = 0; i < numEntries; ++i)
+    {
+        var dataAddress = 0x16440+(i*8);
+
+        //skip entries - Lord British, Avatar, Glitch
+        if(dataAddress != 0x164A8 && dataAddress != 0x0164B0 && dataAddress != 0x164C0)
+        {
+            var dataEntry = enemyData.pop();
+            rom[dataAddress+2] = dataEntry.weapons[0];
+            rom[dataAddress+3] = dataEntry.weapons[1];
+
+            rom[dataAddress+4] = dataEntry.armor[0];
+            rom[dataAddress+5] = dataEntry.armor[1];
+        }
+    }
+}
+
+function shuffleEnemyEquipmentUsersBelievable(rom, random)
+{
+    //shuffle which enemies use equipment
+    console.log("SHUFFLING ENEMY EQUIPMENT USERS - BELIEVABLE");
+
+    //gather enemy data
+    var enemyData = gatherEnemyData(rom);
+    
+    //shuffle data
+    enemyData.shuffle(random);
+
+    var userData = [];
+    var nonUserData = [];
+    var dataLength = enemyData.length;
+    for(var i = 0; i < dataLength; ++i)
+    {
+        var dataEntry = enemyData.pop();
+
+        var dropClass = DATA_ENEMY_DROP_CLASSES[dataEntry.entryNum];
+        if(dropClass < 3)
+        {
+            if(dataEntry.armor[0] > 0x00 || dataEntry.armor[1] > 0x00 || dataEntry.weapons[0] > 0x00 || dataEntry.weapons[1] > 0x00)
+            {
+                userData.push(dataEntry);
+            }
+            else
+            {
+                nonUserData.push(dataEntry);
+            }
+        }
+        else
+        {
+            userData.push(dataEntry);
+        }
+    }
+
+    //reassign equipment
+    var numEntries = TABLE_STATS_ENTRIES;
+    for(var i = 0; i < numEntries; ++i)
+    {
+        var dataAddress = 0x16440+(i*8);
+
+        //skip entries - Lord British, Avatar, Glitch
+        if(dataAddress != 0x164A8 && dataAddress != 0x0164B0 && dataAddress != 0x164C0)
+        {
+            var dataEntry;
+            var dropClass = DATA_ENEMY_DROP_CLASSES[i];
+            if(dropClass < 3)
+            {
+                if(rom[dataAddress+4] > 0x00 || rom[dataAddress+5] > 0x00 || rom[dataAddress+2] > 0x00 || rom[dataAddress+3] > 0x00)
+                {
+                    dataEntry = userData.pop();
+                }
+                else
+                {
+                    dataEntry = nonUserData.pop();
+                }
+            }
+            else
+            {
+                dataEntry = userData.pop();
+            }
+            rom[dataAddress+2] = dataEntry.weapons[0];
+            rom[dataAddress+3] = dataEntry.weapons[1];
+
+            rom[dataAddress+4] = dataEntry.armor[0];
+            rom[dataAddress+5] = dataEntry.armor[1];
+        }
+    }
+}
+
+function shuffleEnemyEquipment(rom, random)
+{
+    //shuffle enemy equipment
+    console.log("SHUFFLING ENEMY EQUIPMENT");
+    
+    //gather enemy data
+    var weaponData = getEnemyWeapons(rom);
+    var armorData = getEnemyArmor(rom);
+
+    //shuffle data
+    weaponData.shuffle(random);
+    armorData.shuffle(random);
+
+    //reassign weapons
+    var numWeapEntries = TABLE_STATS_ENTRIES;
+    for(var i = 0; i < numWeapEntries; ++i)
+    {
+        var dataAddress = 0x16440+(i*8);
+
+        //skip entries - Lord British, Avatar, Glitch
+        if(dataAddress != 0x164A8 && dataAddress != 0x0164B0 && dataAddress != 0x164C0)
+        {
+            if(rom[dataAddress+2] > 0x00 || rom[dataAddress+3] > 0x00) //if this entry should have weapons then we shuffle them
+            {
+                rom[dataAddress+2] = weaponData.pop();
+                rom[dataAddress+3] = weaponData.pop();
+            }
+        }
+    }
+
+    //reassign armor
+    var numArmorEntries = 30;
+    for(var i = 0; i < numArmorEntries; ++i)
+    {
+        var dataAddress = 0x16610+i;
+        rom[dataAddress] = armorData.pop();
+    }
+}
+
+function randomizeEnemyEquipment(rom, random)
+{
+    //randomize enemy equipment 
+    console.log("RANDOMIZING ENEMY EQUIPMENT");
+
+    //reassign weapons
+    randomizeEnemyWeapons(rom, random);
+
+    //reassign armor
+    randomizeEnemyArmor(rom, random);
+
+    //set 6 armor values to 00 to match base game
+    randomlyAddZerosToArmor(rom, random);
+}
+
+function randomizeEnemyWeapons(rom, random)
+{
+    var numWeapEntries = TABLE_STATS_ENTRIES;
+    for(var i = 0; i < numWeapEntries; ++i)
+    {
+        var dataAddress = 0x16440+(i*8);
+
+        //skip entries - Lord British, Avatar, Glitch
+        if(dataAddress != 0x164A8 && dataAddress != 0x0164B0 && dataAddress != 0x164C0)
+        {
+            if(rom[dataAddress+2] > 0x00 || rom[dataAddress+3] > 0x00) //if this entry should have weapons then we randomize them
+            {
+                rom[dataAddress+2] = getRandomAIEquipment(random, DATA_ENEMY_INVENTORY_WEAPONS);
+                rom[dataAddress+3] = getRandomAIEquipment(random, DATA_ENEMY_INVENTORY_WEAPONS);
+            }
+        }
+    }
+}
+
+function randomizeEnemyArmor(rom, random)
+{
+    var numArmorEntries = 30;
+    for(var i = 0; i < numArmorEntries; ++i)
+    {
+        var dataAddress = 0x16610+i;
+
+        if(checkIfInList(rom[dataAddress], DATA_ENEMY_INVENTORY_ARMOR))
+        {
+            rom[dataAddress] = getRandomAIEquipment(random, DATA_ENEMY_INVENTORY_ARMOR);
+        }
+        else if(checkIfInList(rom[dataAddress], DATA_ENEMY_INVENTORY_HELMS))
+        {
+            rom[dataAddress] = getRandomAIEquipment(random, DATA_ENEMY_INVENTORY_HELMS);
+        }
+        else if(checkIfInList(rom[dataAddress], DATA_ENEMY_INVENTORY_SHIELDS))
+        {
+            rom[dataAddress] = getRandomAIEquipment(random, DATA_ENEMY_INVENTORY_SHIELDS);
+        }
+        else
+        {
+            var randomInt = random.from([0,1,2]);
+            if(randomInt == 0)
+            {
+                rom[dataAddress] = getRandomAIEquipment(random, DATA_ENEMY_INVENTORY_ARMOR);
+            }
+            else if(randomInt == 1)
+            {
+                rom[dataAddress] = getRandomAIEquipment(random, DATA_ENEMY_INVENTORY_HELMS);
+            }
+            else if(randomInt == 2)
+            {
+                rom[dataAddress] = getRandomAIEquipment(random, DATA_ENEMY_INVENTORY_SHIELDS);
+            }
+        }
+    }
+}
+
+function randomlyAddZerosToArmor(rom, random)
+{
+    //set 6 armor values to 00 to match base game
+    var numArmorEntries = 30;
+    var randValues = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29];
+    randValues.shuffle(random);
+    var randZeros = [randValues.pop(),randValues.pop(),randValues.pop(),randValues.pop(),randValues.pop(),randValues.pop()];
+    for(var i = 0; i < numArmorEntries; ++i)
+    {
+        for(var j = 0; j < randZeros.length; ++j)
+        {
+            if(randZeros[j] == i)
+            {
+                var dataAddress = 0x16610+i;
+                rom[dataAddress] = 0x00;
+            }
+        }
+    }
+}
+
+function getEnemyWeapons(rom)
+{
+    //enemies can have up to two weapons which are set as a pair of bytes in the base enemy data
+    var weaponData = [];
+
+    var enemyData = gatherEnemyData(rom);
+    var numEntries = enemyData.length;
+
+    for(var i = 0; i < numEntries; ++i)
+    {
+        var dataEntry = enemyData[i];
+        if(dataEntry.weapons[0] > 0x00 || dataEntry.weapons[1] > 0x00)
+        {
+            weaponData.push(dataEntry.weapons[0]);
+            weaponData.push(dataEntry.weapons[1]);
+        }
+    }
+    return weaponData;
+}
+
+function getEnemyArmor(rom)
+{
+    //starts at 16610 and ends at 1662D
+    var armorData = [];
+    var numEntries = 30;
+
+    for(var i = 0; i < numEntries; ++i)
+    {
+        var dataAddress = 0x16610+i;
+        var dataEntry = rom[dataAddress];
+        armorData.push(dataEntry);
+    }
+    return armorData;
+}
+
+function getRandomAIEquipment(random, equipList)
+{
+    var item = random.from(equipList);
+    return item;
 }
 
 //=================================================================================
@@ -868,7 +1798,7 @@ function addZuFlower(rom)
 
     //change stats to PC stats
     rom.set([0xD4, 0x19, 0x01, 0x04, 0x0A, 0x1E],0x7AFB);
-    rom.set([0xD4, 0x19, 0x01, 0x04, 0x0A, 0x1E],0x7B6C);
+    rom.set([0xD4, 0x19, 0x01, 0x04, 0x0A, 0x1E],0x7B6D);
 }
 
 function addSilverSerpent(rom)

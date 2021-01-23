@@ -4,12 +4,14 @@ The Ultima 6 SNES Randomizer allows you to randomize a number of different eleme
 <ul>
     <!--<li>The Character Randomizer allows you to play as other characters as well as randomize how characters in the world appear.</li>-->
     <li>The Item Shuffler allows you to randomly shuffle items around in the world for when you want to enjoy an item hunt and more exploration.</li>
-    <li>The Spawn Randomizer allows you to shuffle enemies and their properties creating new combat experiences and challenges.</li>
+    <li>The Spawn Randomizer allows you to shuffle AI spawns and their properties allowing for new combinations of surprises on AI placement.</li>
+    <li>The AI Randomizer allows you to shuffle and randomize enemies properties creating new combat experiences and challenges.</li>
+    <li>The Gameplay Adjustments portion allows you to btoh shuffle and randomize player and party member properties as well as adjust aspects of the game to your liking.</li>
     <!--<li>The World Randomizer allows you to randomize the layout of the world creating new worlds to explore.</li>-->
 </ul>
 <span class="badge">Item Shuffle Details</span></br>
     The Item Shuffler will randomly shuffle all of the selected items between one another.
-    If "Main Items" and "Overworld Chests" are selected, then Runes and Moonstones could be placed in any overworld chest!</br></br>
+    If <b>"Main Items"</b> and <b>"Overworld Chests"</b> are selected, then Runes and Moonstones could be placed in any overworld chest or other main item locations!</br></br>
     The Item Shuffler will attempt to prevent any placement of items which would result in them being unreachable. 
     If there are multiple items in a chest, the shuffler will choose to randomize only one item per chest. </br></br>
     You may choose to add the Moon Orb and/or Spellbook to the item shuffle pool, which will result in you starting with a random item from the item pool in their spot in your inventory.</br></br>
@@ -62,30 +64,43 @@ The Ultima 6 SNES Randomizer allows you to randomize a number of different eleme
     <li>1x Cyclops Cave</li>
     <li>1x Destard</li>
     <li>1x Hythloth</li>
-    <li>1x Moonglow Crypts</li>
+    <li>1x Moonglow Catacombs</li>
     <li>5x Pirate Cave</li>
     <li>1x Wrong / Covetous</li>
 </ul>
 <span class="badge">Spawn Randomization Details</span></br>
 The Spawn Randomizer allows you to randomize enemy and creature spawns.</br></br>
-If "Randomly Mix" is NOT selected, then creatures will only randomize with their own type, so monsters can only appear where other monsters could appear.</br></br>
-If "Randomly Mix" IS selected then all selected creature types are mixed together. Monsters can now appear where anything else selected could appear!</br></br>
+If <b>"Randomly Mix"</b> is <b>NOT</b> selected, then creatures will only randomize with their own type, so monsters can only appear where other monsters could appear.</br></br>
+If <b>"Randomly Mix"</b> <b>IS</b> selected then all selected creature types are mixed together. Monsters can now appear where anything else selected could appear!</br></br>
 
 <span class="badge">Spawn Number Details</span></br>
 Each creature spawn point in the game has settings on how many creatures appear from their at once. If default is selected, the original spawn point numbers are used.</br></br>
-You can choose to Shuffle the Spawn Numbers which will take all spawn numbers from every spawner in the game and then shuffle them and reassign them.</br></br>
-It is also possible to completely randomize the spawn numbers by selecting "Random Spawn Numbers".</br></br>
+You can choose to <b>"Shuffle"</b> the Spawn Numbers which will take all spawn numbers from every spawner in the game and then shuffle them and reassign them.</br></br>
+It is also possible to completely randomize the spawn numbers by selecting <b>"Random Spawn Numbers"</b>.</br></br>
 
 <span class="badge">Aggression Details</span></br>
 Aggression is assigned to creatures based on the spawn point they spawn at. This is the default setting.</br></br>
-When randomly mixing creatures, you may find character types no longer have the aggression you would expect. The "Intuitive Aggression" option assigns aggression based on creature type and not from the spawn point.</br></br>
-You can choose to "Shuffle Aggression", which will shuffle the aggression of all spawns. Sheep or guards in town could now attack you!</br></br>
-For those who want to not worry about being attacked randomly, you can select "Passive" and all creatures will now ignore you unless you attack first.</br></br>
+When randomly mixing creatures, you may find character types no longer have the aggression you would expect. The <b>"Intuitive Aggression"</b> option assigns aggression based on creature type and not from the spawn point.</br></br>
+You can choose to <b>"Shuffle Aggression"</b>, which will shuffle the aggression of all spawns. Sheep or guards in town could now attack you!</br></br>
+For those who want to not worry about being attacked randomly, you can select <b>"Passive"</b> and all creatures will now ignore you unless you attack first.</br></br>
+
+<span class="badge">AI Options Details</span></br>
+<b>"Shuffle AI Stats"</b> will take the entire set of stats from each AI, and shuffle them between themselves.</br></br>
+<b>"Shuffle Spellcasters"</b> will shuffle which AI can cast spells, maintaining the same ratio of spellcasters to non-spellcasters as the base game.</br></br>
+<b>"Shuffle Equipment Users"</b> will shuffle which AI use armor and weapons, maintaining the same ratio of equipment users to non-equipment users as the base game.</br></br>
+<b>"Shuffle Drop Possessors"</b> will shuffle which AI have non-armor and non-weapon drops. This maintains the same ratio of drop possessors to non-drop possessors as the base game.</br></br>
+<b>"Randomize AI Drops"</b> will randomize the non-armor and non-weapon drops for each AI that is a drop possessor.</br></br>
+<b>"Maintain Believable Spellcasters, Equipment, and Drops"</b> will enforce restrictions from the base game based on AI type on if the AI would be believable casting spells, using armor and weapons, or having certain categories of drops.</br></br>
+You can use <b>"AI Stat Difficulty"</b> to either decrease or increase the stats of AI to make for an easier or harder experience.</br></br>
+You can use <b>"AI Spell Difficulty"</b> to either add remove or add spells from the AI spell lists to make for an easier or harder experience.</br></br>
+Options under <b>"AI Spells"</b> allow you to randomize or shuffle the spell lists for any AI that can cast spells.</br></br>
+Options under <b>"AI Equipment"</b> allow you to randomize or shuffle armor and weapons for any AI that can use armor and weapons.</br></br>
 
 <span class="badge">Gameplay Adjustment Details</span></br>
-If you select "Add Missing Enemies from PC Version" then the Silver Serpent and Zu Flower will be added back to the game. These were unfinished in the SNES port. Due to limitiations the recreated versions are not identical to the PC version.</br></br>
-"Add Missing Spells to AI" fixes a bug that prevents the AI from using all assigned spells. With this, AI can now cast all the spells they could on the PC version as well.</br></br>
-Enable Expanded Button Mapping puts actions onto additional controller buttons beyond only the original A(open menu) and D-Pad(move) buttons.
+If you select <b>"Add Missing Enemies from PC Version"</b> then the Silver Serpent and Zu Flower will be added back to the game. These were unfinished in the SNES port. Due to limitiations the recreated versions are not identical to the PC version.</br></br>
+<b>"Add Missing Spells to AI"</b> fixes a bug that prevents the AI from using all assigned spells. With this, AI can now cast all the spells they could on the PC version as well.</br></br>
+<b>"Enable Expanded Camping"</b> will allow you to sleep in town, which can greatly reduce frustration around trying to find an ideal camping spot.</br></br>
+<b>"Enable Expanded Button Mapping"</b> puts actions onto additional controller buttons beyond only the original A(open menu) and D-Pad(move) buttons.
 <ul>
     <li>D-Pad - Move</li>
     <li>A - Open Menu</li>
@@ -96,19 +111,28 @@ Enable Expanded Button Mapping puts actions onto additional controller buttons b
     <li>R - Attack</li>
     <li>Start - Inventory</li>
 </ul>
+
+<span class="badge">Starting Inventory Details</span></br>
+You can choose to start with the default inventory, none, or between different styles of randomization for the inventory.</br></br>
+The <b>"Tier and Set Based"</b> randomization randomizes your gear and items but ensure that it feels more purposeful and crafted. The randomizer will pick a tier of gear, then randomly a set of armor and seperately a set of weapons, and lastly choose random options from within that set. Each set has a number of options per piece, ensuring there are millions of combinations.</br></br>
+With <b>"Chaotic"</b> randomization your gear and items are completely random and may be non-sensical.</br></br>
+
+<span class="badge">Starting Gold Details</span></br>
+You start the game with 200g by default, but you can choose to start with less, more, or a random amount.</br></br>
+
 <span class="badge">Time Adjustment Details</span></br>
 In Ultima 6, 1 minute of in game time passes for every step you take. Full daylight hours are between 06:00 and 19:00 and are when most NPCs are awake.</br></br>
-You can choose to lengthen the daylight hours by 2x / 3x which means that 1 minute of in game time during daylight hours will pass only after 2 steps / 3 steps taken. Night hour time passing still occurs at 1 minute per step taken.</br></br>
-If you choose to "Use PC Version Day and Night Lengths" then both the day and night will be 2x as long.</br></br>
+You can choose to lengthen the daylight hours by <b>2x or 3x</b> which means that 1 minute of in game time during daylight hours will pass only after 2 steps or 3 steps taken. Night hour time passing still occurs at 1 minute per step taken.</br></br>
+If you choose to <b>"Use PC Version Day and Night Lengths"</b> then both the day and night will be 2x as long.</br></br>
 
 <span class="badge">Karma Adjustment Details</span></br>
 You can choose to make Karma less difficult or more difficult.</br></br>
-When "Easy Karma Mode" is selected, all penalities are reduced to 1 karma loss, you start at 100 karma instead of 75, and all karma rewards are doubled.</br></br>
-When "Hard Karma Mode" is selected, all penalities are doubled and you start at 60 instead of 75 karma.</br></br>
+When <b>"Easy Karma Mode"</b> is selected, all penalities are reduced to 1 karma loss, you start at 100 karma instead of 75, and all karma rewards are doubled.</br></br>
+When <b>"Hard Karma Mode"</b> is selected, all penalities are doubled and you start at 60 instead of 75 karma.</br></br>
 
 <span class="badge">Other Details</span></br>
-"Enable Spoiler Log" grants you access to seeing where all the items were placed. This can be good to reference if you get completely stuck.</br></br>
-"Enable Hints" will replace text in various scrolls and books to give vague hints about the locations of any Main Items.</br></br>
-"Show Symbol Indentifier" replaces the text that tells you what seed number and flags you have selected with a short series of symbols.</br></br>
-"Remove Seed & Flags from Filename" will generate a random value for the filename.</br></br>
-Combining "Show Symbol Indentifier" and "Remove Seed & Flags from Filename" allows you to create hidden seeds for the purposes of races, tournaments, or simply surprises for others.</br></br>
+<b>"Enable Spoiler Log"</b> grants you access to seeing where all the items were placed. This can be good to reference if you get completely stuck.</br></br>
+<b>"Enable Hints"</b> will replace text in various scrolls and books to give vague hints about the locations of any Main Items.</br></br>
+When <b>"Hide Seed In Game"</b> is selected, the seed value will no longer be visible in the game.</br></br>
+<b>"Remove Seed & Flags from Filename"</b> will generate a random value for the filename.</br></br>
+Combining <b>"Hide Seed In Game"</b> and <b>"Remove Seed & Flags from Filename"</b> allows you to create hidden seeds for the purposes of races, tournaments, or simply surprises for others.</br></br>

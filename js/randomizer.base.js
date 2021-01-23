@@ -24,11 +24,20 @@ const ITEM_WINGED_HELM = 0x05;
 const ITEM_BRASS_HELM = 0x06;
 const ITEM_SPARTAN_HELM = 0x07;
 const ITEM_MAGIC_HELM = 0x08;
+const ITEM_ENERGY_WAND = 0x2D;
+const ITEM_FIRE_WAND = 0x2E;
 const ITEM_SWAMP_BOOTS = 0x38;
+const ITEM_KEY = 0x45;
+const ITEM_SPIDERSILK = 0x53;
 const ITEM_GEMS = 0x67;
 const ITEM_GOLD_NUGGET = 0x69;
 const ITEM_TORCH = 0x6A;
+const ITEM_SLEEPING_POWDER = 0x6B;
+const ITEM_POWDER_KEG = 0x7C;
 const ITEM_GOLD = 0xB3;
+const ITEM_BOOK = 0xB7;
+const ITEM_SPELL = 0xB8;
+const ITEM_SCROLL = 0xB9;
 
 
 var DATA_ITEM_MOONORB =
@@ -68,7 +77,7 @@ var DATA_ITEMS_CORE =
 	{"offset": 0x11E23, "flags": [0xC0, 0xC0], "id": [ITEM_RUNE_HONOR], "restrictions": [], "name": "rune-honor", "item": "Rune of Honor", "location": "Trinsic Town Center", "type":"main", "stolen":"no", "hints":[8,18]},
 	{"offset": 0x10E56, "flags": [0xC0, 0xC0], "id": [ITEM_RUNE_JUSTICE], "restrictions": [], "name": "rune-justice", "item": "Rune of Justice", "location": "Potted Plant in Yew", "type":"main", "stolen":"no", "hints":[10,20]},
 	{"offset": 0x10F14, "flags": [0xC0, 0xC0], "id": [ITEM_RUNE_SPIRITUALITY], "restrictions": [], "name": "rune-spirituality", "item": "Rune of Spirituality", "location": "Skara Brae North House", "type":"main", "stolen":"no", "hints":[12,16]},
-	{"offset": 0x10F4F, "flags": [0xC0, 0xC0], "id": [ITEM_RUNE_VALOR], "restrictions": [ITEM_GOLD], "name": "rune-valor", "item": "Rune of Valor", "location": "Jhelom Tavern", "type":"main", "stolen":"no", "hints":[13,20]},
+	{"offset": 0x10F4F, "flags": [0xC0, 0xC0], "id": [ITEM_RUNE_VALOR], "restrictions": [ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPELLBOOK, ITEM_SPIDERSILK, ITEM_SLEEPING_POWDER, ITEM_POWDER_KEG, ITEM_ENERGY_WAND], "name": "rune-valor", "item": "Rune of Valor", "location": "Jhelom Tavern", "type":"main", "stolen":"no", "hints":[13,20]},
 	{"offset": 0x11C37, "flags": [0xC0, 0xC0], "id": [ITEM_VORTEX_CUBE], "restrictions": [ITEM_SPELLBOOK], "name": "vortexcube", "item": "Vortex Cube", "location": "Stonegate", "type":"main", "stolen":"no", "hints":[2,5,18,23,24]},
 
 	//dialog items
@@ -81,15 +90,15 @@ var DATA_ITEMS_CORE =
 var DATA_CHESTS_OVERWORLD =
 [
 	//standard chests
-	{"offset": 0x110BE, "flags": [0x8D, 0xCD], "id": [0xB3], "restrictions": [], "name": "britain-inn-01", "item": "Gold", "location": "Britain Inn", "type":"stack", "stolen" : "yes", "hints":[6,21]},
-	{"offset": 0x10FF6, "flags": [0x80, 0xC0], "id": [0x8E], "restrictions": [], "name": "britain-bardhouse-01", "item": "Blue Potion", "location": "Britain Bard House", "type":"solo", "stolen" : "yes", "hints":[6,16]},
-	{"offset": 0x10FFA, "flags": [0x80, 0xC0], "id": [0x76], "restrictions": [], "name": "britain-bardhouse-02", "item": "Lute", "location": "Britain Bard House", "type":"solo", "stolen" : "yes", "hints":[6,16]},
-	{"offset": 0x1164B, "flags": [0x80, 0xC0], "id": [0x43], "restrictions": [], "name": "britain-guild-01", "item": "Cheese", "location": "Britain Guild Shop", "type":"solo", "stolen" : "yes", "hints":[6,17]}, //added an item as it was empty
+	{"offset": 0x110BE, "flags": [0x8D, 0xCD], "id": [0xB3], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK], "name": "britain-inn-01", "item": "Gold", "location": "Britain Inn", "type":"stack", "stolen" : "yes", "hints":[6,21]},
+	{"offset": 0x10FF6, "flags": [0x80, 0xC0], "id": [0x8E], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK], "name": "britain-bardhouse-01", "item": "Blue Potion", "location": "Britain Bard House", "type":"solo", "stolen" : "yes", "hints":[6,16]},
+	{"offset": 0x10FFA, "flags": [0x80, 0xC0], "id": [0x76], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK], "name": "britain-bardhouse-02", "item": "Lute", "location": "Britain Bard House", "type":"solo", "stolen" : "yes", "hints":[6,16]},
+	{"offset": 0x1164B, "flags": [0x80, 0xC0], "id": [0x43], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK], "name": "britain-guild-01", "item": "Cheese", "location": "Britain Guild Shop", "type":"solo", "stolen" : "yes", "hints":[6,17]}, //added an item as it was empty
 	{"offset": 0x11400, "flags": [0xBC, 0xF0], "id": [0xB3], "restrictions": [], "name": "bucsden-bottomlefthouse-01", "item": "Gold", "location": "Buccaneers Den Left House", "type":"stack", "stolen" : "yes", "hints":[16,22]}, //we changed this to the first item
 	{"offset": 0x113B8, "flags": [0x80, 0xC0], "id": [0x33], "restrictions": [], "name": "bucsden-budo-01", "item": "Ring of Invisibility", "location": "Secret Budo House", "type":"solo", "stolen" : "yes", "hints":[16,22,23]},
-	{"offset": 0x11032, "flags": [0x80, 0xC0], "id": [0x8D], "restrictions": [], "name": "castle-avatar-01", "item": "Red Potion", "location": "Avatar Room", "type":"solo", "stolen" : "no", "hints":[5]}, //we changed this to the first item
-	{"offset": 0x10FBA, "flags": [0x80, 0xC0], "id": [0x1B], "restrictions": [], "name": "castle-lordbritish-01", "item": "Main Gauche", "location": "Closet of Lord British", "type":"solo", "stolen" : "no", "hints":[5]},
-	{"offset": 0x11062, "flags": [0x83, 0xC3], "id": [0x2D], "restrictions": [], "name": "castle-nystful-01", "item": "Energy Wand", "location": "Nystful Room", "type":"stack", "stolen" : "no", "hints":[5]}, //we changed this to the first item
+	{"offset": 0x11032, "flags": [0x80, 0xC0], "id": [0x8D], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK], "name": "castle-avatar-01", "item": "Red Potion", "location": "Avatar Room", "type":"solo", "stolen" : "no", "hints":[5]}, //we changed this to the first item
+	{"offset": 0x10FBA, "flags": [0x80, 0xC0], "id": [0x1B], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK], "name": "castle-lordbritish-01", "item": "Main Gauche", "location": "Closet of Lord British", "type":"solo", "stolen" : "no", "hints":[5]},
+	{"offset": 0x11062, "flags": [0x83, 0xC3], "id": [0x2D], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK], "name": "castle-nystful-01", "item": "Energy Wand", "location": "Nystful Room", "type":"stack", "stolen" : "no", "hints":[5]}, //we changed this to the first item
 	{"offset": 0x116D2, "flags": [0x80, 0xC0], "id": [0x91], "restrictions": [], "name": "daggerisland-basement-01", "item": "Orange Potion", "location": "Dagger Island Basement", "type":"solo", "stolen" : "yes", "hints":[2,16,22]}, //added an item as it was empty
 	{"offset": 0x10F6F, "flags": [0x82, 0xC2], "id": [0x7C], "restrictions": [], "name": "jhelom-easthouse-01", "item": "Powder Keg", "location": "Jhelom East House", "type":"stack", "stolen" : "yes", "hints":[13,16]},
 	{"offset": 0x11100, "flags": [0x8A, 0xCA], "id": [0x6A], "restrictions": [], "name": "minoc-basketweaver-01", "item": "Torches", "location": "Minoc Basket Weaver", "type":"stack", "stolen" : "yes", "hints":[11]},
@@ -100,11 +109,11 @@ var DATA_CHESTS_OVERWORLD =
 	{"offset": 0x1130D, "flags": [0x8C, 0xCC], "id": [0xB3], "restrictions": [], "name": "serpentshold-castle-01", "item": "Gold", "location": "Serpents Hold Castle", "type":"stack", "stolen" : "yes", "hints":[5]}, //we changed this to the first item
 	{"offset": 0x113A5, "flags": [0x80, 0xC0], "id": [0x3D], "restrictions": [], "name": "serpentshold-southhouse-01", "item": "Grapes", "location": "Serpents Hold South House", "type":"solo", "stolen" : "yes", "hints":[16]}, //added an item to move the key down a slot
 	{"offset": 0x11331, "flags": [0x80, 0xC0], "id": [0x0A], "restrictions": [], "name": "serpentshold-upperlefthouse-01", "item": "Curved Heater", "location": "Serpents Hold Left House", "type":"solo", "stolen" : "yes", "hints":[16]}, //we changed this to the first item
-	{"offset": 0x1123A, "flags": [0x80, 0xC0], "id": [0x1E], "restrictions": [], "name": "trinsic-mayorhouse-01", "item": "Dagger", "location": "Trinsic Mayor House", "type":"solo", "stolen" : "yes", "hints":[8,16]},
+	{"offset": 0x1122A, "flags": [0x80, 0xC0], "id": [0x1E], "restrictions": [], "name": "trinsic-mayorhouse-01", "item": "Dagger", "location": "Trinsic Mayor House", "type":"solo", "stolen" : "yes", "hints":[8,16]},
 	{"offset": 0x1129E, "flags": [0x83, 0xC3], "id": [0x69], "restrictions": [], "name": "trinsic-southhouse-01", "item": "Gold Nuggets", "location": "Trinsic South House", "type":"stack", "stolen" : "yes", "hints":[8,16]},
 
 	//magic chests
-	{"offset": 0x10FA6, "flags": [0x8B, 0xCB], "id": [0xB3], "restrictions": [ITEM_SPELLBOOK], "name": "britain-cowhouse-01", "item": "Gold", "location": "Britain Cow House", "type":"stack", "stolen" : "yes", "hints":[6,16]},
+	{"offset": 0x10FA6, "flags": [0x8B, 0xCB], "id": [0xB3], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK], "name": "britain-cowhouse-01", "item": "Gold", "location": "Britain Cow House", "type":"stack", "stolen" : "yes", "hints":[6,16]},
 	{"offset": 0x110A2, "flags": [0x8E, 0xCE], "id": [0xB3], "restrictions": [ITEM_SPELLBOOK], "name": "britain-bank-01", "item": "Gold", "location": "Britain Bank", "type":"stack", "stolen" : "yes", "hints":[6]},
 	{"offset": 0x110A6, "flags": [0x88, 0xC8], "id": [0x69], "restrictions": [ITEM_SPELLBOOK], "name": "britain-bank-02", "item": "Gold Nuggets", "location": "Britain Bank", "type":"stack", "stolen" : "yes", "hints":[6]},
 	{"offset": 0x110AA, "flags": [0x91, 0xD1], "id": [0xB3], "restrictions": [ITEM_SPELLBOOK], "name": "britain-bank-03", "item": "Gold", "location": "Britain Bank", "type":"stack", "stolen" : "yes", "hints":[6]},
@@ -229,6 +238,152 @@ var DATA_SPAWNER_NEVERCHANGE =
 var DATA_SPAWNER_TOWNANDMOONGATE =
 [
 	0x07, 0x18, 0x1F, 0x87
+];
+
+var DATA_ENEMY_SPELL_LISTS =
+[
+    {"address":0x1662E, "slots":7, "spells":[0x07, 0x0c, 0x09, 0x1a, 0x1e, 0x1b, 0x20]},
+    {"address":0x16636, "slots":2, "spells":[0x07, 0x1a]},
+    {"address":0x16639, "slots":2, "spells":[0x0c, 0x20]},
+    {"address":0x1663C, "slots":3, "spells":[0x07, 0x1e, 0x1a]},
+    {"address":0x16640, "slots":1, "spells":[0x27]},
+    {"address":0x16642, "slots":3, "spells":[0x09, 0x1a, 0x1e]},
+    {"address":0x16646, "slots":1, "spells":[0x07]},
+    {"address":0x16648, "slots":3, "spells":[0x1a, 0x18, 0x1b]},
+    {"address":0x1664C, "slots":1, "spells":[0x09]},
+    {"address":0x1664E, "slots":5, "spells":[0x0c, 0x1e, 0x0c, 0x09, 0x0b]},
+    {"address":0x16654, "slots":2, "spells":[0x0c, 0x1a]},
+    {"address":0x16657, "slots":2, "spells":[0x09, 0x1b]},
+    {"address":0x1665A, "slots":4, "spells":[0x1b, 0x25, 0x26, 0x1a]},
+    {"address":0x1665F, "slots":4, "spells":[0x0c, 0x20, 0x1a, 0x25]},
+];
+
+var DATA_ENEMY_SPELLS_EASY	 = [0x03,0x07,0x08,0x09,0x0B,0x0C];
+var DATA_ENEMY_SPELLS_MEDIUM = [0x14,0x1A,0x1B,0x1E,0x23,0x27];
+var DATA_ENEMY_SPELLS_HARD	 = [0x18,0x20,0x21,0x24,0x25,0x26,0x2A,0x2C,0x33];
+var DATA_ENEMY_SPELLS_ALL	 = [	0x03, //Harm
+									0x07, //Magic Arrow
+									0x08, //Poison
+									0x09, //Sleep
+									0x0B, //Curse
+									0x0C, //Fireball
+									//0x13, //Mass Sleep
+									0x14, //Disable
+									0x18, //Explosion
+									0x1A, //Lightning
+									0x1B, //Paralyze
+									0x1E, //Charm
+									0x20, //Flame Wind
+									0x21, //Hail Storm
+									0x23, //Negate Magic
+									0x24, //Poison Wind
+									0x25, //Chain Bolt
+									0x26, //Energy Wind
+									0x27, //Fear
+									//0x29, //Destroy - Insta-kill
+									0x2A, //Mass Curse
+									0x2C, //Wing Strike - Insta-kill
+									//0x2E, //Death Wind
+									//0x2F, //Mass Charm
+									//0x30, //Mass Destroy - Insta-kill
+									0x33, //Tremor
+								];
+
+var DATA_ENEMY_INVENTORY_ARMOR 				= [0x11,0x12,0x13,0x14,0x15,0x16];
+var DATA_ENEMY_INVENTORY_HELMS 				= [0x01,0x02,0x03,0x04,0x05,0x06,0x07];
+var DATA_ENEMY_INVENTORY_SHIELDS 			= [0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F];
+var DATA_ENEMY_INVENTORY_WEAPONS 			= [0x19,0x1A,0x1B,0x1C,0x1D,0x1E,0x1F,0x20,0x21,0x22,0x23,0x24,0x25,0x26,0x27,0x29,0x2C,0x2F];
+var DATA_ENEMY_INVENTORY_DROPS 				= [0x31,0x67,0x6B];
+var DATA_ENEMY_INVENTORY_DROPS_CASTERS		= [0x32,0x67,0xB8];
+var DATA_ENEMY_INVENTORY_DROPS_FOOD			= [0x3D,0x3E,0x3F,0x40,0x41,0x42,0x43,0x44,0x47,0x48,0x49,0x4A,0x4B,0x4C];
+var DATA_ENEMY_INVENTORY_DROPS_POTIONS		= [0x8D,0x8E,0x8F,0x90,0x91,0x92,0x93,0x94];
+var DATA_ENEMY_INVENTORY_DROPS_REAGENTS		= [0x4D,0x4E,0x4F,0x50,0x51,0x52,0x53,0x54];
+var DATA_ENEMY_INVENTORY_DROPS_ANIMALS		= [0x40,0x44,0x47];
+
+//enemy drop classes - none, animal, creature, humanoid (used when believable flags are set)
+var DATA_ENEMY_DROP_CLASSES =
+[
+	03, 03, 03, 03, 03, 03, 03 ,03 ,03 ,03 ,03, 03, 03, 00, 00,
+	01, 00, 01, 00, 01, 02, 02, 02, 01, 01, 01, 01, 03, 03, 03, 01,
+	01, 01, 01, 01, 01, 03, 03, 02, 02, 03, 03, 02, 03, 03, 03, 03,
+	02, 02, 01, 03, 02, 03, 01, 01, 01, 01, 01
+];
+
+//these are used for chaotic randomization mode
+var DATA_PLAYER_INVENTORY_ARMOR 			= {"items":	[0x11,0x12,0x13,0x14,0x15,0x16,0x17,0x39],
+												"quantity":	[0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01]};
+var DATA_PLAYER_INVENTORY_HELMS 			= {"items":	[0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08],
+												"quantity":	[0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01]};
+var DATA_PLAYER_INVENTORY_SHIELDS 			= {"items":	[0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,0x10],
+												"quantity":	[0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01]};
+var DATA_PLAYER_INVENTORY_WEAPONS_1H		= {"items":	[0x19,0x1A,0x1B,0x1C,0x1D,0x1E,0x1F,0x20,0x23,0x28,0x29,0x2C,0x2D,0x2E,0x2F],
+												"quantity":	[0x01,0x01,0x01,0x0A,0x0A,0x0A,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x0F]};
+var DATA_PLAYER_INVENTORY_WEAPONS_2H		= {"items":	[0x21,0x22,0x24,0x25,0x26,0x27,0x2A,0x2B],
+												"quantity":	[0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01]};
+var DATA_PLAYER_INVENTORY_NECKLACE 			= {"items":	[0x36,0x3A,0x18],
+												"quantity":	[0x01,0x01,0x01]};
+var DATA_PLAYER_INVENTORY_BOOTS 			= {"items":	[0x37,0x38],
+												"quantity":	[0x01,0x01]};
+var DATA_PLAYER_INVENTORY_RINGS 			= {"items":	[0x30,0x31,0x32,0x33],
+												"quantity":	[0x01,0x01,0x01,0x01]};
+var DATA_PLAYER_INVENTORY_ITEMS 			= {"items":	[0x2F,0x30,0x31,0x32,0x33,0x39,0x55,0x56,0x67,0x69,0x6A,0x6B,0x6D,0x6E,0x71,0x74,0x76,0x77,0x7C,0x88],
+												"quantity":	[0x0F,0x04,0x04,0x04,0x04,0x01,0xFF,0xFF,0x0A,0x0A,0x0A,0x0A,0x01,0x01,0x01,0x01,0x01,0x01,0x0F,0x01]};
+var DATA_PLAYER_INVENTORY_ITEMS_FOOD		= {"items":	[0x3D,0x3E,0x3F,0x40,0x41,0x42,0x43,0x44,0x47,0x48,0x49,0x4A,0x4B,0x4C],
+												"quantity":	[0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F]};
+var DATA_PLAYER_INVENTORY_ITEMS_POTIONS		= {"items":	[0x8D,0x8E,0x8F,0x90,0x91,0x92,0x93,0x94],
+												"quantity":	[0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F]};
+var DATA_PLAYER_INVENTORY_ITEMS_REAGENTS	= {"items":	[0x4D,0x4E,0x4F,0x50,0x51,0x52,0x53,0x54],
+												"quantity":	[0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F]};
+												
+//these are used for tier randomization mode
+var DATA_PLAYER_INVENTORY_SETS = 
+[
+	{"rarity": 1, 	"item":		[0x6A,0x3D,0x3E,0x3F,0x40,0x41,0x42,0x43,0x44,0x47,0x48,0x49,0x4A,0x4B,0x4C],
+					"quantity":	[0x0A,0x06,0x06,0x06,0x06,0x06,0x06,0x06,0x06,0x06,0x03,0x03,0x06,0x06,0x06]},
+	{"rarity": 2, 	"item":		[0x8D,0x8E,0x8F,0x90,0x91,0x92,0x94,0x2F], 
+					"quantity":	[0x05,0x03,0x05,0x03,0x05,0x03,0x03,0x07]},
+	{"rarity": 3, 	"item":		[0x31,0x32,0x33,0x6B,0x7C,0x93], 
+					"quantity":	[0x01,0x01,0x01,0x05,0x02,0x04]},
+];
+
+var DATA_PLAYER_ARMOR_SETS = 
+[
+	{"rarity": 1,	"helm":[0x00, 0x00, 0x01],	"armor":[0x00, 0x11], 				"shield":[0x00, 0x09], 							"boots":[0x00, 0x37], 				"necklace":[0x00]}, //none - very light
+	{"rarity": 1,	"helm":[0x01, 0x01, 0x00],	"armor":[0x12, 0x11], 				"shield":[0x09, 0x0C, 0x0D, 0x00],				"boots":[0x00, 0x37], 				"necklace":[0x00, 0x00, 0x18]}, //leather
+	{"rarity": 1,	"helm":[0x06, 0x01], 		"armor":[0x13, 0x12], 				"shield":[0x0E, 0x09, 0x0B, 0x0F, 0x0D, 0x00], 	"boots":[0x00, 0x37],				"necklace":[0x00, 0x00, 0x18]}, //brass
+
+	{"rarity": 2,	"helm":[0x05, 0x02], 		"armor":[0x14, 0x15], 				"shield":[0x0C, 0x0A, 0x09, 0x00],				"boots":[0x37],						"necklace":[0x00, 0x18]}, //scale
+	{"rarity": 2,	"helm":[0x02, 0x05], 		"armor":[0x15, 0x14, 0x13], 		"shield":[0x0A, 0x0C, 0x0E, 0x09], 				"boots":[0x37], 					"necklace":[0x00, 0x18]}, //chain
+	{"rarity": 2,	"helm":[0x04, 0x07, 0x05], 	"armor":[0x11, 0x12, 0x14, 0x15], 	"shield":[0x0D, 0x0E, 0x00],					"boots":[0x37], 					"necklace":[0x00, 0x18]}, //beserker
+	{"rarity": 2,	"helm":[0x07, 0x04, 0x05], 	"armor":[0x13, 0x12, 0x14, 0x15], 	"shield":[0x0B, 0x0A, 0x0C, 0x00],				"boots":[0x37], 					"necklace":[0x00, 0x18]}, //gladiator
+
+	{"rarity": 3,	"helm":[0x03, 0x07], 		"armor":[0x16, 0x15, 0x14], 		"shield":[0x0F, 0x0C, 0x0A, 0x0E], 				"boots":[0x37], 					"necklace":[0x00, 0x18]}, //plate
+	{"rarity": 3,	"helm":[0x08, 0x03], 		"armor":[0x17, 0x16], 				"shield":[0x10, 0x0B, 0x0A], 					"boots":[0x37, 0x37, 0x37, 0x38],	"necklace":[0x00]}, //heavy (magic armor)
+	{"rarity": 3,	"helm":[0x08], 				"armor":[0x11], 					"shield":[0x09, 0x10], 							"boots":[0x37, 0x37, 0x37, 0x38],	"necklace":[0x00]}, //battle mage
+];
+
+var DATA_PLAYER_WEAPON_SETS =
+[
+	{"rarity": 1,	"hand_right":[0x19, 0x29],								"hand_left":[0x00], 					"ammo":[0x00], 						"ammoMinMax":[0x00,0x00]}, //ranged - light
+	{"rarity": 2,	"hand_right":[0x21], 									"hand_left":[0xFF], 					"ammo":[0x55], 						"ammoMinMax":[0x20,0xA0]}, //ranged - bow
+	{"rarity": 2,	"hand_right":[0x22], 									"hand_left":[0xFF], 					"ammo":[0x56], 						"ammoMinMax":[0x20,0xA0]}, //ranged - crossbow
+
+	{"rarity": 1,	"hand_right":[0x1A, 0x1B, 0x2C],						"hand_left":[0x00], 					"ammo":[0x00], 						"ammoMinMax":[0x00,0x00]}, //melee - light
+	{"rarity": 2,	"hand_right":[0x1F, 0x23, 0x20],						"hand_left":[0x00], 					"ammo":[0x00], 						"ammoMinMax":[0x00,0x00]}, //melee - average
+	{"rarity": 2,	"hand_right":[0x1A, 0x1B, 0x2C, 0x1F, 0x23, 0x20],		"hand_left":[0x00], 					"ammo":[0x00], 						"ammoMinMax":[0x00,0x00]}, //melee - mixed
+	{"rarity": 1,	"hand_right":[0x1A, 0x1B, 0x2C],						"hand_left":[0x1A, 0x1B, 0x2C],			"ammo":[0x00], 						"ammoMinMax":[0x00,0x00]}, //melee - duel wield light
+	{"rarity": 2,	"hand_right":[0x1F, 0x23, 0x20],						"hand_left":[0x1F, 0x23, 0x20],			"ammo":[0x00], 						"ammoMinMax":[0x00,0x00]}, //melee - duel wield average
+
+	{"rarity": 1,	"hand_right":[0x1A, 0x1B, 0x2C],						"hand_left":[0x1B, 0x23],				"ammo":[0x00],						"ammoMinMax":[0x00,0x00]}, //light melee + light ranged
+	{"rarity": 1,	"hand_right":[0x1A, 0x1B, 0x2C],						"hand_left":[0x1C, 0x1D, 0x1E, 0x2F],	"ammo":[0x1C, 0x1D, 0x1E, 0x2F],	"ammoMinMax":[0x01,0x05]}, //light melee + thrown
+	{"rarity": 2,	"hand_right":[0x1F, 0x23, 0x20],						"hand_left":[0x1B, 0x23],				"ammo":[0x00],						"ammoMinMax":[0x00,0x00]}, //average melee + light ranged
+	{"rarity": 2,	"hand_right":[0x1F, 0x23, 0x20],						"hand_left":[0x1C, 0x1D, 0x1E, 0x2F],	"ammo":[0x1C, 0x1D, 0x1E, 0x2F],	"ammoMinMax":[0x01,0x05]}, //average melee + thrown
+
+	{"rarity": 3,	"hand_right":[0x24, 0x25, 0x26, 0x27],					"hand_left":[0xFF], 					"ammo":[0x00], 						"ammoMinMax":[0x00,0x00]}, //melee - 2-handed
+
+	{"rarity": 2,	"hand_right":[0x2C],									"hand_left":[0x2D, 0x2E, 0x00],			"ammo":[0x6B],						"ammoMinMax":[0x01,0x06]}, //mage
+	{"rarity": 3,	"hand_right":[0x1F, 0x20, 0x2D, 0x2E],					"hand_left":[0x00],						"ammo":[0x00],						"ammoMinMax":[0x00,0x00]}, //battle mage
+	{"rarity": 3,	"hand_right":[0x2E],									"hand_left":[0x00],						"ammo":[0x2F, 0x7C],				"ammoMinMax":[0x01,0x05]}, //fire
 ];
 
 var DATA_HINT_TEXT =

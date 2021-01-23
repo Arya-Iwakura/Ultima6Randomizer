@@ -1,4 +1,4 @@
-var VERSION_STRING = 'v0.4';
+var VERSION_STRING = 'v0.5';
 
 const SUBSYSTEM_ITEMS = 0;
 const SUBSYSTEM_SPAWNERS = 1;
@@ -8,7 +8,12 @@ const SUBSYSTEM_WORLD = 4;
 const SUBSYSTEM_CREDITS = 5;
 const SUBSYSTEM_HINTS = 6;
 const SUBSYSTEM_NEW_ENEMIES = 7; 
-const SUBSYSTEM_SPAWN_NUMBERS = 8; 
+const SUBSYSTEM_SPAWN_NUMBERS = 8;
+const SUBSYSTEM_MONSTER_DATA_STATS = 9;
+const SUBSYSTEM_MONSTER_DATA_SPELLS = 10;
+const SUBSYSTEM_MONSTER_DATA_DROPS = 11;
+const SUBSYSTEM_MONSTER_DATA_EQUIPMENT = 12;
+const SUBSYSTEM_PLAYER_INVENTORY = 13;
 
 function randomizeROM(buffer, seed)
 {
@@ -34,41 +39,75 @@ function randomizeROM(buffer, seed)
 		throw new Error(errorText);
 	}
 
-	//TODO : Ensure seed is affected by flags
+	//TODO : Ensure seed value is affected by flags
 
 	var random = new Random(seed);
 	var vseed = random.seed.toHex(8);
 	var subSystemSeeds = getSubystemSeeds(seed);
 
-	//prepare for randomization
+	//---------prepare for randomization
 	fixPickupGraphics(rom);
 	prepareLocations(rom);
 	fixChests(rom);
 	increaseSherryPickupWeight(rom);
 	bookLordBritishRandomizerBook(rom);
 	
-	//adjustCamping(rom);
-
-	if ($('#day_length_2x').is(':checked'))
+	//---------gameplay and other
+	if ($('#expanded_camping').is(':checked'))
+	{
+		adjustCamping(rom);
+	}
+	
+	if ($('#select-day-night-cycle').val() == 1)
 	{
 		adjustDayLength(rom, 2);
 	}
-	else if ($('#day_length_3x').is(':checked'))
+	else if ($('#select-day-night-cycle').val() == 2)
 	{
 		adjustDayLength(rom, 3);
 	}
-	else if ($('#day_length_pc').is(':checked'))
+	else if ($('#select-day-night-cycle').val() == 3)
 	{
 		adjustDayLength(rom, 1);
 	}
 
-	if ($('#karma_options_easy').is(':checked'))
+	if ($('#select-karma-difficulty').val() == 1)
 	{
 		easyKarmaMode(rom);
 	}
-	else if ($('#karma_options_hard').is(':checked'))
+	else if ($('#select-karma-difficulty').val() == 2)
 	{
 		hardKarmaMode(rom);
+	}
+	
+	if ($('#select-starting-inventory').val() == 1)
+	{
+		setStartingInventory(rom, subSystemSeeds[SUBSYSTEM_PLAYER_INVENTORY], 1); //no inventory
+	}
+	else if ($('#select-starting-inventory').val() == 6)
+	{
+		setStartingInventoryChaotic(rom, subSystemSeeds[SUBSYSTEM_PLAYER_INVENTORY]); //random chaotic inventory
+	}
+	else if ($('#select-starting-inventory').val() > 1)
+	{
+		setStartingInventory(rom, subSystemSeeds[SUBSYSTEM_PLAYER_INVENTORY], $('#select-starting-inventory').val()); //random inventory
+	}
+
+	if ($('#select-starting-gold').val() == 1)
+	{
+		setStartingGold(rom, 1, subSystemSeeds[SUBSYSTEM_PLAYER_INVENTORY]); //no gold
+	}
+	else if ($('#select-starting-gold').val() == 2)
+	{
+		setStartingGold(rom, 2, subSystemSeeds[SUBSYSTEM_PLAYER_INVENTORY]); //2x gold
+	}
+	else if ($('#select-starting-gold').val() == 3)
+	{
+		setStartingGold(rom, 3, subSystemSeeds[SUBSYSTEM_PLAYER_INVENTORY]); //4x gold
+	}
+	else if ($('#select-starting-gold').val() == 4)
+	{
+		setStartingGold(rom, 4, subSystemSeeds[SUBSYSTEM_PLAYER_INVENTORY]); //random gold
 	}
 
 	var addEnemiesFlag = false;
@@ -96,7 +135,7 @@ function randomizeROM(buffer, seed)
 		prepareHintText(rom, subSystemSeeds[SUBSYSTEM_HINTS]);
 	}
 
-	//perform randomization
+	//---------items
 	var spoilers = [];
 	var randomizeItemsDone = false;
 	do
@@ -106,7 +145,9 @@ function randomizeROM(buffer, seed)
 	while (randomizeItemsDone == false);
 	
 	fixShrines(rom); //after item randomization the shrines must be fixed for the new items
-	
+	updateShrineText(rom);
+
+	//---------monsters
 	var monsterFlag = false;
 	var wildFlag = false;
 	var animalFlag = false;
@@ -136,34 +177,155 @@ function randomizeROM(buffer, seed)
 		}
 	}
 
-	if ($('#enemy_aggression_intuitive').is(':checked'))
+	if ($('#select-ai-aggression').val() == 1)
 	{
 		intuitiveEnemyAggression(rom, subSystemSeeds[SUBSYSTEM_AGGRESSION]);
 	}
-	else if ($('#enemy_aggression_shuffle').is(':checked'))
+	else if ($('#select-ai-aggression').val() == 2)
 	{
 		shuffleEnemyAggression(rom, subSystemSeeds[SUBSYSTEM_AGGRESSION]);
 	}
-	else if ($('#enemy_aggression_passive').is(':checked'))
+	else if ($('#select-ai-aggression').val() == 3)
 	{
 		passiveEnemyAggression(rom, subSystemSeeds[SUBSYSTEM_AGGRESSION]);
 	}
 
-	if ($('#shuffle_spawn_numbers').is(':checked'))
+	if ($('#select-ai-spawn-numbers').val() == 1)
 	{
 		shuffleSpawnNumbers(rom, subSystemSeeds[SUBSYSTEM_SPAWN_NUMBERS]);
 	}
-	else if ($('#random_spawn_numbers').is(':checked'))
+	else if ($('#select-ai-spawn-numbers').val() == 2)
 	{
 		randomSpawnNumbers(rom, subSystemSeeds[SUBSYSTEM_SPAWN_NUMBERS]);
 	}
 
+	if ($('#enemy_stats_shuffle').is(':checked'))
+	{
+		if ($('#select-ai-stat-difficulty').val() == 1) //easier stats
+		{
+			shuffleEnemyStats(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_STATS], 1);
+		}
+		else if ($('#select-ai-stat-difficulty').val() == 2) //easy stats
+		{
+			shuffleEnemyStats(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_STATS], 2);
+		}
+		else if ($('#select-ai-stat-difficulty').val() == 3) //hard stats
+		{
+			shuffleEnemyStats(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_STATS], 3);
+		}
+		else if ($('#select-ai-stat-difficulty').val() == 4) //harder stats
+		{
+			shuffleEnemyStats(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_STATS], 4);
+		}
+		else //default stats
+		{
+			shuffleEnemyStats(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_STATS], 0);
+		}
+	}
+	else
+	{
+		if ($('#select-ai-stat-difficulty').val() == 1) //easier
+		{
+			changeEnemyStatDifficulty(rom, 1);
+		}
+		else if ($('#select-ai-stat-difficulty').val() == 2) //easy
+		{
+			changeEnemyStatDifficulty(rom, 2);
+		}
+		else if ($('#select-ai-stat-difficulty').val() == 3) //hard
+		{
+			changeEnemyStatDifficulty(rom, 3);
+		}
+		else if ($('#select-ai-stat-difficulty').val() == 4) //harder
+		{
+			changeEnemyStatDifficulty(rom, 4);
+		}
+	}
+
+	if ($('#enemy_spellcasters_shuffle').is(':checked'))
+	{
+		if($('#maintain_believable_ai').is(':checked'))
+		{
+			shuffleEnemySpellCastersBelievable(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_SPELLS]);
+		}
+		else
+		{
+			shuffleEnemySpellCasters(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_SPELLS]);
+		}
+	}
+
+	if ($('#enemy_equipmentusers_shuffle').is(':checked'))
+	{
+		if($('#maintain_believable_ai').is(':checked'))
+		{
+			shuffleEnemyEquipmentUsersBelievable(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_EQUIPMENT]);
+		}
+		else
+		{
+			shuffleEnemyEquipmentUsers(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_EQUIPMENT]);
+		}
+	}
+
+	if ($('#enemy_droppossessors_shuffle').is(':checked'))
+	{
+		if($('#maintain_believable_ai').is(':checked'))
+		{
+			shuffleEnemyDropPossessorsBelievable(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_DROPS]);
+		}
+		else
+		{
+			shuffleEnemyDropPossessors(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_DROPS]);
+		}
+	}
+
+	if ($('#select-ai-equipment').val() == 1)
+	{
+		shuffleEnemyEquipment(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_EQUIPMENT]);
+	}
+	else if ($('#select-ai-equipment').val() == 2)
+	{
+		randomizeEnemyEquipment(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_EQUIPMENT]);
+	}
+
+	if ($('#randomize_enemy_drops').is(':checked'))
+	{
+		if($('#maintain_believable_ai').is(':checked'))
+		{
+			randomizeEnemyDropsBelievable(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_DROPS]);
+		}
+		else
+		{
+			randomizeEnemyDrops(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_DROPS]);
+		}
+	}
+
+	var spellDifficultySetting = 0;
+	if ($('#select-ai-spell-difficulty').val() == 1)
+	{
+		spellDifficultySetting = 1;
+	}
+	else if ($('#select-ai-spell-difficulty').val() == 2)
+	{
+		spellDifficultySetting = 2;
+	}
+
+	if ($('#select-ai-spells').val() == 1)
+	{
+		shuffleEnemySpells(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_SPELLS], spellDifficultySetting);
+	}
+	else if ($('#select-ai-spells').val() == 2)
+	{
+		randomizeEnemySpells(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_SPELLS], spellDifficultySetting);
+	}
+
+	//---------world
 	if ($('#randomize_world_map').is(':checked'))
 	{
 		randomizeWorld(rom, subSystemSeeds[SUBSYSTEM_WORLD]);
 	}
+	
 
-	//wrap it up
+	//---------wrap it up
 	var preset = +$('#preset').val();
 	if (!preset) preset = 'x' + getRandomizerSettings();
 
@@ -174,11 +336,37 @@ function randomizeROM(buffer, seed)
 	// write version number and the randomizer seed to the rom
 	var checksum = getChecksum(rom).toHex(4);
 
-	writeTextToAddress(rom, TEXT_SEED_LOC, 16, VERSION_STRING + "-"+vseed+" : ");
-	writeTextToAddress(rom, TEXT_FLAGS_LOC, 21, "Flags = " + preset);
+	if ($('#hide_seed_value').is(':checked'))
+	{
+		if(VERSION_STRING.length == 3)
+		{
+			writeTextToAddress(rom, TEXT_SEED_LOC, 16, VERSION_STRING + "-U6 RANDO:  ");
+		}
+		else
+		{
+			writeTextToAddress(rom, TEXT_SEED_LOC, 16, VERSION_STRING + "-U6 RANDO: ");
+		}
+	}
+	else
+	{
+		if(VERSION_STRING.length == 3)
+		{
+			writeTextToAddress(rom, TEXT_SEED_LOC, 16, VERSION_STRING + "-"+vseed+":  ");
+		}
+		else
+		{
+			writeTextToAddress(rom, TEXT_SEED_LOC, 16, VERSION_STRING + "-"+vseed+": ");
+		}
+	}
+	
 	writeTextToAddress(rom, TEXT_SPEED_LOC, 21, " Fast -  Text  - Slow");
-	if ($('#display_symbol_hash').is(':checked'))
-		writeSymbolHash(rom, random);
+
+	writeTextToAddress(rom, TEXT_FLAGS_LOC, 21, "");
+	writeSymbolHash(rom, random);
+
+	//writeTextToAddress(rom, TEXT_FLAGS_LOC, 21, "Flags = " + preset);
+	//if ($('#hide_seed_value').is(':checked'))
+	//	writeSymbolHash(rom, random);
 	
 	writeCredits(rom, subSystemSeeds[SUBSYSTEM_CREDITS]);
 	fixText(rom);
@@ -204,17 +392,10 @@ function randomizeROM(buffer, seed)
 	};
 }
 
-function addDataToDataPool(inPool, inData, grepValue)
-{
-	var grepPool = $.grep(inData, function(x){ return (grepValue in x); });
-	var outPool = inPool.concat(grepPool);
-	return outPool;
-}
-
 function getSubystemSeeds(seed)
 {
 	var subSystemSeeds = [];
-	var numSeeds = 10;
+	var numSeeds = 20;
 	for (var i = 0; i < numSeeds; ++i)
 	{
 		subSystemSeeds.push(new Random(seed+i));
@@ -222,14 +403,40 @@ function getSubystemSeeds(seed)
 	return subSystemSeeds;
 }
 
-function dev(rom)
+function addDataToDataPool(inPool, inData, grepValue)
 {
-	console.log("=========DEV CODE FOR TESTING=========")
-	//74 - skiff : A8 - balloon
-	rom.set([0x6F],0x19898); //gargoyles in throne room flags
-	rom.set([0x24],0x19899); //gargoyles in throne room
-	//rom.set([0xB4],0x19899); //gargoyles in throne room
-	//rom.set([0xB7],0x1989B); //enemies after gargoyles in throne room
+	var grepPool = $.grep(inData, function(x){ return (grepValue in x); });
+	var outPool = inPool.concat(grepPool);
+	return outPool;
+}
+
+function checkIfInList(item, inList)
+{
+    for(var i = 0; i < inList.length; ++i)
+    {
+        if(item == inList[i])
+        {
+            return true;
+        }
+    }
+}
+
+function hexToHexArray(inHex)
+{
+    var hexArray = [];
+    for(var i = inHex.length-1; i >= 0; i=i-2)
+    {
+        if(i > 0)
+        {
+            hexArray.push("0x"+(inHex[i-1]+inHex[i]));
+        }
+        else
+        {
+            hexArray.push("0x"+inHex[i]);
+        }
+    }
+
+    return hexArray;
 }
 
 //=================================================================================

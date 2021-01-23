@@ -92,13 +92,15 @@ function fixChests(rom)
 
 function increaseSherryPickupWeight(rom)
 {
+	//due to restrictions in how sherry picks up items she can never pick up the following items:
+	//	spellbook / gold nugget / gold / book / spell / scroll / key
 	rom[0x11FDA] = 0xCF;
 }
 
 function randomizeItems(rom, random, spoilers)
 {
 	console.log("RANDOMIZING ITEMS");
-	
+
 	var items = [];
 	var locations = [];
 	var restrictions = [];
@@ -389,4 +391,17 @@ function fixShrines(rom)
 	rom[codeOffset+0x37] = honorItem-5;
 	rom[codeOffset+0x3B] = spiritualityItem-6;
 	rom[codeOffset+0x3F] = humilityItem-7;
+}
+
+function updateShrineText(rom)
+{
+	//this function updates the code that reads a byte checked for item pickups
+	//E1 is the dialog command to check for item being inspected
+	rom.set([0x20, 0x00, 0xFD],0xBD24); //inject new address
+
+	rom.set([	0xC9, 0xE1, 0xD0, 0x05, //branch if accumulator is not E1
+				0xA6, 0xE5, 0x8E, 0x38, 0xA7, //load E5(item id) into X then store X into A738
+				0x38, 0xBE, 0x38, 0xA7, //add back code we injected over (LDX A738)
+				0x60, //return
+			],0xFD00);
 }

@@ -136,7 +136,7 @@
 					<div class="checkbox">
 						<label>
 							<input type="checkbox" id="randomize_chests_dungeons" class="presetoption">
-							Include Underground Chests <i><small>(Caves, Dungeons, and Crypts)</small></i>
+							Include Underground Chests <i><small>(Caves, Dungeons, and Catacombs)</small></i>
 						</label>
 					</div>
 
@@ -169,6 +169,7 @@
 					</div>
 
 					<h3>Randomize Spawns</h3>
+					<h5><i>Randomize spawn points for AI by AI type or mix them together.</i></h5>
 					<div class="checkbox">
 						<label>
 							<input type="checkbox" id="randomize_enemy_monsters" class="presetoption">
@@ -200,52 +201,151 @@
 						</label>
 					</div>
 
-					<h3>Creature Spawn Numbers</h3>
-					<div class="radio">
-						<label>
-							<input type="radio" name="spawn_numbers" id="default_spawn_numbers" class="presetoption" checked>
-							Default <i><small>(The base game number of creatures per spawner is unchanged)</small></i>
-						</label>
+					<div class="input-group top-spaced">
+						<div class="input-group-addon">
+							<b>AI Spawn Numbers</b>
+						</div>
+						<select class="form-control" id="select-ai-spawn-numbers">
+							<option value="0">Default</option>
+							<option value="1">Shuffle</option>
+							<option value="2">Random</option>
+						</select>
 					</div>
-					<div class="radio">
-						<label>
-							<input type="radio" name="spawn_numbers" id="shuffle_spawn_numbers" class="presetoption">
-							Shuffle Spawn Numbers <i><small>(Spawners shuffle their creature numbers between themselves)</small></i>
-						</label>
+					<div class="input-group-addon">
+						<small><i><span id="ai-spawn-numbers-tooltip-1">(The base game number of AI per spawner is unchanged)</span></small></i>
+						<small><i><span id="ai-spawn-numbers-tooltip-2" hidden>(Spawners shuffle their AI numbers between themselves)</span></small></i>
+						<small><i><span id="ai-spawn-numbers-tooltip-3" hidden>(All spawn numbers are random! Warning this may be diffuclt!)</span></small></i>
 					</div>
-					<div class="radio">
-						<label>
-							<input type="radio" name="spawn_numbers" id="random_spawn_numbers" class="presetoption">
-							Random Spawn Numbers <i><small>(All spawn numbers are random! Warning this may be diffuclt!)</small></i>
-						</label>
+
+					<div class="input-group top-spaced">
+						<div class="input-group-addon">
+							<b>AI Aggression</b>
+						</div>
+						<select class="form-control" id="select-ai-aggression">
+							<option value="0">Default</option>
+							<option value="1">Intuitive</option>
+							<option value="2">Shuffle</option>
+							<option value="3">Passive</option>
+						</select>
 					</div>
-					
-					<h3>Creature Aggression</h3>
-					<div class="radio">
-						<label>
-							<input type="radio" name="enemy_aggression" id="enemy_aggression_default" class="presetoption" checked>
-							Default Aggression <i><small>(Creatures are assigned aggression based on the spawner they spawn from)</small></i>
-						</label>
+					<div class="input-group-addon">
+						<small><i><span id="ai-aggression-tooltip-1">(AI are assigned aggression based on the spawner they spawn from)</span></small></i>
+						<small><i><span id="ai-aggression-tooltip-2" hidden>(AI are assigned aggression based on the type of AI)</span></small></i>
+						<small><i><span id="ai-aggression-tooltip-3" hidden>(All aggression is shuffled! Warning this may be difficult!)</span></small></i>
+						<small><i><span id="ai-aggression-tooltip-4" hidden>(All AI aggression is set to neutral or passive)</span></small></i>
 					</div>
-					<div class="radio">
+
+					<h3>AI Options</h3>
+					<div class="checkbox">
 						<label>
-							<input type="radio" name="enemy_aggression" id="enemy_aggression_intuitive" class="presetoption">
-							Intuitive Aggression <i><small>(Creatures are assigned aggression based on the type of creature)</small></i>
-						</label>
-					</div>
-					<div class="radio">
-						<label>
-							<input type="radio" name="enemy_aggression" id="enemy_aggression_shuffle" class="presetoption">
-							Shuffle Aggression <i><small>(All aggression is shuffled! Warning this may be difficult!)</small></i>
-						</label>
-					</div>
-					<div class="radio">
-						<label>
-							<input type="radio" name="enemy_aggression" id="enemy_aggression_passive" class="presetoption">
-							Passive <i><small>(All creature aggression is set to neutral or passive)</small></i>
+							<input type="checkbox" id="enemy_stats_shuffle" class="presetoption">
+							Shuffle AI Stats <i><small>(Stat values are shuffled between AI)</small></i>
 						</label>
 					</div>
 
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="enemy_spellcasters_shuffle" class="presetoption">
+							Shuffle Spellcasters <i><small>(Shuffle which enemies can cast spells)</small></i>
+						</label>
+					</div>
+
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="enemy_equipmentusers_shuffle" class="presetoption">
+							Shuffle Equipment Users <i><small>(Shuffle which enemies have armor and weapons)</small></i>
+						</label>
+					</div>
+
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="enemy_droppossessors_shuffle" class="presetoption">
+							Shuffle Drop Possessors <i><small>(Shuffle which AI have non-equipment drops)</small></i>
+						</label>
+					</div>
+
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="randomize_enemy_drops" class="presetoption">
+							Randomize AI Drops <i><small>(AI non-equipment drops are randomized)</small></i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="maintain_believable_ai" class="presetoption">
+							Maintain Believable Spellcasters, Equipment, and Drops <i><small>(Enforces restrictions based on AI type)</small></i>
+						</label>
+					</div>
+
+					<div class="input-group top-spaced">
+						<div class="input-group-addon">
+							<b>AI Stat Difficulty</b>
+						</div>
+						<select class="form-control" id="select-ai-stat-difficulty">
+							<option value="1">Easier</option>
+							<option value="2">Easy</option>
+							<option value="0" selected="selected">Default</option>
+							<option value="3">Hard</option>
+							<option value="4">Harder</option>
+						</select>
+					</div>
+					<div class="input-group-addon">
+						<small><i><span id="ai-stat-difficulty-tooltip-1">(AI stats are the same as the base game)</span></small></i>
+						<small><i><span id="ai-stat-difficulty-tooltip-2" hidden>(AI stats are greatly reduced)</span></small></i>
+						<small><i><span id="ai-stat-difficulty-tooltip-3" hidden>(AI stats are reduced)</span></small></i>
+						<small><i><span id="ai-stat-difficulty-tooltip-4" hidden>(AI stats are increased)</span></small></i>
+						<small><i><span id="ai-stat-difficulty-tooltip-5" hidden>(AI stats are greatly increased)</span></small></i>
+					</div>
+
+					<div class="input-group top-spaced">
+						<div class="input-group-addon">
+							<b>AI Spell Difficulty</b>
+						</div>
+						<select class="form-control" id="select-ai-spell-difficulty">
+							<option value="1">Easy</option>
+							<option value="0" selected="selected">Default</option>
+							<option value="2">Hard</option>
+						</select>
+					</div>
+					<div class="input-group-addon">
+						<small><i><span id="ai-spell-difficulty-tooltip-1">(AI spell options are the same as the base game)</span></small></i>
+						<small><i><span id="ai-spell-difficulty-tooltip-2" hidden>(AI cast only lower level and easier spells)</span></small></i>
+						<small><i><span id="ai-spell-difficulty-tooltip-3" hidden>(AI can now cast harder and higher level spells)</span></small></i>
+					</div>
+
+					<div class="input-group top-spaced">
+						<div class="input-group-addon">
+							<b>AI Spells</b>
+						</div>
+						<select class="form-control" id="select-ai-spells">
+							<option value="0">Default</option>
+							<option value="1">Shuffle</option>
+							<option value="2">Random</option>
+						</select>
+					</div>
+					<div class="input-group-addon">
+						<small><i><span id="ai-spells-tooltip-1">(AI spell lists are unchanged)</span></small></i>
+						<small><i><span id="ai-spells-tooltip-2" hidden>(AI casters are assigned spells from a shuffled pool of all AI spells)</span></small></i>
+						<small><i><span id="ai-spells-tooltip-3" hidden>(AI casters are assigned random spells)</span></small></i>
+					</div>
+
+					<div class="input-group top-spaced">
+						<div class="input-group-addon">
+							<b>AI Equipment</b>
+						</div>
+						<select class="form-control" id="select-ai-equipment">
+							<option value="0">Default</option>
+							<option value="1">Shuffle</option>
+							<option value="2">Random</option>
+						</select>
+					</div>
+					<div class="input-group-addon">
+						<small><i><span id="ai-equipment-tooltip-1">(Unchanged from base game)</span></small></i>
+						<small><i><span id="ai-equipment-tooltip-2" hidden>(AI armor and weapons are shuffled between each other)</span></small></i>
+						<small><i><span id="ai-equipment-tooltip-3" hidden>(AI armor and weapons are randomized)</span></small></i>
+					</div>
+				
+					</br>
 				</div>
 				<div class="col-md-6">
 			
@@ -272,55 +372,93 @@
 					</div>
 					<div class="checkbox">
 						<label>
+							<input type="checkbox" id="expanded_camping" class="presetoption">
+							Enable Expanded Camping <i><small>(Allows camping in town)</small></i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
 							<input type="checkbox" id="enable_fast_button_mapping" class="presetoption">
 							Enable Expanded Button Mapping <i><small>(Adds common game commands to gamepad buttons X,Y,L,R,Start)</small></i>
 						</label>
 					</div>
 
-					<h3>Time Adjustments</h3>
-					<div class="radio">
-						<label>
-							<input type="radio" name="day_length" id="day_length_default" class="presetoption" checked>
-							Default Day and Night Cycle <small><i>(Unchanged from base game)</small></i>
-						</label>
+					<div class="input-group top-spaced">
+						<div class="input-group-addon">
+							<b>Starting Inventory</b>
+						</div>
+						<select class="form-control" id="select-starting-inventory">
+							<option value="1">None</option>
+							<option value="0" selected="selected">Default</option>
+							<option value="2">Random - Tier and Set Based</option>
+							<option value="3">Random - Low Tier Equipment Only</option>
+							<option value="4">Random - Low and Mid Tier Equipment Only</option>
+							<option value="5">Random - Mid and High Tier Equipment Only</option>
+							<option value="6">Random - Chaotic</option>
+						</select>
 					</div>
-					<div class="radio">
-						<label>
-							<input type="radio" name="day_length" id="day_length_2x" class="presetoption">
-							Day Light Hours Last 2x Longer <i><small>(Hours between 6:00-19:00)</small></i>
-						</label>
-					</div>
-					<div class="radio">
-						<label>
-							<input type="radio" name="day_length" id="day_length_3x" class="presetoption">
-							Day Light Hours Last 3x Longer <i><small>(Hours between 6:00-19:00)</small></i>
-						</label>
-					</div>
-					<div class="radio">
-						<label>
-							<input type="radio" name="day_length" id="day_length_pc" class="presetoption">
-							Use PC Version Day and Night Lengths<i><small>(2x longer days and nights)</small></i>
-						</label>
+					<div class="input-group-addon">
+						<small><i><span id="starting-inventory-tooltip-1">(Unchanged from base game)</span></small></i>
+						<small><i><span id="starting-inventory-tooltip-2" hidden>(Starting inventory for party members is empty except for key items)</span></small></i>
+						<small><i><span id="starting-inventory-tooltip-3" hidden>(Starting inventory for party members is randomzied with tiers and sets)</span></small></i>
+						<small><i><span id="starting-inventory-tooltip-4" hidden>(Starting inventory for party members is randomzied with low tier gear)</span></small></i>
+						<small><i><span id="starting-inventory-tooltip-5" hidden>(Starting inventory for party members is randomzied with low and mid tier gear)</span></small></i>
+						<small><i><span id="starting-inventory-tooltip-6" hidden>(Starting inventory for party members is randomzied with mid and high tier gear)</span></small></i>
+						<small><i><span id="starting-inventory-tooltip-7" hidden>(Starting inventory for party members is randomzied chaotically. Warning! May be very strange!)</span></small></i>
 					</div>
 
-					<h3>Karma Adjustments</h3>
-					<div class="radio">
-						<label>
-							<input type="radio" name="karma_options" id="karma_options_default" class="presetoption" checked>
-							Default Karma <small><i>(Unchanged from base game)</small></i>
-						</label>
+					<div class="input-group top-spaced">
+						<div class="input-group-addon">
+							<b>Starting Gold</b>
+						</div>
+						<select class="form-control" id="select-starting-gold">
+							<option value="1">None</option>
+							<option value="0" selected="selected">Default</option>
+							<option value="2">400g</option>
+							<option value="3">800g</option>
+							<option value="4">Random (0 to 800g)</option>
+						</select>
 					</div>
-					<div class="radio">
-						<label>
-							<input type="radio" name="karma_options" id="karma_options_easy" class="presetoption">
-							Easy Karma Mode <small><i>(Karma penalties lowered. Higher starting karma. Higher karma rewards.)</small></i>
-						</label>
+					<div class="input-group-addon">
+						<small><i><span id="starting-gold-tooltip-1">(Unchanged from base game - 200 gold)</span></small></i>
+						<small><i><span id="starting-gold-tooltip-2" hidden>(The player will start with no gold)</span></small></i>
+						<small><i><span id="starting-gold-tooltip-3" hidden>(The player will start with 400 gold)</span></small></i>
+						<small><i><span id="starting-gold-tooltip-4" hidden>(The player will start with 800 gold)</span></small></i>
+						<small><i><span id="starting-gold-tooltip-5" hidden>(The player will start with a random amount of gold between 0 and 800)</span></small></i>
 					</div>
-					<div class="radio">
-						<label>
-							<input type="radio" name="karma_options" id="karma_options_hard" class="presetoption">
-							Hard Karma Mode <small><i>(Karma penalties raised. Lower starting karma.)</small></i>
-						</label>
+
+					<div class="input-group top-spaced">
+						<div class="input-group-addon">
+							<b>Day and Night Cycle</b>
+						</div>
+						<select class="form-control" id="select-day-night-cycle">
+							<option value="0">Default</option>
+							<option value="1">Day Light Hours Last 2x Longer</option>
+							<option value="2">Day Light Hours Last 3x Longer</option>
+							<option value="3">Use PC Version Day and Night Lengths</option>
+						</select>
+					</div>
+					<div class="input-group-addon">
+						<small><i><span id="day-night-cycle-tooltip-1">(Unchanged from base game)</span></small></i>
+						<small><i><span id="day-night-cycle-tooltip-2" hidden>(Hours between 6:00-19:00)</span></small></i>
+						<small><i><span id="day-night-cycle-tooltip-3" hidden>(Hours between 6:00-19:00)</span></small></i>
+						<small><i><span id="day-night-cycle-tooltip-4" hidden>(2x longer days and nights)</span></small></i>
+					</div>
+
+					<div class="input-group top-spaced">
+						<div class="input-group-addon">
+							<b>Karma Difficulty</b>
+						</div>
+						<select class="form-control" id="select-karma-difficulty">
+							<option value="1">Easy</option>
+							<option value="0" selected="selected">Default</option>
+							<option value="2">Hard</option>
+						</select>
+					</div>
+					<div class="input-group-addon">
+						<small><i><span id="karma-tooltip-1">(Unchanged from base game)</span></small></i>
+						<small><i><span id="karma-tooltip-2" hidden>(Karma penalties lowered. Higher starting karma. Higher karma rewards.)</span></small></i>
+						<small><i><span id="karma-tooltip-3" hidden>(Karma penalties raised. Lower starting karma.)</span></small></i>
 					</div>
 
 					<h3>Other</h3>
@@ -338,8 +476,8 @@
 					</div>
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" id="display_symbol_hash" class="presetoption">
-							Show Symbol Identifier <i><small>(Replaces displaying randomizer seed and flags)</small></i>
+							<input type="checkbox" id="hide_seed_value" class="presetoption">
+							Hide Seed in Game <i><small>(Hides the seed value in the game)</small></i>
 						</label>
 					</div>
 					<div class="checkbox">
@@ -449,9 +587,9 @@
 
 						<h4>Choose Avatar Sprite</h4>
 						<select class="form-control" id="select-avatar-sprite">
-							<option value="2">Avatar (Default)</option>
 							<option value="0">Random (All)</option>
 							<option value="1">Random (Realistic People Only)</option>
+							<option value="2" selected="selected">Avatar (Default)</option>
 							<option value="3">Avatar (Dark)</option>
 							<option value="4">Bard</option>
 							<option value="5">Bard (Blue)</option>
@@ -494,11 +632,11 @@
 							</label>
 						</div>
 
-						<h4>Poison Flash Adjustments</h4>
+						<h4>Screen Flash Adjustments</h4>
 						<select class="form-control" id="poison_flash_options">
 							<option value="0">Default Flash <small><i>(Unchanged from base game)</small></i></option>
-							<option value="1">Reduced Flash <small><i>(Far less bright and more faint flashing)</small></i></option>
-							<option value="2">Remove Flash <small><i>(Completely remove the poison flash effect)</small></i></option>
+							<option value="1">Reduced Flash <small><i>(Heavily reduce the poison/lava/fire flash effect)</small></i></option>
+							<option value="2">Remove Flash <small><i>(Completely remove the poison/lava/fire flash effect)</small></i></option>
 						</select>
 
 						<button type="button" id="download-generated-rom" class="btn btn-primary btn-full-width top-spaced">
@@ -547,6 +685,29 @@
 						</h4>
 					</div>
 					<div class="modal-body">
+						<span class="badge">v0.5</span>
+						<ul>
+							<li>Added AI Stat Difficulty options</li>
+							<li>Added Shuffle AI Spellcasters option which shuffles which enemies in the game can cast spells</li>
+							<li>Added AI Spell Difficulty options which will either remove some spells or add some higher level spells</li>
+							<li>Added Shuffle AI Spell option which shuffles the spells the AI have in the game around</li>
+							<li>Added Randomize AI Spell option which randomly sets spells to the AI spell lists</li>
+							<li>Added Shuffle AI Equipment Users option which will shuffle which AI have armor and weapons</li>
+							<li>Added Shuffle AI Drop Possessors option which will shuffle which AI have non-equipment drops</li>
+							<li>Added AI Equipment randomization and shuffling options</li>
+							<li>Added AI Drops randomization and shuffling options</li>
+							<li>Added an option to "Maintain Believable Spellcasters, Equipment, and Drops"</li>
+							<li>Added Expanded Camping option to allow camping in towns</li>
+							<li>Added Starting Player and Party Equipment and Inventories options</li>
+							<li>Added Starting Gold options</li>
+							<li>Updated shrine item pickup text to tell you what item you received</li>
+							<li>Changed Show Symbols and Seed to always be on and replaced with a "Hide Seed in Game" option</li>
+							<li>Fixed camping bug where sleeping with longer days selected resulted in sleeping for the incorrect time</li>
+							<li>Fixed an issue where some items Sherry was unable to pick up would spawn in the Sherry chest</li>
+							<li>Updated the reduce flashing option to include lava and fire as well</li>
+							<li>Restructured the frontend to be less noisy and easier to read</li>
+							<li>Updated credits</li>
+						</ul>
 						<span class="badge">v0.4</span>
 						<ul>
 							<li>Added error reporting dialog box</li>
@@ -618,12 +779,14 @@
 						<ul>
 							<!--<li>The Character Randomizer allows you to play as other characters as well as randomize how characters in the world appear.</li>-->
 							<li>The Item Shuffler allows you to randomly shuffle items around in the world for when you want to enjoy an item hunt and more exploration.</li>
-							<li>The Spawn Randomizer allows you to shuffle enemies and their properties creating new combat experiences and challenges.</li>
+							<li>The Spawn Randomizer allows you to shuffle AI spawns and their properties allowing for new combinations of surprises on AI placement.</li>
+							<li>The AI Randomizer allows you to shuffle and randomize enemies properties creating new combat experiences and challenges.</li>
+							<li>The Gameplay Adjustments portion allows you to btoh shuffle and randomize player and party member properties as well as adjust aspects of the game to your liking.</li>
 							<!--<li>The World Randomizer allows you to randomize the layout of the world creating new worlds to explore.</li>-->
 						</ul>
 						<span class="badge">Item Shuffle Details</span></br>
 							The Item Shuffler will randomly shuffle all of the selected items between one another.
-							If "Main Items" and "Overworld Chests" are selected, then Runes and Moonstones could be placed in any overworld chest!</br></br>
+							If <b>"Main Items"</b> and <b>"Overworld Chests"</b> are selected, then Runes and Moonstones could be placed in any overworld chest or other main item locations!</br></br>
 							The Item Shuffler will attempt to prevent any placement of items which would result in them being unreachable. 
 							If there are multiple items in a chest, the shuffler will choose to randomize only one item per chest. </br></br>
 							You may choose to add the Moon Orb and/or Spellbook to the item shuffle pool, which will result in you starting with a random item from the item pool in their spot in your inventory.</br></br>
@@ -676,30 +839,43 @@
 							<li>1x Cyclops Cave</li>
 							<li>1x Destard</li>
 							<li>1x Hythloth</li>
-							<li>1x Moonglow Crypts</li>
+							<li>1x Moonglow Catacombs</li>
 							<li>5x Pirate Cave</li>
 							<li>1x Wrong / Covetous</li>
 						</ul>
 						<span class="badge">Spawn Randomization Details</span></br>
 						The Spawn Randomizer allows you to randomize enemy and creature spawns.</br></br>
-						If "Randomly Mix" is NOT selected, then creatures will only randomize with their own type, so monsters can only appear where other monsters could appear.</br></br>
-						If "Randomly Mix" IS selected then all selected creature types are mixed together. Monsters can now appear where anything else selected could appear!</br></br>
+						If <b>"Randomly Mix"</b> is <b>NOT</b> selected, then creatures will only randomize with their own type, so monsters can only appear where other monsters could appear.</br></br>
+						If <b>"Randomly Mix"</b> <b>IS</b> selected then all selected creature types are mixed together. Monsters can now appear where anything else selected could appear!</br></br>
 
 						<span class="badge">Spawn Number Details</span></br>
 						Each creature spawn point in the game has settings on how many creatures appear from their at once. If default is selected, the original spawn point numbers are used.</br></br>
-						You can choose to Shuffle the Spawn Numbers which will take all spawn numbers from every spawner in the game and then shuffle them and reassign them.</br></br>
-						It is also possible to completely randomize the spawn numbers by selecting "Random Spawn Numbers".</br></br>
+						You can choose to <b>"Shuffle"</b> the Spawn Numbers which will take all spawn numbers from every spawner in the game and then shuffle them and reassign them.</br></br>
+						It is also possible to completely randomize the spawn numbers by selecting <b>"Random Spawn Numbers"</b>.</br></br>
 
 						<span class="badge">Aggression Details</span></br>
 						Aggression is assigned to creatures based on the spawn point they spawn at. This is the default setting.</br></br>
-						When randomly mixing creatures, you may find character types no longer have the aggression you would expect. The "Intuitive Aggression" option assigns aggression based on creature type and not from the spawn point.</br></br>
-						You can choose to "Shuffle Aggression", which will shuffle the aggression of all spawns. Sheep or guards in town could now attack you!</br></br>
-						For those who want to not worry about being attacked randomly, you can select "Passive" and all creatures will now ignore you unless you attack first.</br></br>
+						When randomly mixing creatures, you may find character types no longer have the aggression you would expect. The <b>"Intuitive Aggression"</b> option assigns aggression based on creature type and not from the spawn point.</br></br>
+						You can choose to <b>"Shuffle Aggression"</b>, which will shuffle the aggression of all spawns. Sheep or guards in town could now attack you!</br></br>
+						For those who want to not worry about being attacked randomly, you can select <b>"Passive"</b> and all creatures will now ignore you unless you attack first.</br></br>
+
+						<span class="badge">AI Options Details</span></br>
+						<b>"Shuffle AI Stats"</b> will take the entire set of stats from each AI, and shuffle them between themselves.</br></br>
+						<b>"Shuffle Spellcasters"</b> will shuffle which AI can cast spells, maintaining the same ratio of spellcasters to non-spellcasters as the base game.</br></br>
+						<b>"Shuffle Equipment Users"</b> will shuffle which AI use armor and weapons, maintaining the same ratio of equipment users to non-equipment users as the base game.</br></br>
+						<b>"Shuffle Drop Possessors"</b> will shuffle which AI have non-armor and non-weapon drops. This maintains the same ratio of drop possessors to non-drop possessors as the base game.</br></br>
+						<b>"Randomize AI Drops"</b> will randomize the non-armor and non-weapon drops for each AI that is a drop possessor.</br></br>
+						<b>"Maintain Believable Spellcasters, Equipment, and Drops"</b> will enforce restrictions from the base game based on AI type on if the AI would be believable casting spells, using armor and weapons, or having certain categories of drops.</br></br>
+						You can use <b>"AI Stat Difficulty"</b> to either decrease or increase the stats of AI to make for an easier or harder experience.</br></br>
+						You can use <b>"AI Spell Difficulty"</b> to either add remove or add spells from the AI spell lists to make for an easier or harder experience.</br></br>
+						Options under <b>"AI Spells"</b> allow you to randomize or shuffle the spell lists for any AI that can cast spells.</br></br>
+						Options under <b>"AI Equipment"</b> allow you to randomize or shuffle armor and weapons for any AI that can use armor and weapons.</br></br>
 
 						<span class="badge">Gameplay Adjustment Details</span></br>
-						If you select "Add Missing Enemies from PC Version" then the Silver Serpent and Zu Flower will be added back to the game. These were unfinished in the SNES port. Due to limitiations the recreated versions are not identical to the PC version.</br></br>
-						"Add Missing Spells to AI" fixes a bug that prevents the AI from using all assigned spells. With this, AI can now cast all the spells they could on the PC version as well.</br></br>
-						Enable Expanded Button Mapping puts actions onto additional controller buttons beyond only the original A(open menu) and D-Pad(move) buttons.
+						If you select <b>"Add Missing Enemies from PC Version"</b> then the Silver Serpent and Zu Flower will be added back to the game. These were unfinished in the SNES port. Due to limitiations the recreated versions are not identical to the PC version.</br></br>
+						<b>"Add Missing Spells to AI"</b> fixes a bug that prevents the AI from using all assigned spells. With this, AI can now cast all the spells they could on the PC version as well.</br></br>
+						<b>"Enable Expanded Camping"</b> will allow you to sleep in town, which can greatly reduce frustration around trying to find an ideal camping spot.</br></br>
+						<b>"Enable Expanded Button Mapping"</b> puts actions onto additional controller buttons beyond only the original A(open menu) and D-Pad(move) buttons.
 						<ul>
 							<li>D-Pad - Move</li>
 							<li>A - Open Menu</li>
@@ -710,22 +886,31 @@
 							<li>R - Attack</li>
 							<li>Start - Inventory</li>
 						</ul>
+
+						<span class="badge">Starting Inventory Details</span></br>
+						You can choose to start with the default inventory, none, or between different styles of randomization for the inventory.</br></br>
+						The <b>"Tier and Set Based"</b> randomization randomizes your gear and items but ensure that it feels more purposeful and crafted. The randomizer will pick a tier of gear, then randomly a set of armor and seperately a set of weapons, and lastly choose random options from within that set. Each set has a number of options per piece, ensuring there are millions of combinations.</br></br>
+						With <b>"Chaotic"</b> randomization your gear and items are completely random and may be non-sensical.</br></br>
+
+						<span class="badge">Starting Gold Details</span></br>
+						You start the game with 200g by default, but you can choose to start with less, more, or a random amount.</br></br>
+
 						<span class="badge">Time Adjustment Details</span></br>
 						In Ultima 6, 1 minute of in game time passes for every step you take. Full daylight hours are between 06:00 and 19:00 and are when most NPCs are awake.</br></br>
-						You can choose to lengthen the daylight hours by 2x / 3x which means that 1 minute of in game time during daylight hours will pass only after 2 steps / 3 steps taken. Night hour time passing still occurs at 1 minute per step taken.</br></br>
-						If you choose to "Use PC Version Day and Night Lengths" then both the day and night will be 2x as long.</br></br>
+						You can choose to lengthen the daylight hours by <b>2x or 3x</b> which means that 1 minute of in game time during daylight hours will pass only after 2 steps or 3 steps taken. Night hour time passing still occurs at 1 minute per step taken.</br></br>
+						If you choose to <b>"Use PC Version Day and Night Lengths"</b> then both the day and night will be 2x as long.</br></br>
 						
 						<span class="badge">Karma Adjustment Details</span></br>
 						You can choose to make Karma less difficult or more difficult.</br></br>
-						When "Easy Karma Mode" is selected, all penalities are reduced to 1 karma loss, you start at 100 karma instead of 75, and all karma rewards are doubled.</br></br>
-						When "Hard Karma Mode" is selected, all penalities are doubled and you start at 60 instead of 75 karma.</br></br>
+						When <b>"Easy Karma Mode"</b> is selected, all penalities are reduced to 1 karma loss, you start at 100 karma instead of 75, and all karma rewards are doubled.</br></br>
+						When <b>"Hard Karma Mode"</b> is selected, all penalities are doubled and you start at 60 instead of 75 karma.</br></br>
 
 						<span class="badge">Other Details</span></br>
-						"Enable Spoiler Log" grants you access to seeing where all the items were placed. This can be good to reference if you get completely stuck.</br></br>
-						"Enable Hints" will replace text in various scrolls and books to give vague hints about the locations of any Main Items.</br></br>
-						"Show Symbol Indentifier" replaces the text that tells you what seed number and flags you have selected with a short series of symbols.</br></br>
-						"Remove Seed & Flags from Filename" will generate a random value for the filename.</br></br>
-						Combining "Show Symbol Indentifier" and "Remove Seed & Flags from Filename" allows you to create hidden seeds for the purposes of races, tournaments, or simply surprises for others.</br></br>
+						<b>"Enable Spoiler Log"</b> grants you access to seeing where all the items were placed. This can be good to reference if you get completely stuck.</br></br>
+						<b>"Enable Hints"</b> will replace text in various scrolls and books to give vague hints about the locations of any Main Items.</br></br>
+						When <b>"Hide Seed In Game"</b> is selected, the seed value will no longer be visible in the game.</br></br>
+						<b>"Remove Seed & Flags from Filename"</b> will generate a random value for the filename.</br></br>
+						Combining <b>"Hide Seed In Game"</b> and <b>"Remove Seed & Flags from Filename"</b> allows you to create hidden seeds for the purposes of races, tournaments, or simply surprises for others.</br></br>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

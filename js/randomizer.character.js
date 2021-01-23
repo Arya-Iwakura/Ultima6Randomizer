@@ -1,4 +1,5 @@
 //TODO : Add characters with less sprites, such as the boat and mouse
+//TODO : Ensure randomization is working as intended as it feels we often get the same sprites
 
 function setCharacterSprite(buffer, seed, character_sprite, fire_flag)
 {

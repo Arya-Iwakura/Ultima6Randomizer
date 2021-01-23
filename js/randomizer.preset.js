@@ -26,6 +26,8 @@ function updatePreset(val)
 			preset_townsfolk();
 			break;
 	}
+
+	updateAllSelectionTooltips();
 }
 
 function preset_townsfolk()
@@ -41,13 +43,27 @@ function preset_townsfolk()
 	$('#randomize_enemy_mix').prop('disabled', true);
 	$('#randomize_enemy_mix').prop('checked', false);
 
-	$('#default_spawn_numbers').prop('checked', true);
-	$('#enemy_aggression_default').prop('checked', true);
+	$('#select-ai-spawn-numbers').prop('value', 0);
+	$('#select-ai-aggression').prop('value', 0);
+	
+	$('#enemy_stats_shuffle').prop('checked', false);
+	$('#enemy_spellcasters_shuffle').prop('checked', false);
+	$('#enemy_equipmentusers_shuffle').prop('checked', false);
+	$('#enemy_droppossessors_shuffle').prop('checked', false);
+	$('#randomize_enemy_drops').prop('checked', true);
 
-	$('#add_missing_enemies').prop('checked', true);			
+	$('#select-ai-stat-difficulty').prop('value', 1);
+	$('#select-ai-spell-difficulty').prop('value', 1);
+	$('#select-ai-spells').prop('value', 0);
+	$('#select-ai-equipment').prop('value', 0);
+
+	$('#add_missing_enemies').prop('checked', true);
 	$('#add_missing_ai_spells').prop('checked', true);
-	$('#day_length_3x').prop('checked', true);
-	$('#karma_options_easy').prop('checked', true);
+	$('#expanded_camping').prop('checked', true);
+	$('#select-starting-inventory').prop('value', 0);
+	$('#select-starting-gold').prop('value', 0);
+	$('#select-day-night-cycle').prop('value', 2);
+	$('#select-karma-difficulty').prop('value', 1);
 
 	$('#display_spoiler_log').prop('checked', true);
 	$('#display_hints').prop('disabled', false);
@@ -67,20 +83,34 @@ function preset_explorer()
 	$('#randomize_enemy_animals').prop('checked', true);
 	$('#randomize_enemy_mix').prop('disabled', false);
 
-	$('#default_spawn_numbers').prop('checked', true);
-	$('#enemy_aggression_default').prop('checked', true);
+	$('#select-ai-spawn-numbers').prop('value', 0);
+	$('#select-ai-aggression').prop('value', 0);
+	
+	$('#enemy_stats_shuffle').prop('checked', false);
+	$('#enemy_spellcasters_shuffle').prop('checked', false);
+	$('#enemy_equipmentusers_shuffle').prop('checked', false);
+	$('#enemy_droppossessors_shuffle').prop('checked', false);
+	$('#randomize_enemy_drops').prop('checked', true);
+
+	$('#select-ai-stat-difficulty').prop('value', 2);
+	$('#select-ai-spell-difficulty').prop('value', 1);
+	$('#select-ai-spells').prop('value', 0);
+	$('#select-ai-equipment').prop('value', 0);
 
 	$('#add_missing_enemies').prop('checked', true);
-	$('#add_missing_ai_spells').prop('checked', true);			
-	$('#day_length_2x').prop('checked', true);
-	$('#karma_options_easy').prop('checked', true);
+	$('#add_missing_ai_spells').prop('checked', true);
+	$('#expanded_camping').prop('checked', true);
+	$('#select-starting-inventory').prop('value', 0);
+	$('#select-starting-gold').prop('value', 0);
+	$('#select-day-night-cycle').prop('value', 1);
+	$('#select-karma-difficulty').prop('value', 1);
 
 	$('#display_spoiler_log').prop('checked', true);
 	$('#display_hints').prop('disabled', false);
 	$('#display_hints').prop('checked', true);
 }
 
-function preset_adventurer()
+function preset_adventurer() //standard
 {
 	$('#randomize_core_items').prop('checked', true);
 	$('#randomize_chests_overworld').prop('checked', true);
@@ -93,17 +123,30 @@ function preset_adventurer()
 
 	$('#randomize_enemy_animals').prop('checked', true);
 	$('#randomize_enemy_wild').prop('checked', true);
-	$('#add_missing_enemies').prop('checked', true);
 	$('#randomize_enemy_mix').prop('checked', true);
-
 	$('#randomize_enemy_mix').prop('disabled', false);
 
-	$('#default_spawn_numbers').prop('checked', true);
-	$('#enemy_aggression_intuitive').prop('checked', true);
+	$('#select-ai-spawn-numbers').prop('value', 0);
+	$('#select-ai-aggression').prop('value', 1);
 
+	$('#enemy_stats_shuffle').prop('checked', false);
+	$('#enemy_spellcasters_shuffle').prop('checked', false);
+	$('#enemy_equipmentusers_shuffle').prop('checked', false);
+	$('#enemy_droppossessors_shuffle').prop('checked', false);
+	$('#randomize_enemy_drops').prop('checked', true);
+
+	$('#select-ai-stat-difficulty').prop('value', 0);
+	$('#select-ai-spell-difficulty').prop('value', 0);
+	$('#select-ai-spells').prop('value', 0);
+	$('#select-ai-equipment').prop('value', 1);
+
+	$('#add_missing_enemies').prop('checked', true);
 	$('#add_missing_ai_spells').prop('checked', true);
-	$('#day_length_default').prop('checked', true);
-	$('#karma_options_default').prop('checked', true);
+	$('#expanded_camping').prop('checked', true);
+	$('#select-starting-inventory').prop('value', 0);
+	$('#select-starting-gold').prop('value', 0);
+	$('#select-day-night-cycle').prop('value', 0);
+	$('#select-karma-difficulty').prop('value', 0);
 
 	$('#display_spoiler_log').prop('checked', true);
 	$('#display_hints').prop('disabled', false);
@@ -127,13 +170,27 @@ function preset_avatar()
 	$('#randomize_enemy_people').prop('checked', true);
 	$('#randomize_enemy_mix').prop('disabled', false);
 
-	$('#shuffle_spawn_numbers').prop('checked', true);
-	$('#enemy_aggression_default').prop('checked', true);
+	$('#select-ai-spawn-numbers').prop('value', 1);
+	$('#select-ai-aggression').prop('value', 0);
+
+	$('#enemy_stats_shuffle').prop('checked', false);
+	$('#enemy_spellcasters_shuffle').prop('checked', false);
+	$('#enemy_equipmentusers_shuffle').prop('checked', false);
+	$('#enemy_droppossessors_shuffle').prop('checked', true);
+	$('#randomize_enemy_drops').prop('checked', true);
+
+	$('#select-ai-stat-difficulty').prop('value', 3);
+	$('#select-ai-spell-difficulty').prop('value', 2);
+	$('#select-ai-spells').prop('value', 1);
+	$('#select-ai-equipment').prop('value', 1);
 
 	$('#add_missing_enemies').prop('checked', true);
 	$('#add_missing_ai_spells').prop('checked', true);
-	$('#day_length_default').prop('checked', true);
-	$('#karma_options_hard').prop('checked', true);
+	$('#expanded_camping').prop('checked', false);
+	$('#select-starting-inventory').prop('value', 0);
+	$('#select-starting-gold').prop('value', 0);
+	$('#select-day-night-cycle').prop('value', 0);
+	$('#select-karma-difficulty').prop('value', 2);
 
 	$('#display_spoiler_log').prop('checked', true);
 	$('#display_hints').prop('disabled', false);
@@ -158,17 +215,31 @@ function preset_guardian()
 
 	$('#randomize_enemy_mix').prop('checked', true);
 	$('#randomize_enemy_mix').prop('disabled', false);
-	$('#random_spawn_numbers').prop('checked', true);
-	$('#enemy_aggression_shuffle').prop('checked', true);
+	$('#select-ai-spawn-numbers').prop('value', 2);
+	$('#select-ai-aggression').prop('value', 2);
+	
+	$('#enemy_stats_shuffle').prop('checked', true);
+	$('#enemy_spellcasters_shuffle').prop('checked', true);
+	$('#enemy_equipmentusers_shuffle').prop('checked', true);
+	$('#enemy_droppossessors_shuffle').prop('checked', true);
+	$('#randomize_enemy_drops').prop('checked', true);
+
+	$('#select-ai-stat-difficulty').prop('value', 4);
+	$('#select-ai-spell-difficulty').prop('value', 2);
+	$('#select-ai-spells').prop('value', 2);
+	$('#select-ai-equipment').prop('value', 2);
 
 	$('#add_missing_enemies').prop('checked', true);
 	$('#add_missing_ai_spells').prop('checked', true);
-	$('#day_length_default').prop('checked', true);
-	$('#karma_options_hard').prop('checked', true);
+	$('#expanded_camping').prop('checked', false);
+	$('#select-starting-inventory').prop('value', 0);
+	$('#select-starting-gold').prop('value', 0);
+	$('#select-day-night-cycle').prop('value', 0);
+	$('#select-karma-difficulty').prop('value', 2);
 
 	$('#display_spoiler_log').prop('checked', true);
 	$('#display_hints').prop('disabled', false);
-	$('#display_hints').prop('checked', true);	
+	$('#display_hints').prop('checked', true);
 }
 
 $('#preset').change(updatePreset);
