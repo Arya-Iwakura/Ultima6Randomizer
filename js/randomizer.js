@@ -1,4 +1,4 @@
-var VERSION_STRING = 'v0.5';
+var VERSION_STRING = 'v0.5a';
 
 const SUBSYSTEM_ITEMS = 0;
 const SUBSYSTEM_SPAWNERS = 1;
@@ -38,8 +38,6 @@ function randomizeROM(buffer, seed)
 
 		throw new Error(errorText);
 	}
-
-	//TODO : Ensure seed value is affected by flags
 
 	var random = new Random(seed);
 	var vseed = random.seed.toHex(8);
@@ -318,12 +316,16 @@ function randomizeROM(buffer, seed)
 		randomizeEnemySpells(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_SPELLS], spellDifficultySetting);
 	}
 
+	if ($('#select-spiritshrine').val() > 0 )
+	{
+		addSpiritShrineWarpMountainIsland(rom, subSystemSeeds[SUBSYSTEM_WORLD], $('#select-spiritshrine').val());
+	}
+
 	//---------world
 	if ($('#randomize_world_map').is(':checked'))
 	{
 		randomizeWorld(rom, subSystemSeeds[SUBSYSTEM_WORLD]);
 	}
-	
 
 	//---------wrap it up
 	var preset = +$('#preset').val();

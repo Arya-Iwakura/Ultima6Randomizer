@@ -20,7 +20,6 @@ function setPoisionFlash(buffer, flashSelection)
         rom.set([0xE0, 0x03],0xB523);
         rom.set([0x1F, 0x00],0xB53B);
         rom.set([0x22, 0xBF, 0xB5, 0x01],0xB590);
-        rom.set([0x22, 0x20, 0xB6, 0x01],0xB5C1);
     }
     else if(flashSelection == 1)
     {
@@ -53,14 +52,14 @@ function easyKarmaMode(rom)
             ], 0xFCB2);
 
     //branch from where karma is decremented to set all penalties to 01
-    rom.set([   0x20, 0xAA, 0xFC, 0xEA, 0xEA, // branch to FCAA
+    rom.set([   0x20, 0xE0, 0xFC, 0xEA, 0xEA, // branch to FCAA
             ], 0xAA94);
 
     rom.set([   0xA9, 0x01, // load value 01 into accumulator
                 0x85, 0x00, // store A at 00
                 0xAD, 0x4A, 0x01, // load 014A
                 0x60, // return
-            ], 0xFCAA);
+            ], 0xFCE0);
 }
 
 function hardKarmaMode(rom)
@@ -69,13 +68,13 @@ function hardKarmaMode(rom)
     rom[0x812A] = 0x3C; //set starting karma to a lower number
 
     //branch from where karma is decremented to double penalties
-    rom.set([   0x20, 0xAA, 0xFC, 0xEA, 0xEA, // branch to FCAA
+    rom.set([   0x20, 0xE0, 0xFC, 0xEA, 0xEA, // branch to FCAA
             ], 0xAA94);
 
     rom.set([   0x0A, 0xEA, // double accumulator then do nothing (keeps the code the same length as the easy karma mode)
                 0x85, 0x00, // store A at 00
                 0xAD, 0x4A, 0x01, 0x60, // load 014A
-            ], 0xFCAA);
+            ], 0xFCE0);
 }
 
 function adjustDayLength(rom, desiredLength)
@@ -84,6 +83,10 @@ function adjustDayLength(rom, desiredLength)
     var timeMultiplier = 0x00; //0 and 1=default, 2=2x, 3=3x, 4=4x
     var dawnTime = 0x06;
     var duskTime = 0x13;
+
+    //first we move the sleep timer byte to a new area in memory to prevent other code overrides
+    rom[0xB67E] = 0xFF;
+    rom[0xB6F0] = 0xFF;
 
     if(desiredLength == 1) //PC timing
     {
@@ -101,10 +104,10 @@ function adjustDayLength(rom, desiredLength)
     }
 
     //branch function at (BA30) to a new space in code (FC87)
-    rom.set([0x20, 0x87, 0xFC, 0xEA, 0xEA, 0xEA],0xBA30); //jsr to FC87
+    rom.set([0x20, 0x50, 0xFD, 0xEA, 0xEA, 0xEA],0xBA30); //jsr to FC87
 
     //load hour data, branch if <5 or >12
-    rom.set([   0xA5, 0xDF, //load sleep timer (check if we are suppose to be asleep)
+    rom.set([   0xA5, 0xFF, //load sleep timer (check if we are suppose to be asleep)
                 0xC9, 0x00, 0xD0, 0x18, //compare and branch if greater than 0 (skip if we are sleeping)
                 0xB5, 0x51, //load hour time
                 0xC9, dawnTime, 0x90, 0x12, //compare and branch if less than 6 (skip if pre-dawn)
@@ -121,9 +124,21 @@ function adjustDayLength(rom, desiredLength)
                 0xC2, 0x21, //reset status bits
                 0x65, 0x00, //add minute time
                 0x60, //return
-            ], 0xFC87);
+            ], 0xFD50);
 }
 
+function updateShrineText(rom)
+{
+	//this function updates the code that reads a byte checked for item pickups
+	//E1 is the dialog command to check for item being inspected
+	rom.set([0x20, 0x00, 0xFD],0xBD24); //inject new address
+
+	rom.set([	0xC9, 0xE1, 0xD0, 0x05, //branch if accumulator is not E1
+				0xA6, 0xE5, 0x8E, 0x38, 0xA7, //load E5(item id) into X then store X into A738
+				0x38, 0xBE, 0x38, 0xA7, //add back code we injected over (LDX A738)
+				0x60, //return
+			],0xFD00);
+}
 
 function adjustCamping(rom)
 {
@@ -377,7 +392,6 @@ function setRandomInventorySet(rom, random, address, inventoryCount, inventoryOf
                     {
                         if(chosenItems[j] == selectedItem)
                         {
-                            console.log("duplicate " + selectedItem);
                             chosenSet = random.from(itemPool);
                             selectedItem = random.from(chosenSet.item);
                             noDuplicateFound = false;

@@ -370,6 +370,13 @@
 							Add Missing Spells to AI <i><small>(Fixes a bug that prevents AI from using all of their assigned spells)</small></i>
 						</label>
 					</div>
+					<!--
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="remove_moonorb" class="presetoption">
+							Remove Moon Orb <i><small>(Remove the Moon Orb. Recommend adding Spirituality Shrine Warp)</small></i>
+						</label>
+					</div>-->
 					<div class="checkbox">
 						<label>
 							<input type="checkbox" id="expanded_camping" class="presetoption">
@@ -460,7 +467,25 @@
 						<small><i><span id="karma-tooltip-2" hidden>(Karma penalties lowered. Higher starting karma. Higher karma rewards.)</span></small></i>
 						<small><i><span id="karma-tooltip-3" hidden>(Karma penalties raised. Lower starting karma.)</span></small></i>
 					</div>
-
+<!--
+					<div class="input-group top-spaced">
+						<div class="input-group-addon">
+							<b>Shrine of Spirituality Warp</b>
+						</div>
+						<select class="form-control" id="select-spiritshrine">
+							<option value="0" selected="selected">Default</option>
+							<option value="1">Add Island Warp</option>
+							<option value="2">Add Island Warp (Requires Flying)</option>
+							<option value="3">Add Island Warp (Random Requirements)</option>
+						</select>
+					</div>
+					<div class="input-group-addon">
+						<small><i><span id="spiritshrine-tooltip-1">(Unchanged from base game. Shrine is reachable only through Moongates.)</span></small></i>
+						<small><i><span id="spiritshrine-tooltip-2" hidden>(Add an island with a warp to the shrine)</span></small></i>
+						<small><i><span id="spiritshrine-tooltip-3" hidden>(Add an island with a warp to the shrine that requires flying to reach)</span></small></i>
+						<small><i><span id="spiritshrine-tooltip-4" hidden>(Add an island with a warp to the shrine with randomly selected requirements to reach)</span></small></i>
+					</div>
+				-->
 					<h3>Other</h3>
 					<div class="checkbox">
 						<label>
@@ -684,10 +709,16 @@
 							Ultima 6 Randomizer Changelog
 						</h4>
 					</div>
-					<div class="modal-body">
+					<div class="modal-body"><!--
 						<span class="badge">v0.6</span>
 						<ul>
-							<li>TEXT</li>
+							<li>Added Remove Moon Orb option to completely remove the Moon Orb from the game</li>
+							<li>Added options to add a new island with a warp to the Shrine of Spirituality (recommended if Remove Moon Orb selected) </li>
+						</ul>-->
+						<span class="badge">v0.5a</span>
+						<ul>
+							<li>Fixed an issue with time settings and karma settings not working well together</li>
+							<li>Fixed an issue that would cause the time code to occasionally ignore the selected settings in game</li>
 						</ul>
 						<span class="badge">v0.5</span>
 						<ul>

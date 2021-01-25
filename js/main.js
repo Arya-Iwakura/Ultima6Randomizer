@@ -336,6 +336,7 @@ function updateAllSelectionTooltips()
 	checkStartingGoldStatus();
 	checkKarmaDifficultyStatus();
 	checkDayNightCycleStatus();
+	checkSpirtShrineStatus();
 }
 
 $('#select-ai-spawn-numbers').click(function(e)
@@ -784,6 +785,50 @@ function checkKarmaDifficultyStatus()
 		$('#karma-tooltip-1').prop('hidden', true);
 		$('#karma-tooltip-2').prop('hidden', true);
 		$('#karma-tooltip-3').prop('hidden', false);
+	}
+}
+
+
+$('#select-spiritshrine').click(function(e)
+{
+	checkSpirtShrineStatus();
+});
+
+$('#select-spiritshrine').keyup(function(e)
+{
+	checkSpirtShrineStatus();
+});
+
+function checkSpirtShrineStatus()
+{
+	var selection = +$('#select-spiritshrine').val();
+	if (selection == 0)
+	{
+		$('#spiritshrine-tooltip-1').prop('hidden', false);
+		$('#spiritshrine-tooltip-2').prop('hidden', true);
+		$('#spiritshrine-tooltip-3').prop('hidden', true);
+		$('#spiritshrine-tooltip-4').prop('hidden', true);
+	}
+	else if (selection == 1)
+	{
+		$('#spiritshrine-tooltip-1').prop('hidden', true);
+		$('#spiritshrine-tooltip-2').prop('hidden', false);
+		$('#spiritshrine-tooltip-3').prop('hidden', true);
+		$('#spiritshrine-tooltip-4').prop('hidden', true);
+	}
+	else if (selection == 2)
+	{
+		$('#spiritshrine-tooltip-1').prop('hidden', true);
+		$('#spiritshrine-tooltip-2').prop('hidden', true);
+		$('#spiritshrine-tooltip-3').prop('hidden', false);
+		$('#spiritshrine-tooltip-4').prop('hidden', true);
+	}
+	else if (selection == 3)
+	{
+		$('#spiritshrine-tooltip-1').prop('hidden', true);
+		$('#spiritshrine-tooltip-2').prop('hidden', true);
+		$('#spiritshrine-tooltip-3').prop('hidden', true);
+		$('#spiritshrine-tooltip-4').prop('hidden', false);
 	}
 }
 

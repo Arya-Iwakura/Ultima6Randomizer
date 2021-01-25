@@ -50,6 +50,11 @@ var DATA_ITEM_SPELLBOOK =
 	{"count": 1, "bytes": 2, "offset": 0x0F923, "flags": [0xC0, 0xC0], "id": [ITEM_SPELLBOOK], "restrictions": [ITEM_GOLD, ITEM_SPELLBOOK, ITEM_MOONORB], "name": "spellbook", "item": "Spellbook", "location": "Inventory", "type":"main", "stolen":"no", "hints":[]},
 ];
 
+var DATA_ITEM_MOONORB_REPLACEMENTS =
+[
+	{"count": 1, "bytes": 2, "offset": 0x0F91D, "flags": [0xC0, 0xC0], "id": [0x6D], "restrictions": [ITEM_GOLD, ITEM_MOONORB, ITEM_SPELLBOOK], "name": "sextant", "item": "Sextant", "location": "Inventory", "type":"solo", "stolen":"no", "hints":[]},
+];
+
 //name is the unique identifier for each of this and must be unique
 //flags are [stolen, not stolen] and for shrine items(moonstones) are "on shrine / not on shrine"
 var DATA_ITEMS_CORE =
@@ -69,7 +74,7 @@ var DATA_ITEMS_CORE =
 		 "name": "moonstone-justice", "item": "Moonstone of Justice", "location": "Shrine of Justice", "type":"shrine", "hints":[1,10,18]},
 	{"offset": 0x11DF1, "flags": [0x41, 0xC0], "id": [0x63], "restrictions": [ITEM_RUNE_SACRIFICE, ITEM_LEATHER_HELM, ITEM_CHAIN_COIF, ITEM_IRON_HELM, ITEM_SPIKED_HELM, ITEM_WINGED_HELM, ITEM_GOLD],
 		 "name": "moonstone-sacrifice", "item": "Moonstone of Sacrifice", "location": "Shrine of Sacrifice", "type":"shrine", "stolen":"no", "hints":[1,11,18]},
-	{"offset": 0x11686, "flags": [0x41, 0xC0], "id": [0x65], "restrictions": [ITEM_RUNE_SPIRITUALITY, ITEM_LEATHER_HELM, ITEM_CHAIN_COIF, ITEM_IRON_HELM, ITEM_SPIKED_HELM, ITEM_WINGED_HELM, ITEM_BRASS_HELM, ITEM_SPARTAN_HELM, ITEM_GOLD],
+	{"offset": 0x11686, "flags": [0x41, 0xC0], "id": [0x65], "restrictions": [ITEM_RUNE_SPIRITUALITY, ITEM_LEATHER_HELM, ITEM_CHAIN_COIF, ITEM_IRON_HELM, ITEM_SPIKED_HELM, ITEM_WINGED_HELM, ITEM_BRASS_HELM, ITEM_SPARTAN_HELM, ITEM_GOLD, ITEM_BALLOON_PLANS],
 		 "name": "moonstone-spirituality", "item": "Moonstone of Spirituality", "location": "Shrine of Spirituality", "type":"shrine", "stolen":"no", "hints":[1,12,18]},
 	{"offset": 0x11E37, "flags": [0x41, 0xC0], "id": [0x61], "restrictions": [ITEM_RUNE_VALOR, ITEM_MOONORB, ITEM_LEATHER_HELM, ITEM_IRON_HELM, ITEM_CHAIN_COIF, ITEM_GOLD],
 		 "name": "moonstone-valor", "item": "Moonstone of Valor", "location": "Shrine of Valor", "type":"shrine", "stolen":"no", "hints":[1,13,18]},

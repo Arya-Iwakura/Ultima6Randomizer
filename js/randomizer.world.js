@@ -748,6 +748,25 @@ function fillBottomBorder(rom)
     }
 }
 
+function setWorldChunkAtCoords(rom, x, y, inTile, inModifier)
+{
+	var chunkID = (y*256) + (x*2);
+	rom[WORLD_OFFSET + chunkID] = inTile;
+	rom[WORLD_OFFSET + chunkID+1] = inModifier;
+}
+
+function setWorldChunksInGrid(rom, startX, startY, endX, endY, inTiles)
+{
+    for(var y = 0; y < endY-startY+1; ++y)
+    {
+        for(var x = 0; x < endX-startX+1; ++x)
+        {
+            var chunkID = ((startY+y)*256) + ((startX+x)*2);
+	        rom[WORLD_OFFSET + chunkID] = inTiles[y][x*2];
+	        rom[WORLD_OFFSET + chunkID+1] = inTiles[y][(x*2)+1];
+        }    
+    }
+}
 
 //=================================================================================
 //=================================================================================
