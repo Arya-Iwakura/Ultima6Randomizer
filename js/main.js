@@ -94,6 +94,16 @@ $('#download-last-generated-rom').click(function(e)
 
 $('#download-spoiler-log').click(function(e)
 {
+	downloadSpoilerLog(e);
+});
+
+$('#download-spoiler-log-from-view').click(function(e)
+{
+	downloadSpoilerLog(e);
+});
+
+function downloadSpoilerLog(e)
+{
 	var fileName = "";
 	fileName = prefix + '-' + result.seed + '-' + result.preset + "-spoiler" + ".txt";
 	if ($('#hide_filename_spoiler').is(':checked'))
@@ -107,7 +117,7 @@ $('#download-spoiler-log').click(function(e)
 		outputText += result.spoilers[i] + '\r\n';
 	}
 	saveAs(new Blob([outputText], {type: "otext/plain;charset=utf-8"}), fileName);
-});
+}
 
 $('#generate-randomized-rom').click(function(e)
 {
