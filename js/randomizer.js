@@ -1,4 +1,4 @@
-var VERSION_STRING = 'v0.5a';
+var VERSION_STRING = 'v0.5b';
 
 const SUBSYSTEM_ITEMS = 0;
 const SUBSYSTEM_SPAWNERS = 1;
@@ -49,7 +49,9 @@ function randomizeROM(buffer, seed)
 	fixChests(rom);
 	increaseSherryPickupWeight(rom);
 	bookLordBritishRandomizerBook(rom);
-	
+	overrideMoongateShrineCheck(rom);
+	addRafts(rom);
+
 	//---------gameplay and other
 	if ($('#expanded_camping').is(':checked'))
 	{
@@ -106,6 +108,15 @@ function randomizeROM(buffer, seed)
 	else if ($('#select-starting-gold').val() == 4)
 	{
 		setStartingGold(rom, 4, subSystemSeeds[SUBSYSTEM_PLAYER_INVENTORY]); //random gold
+	}
+
+	if ($('#select-placedrafts').val() == 1)
+	{
+		addRafts(rom);
+	}
+	else if ($('#select-placedrafts').val() == 2)
+	{
+		removeRafts(rom);
 	}
 
 	var addEnemiesFlag = false;

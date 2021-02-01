@@ -246,6 +246,12 @@ function setStartingInventory(rom, random, inInventorySetting)
     if(inInventorySetting == 1) //none
     {
         clearInventories(rom);
+
+        //add food to empty inventory slots to prevent "selling hands" bug
+        setRandomInventoryForEmptySetting(rom, random, 0xF914, 1, 0); //avatar inventory
+        setRandomInventoryForEmptySetting(rom, random, 0xF925, 2, 0); //dupre inventory
+        setRandomInventoryForEmptySetting(rom, random, 0xF934, 3, 0); //shamino inventory
+        setRandomInventoryForEmptySetting(rom, random, 0xF945, 3, 4); //iolo inventory
     }
     if(inInventorySetting > 1) //random
     {
@@ -419,6 +425,37 @@ function setRandomInventorySet(rom, random, address, inventoryCount, inventoryOf
             }
         }
     }
+}
+
+function setRandomInventoryForEmptySetting(rom, random, address, inventoryCount, inventoryOffset)
+{
+    var inventoryPool = getEmptyItemPoolForInventory();
+    for(var i = 0; i < inventoryCount; ++i)
+    {
+        var inventoryAddress = address+11+inventoryOffset+(i*2);
+
+        if(rom[inventoryAddress] == 0x00) //only add this item if there is an open space here
+        {
+            //choose and set an item
+            var selectedNum = random.nextIntRange(0, inventoryPool.itemPool.length);
+            var selectedItem = inventoryPool.itemPool[selectedNum];
+            rom[inventoryAddress] = selectedItem;
+            rom[inventoryAddress+1] = random.nextIntRange(1, inventoryPool.quantityPool[selectedNum]);
+        }
+    }
+}
+
+function getEmptyItemPoolForInventory()
+{
+    var itemPool = [];
+    itemPool = itemPool.concat(DATA_PLAYER_INVENTORY_ITEMS_FOOD.items);
+
+    var quantityPool = [];
+    quantityPool = quantityPool.concat(DATA_PLAYER_INVENTORY_ITEMS_FOOD.quantity);
+
+    return {    itemPool : itemPool,
+                quantityPool : quantityPool,
+            };
 }
 
 function setStartingInventoryChaotic(rom, random)
@@ -596,4 +633,61 @@ function getChaoticItemPoolForInventory()
     return {    itemPool : itemPool,
                 quantityPool : quantityPool,
             };
+}
+
+function overrideMoongateShrineCheck(rom)
+{
+    rom.set([0xEA, 0xA9, 0xFF],0x678); //overwrite shrines cleared byte load and force it to always think the shrines are active
+}
+
+function removeRafts(rom)
+{
+    //move the rafts somewhere that traps them behind bridges and prevents them from accessing the ocean
+    //x,y - 7E7BD4, 7E7C26 - move empath raft to 5D 00, D5 00 (river west of empath) - 0x16726 - 88 B8 82 
+    rom.set([0x5D, 0x54, 0x83], 0x16726);
+
+    //x,y - 7E7BD6, 7E7C28 - move long haul raft to 25 01, 94 00 (river east of yew) - 0x16729 - ED 3D 82
+    rom.set([0x25, 0x51, 0x82], 0x16729);
+
+    //x,y - 7E7BDA, 7E7C2C - move cove raft to 13 02, 56 01 (trapped near cove) - 0x1672F - 4A FA 84
+    rom.set([0x13, 0x5A, 0x85], 0x1672F);
+
+    //x,y - 7E7BD8, 7E7C2A - move swamp raft to 96 03, 13 02 (trapped in moonglow) - 0x1672C - F3 D5 83
+    rom.set([0x96, 0x4F, 0x88], 0x1672C);
+
+    //x,y - 7E7BDC, 7E7C2E - move skara raft to E0 00, AC 01 (shame entrance) - 0x16732 - 42 A8 87
+    rom.set([0xE0, 0xB0, 0x86], 0x16732);
+}
+
+function addRafts(rom)
+{
+    //x,y - 7E7BAA, 7E7BFC - minoc ship
+    //x,y - 7E7BCC, 7E7C1E - jhelom ship
+    //x,y - 7E7BCE, 7E7C20 - jhelom ship
+
+    if ($('#select-spiritshrine').val() > 0 )
+	{
+        //x,y - 7E7BA8, 7E7BFA - minoc ship - 0x166E4 - 52 DE 61
+        //add - shrine of spirituality 5F 00, 73 00 = 5F CC 81
+        rom.set([0x5F, 0xCC, 0x81], 0x166E4);
+    }
+
+    //x,y - 7E7BB8, 7E7C0A - britain ship - 0x166FC - 37 F5 66
+    //add - shrine of honesty B3 03, 0F 01
+    rom.set([0xB3, 0x3F, 0x84], 0x166FC);
+
+    //x,y - 7E7BC2, 7E7C14 - den ship - 0x1670B - 4E DA 69
+    //add - shrine of humility A2 03, AF 03
+    rom.set([0xA2, 0xBF, 0x8E], 0x1670B);
+
+    //x,y - 7E7BCA, 7E7C1C - jhelom ship
+    //add - shrine of valor 82 00, AF 03 - 0x16717 - 9D B8 6D
+    rom.set([0x8C, 0xBC, 0x8E], 0x16717);
+
+    //add - bonn
+    //add - skara brae mage
+    //add - stonegate
+    //add - new maginica
+    //add - serpents hold
+    //add - sutek
 }

@@ -1,10 +1,88 @@
 //TODO : Add characters with less sprites, such as the boat and mouse
-//TODO : Ensure randomization is working as intended as it feels we often get the same sprites
+
+var DATA_PLAYER_CHARACTERS =
+[
+    {"characterID":0x0F, "spriteID":0x10, "paletteID":0x05, "sleepingID":0x06, "id":2, "name":"Avatar", "tags":["base", "realistic"]},
+    {"characterID":0x0F, "spriteID":0x10, "paletteID":0x02, "sleepingID":0x06, "id":3, "name":"Avatar Dark", "tags":["realistic"]},
+    {"characterID":0x0B, "spriteID":0x0C, "paletteID":0x01, "sleepingID":0x06, "id":4, "name":"Bard", "tags":["base", "realistic"]},
+    {"characterID":0x0B, "spriteID":0x0C, "paletteID":0x06, "sleepingID":0x06, "id":5, "name":"Bard (Blue)", "tags":["realistic"]},
+    {"characterID":0x06, "spriteID":0x07, "paletteID":0x03, "sleepingID":0x05, "id":6, "name":"Child", "tags":["base", "realistic"]},
+    {"characterID":0x06, "spriteID":0x07, "paletteID":0x01, "sleepingID":0x03, "id":7, "name":"Child (Pink)", "tags":["wild"]},
+    {"characterID":0x29, "spriteID":0x22, "paletteID":0x00, "sleepingID":0x01, "id":8, "name":"Daemon (Brown)", "tags":["monster"]},
+    {"characterID":0x29, "spriteID":0x22, "paletteID":0x04, "sleepingID":0x01, "id":9, "name":"Daemon (Green)", "tags":["monster"]},
+    {"characterID":0x29, "spriteID":0x22, "paletteID":0x02, "sleepingID":0x01, "id":10, "name":"Daemon (Red)", "tags":["base", "monster"]},
+    {"characterID":0x0C, "spriteID":0x0D, "paletteID":0x06, "sleepingID":0x02, "id":11, "name":"Dress Wearer (Blue)", "tags":["base", "realistic"]},
+    {"characterID":0x0C, "spriteID":0x0D, "paletteID":0x02, "sleepingID":0x02, "id":12, "name":"Dress Wearer (Red)", "tags":["realistic"]},
+    {"characterID":0x0A, "spriteID":0x0B, "paletteID":0x03, "sleepingID":0x05, "id":13, "name":"Farmer", "tags":["base", "realistic"]},
+    {"characterID":0x01, "spriteID":0x02, "paletteID":0x05, "sleepingID":0x00, "id":14, "name":"Fighter (Silver)", "tags":["base", "realistic"]},
+    {"characterID":0x01, "spriteID":0x02, "paletteID":0x00, "sleepingID":0x00, "id":15, "name":"Fighter (Bronze)", "tags":["realistic"]},
+    {"characterID":0x26, "spriteID":0x21, "paletteID":0x04, "sleepingID":0x01, "id":16, "name":"Gargoyle (Green)", "tags":["wild"]},
+    {"characterID":0x26, "spriteID":0x21, "paletteID":0x02, "sleepingID":0x01, "id":17, "name":"Gargoyle (Red)", "tags":["base"]},
+    {"characterID":0x26, "spriteID":0x21, "paletteID":0x00, "sleepingID":0x01, "id":18, "name":"Gargoyle (Tan)", "tags":["wild"]},
+    {"characterID":0x07, "spriteID":0x08, "paletteID":0x05, "sleepingID":0x00, "id":19, "name":"Guard", "tags":["base", "realistic"]},
+    {"characterID":0x08, "spriteID":0x09, "paletteID":0x06, "sleepingID":0x04, "id":20, "name":"Jester", "tags":["base", "realistic"]},
+    {"characterID":0x0E, "spriteID":0x0F, "paletteID":0x01, "sleepingID":0x02, "id":21, "name":"Lord British", "tags":["base"]},
+    {"characterID":0x03, "spriteID":0x04, "paletteID":0x06, "sleepingID":0x02, "id":22, "name":"Mage (Blue)", "tags":["base", "realistic"]},
+    {"characterID":0x03, "spriteID":0x04, "paletteID":0x02, "sleepingID":0x02, "id":23, "name":"Mage (Red)", "tags":["realistic"]},
+    {"characterID":0x03, "spriteID":0x04, "paletteID":0x00, "sleepingID":0x02, "id":24, "name":"Mage (Tan)", "tags":["realistic"]},
+    {"characterID":0x05, "spriteID":0x06, "paletteID":0x03, "sleepingID":0x05, "id":25, "name":"Merchant", "tags":["base", "realistic"]},
+    {"characterID":0x2E, "spriteID":0x26, "paletteID":0x03, "sleepingID":0x04, "id":26, "name":"Mongbat", "tags":["base", "monster"]},
+    {"characterID":0x04, "spriteID":0x05, "paletteID":0x01, "sleepingID":0x03, "id":27, "name":"Noble", "tags":["base", "realistic"]},
+    {"characterID":0x09, "spriteID":0x0A, "paletteID":0x03, "sleepingID":0x04, "id":28, "name":"Peasant", "tags":["base", "realistic"]},
+    {"characterID":0x09, "spriteID":0x0A, "paletteID":0x06, "sleepingID":0x04, "id":29, "name":"Peasant (Blue)", "tags":["realistic"]},
+    {"characterID":0x09, "spriteID":0x0A, "paletteID":0x00, "sleepingID":0x04, "id":30, "name":"Peasant (Tan)", "tags":["realistic"]},
+    {"characterID":0x02, "spriteID":0x03, "paletteID":0x05, "sleepingID":0x01, "id":31, "name":"Ranger", "tags":["base", "realistic"]},
+    {"characterID":0x02, "spriteID":0x03, "paletteID":0x02, "sleepingID":0x01, "id":32, "name":"Ranger (Dark)", "tags":["realistic"]},
+    {"characterID":0x2A, "spriteID":0x23, "paletteID":0x02, "sleepingID":0x02, "id":33, "name":"Skeleton", "tags":["base", "monster"]},
+    {"characterID":0x2D, "spriteID":0x25, "paletteID":0x03, "sleepingID":0x05, "id":34, "name":"Troll", "tags":["base", "monster"]},
+    {"characterID":0x2D, "spriteID":0x25, "paletteID":0x01, "sleepingID":0x03, "id":35, "name":"Troll (Pink)", "tags":["wild", "monster"]},
+];
+
+function getCharacterIDByOptionID(inID)
+{
+    for(var i = 0; i < DATA_PLAYER_CHARACTERS.length; ++i)
+    {
+        if(inID == DATA_PLAYER_CHARACTERS[i].id)
+        {
+            return DATA_PLAYER_CHARACTERS[i];
+        }
+    }
+    console.log("SELECTED CHARACTER NOT FOUND - DEFAULTING TO AVATAR");
+    return DATA_PLAYER_CHARACTERS[0]; //return avatar if no character found
+}
+
+function getRandomCharacterWithTag(inTag)
+{
+    var characterList = [];
+    for(var i = 0; i < DATA_PLAYER_CHARACTERS.length; ++i)
+    {
+        if(inTag != "")
+        {
+            if(DATA_PLAYER_CHARACTERS[i].tags.length > 0)
+            {
+                for(var j = 0; j < DATA_PLAYER_CHARACTERS[i].tags.length; ++j)
+                {
+                    if(inTag == DATA_PLAYER_CHARACTERS[i].tags[j])
+                    {
+                        characterList.push(DATA_PLAYER_CHARACTERS[i]);
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            characterList.push(DATA_PLAYER_CHARACTERS[i])
+        }
+    }
+    return characterList;
+}
 
 function setCharacterSprite(buffer, seed, character_sprite, fire_flag)
 {
 	var rom = new Uint8Array(buffer);
-	
+    
+    //default values = avatar
 	var selectedCharacterHex = 0x0F;
 	var selectedSpriteHex = 0x10;
     var selectedPaletteHex = 0x05;
@@ -14,233 +92,33 @@ function setCharacterSprite(buffer, seed, character_sprite, fire_flag)
     var paletteAddress = 0x00F168; //0x00F168 is Avatar
     var sleepingSpriteAddress = 0x00F122; //0x00F122 is Avatar
 
-	//random sprites
+    //random sprites
 	if(character_sprite == 0) //random any sprite
 	{
-		var spriteOptions = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35];
-		spriteOptions.shuffle();
-		character_sprite = spriteOptions[0];
+        var characterOptions = getRandomCharacterWithTag("");
+        characterOptions.shuffle();
+        selectedCharacterHex = characterOptions[0].characterID;
+        selectedSpriteHex = characterOptions[0].spriteID;
+        selectedPaletteHex = characterOptions[0].paletteID;
+        selectedSleepingHex = characterOptions[0].sleepingID;
     }
     else if(character_sprite == 1) //random realistic person sprite
 	{
-		var spriteOptions = [2,3,4,5,6,11,12,13,14,15,19,20,22,23,24,25,27,28,29,30,31,32];
-		spriteOptions.shuffle();
-		character_sprite = spriteOptions[0];
-	}
-
-	switch(character_sprite)
-	{
-		case 2:
-			selectedCharacterHex = 0x0F; //Avatar
-			selectedSpriteHex = 0x10; //Avatar
-            selectedPaletteHex = 0x05; //Avatar
-            selectedSleepingHex = 0x06;
-            break;
-        case 3:
-            selectedCharacterHex = 0x0F; //Avatar (Dark)
-            selectedSpriteHex = 0x10; //Avatar (Dark)
-            selectedPaletteHex = 0x02; //Avatar (Dark)
-            selectedSleepingHex = 0x06;
-            break;
-		case 4:
-			selectedCharacterHex = 0x0B; //Bard
-			selectedSpriteHex = 0x0C; //Bard
-            selectedPaletteHex = 0x01; //Bard
-            selectedSleepingHex = 0x06;
-            break;
-        case 5:
-			selectedCharacterHex = 0x0B; //Bard (Blue)
-			selectedSpriteHex = 0x0C; //Bard (Blue)
-            selectedPaletteHex = 0x06; //Bard (Blue)
-            selectedSleepingHex = 0x06;
-			break;
-		case 6:
-			selectedCharacterHex = 0x06; //Child
-			selectedSpriteHex = 0x07; //Child
-            selectedPaletteHex = 0x03; //Child
-            selectedSleepingHex = 0x05;
-            break;
-        case 7:
-            selectedCharacterHex = 0x06; //Child (Completely Pink)
-            selectedSpriteHex = 0x07; //Child (Completely Pink)
-            selectedPaletteHex = 0x01; //Child (Completely Pink)
-            selectedSleepingHex = 0x03;
-            break;
-        case 8:
-            selectedCharacterHex = 0x29; //Daemon (Brown)
-            selectedSpriteHex = 0x22; //Daemon (Brown)
-            selectedPaletteHex = 0x00; //Daemon (Brown)
-            selectedSleepingHex = 0x01;
-            break;
-        case 9:
-            selectedCharacterHex = 0x29; //Daemon (Green)
-            selectedSpriteHex = 0x22; //Daemon (Green)
-            selectedPaletteHex = 0x04; //Daemon (Green)
-            selectedSleepingHex = 0x01;
-            break;
-        case 10:
-            selectedCharacterHex = 0x29; //Daemon (Red)
-            selectedSpriteHex = 0x22; //Daemon (Red)
-            selectedPaletteHex = 0x02; //Daemon (Red)
-            selectedSleepingHex = 0x01;
-            break;
-		case 11:
-			selectedCharacterHex = 0x0C; //Dress Wearer (Blue)
-			selectedSpriteHex = 0x0D; //Dress Wearer (Blue)
-            selectedPaletteHex = 0x06; //Dress Wearer (Blue)
-            selectedSleepingHex = 0x02;
-            break;
-        case 12:
-            selectedCharacterHex = 0x0C; //Dress Wearer (Red)
-            selectedSpriteHex = 0x0D; //Dress Wearer (Red)
-            selectedPaletteHex = 0x02; //Dress Wearer (Red)
-            selectedSleepingHex = 0x02;
-            break;
-		case 13:
-			selectedCharacterHex = 0x0A; //Farmer
-			selectedSpriteHex = 0x0B; //Farmer
-            selectedPaletteHex = 0x03; //Farmer
-            selectedSleepingHex = 0x05;
-			break;
-		case 14:
-			selectedCharacterHex = 0x01; //Fighter (Silver)
-			selectedSpriteHex = 0x02; //Fighter (Silver)
-            selectedPaletteHex = 0x05; //Fighter (Silver)
-            selectedSleepingHex = 0x00;
-            break;
-        case 15:
-            selectedCharacterHex = 0x01; //Fighter (Bronze)
-            selectedSpriteHex = 0x02; //Fighter (Bronze)
-            selectedPaletteHex = 0x00; //Fighter (Bronze)
-            selectedSleepingHex = 0x00;
-            break;
-        case 16:
-            selectedCharacterHex = 0x26; //Gargoyle (Green)
-            selectedSpriteHex = 0x21; //Gargoyle (Green)
-            selectedPaletteHex = 0x04; //Gargoyle (Green)
-            selectedSleepingHex = 0x01;
-            break;
-		case 17:
-			selectedCharacterHex = 0x26; //Gargoyle (Red)
-			selectedSpriteHex = 0x21; //Gargoyle (Red)
-            selectedPaletteHex = 0x02; //Gargoyle (Red)
-            selectedSleepingHex = 0x01;
-            break;
-        case 18:
-            selectedCharacterHex = 0x26; //Gargoyle (Tan)
-            selectedSpriteHex = 0x21; //Gargoyle (Tan)
-            selectedPaletteHex = 0x00; //Gargoyle (Tan)
-            selectedSleepingHex = 0x01;
-            break;
-		case 19:
-			selectedCharacterHex = 0x07; //Guard
-			selectedSpriteHex = 0x08; //Guard
-            selectedPaletteHex = 0x05; //Guard
-            selectedSleepingHex = 0x00;
-			break;
-		case 20:
-			selectedCharacterHex = 0x08; //Jester
-			selectedSpriteHex = 0x09; //Jester
-            selectedPaletteHex = 0x06; //Jester
-            selectedSleepingHex = 0x04;
-			break;
-		case 21:
-			selectedCharacterHex = 0x0E; //Lord British
-			selectedSpriteHex = 0x0F; //Lord British
-            selectedPaletteHex = 0x01; //Lord British
-            selectedSleepingHex = 0x02;
-			break;
-		case 22:
-			selectedCharacterHex = 0x03; //Mage (Blue)
-			selectedSpriteHex = 0x04; //Mage (Blue)
-            selectedPaletteHex = 0x06; //Mage (Blue)
-            selectedSleepingHex = 0x02;
-            break;
-        case 23:
-            selectedCharacterHex = 0x03; //Mage (Red)
-            selectedSpriteHex = 0x04; //Mage (Red)
-            selectedPaletteHex = 0x02; //Mage (Red)
-            selectedSleepingHex = 0x02;
-            break;
-        case 24:
-            selectedCharacterHex = 0x03; //Mage (Tan)
-            selectedSpriteHex = 0x04; //Mage (Tan)
-            selectedPaletteHex = 0x00; //Mage (Tan)
-            selectedSleepingHex = 0x02;
-            break;
-		case 25:
-			selectedCharacterHex = 0x05; //Merchant
-			selectedSpriteHex = 0x06; //Merchant
-            selectedPaletteHex = 0x03; //Merchant
-            selectedSleepingHex = 0x05;
-            break;
-        case 26:
-            selectedCharacterHex = 0x2E; //Mongbat
-            selectedSpriteHex = 0x26; //Mongbat
-            selectedPaletteHex = 0x03; //Mongbat
-            selectedSleepingHex = 0x04;
-            break;
-		case 27:
-			selectedCharacterHex = 0x04; //Noble
-			selectedSpriteHex = 0x05; //Noble
-            selectedPaletteHex = 0x01; //Noble
-            selectedSleepingHex = 0x03;
-			break;
-		case 28:
-			selectedCharacterHex = 0x09; //Peasant
-			selectedSpriteHex = 0x0A; //Peasant
-            selectedPaletteHex = 0x03; //Peasant
-            selectedSleepingHex = 0x04;
-            break;
-        case 29:
-            selectedCharacterHex = 0x09; //Peasant (Blue)
-            selectedSpriteHex = 0x0A; //Peasant (Blue)
-            selectedPaletteHex = 0x06; //Peasant (Blue)
-            selectedSleepingHex = 0x04;
-            break;
-        case 30:
-			selectedCharacterHex = 0x09; //Peasant (Tan)
-			selectedSpriteHex = 0x0A; //Peasant (Tan)
-            selectedPaletteHex = 0x00; //Peasant (Tan)
-            selectedSleepingHex = 0x04;
-			break;
-		case 31:
-			selectedCharacterHex = 0x02; //Ranger
-			selectedSpriteHex = 0x03; //Ranger
-            selectedPaletteHex = 0x05; //Ranger
-            selectedSleepingHex = 0x01;
-            break;
-        case 32:
-            selectedCharacterHex = 0x02; //Ranger (Dark)
-            selectedSpriteHex = 0x03; //Ranger (Dark)
-            selectedPaletteHex = 0x02; //Ranger (Dark)
-            selectedSleepingHex = 0x01;
-            break;
-		case 33:
-			selectedCharacterHex = 0x2A; //Skeleton
-			selectedSpriteHex = 0x23; //Skeleton
-            selectedPaletteHex = 0x02; //Skeleton
-            selectedSleepingHex = 0x02; //Skeleton
-            break;
-        case 34:
-            selectedCharacterHex = 0x2D; //Troll
-            selectedSpriteHex = 0x25; //Troll
-            selectedPaletteHex = 0x03; //Troll
-            selectedSleepingHex = 0x05; //Troll
-            break;
-        case 35:
-            selectedCharacterHex = 0x2D; //Troll (Pink)
-            selectedSpriteHex = 0x25; //Troll (Pink)
-            selectedPaletteHex = 0x01; //Troll (Pink)
-            selectedSleepingHex = 0x03; //Troll (Pink)
-            break;
-		default:
-			selectedCharacterHex = 0x0F; //Avatar
-			selectedSpriteHex = 0x10; //Avatar
-            selectedPaletteHex = 0x05; //Avatar
-            selectedSleepingHex = 0x06; //Avatar
-			break;
-	}
+        var characterOptions = getRandomCharacterWithTag("realistic");
+        characterOptions.shuffle();
+        selectedCharacterHex = characterOptions[0].characterID;
+        selectedSpriteHex = characterOptions[0].spriteID;
+        selectedPaletteHex = characterOptions[0].paletteID;
+        selectedSleepingHex = characterOptions[0].sleepingID;
+    }
+    else
+    {
+        var selectedData = getCharacterIDByOptionID(character_sprite);
+        selectedCharacterHex = selectedData.characterID;
+        selectedSpriteHex = selectedData.spriteID;
+        selectedPaletteHex = selectedData.paletteID;
+        selectedSleepingHex = selectedData.sleepingID;
+    }
 
     rom[spriteAddress] = selectedSpriteHex;
     rom[sleepingSpriteAddress] = selectedSleepingHex;
@@ -254,6 +132,7 @@ function setCharacterSprite(buffer, seed, character_sprite, fire_flag)
         rom[paletteAddress] = selectedPaletteHex;
     }
 
+    console.log("SELECTED CHARACTER IS: " + character_sprite + ", spriteID: " + selectedSpriteHex + ", paletteID: " + selectedPaletteHex);
     fixChecksum(rom);
 	return rom;
 }

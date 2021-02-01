@@ -22,6 +22,9 @@ function updatePreset(val)
 		case 5: //Very Difficult
 			preset_guardian();
 			break;
+		case 6: //TEST
+			preset_test();
+			break;
 		default:
 			preset_townsfolk();
 			break;
@@ -60,6 +63,7 @@ function preset_townsfolk()
 	$('#add_missing_enemies').prop('checked', true);
 	$('#add_missing_ai_spells').prop('checked', true);
 	$('#expanded_camping').prop('checked', true);
+	$('#enable_fast_button_mapping').prop('checked', false);
 	$('#select-starting-inventory').prop('value', 0);
 	$('#select-starting-gold').prop('value', 0);
 	$('#select-day-night-cycle').prop('value', 2);
@@ -100,6 +104,7 @@ function preset_explorer()
 	$('#add_missing_enemies').prop('checked', true);
 	$('#add_missing_ai_spells').prop('checked', true);
 	$('#expanded_camping').prop('checked', true);
+	$('#enable_fast_button_mapping').prop('checked', false);
 	$('#select-starting-inventory').prop('value', 0);
 	$('#select-starting-gold').prop('value', 0);
 	$('#select-day-night-cycle').prop('value', 1);
@@ -143,6 +148,7 @@ function preset_adventurer() //standard
 	$('#add_missing_enemies').prop('checked', true);
 	$('#add_missing_ai_spells').prop('checked', true);
 	$('#expanded_camping').prop('checked', true);
+	$('#enable_fast_button_mapping').prop('checked', false);
 	$('#select-starting-inventory').prop('value', 0);
 	$('#select-starting-gold').prop('value', 0);
 	$('#select-day-night-cycle').prop('value', 0);
@@ -187,6 +193,7 @@ function preset_avatar()
 	$('#add_missing_enemies').prop('checked', true);
 	$('#add_missing_ai_spells').prop('checked', true);
 	$('#expanded_camping').prop('checked', false);
+	$('#enable_fast_button_mapping').prop('checked', false);
 	$('#select-starting-inventory').prop('value', 0);
 	$('#select-starting-gold').prop('value', 0);
 	$('#select-day-night-cycle').prop('value', 0);
@@ -232,11 +239,56 @@ function preset_guardian()
 	$('#add_missing_enemies').prop('checked', true);
 	$('#add_missing_ai_spells').prop('checked', true);
 	$('#expanded_camping').prop('checked', false);
+	$('#enable_fast_button_mapping').prop('checked', false);
 	$('#select-starting-inventory').prop('value', 0);
 	$('#select-starting-gold').prop('value', 0);
 	$('#select-day-night-cycle').prop('value', 0);
 	$('#select-karma-difficulty').prop('value', 2);
 
+	$('#display_spoiler_log').prop('checked', true);
+	$('#display_hints').prop('disabled', false);
+	$('#display_hints').prop('checked', true);
+}
+
+function preset_test()
+{
+	$('#randomize_core_items').prop('checked', false);
+	$('#randomize_chests_overworld').prop('checked', false);
+	
+	$('#randomize_moonorb').prop('disabled', false);
+	$('#randomize_spellbook').prop('disabled', false);
+	
+	$('#randomize_enemy_animals').prop('checked', false);
+	
+	$('#randomize_enemy_mix').prop('disabled', true);
+	$('#randomize_enemy_mix').prop('checked', false);
+
+	$('#select-ai-spawn-numbers').prop('value', 0);
+	$('#select-ai-aggression').prop('value', 3);
+	
+	$('#enemy_stats_shuffle').prop('checked', false);
+	$('#enemy_spellcasters_shuffle').prop('checked', false);
+	$('#enemy_equipmentusers_shuffle').prop('checked', false);
+	$('#enemy_droppossessors_shuffle').prop('checked', false);
+	$('#randomize_enemy_drops').prop('checked', false);
+
+	$('#select-ai-stat-difficulty').prop('value', 0);
+	$('#select-ai-spell-difficulty').prop('value', 0);
+	$('#select-ai-spells').prop('value', 0);
+	$('#select-ai-equipment').prop('value', 0);
+
+	$('#add_missing_enemies').prop('checked', true);
+	$('#add_missing_ai_spells').prop('checked', true);
+	$('#remove_moonorb').prop('checked', false);
+	$('#expanded_camping').prop('checked', true);
+	$('#enable_fast_button_mapping').prop('checked', true);
+	$('#select-starting-inventory').prop('value', 0);
+	$('#select-starting-gold').prop('value', 0);
+	$('#select-day-night-cycle').prop('value', 2);
+	$('#select-karma-difficulty').prop('value', 1);
+	$('#select-spiritshrine').prop('value', 1)
+	$('#select-placedrafts').prop('value', 2)
+	
 	$('#display_spoiler_log').prop('checked', true);
 	$('#display_hints').prop('disabled', false);
 	$('#display_hints').prop('checked', true);

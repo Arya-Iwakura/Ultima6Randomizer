@@ -337,6 +337,7 @@ function updateAllSelectionTooltips()
 	checkKarmaDifficultyStatus();
 	checkDayNightCycleStatus();
 	checkSpirtShrineStatus();
+	checkPlacedRaftsStatus();
 }
 
 $('#select-ai-spawn-numbers').click(function(e)
@@ -788,7 +789,6 @@ function checkKarmaDifficultyStatus()
 	}
 }
 
-
 $('#select-spiritshrine').click(function(e)
 {
 	checkSpirtShrineStatus();
@@ -829,6 +829,39 @@ function checkSpirtShrineStatus()
 		$('#spiritshrine-tooltip-2').prop('hidden', true);
 		$('#spiritshrine-tooltip-3').prop('hidden', true);
 		$('#spiritshrine-tooltip-4').prop('hidden', false);
+	}
+}
+
+$('#select-placedrafts').click(function(e)
+{
+	checkPlacedRaftsStatus();
+});
+
+$('#select-placedrafts').keyup(function(e)
+{
+	checkPlacedRaftsStatus();
+});
+
+function checkPlacedRaftsStatus()
+{
+	var selection = +$('#select-placedrafts').val();
+	if (selection == 0)
+	{
+		$('#placedrafts-tooltip-1').prop('hidden', false);
+		$('#placedrafts-tooltip-2').prop('hidden', true);
+		$('#placedrafts-tooltip-3').prop('hidden', true);
+	}
+	else if (selection == 1)
+	{
+		$('#placedrafts-tooltip-1').prop('hidden', true);
+		$('#placedrafts-tooltip-2').prop('hidden', false);
+		$('#placedrafts-tooltip-3').prop('hidden', true);
+	}
+	else if (selection == 2)
+	{
+		$('#placedrafts-tooltip-1').prop('hidden', true);
+		$('#placedrafts-tooltip-2').prop('hidden', true);
+		$('#placedrafts-tooltip-3').prop('hidden', false);
 	}
 }
 

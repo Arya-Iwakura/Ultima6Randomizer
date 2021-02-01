@@ -11,7 +11,7 @@ function randomizeEnemySpawners(rom, random, monsterFlag, wildFlag, animalFlag, 
         var entryID = i*2;
         var spawned = false;
 
-        if(monsterFlag == true) //randomizer monsters
+        if(monsterFlag == true) //randomize monsters
         {
             var foundSpawner = getRandomMonster(rom, random, entryID);
             if(foundSpawner > 0)
@@ -21,7 +21,7 @@ function randomizeEnemySpawners(rom, random, monsterFlag, wildFlag, animalFlag, 
             }
         }
 
-        if(wildFlag == true) //randomizer wild animals
+        if(wildFlag == true) //randomize wild animals
         {
             var foundSpawner = getRandomWild(rom, random, entryID, addEnemiesFlag);
             if(foundSpawner > 0)
@@ -31,7 +31,7 @@ function randomizeEnemySpawners(rom, random, monsterFlag, wildFlag, animalFlag, 
             }
         }
         
-        if(animalFlag == true && spawned == false) //randomizer animals
+        if(animalFlag == true && spawned == false) //randomize animals
         {
             var foundSpawner = getRandomAnimal(rom, random, entryID);
             if(foundSpawner > 0)
@@ -41,7 +41,7 @@ function randomizeEnemySpawners(rom, random, monsterFlag, wildFlag, animalFlag, 
             }
         }
         
-        if(peopleFlag == true && spawned == false) //randomizer people
+        if(peopleFlag == true && spawned == false) //randomize people
         {
             var foundSpawner = getRandomPerson(rom, random, entryID);
             if(foundSpawner > 0)
@@ -80,28 +80,28 @@ function randomizeEnemySpawnersMix(rom, random, monsterFlag, wildFlag, animalFla
 
 function getRandomMonster(rom, random, entryID)
 {
-    for( j = 0; j < DATA_SPAWNER_EVIL_SOLO.length; ++j)
+    for(var j = 0; j < DATA_SPAWNER_EVIL_SOLO.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_EVIL_SOLO[j])
         {
             return getRandomSpawnerFromList(random, DATA_SPAWNER_EVIL_SOLO);
         }
     }
-    for( j = 0; j < DATA_SPAWNER_EVIL_GROUP.length; ++j)
+    for(var j = 0; j < DATA_SPAWNER_EVIL_GROUP.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_EVIL_GROUP[j])
         {
             return getRandomSpawnerFromList(random, DATA_SPAWNER_EVIL_GROUP);
         }
     }
-    for( j = 0; j < DATA_SPAWNER_SEA_SOLO.length; ++j)
+    for(var j = 0; j < DATA_SPAWNER_SEA_SOLO.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_SEA_SOLO[j])
         {
             return getRandomSpawnerFromList(random, DATA_SPAWNER_SEA_SOLO);
         }
     }
-    for( j = 0; j < DATA_SPAWNER_SEA_GROUP.length; ++j)
+    for(var j = 0; j < DATA_SPAWNER_SEA_GROUP.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_SEA_GROUP[j])
         {
@@ -115,14 +115,14 @@ function getRandomWild(rom, random, entryID, addEnemiesFlag)
 {
     if(addEnemiesFlag == true)
     {
-        for( j = 0; j < DATA_SPAWNER_WILD_SOLO_ADDITIONAL.length; ++j)
+        for(var j = 0; j < DATA_SPAWNER_WILD_SOLO_ADDITIONAL.length; ++j)
         {
             if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_WILD_SOLO_ADDITIONAL[j])
             {
                 return getRandomSpawnerFromList(random, DATA_SPAWNER_WILD_SOLO_ADDITIONAL);
             }
         }
-        for( j = 0; j < DATA_SPAWNER_WILD_GROUP_ADDITIONAL.length; ++j)
+        for(var j = 0; j < DATA_SPAWNER_WILD_GROUP_ADDITIONAL.length; ++j)
         {
             if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_WILD_GROUP_ADDITIONAL[j])
             {
@@ -132,14 +132,14 @@ function getRandomWild(rom, random, entryID, addEnemiesFlag)
     }
     else
     {
-        for( j = 0; j < DATA_SPAWNER_WILD_SOLO.length; ++j)
+        for(var j = 0; j < DATA_SPAWNER_WILD_SOLO.length; ++j)
         {
             if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_WILD_SOLO[j])
             {
                 return getRandomSpawnerFromList(random, DATA_SPAWNER_WILD_SOLO);
             }
         }
-        for( j = 0; j < DATA_SPAWNER_WILD_GROUP.length; ++j)
+        for(var j = 0; j < DATA_SPAWNER_WILD_GROUP.length; ++j)
         {
             if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_WILD_GROUP[j])
             {
@@ -152,21 +152,21 @@ function getRandomWild(rom, random, entryID, addEnemiesFlag)
 
 function getRandomAnimal(rom, random, entryID)
 {
-    for( j = 0; j < DATA_SPAWNER_ANIMAL_SOLO.length; ++j)
+    for(var j = 0; j < DATA_SPAWNER_ANIMAL_SOLO.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_ANIMAL_SOLO[j])
         {
             return getRandomSpawnerFromList(random, DATA_SPAWNER_ANIMAL_SOLO);
         }
     }
-    for( j = 0; j < DATA_SPAWNER_ANIMAL_GROUP.length; ++j)
+    for(var j = 0; j < DATA_SPAWNER_ANIMAL_GROUP.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_ANIMAL_GROUP[j])
         {
             return getRandomSpawnerFromList(random, DATA_SPAWNER_ANIMAL_GROUP);
         }
     }
-    for( j = 0; j < DATA_SPAWNER_REAGENT.length; ++j)
+    for(var j = 0; j < DATA_SPAWNER_REAGENT.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_REAGENT[j])
         {
@@ -178,14 +178,14 @@ function getRandomAnimal(rom, random, entryID)
 
 function getRandomPerson(rom, random, entryID)
 {
-    for( j = 0; j < DATA_SPAWNER_PEOPLE_SOLO.length; ++j)
+    for(var j = 0; j < DATA_SPAWNER_PEOPLE_SOLO.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_PEOPLE_SOLO[j])
         {
             return getRandomSpawnerFromList(random, DATA_SPAWNER_PEOPLE_SOLO);
         }
     }
-    for( j = 0; j < DATA_SPAWNER_PEOPLE_GROUP.length; ++j)
+    for(var j = 0; j < DATA_SPAWNER_PEOPLE_GROUP.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_PEOPLE_GROUP[j])
         {
@@ -269,7 +269,7 @@ function getMixedSpawnerListGroup(random, monsterFlag, wildFlag, animalFlag, peo
 
 function checkMixEarlyOut(rom, random, entryID, monsterFlag, animalFlag)
 {
-    for( j = 0; j < DATA_SPAWNER_NEVERCHANGE.length; ++j) //check for all spots we should always skip
+    for(var j = 0; j < DATA_SPAWNER_NEVERCHANGE.length; ++j) //check for all spots we should always skip
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_NEVERCHANGE[j])
         {
@@ -278,7 +278,7 @@ function checkMixEarlyOut(rom, random, entryID, monsterFlag, animalFlag)
     }
     if(monsterFlag == true) //check for sea creature spawns
     {
-        for( j = 0; j < DATA_SPAWNER_SEA_SOLO.length; ++j)
+        for(var j = 0; j < DATA_SPAWNER_SEA_SOLO.length; ++j)
         {
             if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_SEA_SOLO[j])
             {
@@ -286,7 +286,7 @@ function checkMixEarlyOut(rom, random, entryID, monsterFlag, animalFlag)
                 return true;
             }
         }
-        for( j = 0; j < DATA_SPAWNER_SEA_GROUP.length; ++j)
+        for(var j = 0; j < DATA_SPAWNER_SEA_GROUP.length; ++j)
         {
             if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_SEA_GROUP[j])
             {
@@ -297,7 +297,7 @@ function checkMixEarlyOut(rom, random, entryID, monsterFlag, animalFlag)
     }
     if(animalFlag == true) //check for reagent spawns
     {
-        for( j = 0; j < DATA_SPAWNER_REAGENT.length; ++j)
+        for(var j = 0; j < DATA_SPAWNER_REAGENT.length; ++j)
         {
             if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_REAGENT[j])
             {
@@ -311,7 +311,7 @@ function checkMixEarlyOut(rom, random, entryID, monsterFlag, animalFlag)
 
 function getMixedSpawner(rom, random, entryID, spawnerPoolSolo, spawnerPoolGroup)
 {
-    for( j = 0; j < spawnerPoolSolo.length; ++j)
+    for(var j = 0; j < spawnerPoolSolo.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == spawnerPoolSolo[j])
         {
@@ -319,7 +319,7 @@ function getMixedSpawner(rom, random, entryID, spawnerPoolSolo, spawnerPoolGroup
         }
     }
 
-    for( j = 0; j < spawnerPoolGroup.length; ++j)
+    for(var j = 0; j < spawnerPoolGroup.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == spawnerPoolGroup[j])
         {
@@ -419,14 +419,14 @@ function shuffleEnemyAggression(rom, random)
 
 function checkAggressionEarlyOut(rom, entryID)
 {
-    for( j = 0; j < DATA_SPAWNER_NEVERCHANGE.length; ++j) //check for all spots we should always skip
+    for(var j = 0; j < DATA_SPAWNER_NEVERCHANGE.length; ++j) //check for all spots we should always skip
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_NEVERCHANGE[j])
         {
             return true;
         }
     }
-    for( j = 0; j < DATA_SPAWNER_REAGENT.length; ++j)
+    for(var j = 0; j < DATA_SPAWNER_REAGENT.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_REAGENT[j])
         {
@@ -586,42 +586,42 @@ function intuitiveEnemyAggression(rom, random)
 
 function checkIfEvil(rom, entryID)
 {
-    for( j = 0; j < DATA_SPAWNER_EVIL_SOLO.length; ++j)
+    for(var j = 0; j < DATA_SPAWNER_EVIL_SOLO.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_EVIL_SOLO[j])
         {
             return true;
         }
     }
-    for( j = 0; j < DATA_SPAWNER_EVIL_GROUP.length; ++j)
+    for(var j = 0; j < DATA_SPAWNER_EVIL_GROUP.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_EVIL_GROUP[j])
         {
             return true;
         }
     }
-    for( j = 0; j < DATA_SPAWNER_SEA_SOLO.length; ++j)
+    for(var j = 0; j < DATA_SPAWNER_SEA_SOLO.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_SEA_SOLO[j])
         {
             return true;
         }
     }
-    for( j = 0; j < DATA_SPAWNER_SEA_GROUP.length; ++j)
+    for(var j = 0; j < DATA_SPAWNER_SEA_GROUP.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_SEA_GROUP[j])
         {
             return true;
         }
     }
-    for( j = 0; j < DATA_SPAWNER_PEOPLE_SOLO_NOGUARDS.length; ++j)
+    for(var j = 0; j < DATA_SPAWNER_PEOPLE_SOLO_NOGUARDS.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_PEOPLE_SOLO_NOGUARDS[j])
         {
             return true;
         }
     }
-    for( j = 0; j < DATA_SPAWNER_PEOPLE_GROUP_NOGUARDS.length; ++j)
+    for(var j = 0; j < DATA_SPAWNER_PEOPLE_GROUP_NOGUARDS.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_PEOPLE_GROUP_NOGUARDS[j])
         {
@@ -633,14 +633,14 @@ function checkIfEvil(rom, entryID)
 
 function checkIfWild(rom, entryID)
 {
-    for( j = 0; j < DATA_SPAWNER_WILD_SOLO_ADDITIONAL.length; ++j)
+    for(var j = 0; j < DATA_SPAWNER_WILD_SOLO_ADDITIONAL.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_WILD_SOLO_ADDITIONAL[j])
         {
             return true;
         }
     }
-    for( j = 0; j < DATA_SPAWNER_WILD_GROUP_ADDITIONAL.length; ++j)
+    for(var j = 0; j < DATA_SPAWNER_WILD_GROUP_ADDITIONAL.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_WILD_GROUP_ADDITIONAL[j])
         {
@@ -652,21 +652,21 @@ function checkIfWild(rom, entryID)
 
 function checkIfFriendly(rom, entryID)
 {
-    for( j = 0; j < DATA_SPAWNER_ANIMAL_SOLO.length; ++j)
+    for(var j = 0; j < DATA_SPAWNER_ANIMAL_SOLO.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_ANIMAL_SOLO[j])
         {
             return true;
         }
     }
-    for( j = 0; j < DATA_SPAWNER_ANIMAL_GROUP.length; ++j)
+    for(var j = 0; j < DATA_SPAWNER_ANIMAL_GROUP.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_ANIMAL_GROUP[j])
         {
             return true;
         }
     }
-    for( j = 0; j < DATA_SPAWNER_TOWNANDMOONGATE.length; ++j)
+    for(var j = 0; j < DATA_SPAWNER_TOWNANDMOONGATE.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_TOWNANDMOONGATE[j])
         {
@@ -732,14 +732,14 @@ function getSpawnNumbers(rom, spawnNumbers)
 
 function checkSpawnNumbersEarlyOut(rom, entryID)
 {
-    for( j = 0; j < DATA_SPAWNER_NEVERCHANGE.length; ++j) //check for all spots we should always skip
+    for(var j = 0; j < DATA_SPAWNER_NEVERCHANGE.length; ++j) //check for all spots we should always skip
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_NEVERCHANGE[j])
         {
             return true;
         }
     }
-    for( j = 0; j < DATA_SPAWNER_REAGENT.length; ++j)
+    for(var j = 0; j < DATA_SPAWNER_REAGENT.length; ++j)
     {
         if(rom[TABLE_SPAWNER_START+entryID+1] == DATA_SPAWNER_REAGENT[j])
         {
