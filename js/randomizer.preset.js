@@ -62,12 +62,16 @@ function preset_townsfolk()
 
 	$('#add_missing_enemies').prop('checked', true);
 	$('#add_missing_ai_spells').prop('checked', true);
+	$('#remove_moonorb').prop('checked', false);
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', false);
+
 	$('#select-starting-inventory').prop('value', 0);
 	$('#select-starting-gold').prop('value', 0);
 	$('#select-day-night-cycle').prop('value', 2);
 	$('#select-karma-difficulty').prop('value', 1);
+	$('#select-spiritshrine').prop('value', 0);
+	$('#select-placedrafts').prop('value', 0);
 
 	$('#display_spoiler_log').prop('checked', true);
 	$('#display_hints').prop('disabled', false);
@@ -103,12 +107,16 @@ function preset_explorer()
 
 	$('#add_missing_enemies').prop('checked', true);
 	$('#add_missing_ai_spells').prop('checked', true);
+	$('#remove_moonorb').prop('checked', false);
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', false);
+
 	$('#select-starting-inventory').prop('value', 0);
 	$('#select-starting-gold').prop('value', 0);
 	$('#select-day-night-cycle').prop('value', 1);
 	$('#select-karma-difficulty').prop('value', 1);
+	$('#select-spiritshrine').prop('value', 0);
+	$('#select-placedrafts').prop('value', 1);
 
 	$('#display_spoiler_log').prop('checked', true);
 	$('#display_hints').prop('disabled', false);
@@ -147,12 +155,16 @@ function preset_adventurer() //standard
 
 	$('#add_missing_enemies').prop('checked', true);
 	$('#add_missing_ai_spells').prop('checked', true);
+	$('#remove_moonorb').prop('checked', false);
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', false);
+
 	$('#select-starting-inventory').prop('value', 0);
 	$('#select-starting-gold').prop('value', 0);
 	$('#select-day-night-cycle').prop('value', 0);
 	$('#select-karma-difficulty').prop('value', 0);
+	$('#select-spiritshrine').prop('value', 0);
+	$('#select-placedrafts').prop('value', 1);
 
 	$('#display_spoiler_log').prop('checked', true);
 	$('#display_hints').prop('disabled', false);
@@ -192,12 +204,16 @@ function preset_avatar()
 
 	$('#add_missing_enemies').prop('checked', true);
 	$('#add_missing_ai_spells').prop('checked', true);
+	$('#remove_moonorb').prop('checked', false);
 	$('#expanded_camping').prop('checked', false);
 	$('#enable_fast_button_mapping').prop('checked', false);
+
 	$('#select-starting-inventory').prop('value', 0);
 	$('#select-starting-gold').prop('value', 0);
 	$('#select-day-night-cycle').prop('value', 0);
 	$('#select-karma-difficulty').prop('value', 2);
+	$('#select-spiritshrine').prop('value', 0);
+	$('#select-placedrafts').prop('value', 1);
 
 	$('#display_spoiler_log').prop('checked', true);
 	$('#display_hints').prop('disabled', false);
@@ -238,12 +254,16 @@ function preset_guardian()
 
 	$('#add_missing_enemies').prop('checked', true);
 	$('#add_missing_ai_spells').prop('checked', true);
+	$('#remove_moonorb').prop('checked', false);
 	$('#expanded_camping').prop('checked', false);
 	$('#enable_fast_button_mapping').prop('checked', false);
+
 	$('#select-starting-inventory').prop('value', 0);
 	$('#select-starting-gold').prop('value', 0);
 	$('#select-day-night-cycle').prop('value', 0);
 	$('#select-karma-difficulty').prop('value', 2);
+	$('#select-spiritshrine').prop('value', 0);
+	$('#select-placedrafts').prop('value', 1);
 
 	$('#display_spoiler_log').prop('checked', true);
 	$('#display_hints').prop('disabled', false);
@@ -282,12 +302,13 @@ function preset_test()
 	$('#remove_moonorb').prop('checked', false);
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
+	
 	$('#select-starting-inventory').prop('value', 0);
 	$('#select-starting-gold').prop('value', 0);
 	$('#select-day-night-cycle').prop('value', 2);
 	$('#select-karma-difficulty').prop('value', 1);
-	$('#select-spiritshrine').prop('value', 1)
-	$('#select-placedrafts').prop('value', 2)
+	$('#select-spiritshrine').prop('value', 1);
+	$('#select-placedrafts').prop('value', 2);
 	
 	$('#display_spoiler_log').prop('checked', true);
 	$('#display_hints').prop('disabled', false);
