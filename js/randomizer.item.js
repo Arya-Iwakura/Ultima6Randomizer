@@ -97,6 +97,12 @@ function increaseSherryPickupWeight(rom)
 	rom[0x11FDA] = 0xCF;
 }
 
+function replaceMoonOrb(rom)
+{
+	//replace the moonorb with something else in the case where no item randomization is chosen
+	rom[0xF91D] = 0x3F; //bread
+}
+
 function randomizeItems(rom, random, spoilers)
 {
 	console.log("RANDOMIZING ITEMS");

@@ -1,4 +1,4 @@
-var VERSION_STRING = 'v0.5b';
+var VERSION_STRING = 'v0.5c';
 
 const SUBSYSTEM_ITEMS = 0;
 const SUBSYSTEM_SPAWNERS = 1;
@@ -44,13 +44,8 @@ function randomizeROM(buffer, seed)
 	var subSystemSeeds = getSubystemSeeds(seed);
 
 	//---------prepare for randomization
-	fixPickupGraphics(rom);
-	prepareLocations(rom);
-	fixChests(rom);
-	increaseSherryPickupWeight(rom);
-	bookLordBritishRandomizerBook(rom);
-	overrideMoongateShrineCheck(rom);
-	addRafts(rom);
+	var randomizedOptionsSelected = false;
+	var itemsRandomized = false;
 
 	//---------gameplay and other
 	if ($('#expanded_camping').is(':checked'))
@@ -145,16 +140,34 @@ function randomizeROM(buffer, seed)
 	}
 
 	//---------items
-	var spoilers = [];
-	var randomizeItemsDone = false;
-	do
+	if ($('#remove_moonorb').is(':checked'))
 	{
-		randomizeItemsDone = randomizeItems(rom, subSystemSeeds[SUBSYSTEM_ITEMS], spoilers);	
+		replaceMoonOrb(rom);
 	}
-	while (randomizeItemsDone == false);
-	
-	fixShrines(rom); //after item randomization the shrines must be fixed for the new items
-	updateShrineText(rom);
+	if ($('#remove_moonorb').is(':checked') || $('#randomize_moonorb').is(':checked') || $('#randomize_spellbook').is(':checked'))
+	{
+		overrideMoongateShrineCheck(rom);
+	}
+	if ($('#randomize_core_items').is(':checked') || $('#randomize_chests_overworld').is(':checked') || $('#randomize_chests_dungeons').is(':checked')) 
+	{
+		randomizedOptionsSelected = true;
+		itemsRandomized = true;
+		fixPickupGraphics(rom);
+		prepareLocations(rom);
+		fixChests(rom);
+		increaseSherryPickupWeight(rom);
+
+		var spoilers = [];
+		var randomizeItemsDone = false;
+		do
+		{
+			randomizeItemsDone = randomizeItems(rom, subSystemSeeds[SUBSYSTEM_ITEMS], spoilers);	
+		}
+		while (randomizeItemsDone == false);
+		
+		fixShrines(rom); //after item randomization the shrines must be fixed for the new items
+		updateShrineText(rom);
+	}
 
 	//---------monsters
 	var monsterFlag = false;
@@ -176,6 +189,7 @@ function randomizeROM(buffer, seed)
 
 	if(monsterFlag || wildFlag || animalFlag || peopleFlag)
 	{
+		randomizedOptionsSelected = true;
 		if ($('#randomize_enemy_mix').is(':checked'))
 		{
 			randomizeEnemySpawnersMix(rom, subSystemSeeds[SUBSYSTEM_SPAWNERS_MIX], monsterFlag, wildFlag, animalFlag, peopleFlag, addEnemiesFlag);
@@ -192,6 +206,7 @@ function randomizeROM(buffer, seed)
 	}
 	else if ($('#select-ai-aggression').val() == 2)
 	{
+		randomizedOptionsSelected = true;
 		shuffleEnemyAggression(rom, subSystemSeeds[SUBSYSTEM_AGGRESSION]);
 	}
 	else if ($('#select-ai-aggression').val() == 3)
@@ -210,6 +225,7 @@ function randomizeROM(buffer, seed)
 
 	if ($('#enemy_stats_shuffle').is(':checked'))
 	{
+		randomizedOptionsSelected = true;
 		if ($('#select-ai-stat-difficulty').val() == 1) //easier stats
 		{
 			shuffleEnemyStats(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_STATS], 1);
@@ -259,6 +275,7 @@ function randomizeROM(buffer, seed)
 		}
 		else
 		{
+			randomizedOptionsSelected = true;
 			shuffleEnemySpellCasters(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_SPELLS]);
 		}
 	}
@@ -271,6 +288,7 @@ function randomizeROM(buffer, seed)
 		}
 		else
 		{
+			randomizedOptionsSelected = true;
 			shuffleEnemyEquipmentUsers(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_EQUIPMENT]);
 		}
 	}
@@ -283,6 +301,7 @@ function randomizeROM(buffer, seed)
 		}
 		else
 		{
+			randomizedOptionsSelected = true;
 			shuffleEnemyDropPossessors(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_DROPS]);
 		}
 	}
@@ -304,6 +323,7 @@ function randomizeROM(buffer, seed)
 		}
 		else
 		{
+			randomizedOptionsSelected = true;
 			randomizeEnemyDrops(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_DROPS]);
 		}
 	}
@@ -320,10 +340,12 @@ function randomizeROM(buffer, seed)
 
 	if ($('#select-ai-spells').val() == 1)
 	{
+		randomizedOptionsSelected = true;
 		shuffleEnemySpells(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_SPELLS], spellDifficultySetting);
 	}
 	else if ($('#select-ai-spells').val() == 2)
 	{
+		randomizedOptionsSelected = true;
 		randomizeEnemySpells(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_SPELLS], spellDifficultySetting);
 	}
 
@@ -336,6 +358,12 @@ function randomizeROM(buffer, seed)
 	if ($('#randomize_world_map').is(':checked'))
 	{
 		randomizeWorld(rom, subSystemSeeds[SUBSYSTEM_WORLD]);
+	}
+
+	//---------randomizer book
+	if(randomizedOptionsSelected == true )
+	{
+		bookLordBritishRandomizerBook(rom);
 	}
 
 	//---------wrap it up
@@ -382,7 +410,9 @@ function randomizeROM(buffer, seed)
 	//	writeSymbolHash(rom, random);
 	
 	writeCredits(rom, subSystemSeeds[SUBSYSTEM_CREDITS]);
-	fixText(rom);
+	fixText(rom, itemsRandomized);
+
+	//testLZW(rom);
 
 	// fix the checksum (not necessary, but good to do!)
 	fixChecksum(rom);

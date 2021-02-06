@@ -132,7 +132,6 @@ function setCharacterSprite(buffer, seed, character_sprite, fire_flag)
         rom[paletteAddress] = selectedPaletteHex;
     }
 
-    console.log("SELECTED CHARACTER IS: " + character_sprite + ", spriteID: " + selectedSpriteHex + ", paletteID: " + selectedPaletteHex);
     fixChecksum(rom);
 	return rom;
 }

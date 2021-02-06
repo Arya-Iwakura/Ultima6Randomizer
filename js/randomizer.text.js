@@ -284,7 +284,7 @@ function writeCredits(rom, random)
 		0x01D45E);
 }
 
-function fixText(rom)
+function fixText(rom, itemsRandomized)
 {
 	rom.set([0x52], 0x0E115); //Leather Armor
 
@@ -292,10 +292,12 @@ function fixText(rom)
 	writeTextToAddress(rom, 0x0E22C, 6, "R.Regn"); //Ring of Regeneration
 	writeTextToAddress(rom, 0x0E233, 6, "R.Invs"); //Ring of Invisibility
 
-	writeTextToAddress(rom, 0x0CFD0, 17, "see something!"); //find a moonstone!
-
-	//writeTextToAddress(rom, 0x0D5DF, 17, "took an item!"); //took a moonstone!
-	rom.set([0xE1, 0x01, 0xF6, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00], 0xD5E4); //took a moonstone (shrine text)
+	if(itemsRandomized == true)
+	{
+		writeTextToAddress(rom, 0x0CFD0, 17, "see something!"); //find a moonstone!
+		//writeTextToAddress(rom, 0x0D5DF, 17, "took an item!"); //took a moonstone!
+		rom.set([0xE1, 0x01, 0xF6, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00], 0xD5E4); //took a moonstone (shrine text)
+	}
 }
 
 function prepareHintText(rom, random)
