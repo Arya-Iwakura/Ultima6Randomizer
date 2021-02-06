@@ -134,11 +134,6 @@ function randomizeROM(buffer, seed)
 		fastActionButtonBinding(rom);
 	}
 
-	if ($('#display_hints').is(':checked'))
-	{
-		prepareHintText(rom, subSystemSeeds[SUBSYSTEM_HINTS]);
-	}
-
 	//---------items
 	if ($('#remove_moonorb').is(':checked'))
 	{
@@ -156,6 +151,11 @@ function randomizeROM(buffer, seed)
 		prepareLocations(rom);
 		fixChests(rom);
 		increaseSherryPickupWeight(rom);
+
+		if ($('#display_hints').is(':checked'))
+		{
+			prepareHintText(rom, subSystemSeeds[SUBSYSTEM_HINTS]);
+		}
 
 		var spoilers = [];
 		var randomizeItemsDone = false;
