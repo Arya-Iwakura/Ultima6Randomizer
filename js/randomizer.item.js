@@ -71,8 +71,8 @@ function prepareLocations(rom)
 	rom.set([0x06, 0x3A, 0x84, 0x45], 0x10F77); //jhelom - west house
 
 	//swap gems with sleeping powder
-	rom.set([0x19, 0x07, 0x83, 0x6B], 0x1151D); //moonglow - pneumbra house
-	rom.set([0x19, 0x07, 0x84, 0x67], 0x1152D); //moonglow - pneumbra house
+	rom.set([0x19, 0x07, 0x83, 0x6B], 0x1151D); //moonglow - penumbra house
+	rom.set([0x19, 0x07, 0x84, 0x67], 0x1152D); //moonglow - penumbra house
 }
 
 function fixChests(rom)
@@ -151,6 +151,44 @@ function randomizeItems(rom, random, spoilers)
 		items = addDataToDataPool(items, DATA_ITEM_SPELLBOOK, 'id');
 		locations = addDataToDataPool(locations, DATA_ITEM_SPELLBOOK, 'offset');
 		restrictions = addDataToDataPool(restrictions, DATA_ITEM_SPELLBOOK, 'restrictions');
+
+		increaseSpellbookPrices(rom); //increase the spellbook prices if the spellbook is randomized
+	}
+
+	if ($('#randomize_unlockanddispel').is(':checked'))
+	{
+		//replace overworld or underworld items in the item pool with unlock and dispel spells
+		if ($('#randomize_chests_overworld').is(':checked'))
+		{
+			removeUnlockAndDispelSpells(rom); //remove the unlock and dispel field spells from the shops
+			
+			items = addDataToDataPool(items, DATA_CHESTS_OVERWORLD_SPELLS, 'id');
+			locations = addDataToDataPool(locations, DATA_CHESTS_OVERWORLD_SPELLS, 'offset');
+			restrictions = addDataToDataPool(restrictions, DATA_CHESTS_OVERWORLD_SPELLS, 'restrictions');
+		}
+		else if($('#randomize_chests_dungeons').is(':checked'))
+		{
+			removeUnlockAndDispelSpells(rom); //remove the unlock and dispel field spells from the shops
+			
+			items = addDataToDataPool(items, DATA_CHESTS_DUNGEON_SPELLS, 'id');
+			locations = addDataToDataPool(locations, DATA_CHESTS_DUNGEON_SPELLS, 'offset');
+			restrictions = addDataToDataPool(restrictions, DATA_CHESTS_DUNGEON_SPELLS, 'restrictions');
+		}
+	}
+	else
+	{
+		if ($('#randomize_chests_overworld').is(':checked'))
+		{
+			items = addDataToDataPool(items, DATA_CHESTS_OVERWORLD_NOSPELLS, 'id');
+			locations = addDataToDataPool(locations, DATA_CHESTS_OVERWORLD_NOSPELLS, 'offset');
+			restrictions = addDataToDataPool(restrictions, DATA_CHESTS_OVERWORLD_NOSPELLS, 'restrictions');
+		}
+		else if($('#randomize_chests_dungeons').is(':checked'))
+		{
+			items = addDataToDataPool(items, DATA_CHESTS_DUNGEON_NOSPELLS, 'id');
+			locations = addDataToDataPool(locations, DATA_CHESTS_DUNGEON_NOSPELLS, 'offset');
+			restrictions = addDataToDataPool(restrictions, DATA_CHESTS_DUNGEON_NOSPELLS, 'restrictions');
+		}	
 	}
 
 	if(items.length != locations.length)
@@ -258,11 +296,22 @@ function placeItemsInLocations(rom, random, items, locations, restrictions, spoi
 					locations.splice(iLocation, 1);
 					break;
 				}
-				else if(locations[iLocation].offset == 0x09E3F) //rune of compassion
+				else if(locations[iLocation].offset == 0x4A34B || locations[iLocation].offset == 0x54758  || locations[iLocation].offset == 0x6064C) //rune of compassion / sacrifice / humility
 				{
 					var locHex = locations[iLocation].offset;
 					var itemHex = items[iItem].id;
-					rom[locHex] = itemHex;
+					if(locations[iLocation].offset == 0x4A34B)
+					{
+						rom.set([items[iItem].compassion[0], items[iItem].compassion[1]], 0x4A34B); //rune of compassion
+					}
+					else if(locations[iLocation].offset == 0x54758)
+					{
+						rom.set([items[iItem].sacrifice[0], items[iItem].sacrifice[1]], 0x54758); //rune of sacrifice
+					}
+					else if(locations[iLocation].offset == 0x6064C)
+					{
+						rom.set([items[iItem].humility[0], items[iItem].humility[1]], 0x6064C); //rune of humility
+					}
 					if(items[iItem].item != '' && items[iItem].location != '')
 					{
 						if ($('#display_hints').is(':checked'))

@@ -40,7 +40,8 @@ function preset_townsfolk()
 	
 	$('#randomize_moonorb').prop('disabled', false);
 	$('#randomize_spellbook').prop('disabled', false);
-	
+	$('#randomize_unlockanddispel').prop('disabled', false);
+
 	$('#randomize_enemy_animals').prop('checked', true);
 	
 	$('#randomize_enemy_mix').prop('disabled', true);
@@ -86,6 +87,7 @@ function preset_explorer()
 	
 	$('#randomize_moonorb').prop('disabled', false);
 	$('#randomize_spellbook').prop('disabled', false);
+	$('#randomize_unlockanddispel').prop('disabled', false);
 
 	$('#randomize_enemy_wild').prop('checked', true);
 	$('#randomize_enemy_animals').prop('checked', true);
@@ -133,6 +135,7 @@ function preset_adventurer() //standard
 
 	$('#randomize_moonorb').prop('disabled', false);
 	$('#randomize_spellbook').prop('disabled', false);
+	$('#randomize_unlockanddispel').prop('disabled', false);
 
 	$('#randomize_enemy_animals').prop('checked', true);
 	$('#randomize_enemy_wild').prop('checked', true);
@@ -181,6 +184,7 @@ function preset_avatar()
 
 	$('#randomize_moonorb').prop('disabled', false);
 	$('#randomize_spellbook').prop('disabled', false);
+	$('#randomize_unlockanddispel').prop('disabled', false);
 
 	$('#randomize_enemy_monsters').prop('checked', true);
 	$('#randomize_enemy_wild').prop('checked', true);
@@ -230,6 +234,7 @@ function preset_guardian()
 
 	$('#randomize_moonorb').prop('disabled', false);
 	$('#randomize_spellbook').prop('disabled', false);
+	$('#randomize_unlockanddispel').prop('disabled', false);
 
 	$('#randomize_enemy_monsters').prop('checked', true);
 	$('#randomize_enemy_wild').prop('checked', true);
@@ -274,9 +279,11 @@ function preset_test()
 {
 	$('#randomize_core_items').prop('checked', false);
 	$('#randomize_chests_overworld').prop('checked', false);
+	$('#randomize_chests_dungeons').prop('checked', false);
 	
 	$('#randomize_moonorb').prop('disabled', false);
 	$('#randomize_spellbook').prop('disabled', false);
+	$('#randomize_unlockanddispel').prop('disabled', false);
 	
 	$('#randomize_enemy_animals').prop('checked', false);
 	

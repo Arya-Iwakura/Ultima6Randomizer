@@ -155,6 +155,13 @@
 						</label>
 					</div>
 
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="randomize_unlockanddispel" class="presetoption">
+							Include Unlock and Dispel Field Spells <i><small>(Required spells now must be found and not bought)</small></i>
+						</label>
+					</div>
+
 					<div class="checkbox hidden">
 						<label>
 							<input type="checkbox" id="randomize_add_chests" class="presetoption">
@@ -726,6 +733,17 @@
 						</h4>
 					</div>
 					<div class="modal-body">
+						<span class="badge">v0.5d</span>
+						<ul>
+							<li>Added Rune of Compassion item and location to the Main Items pool</li>
+							<li>Added Rune of Sacrifice item and location to the Main Items pool</li>
+							<li>Added Rune of Humility item and location to the Main Items pool</li>
+							<li>Added option to add Unlock and Dispel Field spells to the item randomization pool and remove them from shops</li>
+							<li>When the spellbook is included in the item randomization pool, purchasable books are now replaced or more expensive</li>
+							<li>Fixed a bug where cleansing a shrine while the corresponding moonstone was buried would cause a soft lock</li>
+							<li>Fixed a bug with the base game in which the moon phase graphics were incorrect and corrupt</li>
+							<li>Updated Credits</li>
+						</ul>
 						<span class="badge">v0.5c</span>
 						<ul>
 							<li>Separated systems out to allow base game rom changes without any randomization additions</li>
@@ -852,7 +870,8 @@
 							If <b>"Main Items"</b> and <b>"Overworld Chests"</b> are selected, then Runes and Moonstones could be placed in any overworld chest or other main item locations!</br></br>
 							The Item Shuffler will attempt to prevent any placement of items which would result in them being unreachable. 
 							If there are multiple items in a chest, the shuffler will choose to randomize only one item per chest. </br></br>
-							You may choose to add the Moon Orb and/or Spellbook to the item shuffle pool, which will result in you starting with a random item from the item pool in their spot in your inventory.</br></br>
+							You may choose to add the Moon Orb and/or Spellbook to the item shuffle pool, which will result in you starting with a random item from the item pool in their spot in your inventory. Choosing to include the Spellbook will also increase the prices of spellbooks in shops.</br></br>
+							If you choose to randomize the spells, Dispel Field and Unlock will be removed from shops and random placed along with the other selected items.</br></br>
 						<span class="badge">Main Items</span>
 						</br>
 						<i>These are what items are considered Main Items.</i>

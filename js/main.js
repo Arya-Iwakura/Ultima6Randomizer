@@ -129,7 +129,9 @@ $('#generate-randomized-rom').click(function(e)
 	if (ORIGINAL_ROM === true)
 	{
 		var xhr = new XMLHttpRequest();
-		xhr.open('GET', 'u6.sfc', true);
+		//xhr.open('GET', 'u6.sfc', true);
+		xhr.open('GET', 'validation.data', true);
+		console.log("generate-randomized-rom - READING VALIDATION DATA");
 		xhr.responseType = 'arraybuffer';
 
 		xhr.onload = function(e){ doRandomize(xhr.response, seed); }
@@ -149,56 +151,14 @@ $('#generate-param-rom').click(function(e)
 	var seed = parseInt($('#custom-seed').val(), 16);
 
 	var xhr = new XMLHttpRequest();
-	xhr.open('GET', 'u6.sfc', true);
+	//xhr.open('GET', 'u6.sfc', true);
+	console.log("generate-param-rom - READING VALIDATION DATA");
+	xhr.open('GET', 'validation.data', true);
 	xhr.responseType = 'arraybuffer';
 
 	xhr.onload = function(e){ doRandomize(xhr.response, seed); }
 	xhr.send();
 });
-
-function _validateRandomizer(buffer, maxiter, iter, errors)
-{
-	var copy = new ArrayBuffer(buffer.byteLength);
-	new Uint8Array(copy).set(new Uint8Array(buffer));
-
-	try
-	{
-		shuffleOptions();
-		randomizeROM(copy);
-	}
-	catch (e)
-	{
-		++errors;
-		console.log(BASEURL + '#!/' + e.seed + '/' + e.preset);
-		console.log(e.errors.join("\n"));
-	}
-
-	if (--iter)
-	{
-		console.log(Math.floor(100 * (maxiter - iter) / maxiter) + '%... ' + errors + ' (' + Math.round(errors*100/(maxiter-iter)) + '%)');
-		setTimeout(_validateRandomizer.bind(this, buffer, maxiter, iter, errors), 1);
-	}
-	else console.log('Validation complete: ' + errors + ' errors (' + Math.round(errors*100/maxiter) + '%)'); // FIXME
-}
-
-function validateRandomizer(iter)
-{
-	// turn on error reporting
-	DEVMODE = false;
-	DEEPVALIDATION = true;
-
-	var xhr = new XMLHttpRequest();
-	xhr.open('GET', 'u6.sfc', true);
-	xhr.responseType = 'arraybuffer';
-
-	iter = iter || 10000;
-	xhr.onload = function(e)
-	{
-		console.log('Starting ' + iter + ' iterations of the randomizer...');
-		_validateRandomizer(xhr.response, iter, iter, 0);
-	};
-	xhr.send();
-}
 
 function getMD5(file, callback)
 {
@@ -261,6 +221,13 @@ function checkInventoryFlagStatus()
 	{
 		$('#randomize_moonorb').prop('disabled', false);
 		$('#randomize_spellbook').prop('disabled', false);
+		$('#randomize_unlockanddispel').prop('disabled', false);
+
+		if($('#randomize_chests_overworld').is(':checked') == false && $('#randomize_chests_dungeons').is(':checked') == false)
+		{
+			$('#randomize_unlockanddispel').prop('disabled', true);
+		$('#randomize_unlockanddispel').prop('checked', false);
+		}
 	}
 	else
 	{
@@ -268,6 +235,9 @@ function checkInventoryFlagStatus()
 		$('#randomize_spellbook').prop('disabled', true);
 		$('#randomize_moonorb').prop('checked', false);
 		$('#randomize_spellbook').prop('checked', false);
+		
+		$('#randomize_unlockanddispel').prop('disabled', true);
+		$('#randomize_unlockanddispel').prop('checked', false);
 	}
 }
 
@@ -1239,6 +1209,7 @@ var TESTERS =
 	'synthpopisback': 'synthpopisback',
 	'chadriden': 'chadriden',
 	'cloudyshoe': 'cloudyshoe',
+	'fenyx4' : 'fenyx4',
 }
 
 $('#tester-list').html(

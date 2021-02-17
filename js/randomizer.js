@@ -1,4 +1,4 @@
-var VERSION_STRING = 'v0.5c';
+var VERSION_STRING = 'v0.5d';
 
 const SUBSYSTEM_ITEMS = 0;
 const SUBSYSTEM_SPAWNERS = 1;
@@ -46,6 +46,8 @@ function randomizeROM(buffer, seed)
 	//---------prepare for randomization
 	var randomizedOptionsSelected = false;
 	var itemsRandomized = false;
+
+	fixMoonPhaseBug(rom);
 
 	//---------gameplay and other
 	if ($('#expanded_camping').is(':checked'))
@@ -139,7 +141,7 @@ function randomizeROM(buffer, seed)
 	{
 		replaceMoonOrb(rom);
 	}
-	if ($('#remove_moonorb').is(':checked') || $('#randomize_moonorb').is(':checked') || $('#randomize_spellbook').is(':checked'))
+	if ($('#remove_moonorb').is(':checked') || $('#randomize_moonorb').is(':checked') || $('#randomize_spellbook').is(':checked') || $('#randomize_core_items').is(':checked'))
 	{
 		overrideMoongateShrineCheck(rom);
 	}
@@ -405,14 +407,8 @@ function randomizeROM(buffer, seed)
 	writeTextToAddress(rom, TEXT_FLAGS_LOC, 21, "");
 	writeSymbolHash(rom, random);
 
-	//writeTextToAddress(rom, TEXT_FLAGS_LOC, 21, "Flags = " + preset);
-	//if ($('#hide_seed_value').is(':checked'))
-	//	writeSymbolHash(rom, random);
-	
 	writeCredits(rom, subSystemSeeds[SUBSYSTEM_CREDITS]);
 	fixText(rom, itemsRandomized);
-
-	//testLZW(rom);
 
 	// fix the checksum (not necessary, but good to do!)
 	fixChecksum(rom);
@@ -526,91 +522,6 @@ function snesAddressToOffset(addr)
 function offsetToSnesAddress(x)
 {
 	return ((x & 0xFF8000) << 1) + (x & 0xFFFF) + ((x & 0x8000) ? 0 : 0x8000);
-}
-
-function validateROM(stages, rom)
-{
-	var errors = [];
-	var reachable = new Array(0x200);
-/*
-	for (var i = 0; i < stages.length; ++i)
-	{
-		var stage = stages[i];
-
-		// skip warp entries
-		var copyfrom = stage.copyfrom ? stage.copyfrom : stage;
-		if (copyfrom && copyfrom.warp) continue;
-
-		var location = copyfrom.name + '(@' + stage.name + ')';
-
-		var exitinfo = checkExits(stage, rom);
-		if (stage.castle !== 8 && exitinfo.count != stage.exits)
-			errors.push(location + ' has ' + exitinfo.count + ' exit(s) (' + stage.exits + ' expected)');
-		if (exitinfo.types == SECRET_EXIT)
-			errors.push(location + ' has only secret exit ???');
-
-		var stage = stages[i], sub = getRelatedSublevels(stage.id, rom);
-		for (var j = 0; j < sub.length; ++j)
-		{
-			if (isSublevelFree(sub[j], rom))
-				errors.push('Sublevel ' + sub[j].toPrintHex(3) + ' of ' + location + ' is empty');
-
-			var meta = getSublevelData(sub[j], rom);
-
-			var exits = parseExits(sub[j], rom);
-			for (var k = 0; k < exits.length; ++k)
-			{
-				var dest = exits[k].sublevel;
-				if (dest & 0xFF == 0) errors.push('Exit in ' + sub[j].toPrintHex(3) + ' of ' + location + ' is ' + dest.toPrintHex(3));
-			}
-
-			if (!reachable[sub[j]])
-				reachable[sub[j]] = [];
-			reachable[sub[j]].push(location);
-		}
-	}
-
-	if (DEEPVALIDATION)
-	{
-		var spritemap = {}, spritedata = {};
-		for (var i = 0; i < SPRITE_SETS.length; ++i)
-		{
-			var set = [];
-			for (var k in SPRITE_SETS[i])
-			{
-				spritemap[+k] = set;
-				set.push(spritedata[+k] = SPRITE_SETS[i][k])
-				SPRITE_SETS[i][k].id = +k;
-			}
-		}
-
-		for (var id = 0; id < 0x200; ++id)
-		{
-			var mode = getLevelMode(id, rom);
-			var sprites = getSprites(id, rom);
-			var meta = getSublevelData(id, rom);
-
-			for (var i = 0; i < sprites.sprites.length; ++i)
-			{
-				var sprite = spritedata[sprites.sprites[i].id];
-				if (!sprite) continue;
-
-				if (mode.boss && [0x33].contains(sprite.id)) continue;
-				$(['sp3', 'sp4']).each(function(_,x)
-				{
-					if (sprite[x] && !sprite[x].contains(meta[x]))
-						errors.push('Sublevel ' + id.toPrintHex(3) + ' has wrong ' + x +
-							' setting for sprite ' + sprite.id.toPrintHex(2) + ': ' + meta[x].toPrintHex(1));
-				});
-			}
-		}
-	}
-
-	for (var i = 0; i < 0x200; ++i) if (reachable[i] && reachable[i].length > 1)
-		errors.push('Sublevel ' + i.toPrintHex(3) + ' reachable from ' + reachable[i].length + ' stages: ' + reachable[i].join(', '));
-
-	*/
-	return errors;
 }
 
 function expandROM(rom)
