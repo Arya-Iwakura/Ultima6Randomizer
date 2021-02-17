@@ -411,7 +411,7 @@ var DATA_HINT_TEXT =
 	" is in a place with Gargoyles.", //15
 	" is in a house.", //16
 	" is in a shop.", //17
-	" is on a pedastal.", //18
+	" is on a pedestal.", //18
 	" is in a pocket.", //19
 	" is in a tavern.", //20
 	" is in a place of rest.", //21
