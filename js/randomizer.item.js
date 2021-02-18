@@ -262,7 +262,7 @@ function placeItemsInLocations(rom, random, items, locations, restrictions, spoi
 						{
 							if(rArray[iRA] == itemHex)
 							{
-								console.log('FAILED PLACEMENT - ITEM ' + items[iItem].item + ' #' + itemHex + ' IS NOT ALLOWED IN LOCATION ' + locations[iLocation].name);
+								//console.log('FAILED PLACEMENT - ITEM ' + items[iItem].item + ' #' + itemHex + ' IS NOT ALLOWED IN LOCATION ' + locations[iLocation].name);
 								isItemAllowed = 0;
 								break;
 							}
@@ -278,7 +278,7 @@ function placeItemsInLocations(rom, random, items, locations, restrictions, spoi
 				{
 					if(items[iItem].flags[0] == locations[iLocation].spellrestrictions[iSpellRestriction])
 					{
-						console.log('FAILED PLACEMENT - SPELL ' + items[iItem].item + ' #' + itemHex + ' IS NOT ALLOWED IN LOCATION ' + locations[iLocation].name);
+						//console.log('FAILED PLACEMENT - SPELL ' + items[iItem].item + ' #' + itemHex + ' IS NOT ALLOWED IN LOCATION ' + locations[iLocation].name);
 						isItemAllowed = 0;
 						break;
 					}
