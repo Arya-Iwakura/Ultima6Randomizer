@@ -226,7 +226,7 @@ function checkInventoryFlagStatus()
 		if($('#randomize_chests_overworld').is(':checked') == false && $('#randomize_chests_dungeons').is(':checked') == false)
 		{
 			$('#randomize_unlockanddispel').prop('disabled', true);
-		$('#randomize_unlockanddispel').prop('checked', false);
+			$('#randomize_unlockanddispel').prop('checked', false);
 		}
 	}
 	else

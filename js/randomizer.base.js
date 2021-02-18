@@ -183,8 +183,8 @@ var DATA_CHESTS_OVERWORLD_NOSPELLS =
 
 var DATA_CHESTS_OVERWORLD_SPELLS =
 [
-	{"offset": 0x116D2, "flags": [0xCF, 0xCF], "id": [0xB8], "restrictions": [], "name": "daggerisland-basement-01", "item": "Spell of Dispel Field", "location": "Dagger Island Basement", "type":"solo", "stolen" : "yes", "hints":[2,16,22], "spellrestrictions":[]}, //added an item as it was empty
-	{"offset": 0x111BF, "flags": [0xCA, 0xCA], "id": [0xB8], "restrictions": [], "name": "paws-spinner-02", "item": "Spell of Unlock", "location": "House of Arbeth", "type":"solo", "stolen" : "yes", "hints":[14], "spellrestrictions":[]}, //added an item as it was empty
+	{"offset": 0x116D2, "flags": [0xCF, 0xCF], "id": [0xB8], "restrictions": [], "name": "daggerisland-basement-01", "item": "Spell of Dispel Field", "location": "Dagger Island Basement", "type":"spell", "stolen" : "yes", "hints":[2,16,22], "spellrestrictions":[]}, //added an item as it was empty
+	{"offset": 0x111BF, "flags": [0xCA, 0xCA], "id": [0xB8], "restrictions": [], "name": "paws-spinner-02", "item": "Spell of Unlock", "location": "House of Arbeth", "type":"spell", "stolen" : "yes", "hints":[14], "spellrestrictions":[]}, //added an item as it was empty
 ];
 
 var DATA_CHESTS_DUNGEON =
@@ -214,8 +214,8 @@ var DATA_CHESTS_DUNGEON_NOSPELLS =
 
 var DATA_CHESTS_DUNGEON_SPELLS =
 [
-	{"offset": 0x11D63, "flags": [0xCF, 0xCF], "id": [0xB8], "restrictions": [], "name": "dungeon-hythloth-captainjohn-01", "item": "Spell of Dispel Field", "location": "House of Captain John", "type":"solo", "stolen" : "no", "hints":[2,4,16,22], "spellrestrictions":[]}, //added an item as it was empty
-	{"offset": 0x11D23, "flags": [0xCA, 0xCA], "id": [0xB8], "restrictions": [ITEM_SHOVEL,ITEM_SPELLBOOK], "name": "dungeon-piratecave-F4-01", "item": "Spell of Unlock", "location": "Pirate Cave", "type":"solo", "stolen" : "no", "hints":[2,3,22,26], "spellrestrictions":[SPELL_DISPEL_FIELD]},
+	{"offset": 0x11D63, "flags": [0xCF, 0xCF], "id": [0xB8], "restrictions": [], "name": "dungeon-hythloth-captainjohn-01", "item": "Spell of Dispel Field", "location": "House of Captain John", "type":"spell", "stolen" : "no", "hints":[2,4,16,22], "spellrestrictions":[]}, //added an item as it was empty
+	{"offset": 0x11D23, "flags": [0xCA, 0xCA], "id": [0xB8], "restrictions": [ITEM_SHOVEL,ITEM_SPELLBOOK], "name": "dungeon-piratecave-F4-01", "item": "Spell of Unlock", "location": "Pirate Cave", "type":"spell", "stolen" : "no", "hints":[2,3,22,26], "spellrestrictions":[SPELL_DISPEL_FIELD]},
 ];
 
 var DATA_HINT_TEXT =
