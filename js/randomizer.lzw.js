@@ -299,20 +299,11 @@ function compressLZW(data)
 
         // The decompressor supports a special case when cw == cw_next it repeats the
         // last cw's string, then repeats the first byte of that string.
-        var special = null;
-        if(prevCw >= BASE_CW)
-        {
-            var prevString = dictionary[prevCw - BASE_CW];
-            special = concatByteArrays([prevString, prevString.subarray(0, 1)]);
-        }
-        else
-        {
-            special = null;
-        }
+        var special = concatByteArrays([prev, prev.subarray(0,1)]);
 
         var string;
         var cw;
-        if(special != null && special.length >= longestLen && dataStartsWith(special))
+        if(special.length >= longestLen && dataStartsWith(special))
         {
             // The special case was better than a dictionary match, use it
             string = special;
