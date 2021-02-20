@@ -221,11 +221,187 @@ function shuffleLocations(random, locations)
 	return locations;
 }
 
+function checkRestrictions(restrictions, locations, items, iLocation, iItem, itemHex, isItemAllowed)
+{
+	outerLoop:
+	for(var iR = 0; iR < restrictions.length; ++iR)
+	{
+		if(restrictions[iR].name == locations[iLocation].name)
+		{
+			locationHasRestrictions = true;
+			
+			//if we are attempting to place a stacked item at a shrine then flag as not allowed to place here
+			if(locations[iLocation].type == "shrine" && items[iItem].type == "stack")
+			{
+				//console.log('STACK NOT ALLOWED - ITEM ' + items[iItem].item + ' #' + itemHex + ' IS NOT ALLOWED IN LOCATION ' + locations[iLocation].name);
+				isItemAllowed = 0;
+				break outerLoop;
+			}
+			else if(locations[iLocation].id == ITEM_RUNE_VALOR && items[iItem].type == "stack")
+			{
+				//console.log('STACK NOT ALLOWED - ITEM ' + items[iItem].item + ' #' + itemHex + ' IS NOT ALLOWED IN LOCATION ' + locations[iLocation].name);
+				isItemAllowed = 0;
+				break outerLoop;
+			}
+			else
+			{
+				var rArray = [];
+				rArray = rArray.concat(restrictions[iR].restrictions);
+				rArray = rArray.concat(restrictions[iR].requires);
+				rArray = rArray.concat(restrictions[iR].addedRequires);
+				for(var iRA = 0; iRA < rArray.length; ++iRA)
+				{
+					if(rArray[iRA] == itemHex)
+					{
+						//console.log('FAILED PLACEMENT - ITEM ' + items[iItem].item + ' #' + itemHex + ' IS NOT ALLOWED IN LOCATION ' + locations[iLocation].name);
+						isItemAllowed = 0;
+						break outerLoop;
+					}
+				}
+			}
+		}
+	}
+	
+	return {
+		locationHasRestrictions: locationHasRestrictions,
+		isItemAllowed: isItemAllowed,
+	};
+}
+
+function checkSpellRestrictions(locations, items, iLocation, iItem, isItemAllowed)
+{
+	if(isItemAllowed == 1 && items[iItem].type == "spell")
+	{
+		var rArray = [];
+		rArray = rArray.concat(locations[iLocation].spellrestrictions);
+		rArray = rArray.concat(locations[iLocation].addedSpellRequires);
+		for(var iRA = 0; iRA < rArray.length; ++iRA)
+		{
+			if(items[iItem].flags[0] == rArray[iRA])
+			{
+				//console.log('FAILED PLACEMENT - SPELL ' + items[iItem].item + ' #' + items[iItem].id + ' IS NOT ALLOWED IN LOCATION ' + locations[iLocation].name);
+				isItemAllowed = 0;
+				break;
+			}
+		}
+	}
+	return {
+		isItemAllowed: isItemAllowed,
+	};
+}
+
+function clearedAddedRequirements(locations)
+{
+	for(var iLocation = 0; iLocation < locations.length; ++iLocation)
+	{
+		locations[iLocation].addedRequires = [];
+	}
+	for(var iLocation = 0; iLocation < locations.length; ++iLocation)
+	{
+		locations[iLocation].addedSpellRequires = [];
+	}
+	return locations;
+}
+
+function updateLocationRequirements(locations, inLocation, inItem)
+{
+	//we placed an item in a restricted location
+	//find all locations that require this item and add the locations required items to that list
+	//example: rune of valor placed in shrine of justice so all places that require the valor rune should also require the justice rune
+	for(var iLocation = 0; iLocation < locations.length; ++iLocation) //look through all locations
+	{
+		for(var iRequires = 0; iRequires < locations[iLocation].requires.length; ++iRequires) //look through the requirements of each location
+		{
+			if(locations[iLocation].requires[iRequires] == inItem.id) //determine if this location has a requirement that is this item
+			{
+				//add the placed location requirements to this location
+				locations[iLocation] = addLocationRequirements(locations[iLocation], inLocation);
+			}
+		}
+		for(var iRequires = 0; iRequires < locations[iLocation].addedRequires.length; ++iRequires) //look through the added requirements of each location
+		{
+			if(locations[iLocation].addedRequires[iRequires] == inItem.id) //determine if this location has a requirement that is this item
+			{
+				//add the placed location requirements to this location
+				locations[iLocation] = addLocationRequirements(locations[iLocation], inLocation);
+			}
+		}
+
+		//do the same as above for spell requirements
+		for(var iSpellRestriction = 0; iSpellRestriction < locations[iLocation].spellrestrictions.length; ++iSpellRestriction)
+		{
+			if(locations[iLocation].spellrestrictions[iSpellRestriction] == inItem.flags[0]) //determine if this location has a requirement that is this spell
+			{
+				//add the placed location spell requirements to this location
+				locations[iLocation] = addLocationSpellRequirements(locations[iLocation], inLocation);
+			}
+		}
+		for(var iSpellRestriction = 0; iSpellRestriction < locations[iLocation].spellrestrictions.length; ++iSpellRestriction)
+		{
+			if(locations[iLocation].addedSpellRequires[iSpellRestriction] == inItem.flags[0]) //determine if this location has a requirement that is this spell
+			{
+				//add the placed location spell requirements to this location
+				locations[iLocation] = addLocationSpellRequirements(locations[iLocation], inLocation);
+			}
+		}
+	}
+	return locations;
+}
+
+function addLocationRequirements(location1, location2)
+{
+	var allRequires2 = location2.requires.concat(location2.addedRequires);
+	var allRequires1 = location1.requires.concat(location1.addedRequires);
+	for(var i = 0; i < allRequires2.length; ++i) //look through the requirements of the placed location
+	{
+		var requirementMatchFound = false;
+		for(var j = 0; j < allRequires1.length; ++j) //look through the requirements of the searched location
+		{
+			if(allRequires1[j] == allRequires2[i]) //avoid adding duplicates
+			{
+				requirementMatchFound = true;
+				break;
+			}
+		}
+		if(requirementMatchFound == false) //no duplicate found so add the requirement
+		{
+			location1.addedRequires.push(allRequires2[i]);
+		}
+	}
+	return location1;
+}
+
+function addLocationSpellRequirements(location1, location2)
+{
+	var allRequires2 = location2.spellrestrictions.concat(location2.addedSpellRequires);
+	var allRequires1 = location1.spellrestrictions.concat(location1.addedSpellRequires);
+	for(var i = 0; i < allRequires2.length; ++i) //look through the requirements of the placed location
+	{
+		var requirementMatchFound = false;
+		for(var j = 0; j < allRequires1.length; ++j) //look through the requirements of the searched location
+		{
+			if(allRequires1[j] == allRequires2[i]) //avoid adding duplicates
+			{
+				requirementMatchFound = true;
+				break;
+			}
+		}
+		if(requirementMatchFound == false) //no duplicate found so add the requirement
+		{
+			location1.addedSpellRequires.push(allRequires2[i]);
+		}
+	}
+
+	return location1;
+}
+
 function placeItemsInLocations(rom, random, items, locations, restrictions, spoilers, hintLocations)
 {
 	var iItem = 0;
 	var safetyCounter = 0;
 	var wasSuccessful = false;
+	
+	clearedAddedRequirements(locations);
 
 	while (safetyCounter < 1000)
 	{
@@ -236,53 +412,21 @@ function placeItemsInLocations(rom, random, items, locations, restrictions, spoi
 			var locHex = locations[iLocation].offset + 3;
 			var itemHex = items[iItem].id;
 			var isItemAllowed = 1;
-			
+			var locationHasRestrictions = false;
+
 			//check restrictions on location 
-			for(var iR = 0; iR < restrictions.length; ++iR)
-			{
-				if(restrictions[iR].name == locations[iLocation].name)
-				{
-					//if we are attempting to place a stacked item at a shrine then flag as not allowed to place here
-					if(locations[iLocation].type == "shrine" && items[iItem].type == "stack")
-					{
-						//console.log('STACK NOT ALLOWED - ITEM ' + items[iItem].item + ' #' + itemHex + ' IS NOT ALLOWED IN LOCATION ' + locations[iLocation].name);
-						isItemAllowed = 0;
-						break;
-					}
-					else if(locations[iLocation].id == ITEM_RUNE_VALOR && items[iItem].type == "stack")
-					{
-						//console.log('STACK NOT ALLOWED - ITEM ' + items[iItem].item + ' #' + itemHex + ' IS NOT ALLOWED IN LOCATION ' + locations[iLocation].name);
-						isItemAllowed = 0;
-						break;
-					}
-					else
-					{
-						var rArray = restrictions[iR].restrictions;
-						for(var iRA = 0; iRA < rArray.length; ++iRA)
-						{
-							if(rArray[iRA] == itemHex)
-							{
-								//console.log('FAILED PLACEMENT - ITEM ' + items[iItem].item + ' #' + itemHex + ' IS NOT ALLOWED IN LOCATION ' + locations[iLocation].name);
-								isItemAllowed = 0;
-								break;
-							}
-						}
-					}
-				}
-			}
+			var restrictionResults = checkRestrictions(restrictions, locations, items, iLocation, iItem, itemHex, isItemAllowed);
+			isItemAllowed = restrictionResults.isItemAllowed;
+			locationHasRestrictions = restrictionResults.locationHasRestrictions;
 
 			//check spell restrictions on location if we did not already fail
-			if(isItemAllowed == 1 && items[iItem].type == "spell")
+			var spellRestrictionResults = checkSpellRestrictions(locations, items, iLocation, iItem, isItemAllowed)
+			isItemAllowed = spellRestrictionResults.isItemAllowed;
+
+			//we are allowed to be placed here by normal restrictions, now we check requirement restrictions
+			if(locationHasRestrictions == true)
 			{
-				for(var iSpellRestriction = 0; iSpellRestriction < locations[iLocation].spellrestrictions.length; ++iSpellRestriction)
-				{
-					if(items[iItem].flags[0] == locations[iLocation].spellrestrictions[iSpellRestriction])
-					{
-						//console.log('FAILED PLACEMENT - SPELL ' + items[iItem].item + ' #' + itemHex + ' IS NOT ALLOWED IN LOCATION ' + locations[iLocation].name);
-						isItemAllowed = 0;
-						break;
-					}
-				}
+				locations = updateLocationRequirements(locations, locations[iLocation], items[iItem]);
 			}
 
 			if(isItemAllowed == 1)

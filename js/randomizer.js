@@ -1,4 +1,4 @@
-var VERSION_STRING = 'v0.5e';
+var VERSION_STRING = 'v0.5f';
 
 const SUBSYSTEM_ITEMS = 0;
 const SUBSYSTEM_SPAWNERS = 1;
@@ -47,7 +47,7 @@ function randomizeROM(buffer, seed)
 	var randomizedOptionsSelected = false;
 	var itemsRandomized = false;
 
-	fixMoonPhaseBug(rom);
+	fixMoonPhaseBug(rom); //fixes base game graphics bug with moon phases
 
 	//---------gameplay and other
 	if ($('#expanded_camping').is(':checked'))
@@ -429,6 +429,16 @@ function randomizeROM(buffer, seed)
 		// spoilers
 		spoilers: spoilers,
 	};
+}
+
+function testLZW(rom)
+{
+	var testData = decompressDataFromLZW(rom, 0x48000);
+	console.log(testData[0x2C20]);
+	testData[0x2BF5] = 0x41;
+	testData[0x2C1D] = 0x41;
+	testData[0x2C20] = 0x41;
+	rom.set(compressDataToLZW(testData), 0x48000);
 }
 
 function getSubystemSeeds(seed)

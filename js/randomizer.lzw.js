@@ -1,3 +1,15 @@
+//usage:
+//- var dialogData = decompressDataFromLZW(rom, 0x48000);
+//- make changes to dialogData
+//- rom.set(compressDataToLZW(dialog1data), 0x48000);
+
+//This produces slightly different compressed results to the Python version, but resolves many of the discrepancies between the ROM version and the re-compressed version.
+//Compared to the Python version's many discrepancies, this version only has discrepancies in the re-compressed versions of these files:
+//0x9f500	Differs from ROM. Exactly matches Python version
+//0xd6600	Differs from ROM. Exactly matches Python version
+//0xdc100	Differs from ROM. Exactly matches Python version
+//0xe1000	Differs from ROM & Python version
+
 var BASE_CW = 0x102;
 
 function concatByteArrays(arrays)
@@ -184,7 +196,7 @@ function decompressRLE(inputBytes)
     return new Uint8Array(result);
 }
 
-function decompress(rom, startAddress)
+function decompressDataFromLZW(rom, startAddress)
 {
     return decompressRLE(decompressLZW(readCodewords(rom, startAddress).codewords));
 }
@@ -398,7 +410,7 @@ function packCodewords(codewords)
     return new Uint8Array(outputBytes);
 }
 
-function compress(data)
+function compressDataToLZW(data)
 {
     return packCodewords(compressLZW(compressRLE(data)));
 }
