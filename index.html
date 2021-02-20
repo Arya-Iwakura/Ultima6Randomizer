@@ -733,6 +733,10 @@
 						</h4>
 					</div>
 					<div class="modal-body">
+						<span class="badge">v0.5f</span>
+						<ul>
+							<li>Added a fix that should resolve all dependency chain and loop soft-lock issues</li>
+						</ul>
 						<span class="badge">v0.5e</span>
 						<ul>
 							<li>Fixed an issue with spells spawning where they should not if they were included in the item pool</li>
@@ -742,9 +746,9 @@
 							<li>Added Rune of Compassion item and location to the Main Items pool</li>
 							<li>Added Rune of Sacrifice item and location to the Main Items pool</li>
 							<li>Added Rune of Humility item and location to the Main Items pool</li>
-							<li>Added option to add Unlock and Dispel Field spells to the item randomization pool and remove them from shops</li>
-							<li>When the spellbook is included in the item randomization pool, purchasable books are now replaced or more expensive</li>
-							<li>Fixed a bug where cleansing a shrine while the corresponding moonstone was buried would cause a soft lock</li>
+							<li>Added option to add Unlock & Dispel Field spells to the item pool and remove them from shops</li>
+							<li>If the spellbook is included in the item pool they are now replaced or more expensive in shops</li>
+							<li>Fixed a bug where buried moonstones would be deleted if their shrine was cleansed after burial</li>
 							<li>Fixed a bug with the base game in which the moon phase graphics were incorrect and corrupt</li>
 							<li>Updated Credits</li>
 						</ul>
@@ -757,9 +761,9 @@
 						<span class="badge">v0.5b</span>
 						<ul>
 							<li>Added Remove Moon Orb option to completely remove the Moon Orb from the game</li>
-							<li>Added options to add a new island with a warp to the Shrine of Spirituality (recommended if Remove Moon Orb selected)</li>
+							<li>Added options to add an island with a warp to the Shrine of Spirituality (recommend with Remove Moon Orb)</li>
 							<li>Added option to add safety rafts to shrine islands as well as an option to trap all placed rafts</li>
-							<li>Fixed issue where you could not leave the Shrine of Spirituality if you had cleansed all shrines and had no Moon Orb</li>
+							<li>Fixed issue with a soft lock at the Shrine of Spirituality with all shrines cleared and no Moon Orb</li>
 							<li>Fixed an issue where you would receive null items when selecting none as a starting inventory</li>
 							<li>Fixed an issue where spawn numbers were not following the selected spawn number settings</li>
 							<li>Fixed an issue where character selection sometimes would not give you the character you had selected</li>
@@ -798,8 +802,8 @@
 							<li>Added error reporting dialog box</li>
 							<li>Added system to isolate randomization systems from one another(changes in one system will no longer cascade into the others)</li>
 							<li>Fixed sprites with incorrectly assigned palettes</li>
-							<li>Added the Zu Flower (Tangle Vine) back to the game as the port of the enemy was never finished for the SNES port</li>
-							<li>Added the Silver Serpent back to the game as the port of the enemy was never finished for the SNES port (thanks BinarySplit!)</li>
+							<li>Added the Zu Flower (Tangle Vine) back to the game as the enemy was never finished for the SNES port</li>
+							<li>Added the Silver Serpent back to the game as the enemy was never finished for the SNES port (thanks BinarySplit!)</li>
 							<li>Added option for additional controller buttons assigned to actions other than only D-Pad and A (thanks BinarySplit!)</li>
 							<li>Added Easy Karma and Hard Karma options</li>
 							<li>Added option to allow day light hours to last 2x or 3x as long or to be equal to the PC version (2x longer days and nights)</li>
