@@ -37,10 +37,12 @@ function preset_townsfolk()
 {
 	$('#randomize_core_items').prop('checked', true);
 	$('#randomize_chests_overworld').prop('checked', true);
+	$('#add_sherry_item').prop('checked', true);
 	
 	$('#randomize_moonorb').prop('disabled', false);
 	$('#randomize_spellbook').prop('disabled', false);
 	$('#randomize_unlockanddispel').prop('disabled', false);
+	$('#add_sherry_item').prop('disabled', false);
 
 	$('#randomize_enemy_animals').prop('checked', true);
 	
@@ -65,7 +67,8 @@ function preset_townsfolk()
 	$('#add_missing_ai_spells').prop('checked', true);
 	$('#remove_moonorb').prop('checked', false);
 	$('#expanded_camping').prop('checked', true);
-	$('#enable_fast_button_mapping').prop('checked', false);
+	$('#enable_fast_button_mapping').prop('checked', true);
+	$('#enable_expanded_armor_items').prop('checked', true);
 
 	$('#select-starting-inventory').prop('value', 0);
 	$('#select-starting-gold').prop('value', 0);
@@ -84,10 +87,12 @@ function preset_explorer()
 	$('#randomize_core_items').prop('checked', true);
 	$('#randomize_chests_overworld').prop('checked', true);
 	$('#randomize_moonorb').prop('checked', true);
-	
+	$('#add_sherry_item').prop('checked', true);
+
 	$('#randomize_moonorb').prop('disabled', false);
 	$('#randomize_spellbook').prop('disabled', false);
 	$('#randomize_unlockanddispel').prop('disabled', false);
+	$('#add_sherry_item').prop('disabled', false);
 
 	$('#randomize_enemy_wild').prop('checked', true);
 	$('#randomize_enemy_animals').prop('checked', true);
@@ -111,7 +116,8 @@ function preset_explorer()
 	$('#add_missing_ai_spells').prop('checked', true);
 	$('#remove_moonorb').prop('checked', false);
 	$('#expanded_camping').prop('checked', true);
-	$('#enable_fast_button_mapping').prop('checked', false);
+	$('#enable_fast_button_mapping').prop('checked', true);
+	$('#enable_expanded_armor_items').prop('checked', true);
 
 	$('#select-starting-inventory').prop('value', 0);
 	$('#select-starting-gold').prop('value', 0);
@@ -132,10 +138,12 @@ function preset_adventurer() //standard
 	$('#randomize_chests_dungeons').prop('checked', true);
 	$('#randomize_moonorb').prop('checked', true);
 	$('#randomize_spellbook').prop('checked', true);
+	$('#add_sherry_item').prop('checked', true);
 
 	$('#randomize_moonorb').prop('disabled', false);
 	$('#randomize_spellbook').prop('disabled', false);
 	$('#randomize_unlockanddispel').prop('disabled', false);
+	$('#add_sherry_item').prop('disabled', false);
 
 	$('#randomize_enemy_animals').prop('checked', true);
 	$('#randomize_enemy_wild').prop('checked', true);
@@ -160,7 +168,8 @@ function preset_adventurer() //standard
 	$('#add_missing_ai_spells').prop('checked', true);
 	$('#remove_moonorb').prop('checked', false);
 	$('#expanded_camping').prop('checked', true);
-	$('#enable_fast_button_mapping').prop('checked', false);
+	$('#enable_fast_button_mapping').prop('checked', true);
+	$('#enable_expanded_armor_items').prop('checked', true);
 
 	$('#select-starting-inventory').prop('value', 0);
 	$('#select-starting-gold').prop('value', 0);
@@ -181,10 +190,12 @@ function preset_avatar()
 	$('#randomize_chests_dungeons').prop('checked', true);
 	$('#randomize_moonorb').prop('checked', true);
 	$('#randomize_spellbook').prop('checked', true);
+	$('#add_sherry_item').prop('checked', true);
 
 	$('#randomize_moonorb').prop('disabled', false);
 	$('#randomize_spellbook').prop('disabled', false);
 	$('#randomize_unlockanddispel').prop('disabled', false);
+	$('#add_sherry_item').prop('disabled', false);
 
 	$('#randomize_enemy_monsters').prop('checked', true);
 	$('#randomize_enemy_wild').prop('checked', true);
@@ -209,8 +220,9 @@ function preset_avatar()
 	$('#add_missing_enemies').prop('checked', true);
 	$('#add_missing_ai_spells').prop('checked', true);
 	$('#remove_moonorb').prop('checked', false);
-	$('#expanded_camping').prop('checked', false);
-	$('#enable_fast_button_mapping').prop('checked', false);
+	$('#expanded_camping').prop('checked', true);
+	$('#enable_fast_button_mapping').prop('checked', true);
+	$('#enable_expanded_armor_items').prop('checked', true);
 
 	$('#select-starting-inventory').prop('value', 0);
 	$('#select-starting-gold').prop('value', 0);
@@ -231,10 +243,12 @@ function preset_guardian()
 	$('#randomize_chests_dungeons').prop('checked', true);
 	$('#randomize_moonorb').prop('checked', true);
 	$('#randomize_spellbook').prop('checked', true);
+	$('#add_sherry_item').prop('checked', true);
 
 	$('#randomize_moonorb').prop('disabled', false);
 	$('#randomize_spellbook').prop('disabled', false);
 	$('#randomize_unlockanddispel').prop('disabled', false);
+	$('#add_sherry_item').prop('disabled', false);
 
 	$('#randomize_enemy_monsters').prop('checked', true);
 	$('#randomize_enemy_wild').prop('checked', true);
@@ -260,8 +274,9 @@ function preset_guardian()
 	$('#add_missing_enemies').prop('checked', true);
 	$('#add_missing_ai_spells').prop('checked', true);
 	$('#remove_moonorb').prop('checked', false);
-	$('#expanded_camping').prop('checked', false);
-	$('#enable_fast_button_mapping').prop('checked', false);
+	$('#expanded_camping').prop('checked', true);
+	$('#enable_fast_button_mapping').prop('checked', true);
+	$('#enable_expanded_armor_items').prop('checked', true);
 
 	$('#select-starting-inventory').prop('value', 0);
 	$('#select-starting-gold').prop('value', 0);
@@ -284,6 +299,7 @@ function preset_test()
 	$('#randomize_moonorb').prop('disabled', false);
 	$('#randomize_spellbook').prop('disabled', false);
 	$('#randomize_unlockanddispel').prop('disabled', false);
+	$('#add_sherry_item').prop('disabled', false);
 	
 	$('#randomize_enemy_animals').prop('checked', false);
 	
@@ -309,17 +325,18 @@ function preset_test()
 	$('#remove_moonorb').prop('checked', false);
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
+	$('#enable_expanded_armor_items').prop('checked', true);
 	
 	$('#select-starting-inventory').prop('value', 0);
 	$('#select-starting-gold').prop('value', 0);
 	$('#select-day-night-cycle').prop('value', 2);
-	$('#select-karma-difficulty').prop('value', 1);
-	$('#select-spiritshrine').prop('value', 1);
-	$('#select-placedrafts').prop('value', 2);
+	$('#select-karma-difficulty').prop('value', 0);
+	$('#select-spiritshrine').prop('value', 0);
+	$('#select-placedrafts').prop('value', 0);
 	
-	$('#display_spoiler_log').prop('checked', true);
-	$('#display_hints').prop('disabled', false);
-	$('#display_hints').prop('checked', true);
+	$('#display_spoiler_log').prop('checked', false);
+	$('#display_hints').prop('disabled', true);
+	$('#display_hints').prop('checked', false);
 }
 
 $('#preset').change(updatePreset);
@@ -345,7 +362,6 @@ var PRESET_NAMES =
 function getPresetName(n)
 {
 	if (n === undefined) n = $('#preset').val();
-	console.log(n);
 	return PRESET_NAMES[n] || PRESET_NAMES[0];
 }
 
@@ -354,7 +370,7 @@ $('.presetoption').each(function(){ RANDOMIZER_SETTINGS.push(this); });
 
 function getRandomizerSettings()
 {
-	var bitset = $.map(RANDOMIZER_SETTINGS, function(x){ return $(x).is(':checked'); });
+	var bitset = $.map(RANDOMIZER_SETTINGS, function(x){ return $(x).is(':checked') });
 	return bitsToHex(bitset);
 }
 
@@ -365,6 +381,28 @@ function setRandomizerSettings(set)
 	{
 		var x = i > bitset.length ? 0 : bitset[i];
 		$(RANDOMIZER_SETTINGS[i]).prop('checked', x);
+	}
+}
+
+var RANDOMIZER_SETTING_SELECTS = [];
+$('.presetselect').each(function(){ RANDOMIZER_SETTING_SELECTS.push(this); });
+
+function getRandomizerSettingsSelects()
+{
+	var settingsText = "";
+	for (var i = 0; i < RANDOMIZER_SETTING_SELECTS.length; ++i)
+	{
+		settingsText = settingsText.concat(RANDOMIZER_SETTING_SELECTS[i].value);
+	}
+	return settingsText;
+}
+
+function setRandomizerSettingsSelects(set)
+{
+	for (var i = 0; i < RANDOMIZER_SETTING_SELECTS.length; ++i)
+	{
+		var x = set[i];
+		$(RANDOMIZER_SETTING_SELECTS[i]).prop('value', x);
 	}
 }
 

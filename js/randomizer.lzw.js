@@ -198,7 +198,7 @@ function decompressRLE(inputBytes)
 
 function decompressDataFromLZW(rom, startAddress)
 {
-    return decompressRLE(decompressLZW(readCodewords(rom, startAddress).codewords));
+    return checkIfDecompressed(rom, startAddress);
 }
 
 function compressRLE(data)
@@ -404,4 +404,45 @@ function packCodewords(codewords)
 function compressDataToLZW(data)
 {
     return packCodewords(compressLZW(compressRLE(data)));
+}
+
+//---------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------
+
+//Decompressing and recompressing is slow so we ensure that each chunk of compressed data is only decompressed and compressed once
+
+var decompressedDataList = [];
+
+function checkIfDecompressed(rom, startAddress)
+{
+    for(var i = 0; i < decompressedDataList.length; ++i)
+    {
+        if(decompressedDataList[i].address == startAddress)
+        {
+            //data already decompressed
+            return decompressedDataList[i].data;
+        }
+    }
+    
+    //no decompressed data match was found
+    var data = new DecompressedData(startAddress, decompressRLE(decompressLZW(readCodewords(rom, startAddress).codewords)))
+    decompressedDataList.push(data);
+    return data.data;
+}
+
+function recompressAllDecompressedData(rom)
+{
+    while(decompressedDataList.length)
+    {
+        var data = decompressedDataList.pop();
+        rom.set(compressDataToLZW(data.data), data.address);
+    }
+}
+
+class DecompressedData {
+    constructor(address, data) {
+        this.address = address;
+        this.data = data;
+    }
 }

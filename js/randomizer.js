@@ -1,4 +1,4 @@
-var VERSION_STRING = 'v0.5f';
+var VERSION_STRING = 'v0.6';
 
 const SUBSYSTEM_ITEMS = 0;
 const SUBSYSTEM_SPAWNERS = 1;
@@ -14,6 +14,7 @@ const SUBSYSTEM_MONSTER_DATA_SPELLS = 10;
 const SUBSYSTEM_MONSTER_DATA_DROPS = 11;
 const SUBSYSTEM_MONSTER_DATA_EQUIPMENT = 12;
 const SUBSYSTEM_PLAYER_INVENTORY = 13;
+const SUBSYSTEM_PLAYER_GAMEPLAY = 14;
 
 function randomizeROM(buffer, seed)
 {
@@ -46,6 +47,7 @@ function randomizeROM(buffer, seed)
 	//---------prepare for randomization
 	var randomizedOptionsSelected = false;
 	var itemsRandomized = false;
+	var spoilers = [];
 
 	fixMoonPhaseBug(rom); //fixes base game graphics bug with moon phases
 
@@ -135,8 +137,25 @@ function randomizeROM(buffer, seed)
 	{
 		fastActionButtonBinding(rom);
 	}
+	
+	if ($('#enable_expanded_armor_items').is(':checked'))
+	{
+		adjustArmorItems(rom);
+	}
 
 	//---------items
+	if ($('#add_sherry_item').is(':checked'))
+	{
+		addCustomSherryItem(rom);
+	}
+	if ($('#randomize_unlockanddispel').is(':checked'))
+	{
+		removeUnlockAndDispelSpellsFromShops(rom);
+	}
+	if ($('#randomize_spellbook').is(':checked'))
+	{
+		increaseSpellbookPrices(rom); //increase the spellbook prices if the spellbook is randomized
+	}
 	if ($('#remove_moonorb').is(':checked'))
 	{
 		replaceMoonOrb(rom);
@@ -145,21 +164,26 @@ function randomizeROM(buffer, seed)
 	{
 		overrideMoongateShrineCheck(rom);
 	}
+	if ($('#randomize_castle_britannia_items').is(':checked'))
+	{
+		randomizeCastleBritanniaContents(rom, subSystemSeeds[SUBSYSTEM_ITEMS]);
+	}
 	if ($('#randomize_core_items').is(':checked') || $('#randomize_chests_overworld').is(':checked') || $('#randomize_chests_dungeons').is(':checked')) 
 	{
 		randomizedOptionsSelected = true;
 		itemsRandomized = true;
-		fixPickupGraphics(rom);
+
+		//prepare for randomization
+		updateAndAddChests(rom);
 		prepareLocations(rom);
-		fixChests(rom);
 		increaseSherryPickupWeight(rom);
+		setDrCatReward(rom, subSystemSeeds[SUBSYSTEM_ITEMS]);
 
 		if ($('#display_hints').is(':checked'))
 		{
 			prepareHintText(rom, subSystemSeeds[SUBSYSTEM_HINTS]);
 		}
 
-		var spoilers = [];
 		var randomizeItemsDone = false;
 		do
 		{
@@ -363,14 +387,17 @@ function randomizeROM(buffer, seed)
 	}
 
 	//---------randomizer book
-	if(randomizedOptionsSelected == true )
+	if(randomizedOptionsSelected == true)
 	{
 		bookLordBritishRandomizerBook(rom);
+		randomizeMoonPhases(rom, subSystemSeeds[SUBSYSTEM_PLAYER_GAMEPLAY]);
+		paladinJoke(rom);
 	}
 
+	//testLZW(rom, subSystemSeeds[SUBSYSTEM_PLAYER_GAMEPLAY]);
+
 	//---------wrap it up
-	var preset = +$('#preset').val();
-	if (!preset) preset = 'x' + getRandomizerSettings();
+	var preset = 'x' + getRandomizerSettings() + '-' + 's' + getRandomizerSettingsSelects();
 
 	// validate the rom before we spit it out
 	//var errors = validateROM(rom);
@@ -405,10 +432,11 @@ function randomizeROM(buffer, seed)
 	writeTextToAddress(rom, TEXT_SPEED_LOC, 21, " Fast -  Text  - Slow");
 
 	writeTextToAddress(rom, TEXT_FLAGS_LOC, 21, "");
-	writeSymbolHash(rom, random);
+	writeSymbolHash(rom, subSystemSeeds[SUBSYSTEM_CREDITS]);
 
 	writeCredits(rom, subSystemSeeds[SUBSYSTEM_CREDITS]);
 	fixText(rom, itemsRandomized);
+	recompressAllDecompressedData(rom);
 
 	// fix the checksum (not necessary, but good to do!)
 	fixChecksum(rom);
@@ -431,14 +459,19 @@ function randomizeROM(buffer, seed)
 	};
 }
 
-function testLZW(rom)
+function testLZW(rom, random)
 {
-	var testData = decompressDataFromLZW(rom, 0x48000);
-	console.log(testData[0x2C20]);
-	testData[0x2BF5] = 0x41;
-	testData[0x2C1D] = 0x41;
-	testData[0x2C20] = 0x41;
-	rom.set(compressDataToLZW(testData), 0x48000);
+	//console.log("TEST");
+	//test map data change
+	//var lzwData = decompressDataFromLZW(rom, 0x9E300);
+	//lzwData[0x10AD] = 0x59;
+	//dialogItemArturos(rom, "M. Spirituality", 0x65, 0x01);
+	//dialogItemCaptainJohn(rom, "Moonstone of Spirituality", "M. Spirituality", 0x65, 0x01);
+
+    //var lzwData = decompressDataFromLZW(rom, 0x9D000);
+	//lzwData.set([0x56,0x57], 0x54D); //lycaeum - blue moongate
+
+	//rom.set([0xFF], 0x9DC56); //TEST ROM CHANGE TO FIND DATA CHANGE IN DECOMPRESSED LZW FILES
 }
 
 function getSubystemSeeds(seed)
@@ -486,6 +519,15 @@ function hexToHexArray(inHex)
     }
 
     return hexArray;
+}
+
+function rotateArrayRight(inArray, amount)
+{
+    for(var i = 0; i < amount; ++i)
+    {
+        inArray.unshift(inArray.pop());
+    }
+    return inArray;
 }
 
 //=================================================================================

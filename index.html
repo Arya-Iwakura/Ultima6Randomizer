@@ -80,7 +80,7 @@
 							<option value="3">Adventurer (Standard)</option>
 							<option value="4">Avatar</option>
 							<option value="5">Guardian (Difficult)</option>
-							<!--<option value="6">TEST</option>-->
+							<option value="6">TEST</option>
 						</select>
 					</div>
 				</div>
@@ -154,21 +154,18 @@
 							Include Spellbook <i><small>(Adds more difficulty as you will start with no spells)</small></i>
 						</label>
 					</div>
-
 					<div class="checkbox">
 						<label>
 							<input type="checkbox" id="randomize_unlockanddispel" class="presetoption">
-							Include Unlock and Dispel Field Spells <i><small>(Required spells now must be found and not bought)</small></i>
+							Include Unlock & Dispel Field Spells & Chests<i><small>(Required spells now must be found)</small></i>
 						</label>
 					</div>
-
-					<div class="checkbox hidden">
+					<div class="checkbox">
 						<label>
-							<input type="checkbox" id="randomize_add_chests" class="presetoption">
-							Add New Chests <i><small>(Add chests to expand the total locations randomized)</small></i>
+							<input type="checkbox" id="add_sherry_item" class="presetoption" checked>
+							Add Unique Sherry Item & Chest <i><small>(Sherry will now require a unique item to join)</small></i>
 						</label>
 					</div>
-
 					<div class="checkbox hidden">
 						<label>
 							<input type="checkbox" id="randomize_chest_locks" class="presetoption">
@@ -213,8 +210,8 @@
 						<div class="input-group-addon">
 							<b>AI Spawn Numbers</b>
 						</div>
-						<select class="form-control" id="select-ai-spawn-numbers">
-							<option value="0">Default</option>
+						<select class="form-control , presetselect" id="select-ai-spawn-numbers">
+							<option value="0" selected="selected">Default</option>
 							<option value="1">Shuffle</option>
 							<option value="2">Random</option>
 						</select>
@@ -229,8 +226,8 @@
 						<div class="input-group-addon">
 							<b>AI Aggression</b>
 						</div>
-						<select class="form-control" id="select-ai-aggression">
-							<option value="0">Default</option>
+						<select class="form-control , presetselect" id="select-ai-aggression">
+							<option value="0" selected="selected">Default</option>
 							<option value="1">Intuitive</option>
 							<option value="2">Shuffle</option>
 							<option value="3">Passive</option>
@@ -289,7 +286,7 @@
 						<div class="input-group-addon">
 							<b>AI Stat Difficulty</b>
 						</div>
-						<select class="form-control" id="select-ai-stat-difficulty">
+						<select class="form-control , presetselect" id="select-ai-stat-difficulty">
 							<option value="1">Easier</option>
 							<option value="2">Easy</option>
 							<option value="0" selected="selected">Default</option>
@@ -309,7 +306,7 @@
 						<div class="input-group-addon">
 							<b>AI Spell Difficulty</b>
 						</div>
-						<select class="form-control" id="select-ai-spell-difficulty">
+						<select class="form-control , presetselect" id="select-ai-spell-difficulty">
 							<option value="1">Easy</option>
 							<option value="0" selected="selected">Default</option>
 							<option value="2">Hard</option>
@@ -325,8 +322,8 @@
 						<div class="input-group-addon">
 							<b>AI Spells</b>
 						</div>
-						<select class="form-control" id="select-ai-spells">
-							<option value="0">Default</option>
+						<select class="form-control , presetselect" id="select-ai-spells">
+							<option value="0" selected="selected">Default</option>
 							<option value="1">Shuffle</option>
 							<option value="2">Random</option>
 						</select>
@@ -341,8 +338,8 @@
 						<div class="input-group-addon">
 							<b>AI Equipment</b>
 						</div>
-						<select class="form-control" id="select-ai-equipment">
-							<option value="0">Default</option>
+						<select class="form-control , presetselect" id="select-ai-equipment">
+							<option value="0" selected="selected">Default</option>
 							<option value="1">Shuffle</option>
 							<option value="2">Random</option>
 						</select>
@@ -386,14 +383,28 @@
 					</div>
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" id="expanded_camping" class="presetoption">
+							<input type="checkbox" id="expanded_camping" class="presetoption" checked>
 							Enable Expanded Camping <i><small>(Allows camping in town)</small></i>
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" id="enable_fast_button_mapping" class="presetoption">
+							<input type="checkbox" id="enable_fast_button_mapping" class="presetoption" checked>
 							Enable Expanded Button Mapping <i><small>(Adds common game commands to gamepad buttons X,Y,L,R,Start)</small></i>
+						</label>
+					</div>
+
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="enable_expanded_armor_items" class="presetoption" checked>
+							Enable Expanded Armor Items <i><small>(Adds armor values to boots, belts, and necklaces)</small></i>
+						</label>
+					</div>
+
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="randomize_castle_britannia_items" class="presetoption">
+							Randomize Castle Britannia Items <i><small>(The free items in the starting castle are randomized)</small></i>
 						</label>
 					</div>
 
@@ -401,7 +412,7 @@
 						<div class="input-group-addon">
 							<b>Starting Inventory</b>
 						</div>
-						<select class="form-control" id="select-starting-inventory">
+						<select class="form-control , presetselect" id="select-starting-inventory">
 							<option value="1">None</option>
 							<option value="0" selected="selected">Default</option>
 							<option value="2">Random - Tier and Set Based</option>
@@ -425,7 +436,7 @@
 						<div class="input-group-addon">
 							<b>Starting Gold</b>
 						</div>
-						<select class="form-control" id="select-starting-gold">
+						<select class="form-control , presetselect" id="select-starting-gold">
 							<option value="1">None</option>
 							<option value="0" selected="selected">Default</option>
 							<option value="2">400g</option>
@@ -445,8 +456,8 @@
 						<div class="input-group-addon">
 							<b>Day and Night Cycle</b>
 						</div>
-						<select class="form-control" id="select-day-night-cycle">
-							<option value="0">Default</option>
+						<select class="form-control , presetselect" id="select-day-night-cycle">
+							<option value="0" selected="selected">Default</option>
 							<option value="1">Day Light Hours Last 2x Longer</option>
 							<option value="2">Day Light Hours Last 3x Longer</option>
 							<option value="3">Use PC Version Day and Night Lengths</option>
@@ -463,7 +474,7 @@
 						<div class="input-group-addon">
 							<b>Karma Difficulty</b>
 						</div>
-						<select class="form-control" id="select-karma-difficulty">
+						<select class="form-control , presetselect" id="select-karma-difficulty">
 							<option value="1">Easy</option>
 							<option value="0" selected="selected">Default</option>
 							<option value="2">Hard</option>
@@ -479,7 +490,7 @@
 						<div class="input-group-addon">
 							<b>Shrine of Spirituality Warp</b>
 						</div>
-						<select class="form-control" id="select-spiritshrine">
+						<select class="form-control , presetselect" id="select-spiritshrine">
 							<option value="0" selected="selected">Default</option>
 							<option value="1">Add Island Warp</option>
 							<option value="2">Add Island Warp (Requires Flying)</option>
@@ -495,17 +506,17 @@
 
 					<div class="input-group top-spaced">
 						<div class="input-group-addon">
-							<b>Placed Rafts</b>
+							<b>Placed Rafts and Gates</b>
 						</div>
-						<select class="form-control" id="select-placedrafts">
+						<select class="form-control , presetselect" id="select-placedrafts">
 							<option value="0" selected="selected">Default</option>
-							<option value="1">Add Safety Rafts</option>
+							<option value="1">Add Safety Rafts and Gates</option>
 							<option value="2">Trap All Placed Rafts</option>
 						</select>
 					</div>
 					<div class="input-group-addon">
-						<small><i><span id="placedrafts-tooltip-1">(Same as base game. Possible to get stuck if playing with randomized or removed Moon Orb)</span></small></i>
-						<small><i><span id="placedrafts-tooltip-2" hidden>(Adds rafts to the shrine islands. Recommended if removing or randomizing the Moon Orb)</span></small></i>
+						<small><i><span id="placedrafts-tooltip-1">(Same as base game. Possible to get stuck if you have no Moon Orb or Spellbook.)</span></small></i>
+						<small><i><span id="placedrafts-tooltip-2" hidden>(Adds rafts & gates to possible stuck spots if you have no Moon Orb or Spellbook.)</span></small></i>
 						<small><i><span id="placedrafts-tooltip-3" hidden>(All placed rafts will be moved to prevent them from accessing the ocean.)</span></small></i>
 					</div>
 				
@@ -601,9 +612,10 @@
 					</div>
 					<div class="modal-body">
 						<p>
-							You have been directed here to download the <strong class="version-number"></strong> rom with a seed of <strong class="seed"></strong> using
-							the <strong class="preset"></strong> preset. If this is not correct, close this window to access the customization tools to generate the rom
-							of your choosing. If you would like to download this specific rom, please click the button labelled with the seed + preset below.
+							You have been directed here to download a <strong class="version-number"></strong> rom with a seed of <strong class="seed"></strong> using the <strong class="flags"></strong> flag set!
+							You may now select some personalized customization options for your rom that will not affect your randomization.
+							If this is not correct, close this window to access the customization tools to generate the rom
+							of your choosing.
 						</p>
 
 						<button type="button" id="generate-param-rom" class="btn btn-primary btn-full-width" data-dismiss="modal">
@@ -689,7 +701,7 @@
 
 						<button type="button" id="download-generated-rom" class="btn btn-primary btn-full-width top-spaced">
 							<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
-							Download U6R <span class="version-number"></span> (<span id="modal-seed-text"></span> + <span id="modal-flags-text"></span>)
+							Download Generated U6R <span class="version-number"></span> Game
 						</button>
 						<button type="button" id="download-spoiler-log" class="btn btn-primary btn-full-width top-spaced">
 							<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
@@ -733,6 +745,30 @@
 						</h4>
 					</div>
 					<div class="modal-body">
+						<span class="badge">v0.6</span>
+						<ul>
+							<li>Added an new overworld chest locations expanding the places you need to visit and explore</li>
+							<li>Added an new underworld chest locations expanding the places you need to visit and explore</li>
+							<li>Added an option for Sherry to need a special cheese delivered before she joins your party</li>
+							<li>New dialog item rewards added to main locations include Captain John.</li>
+							<li>New dialog item rewards added to overworld locations include Lord British and Dr. Cat.</li>
+							<li>New dialog item rewards added to underworld locations include Phoenix, Arturos, Homer, Ybarra, Whitsaber, and Morchella.</li>
+							<li>Added an option to Expand Armor Items which will add armor to boots, belts, and necklaces</li>
+							<li>Added an option to randomize the free items scattered throughout the starting castle</li>
+							<li>Efram the Guild Shop owner in Britain has moved their chest into the locked area of their shop</li>
+							<li>Smith the Horse will now give a clue to an item location</li>
+							<li>All dialog item givers will tell you what item they gave you now during their dialog</li>
+							<li>When Unlock & Dispel Field spells are shuffled, they are no longer removed from shops, but are made more expensive</li>
+							<li>Moonphases will now start at a random point in the moonphase table</li>
+							<li>Added a ladder back to the surface if you add the Shrine if Spirituality island</li>
+							<li>Reduced Shrine of Spirituality island random chance to be balloon blocked from 50% to 20%</li>
+							<li>Changed how seed and flag sharing works to make it more reliable</li>
+							<li>Shifted all systems to use the LZW decompressor / compressor where appropriate</li>
+							<li>Optimized how LZW decompressing and compressing works to allow for faster generation</li>
+							<li>Fixed a bug that would prevent the creating a game with no items shuffled and spoilers enabled</li>
+							<li>Fixed a bug with Passive aggression setting causing mobs to sometimes not be passive</li>
+							<li>Fixed a bug with Passive aggression setting causing invisible collision around some spawners</li>
+						</ul>
 						<span class="badge">v0.5f</span>
 						<ul>
 							<li>Added a fix that should resolve all dependency chain and loop soft-lock issues</li>
@@ -862,7 +898,7 @@
 						</h4>
 					</div>
 					<div class="modal-body">
-						The Ultima 6 SNES Randomizer allows you to randomize a number of different elements to Ultima 6, giving you a endless amount of unqiue replays of the game.
+						The Ultima 6 SNES Randomizer allows you to randomize a number of different elements to Ultima 6, giving you a endless amount of unique replays of the game.
 						</br></br>
 						<span class="badge">Overview</span>
 						<ul>
@@ -879,7 +915,8 @@
 							The Item Shuffler will attempt to prevent any placement of items which would result in them being unreachable. 
 							If there are multiple items in a chest, the shuffler will choose to randomize only one item per chest. </br></br>
 							You may choose to add the Moon Orb and/or Spellbook to the item shuffle pool, which will result in you starting with a random item from the item pool in their spot in your inventory. Choosing to include the Spellbook will also increase the prices of spellbooks in shops.</br></br>
-							If you choose to randomize the spells, Dispel Field and Unlock will be removed from shops and random placed along with the other selected items.</br></br>
+							If you choose to randomize the spells, Dispel Field and Unlock will be removed from shops and random placed along with the other selected items. This will force the Xiao and Rudyom chests to be in the item pool as well.</br></br>
+							When you choose to add the unique Sherry item, Sherry will now require you to find the item Odd Cheese before she will join your party. This will force the Skara Brae Wine Cellar chest to be in the item pool as well.</br></br>
 						<span class="badge">Main Items</span>
 						</br>
 						<i>These are what items are considered Main Items.</i>
@@ -889,6 +926,7 @@
 							<li>Vortex Cube</li>
 							<li>Balloon Plans</li>
 							<li>Broken Gargoyle Lens</li>
+							<li>Gargish Text</li>
 						</ul>
 						<span class="badge">Main Item Locations</span>
 						</br>
@@ -896,6 +934,7 @@
 						<ul>
 							<li>1x Britain</li>
 							<li>1x Gargoyle City</li>
+							<li>1x Hythloth</li>
 							<li>1x Jhelom</li>
 							<li>1x Minoc</li>
 							<li>1x Moonglow</li>
@@ -913,24 +952,41 @@
 						<ul>
 							<li>8x Britain</li>
 							<li>2x Buccaneer's Den</li>
-							<li>3x Castle Britannia</li>
+							<li>4x Castle Britannia</li>
+							<li>1x Cove</li>
 							<li>3x Dagger Island</li>
-							<li>2x Deep Forest</li>
+							<li>1x Desert</li>
+							<li>3x Deep Forest</li>
+							<li>1x Empath Abbey</li>
+							<li>1x Gargoyle City</li>
 							<li>2x Jhelom</li>
 							<li>3x Minoc</li>
-							<li>2x Moonglow</li>
+							<li>5x Moonglow / Lycaeum</li>
+							<li>1x Road to Skara Brae</li>
 							<li>3x Paws</li>
 							<li>4x Serpent's Hold</li>
+							<li>1x Skara Brae</li>
 							<li>2x Trinsic</li>
 						</ul>
 						<span class="badge">Underground Chests</span>
 						<ul>
-							<li>4x Britain Sewers / Buccaneer's Cave</li>
+							<li>1x Ant Mound</li>
+							<li>5x Britain Sewers / Buccaneer's Cave</li>
+							<li>1x Buccaneer's Den</li>
 							<li>1x Cyclops Cave</li>
+							<li>3x Dagger Island</li>
+							<li>1x Deceit</li>
+							<li>1x Despise</li>
 							<li>1x Destard</li>
 							<li>1x Hythloth</li>
 							<li>1x Moonglow Catacombs</li>
 							<li>5x Pirate Cave</li>
+							<li>1x Serpent's Hold</li>
+							<li>2x Shame</li>
+							<li>1x Spider Cave</li>
+							<li>2x Swamp Cave</li>
+							<li>1x Tomb of Kings</li>
+							<li>2x Trinsic</li>
 							<li>1x Wrong / Covetous</li>
 						</ul>
 						<span class="badge">Spawn Randomization Details</span></br>
@@ -977,6 +1033,8 @@
 							<li>R - Attack</li>
 							<li>Start - Inventory</li>
 						</ul></br>
+						<b>"Enable Expanded Armor Items"</b> will allow for items that have no practical use such as boots, belts, and necklaces to now provide a small amount of armor.</br></br>
+						<b>"Randomize Castle Britannia Items"</b> will randomize the extra items you can take for free from the chests and crates with a pool of common items.</br></br>
 
 						<span class="badge">Starting Inventory Details</span></br>
 						You can choose to start with the default inventory, none, or between different styles of randomization for the inventory.</br></br>
@@ -990,7 +1048,7 @@
 						In Ultima 6, 1 minute of in game time passes for every step you take. Full daylight hours are between 06:00 and 19:00 and are when most NPCs are awake.</br></br>
 						You can choose to lengthen the daylight hours by <b>2x or 3x</b> which means that 1 minute of in game time during daylight hours will pass only after 2 steps or 3 steps taken. Night hour time passing still occurs at 1 minute per step taken.</br></br>
 						If you choose to <b>"Use PC Version Day and Night Lengths"</b> then both the day and night will be 2x as long.</br></br>
-						
+
 						<span class="badge">Karma Adjustment Details</span></br>
 						You can choose to make Karma less difficult or more difficult.</br></br>
 						When <b>"Easy Karma Mode"</b> is selected, all penalities are reduced to 1 karma loss, you start at 100 karma instead of 75, and all karma rewards are doubled.</br></br>
@@ -1001,12 +1059,12 @@
 						Adding the island is recommended when playing with removed Moon Orb, as the game intends you to use the Moon Orb to reach the shrine.</br></br>
 						When <b>Add Island Warp</b> is selected, an island with a cave that requires a boat to reach will appear north of Empath Abbey.</br></br>
 						When <b>Add Island Warp (Requires Flying)</b> is selected, an island with a cave that requires a balloon to reach will appear north of Empath Abbey.</br></br>
-						When <b>Add Island Warp (Random Requirements)</b> is selected, an island with a cave that will appear north of Empath Abbey with random requirements on if it needs a balloon or not.</br></br>
+						When <b>Add Island Warp (Random Requirements)</b> is selected, an island with a cave that will appear north of Empath Abbey with random chance on if it needs a balloon or not.</br></br>
 
 						<span class="badge">Placed Rafts</span></br>
 						In the base game, there are a few pre-placed rafts around the world. These options allow you to add or remove those rafts.</br></br>
-						Adding safety rafts is recommended when playing with the Moon Orb randomized or removed as it becomes easier to get stuck.</br></br>
-						If <b>Add Safety Rafts</b> is selected rafts are added to each of the Shrine islands to prevent getting stuck if taking an accidental Moongate.</br></br>
+						Adding safety rafts is recommended when playing with the Spellbook or Moon Orb randomized or removed as it becomes easier to get stuck.</br></br>
+						If <b>Add Safety Rafts and Gates</b> is selected, rafts and gates are added to potential stuck spots for if you have no Moon Orb or Spellbook.</br></br>
 						If <b>Trap All Placed Rafts</b> is selected all the current rafts in the game will be moved to areas where they can not reach the ocean.</br></br>
 
 						<span class="badge">Other Details</span></br>

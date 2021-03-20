@@ -1,8 +1,8 @@
 const TABLE_SPAWNER_START = 0x19804;
-const TABLE_SPAWNER_END = 0x19A02;
-const TABLE_SPAWNER_ENTRIES = 256;
+const TABLE_SPAWNER_END = 0x19A3E;
+const TABLE_SPAWNER_ENTRIES = 286;
 const TABLE_STATS_ENTRIES = 58;
-
+//TODO - SEE HOW FAR THE TABLE EXTENDS - IT MAY EXTEND TO 839A3E (CHANGE EVERYTHING TO LORD BRITISH AND RUN AROUND THE GAME FOR A WHILE)
 function randomizeEnemySpawners(rom, random, monsterFlag, wildFlag, animalFlag, peopleFlag, addEnemiesFlag)
 {
     console.log("RANDOMIZING SPAWNERS");
@@ -536,13 +536,9 @@ function setAggressionToFriendly(rom, random, entryID)
         
         //console.log(entryID + " has flags " + newFlags + " with high byte " + highByte + " at address " + (TABLE_SPAWNER_START+entryID).toHex(3));
 
-        if(highByte == "2" || highByte == "3" || highByte == "4" || highByte == "5" || highByte == "6" || highByte == "8")
+        if(highByte == "2" || highByte == "3" || highByte == "4" || highByte == "5" || highByte == "6" || highByte == "8" || highByte == "c")
         {
-            highByte = random.from(["d","a"]);
-        }
-        else if(highByte == "c")
-        {
-            highByte = random.from(["b","9"]);
+            highByte = random.from(["a","b","d"]);
         }
 
         newFlags = highByte + lowByte;

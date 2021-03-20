@@ -15,15 +15,48 @@ function fixMoonPhaseBug(rom)
     rom.set([0x1D, 0x1E, 0x1D],0x131EE); //the moon phase graphics are off by one in the base game and this fixes that bug
 }
 
-function randomizeMoonPhases(rom)
+function randomizeMoonPhases(rom, random)
 {
     //randomize the moon phase table by shifting the table or flipping the moon rotations or lengthening the phase lengths
     var moonPhaseTable = [            0x00, 0x00, 0x07, 0x00, 0x07, 0x07, 0x06, 0x06, 0x06, 0x05, 0x05,
         0x04, 0x05, 0x03, 0x04, 0x02, 0x03, 0x01, 0x03, 0x00, 0x02, 0x00, 0x02, 0x07, 0x01, 0x06, 0x01,
         0x05, 0x00, 0x04, 0x07, 0x03, 0x07, 0x02, 0x06, 0x01, 0x06, 0x00, 0x05, 0x00, 0x05, 0x07, 0x04,
-        0x06, 0x03, 0x05, 0x03, 0x04, 0x02, 0x03, 0x02, 0x02, 0x01, 0x01, 0x01, 0x00]
+        0x06, 0x03, 0x05, 0x03, 0x04, 0x02, 0x03, 0x02, 0x02, 0x01, 0x01, 0x01, 0x00];
+
+    rotateArrayRight(moonPhaseTable,random.nextIntRange(0,27)*2);
 
     rom.set(moonPhaseTable, 0xBB35);
+}
+
+function addCustomSherryItem(rom)
+{
+    //adjust name of Cheese in dialog
+    var lzwData = decompressDataFromLZW(rom, 0x48000);
+    lzwData[0x2BF5] = 0x57; //change the item Sherry wants
+    lzwData[0x2C1D] = 0x57; //change the item Sherry wants
+    lzwData[0x2C20] = 0x57; //change the item Sherry wants
+    lzwData.set([0x2F, 0x44, 0x44, 0x5F, 0x23, 0x48, 0x45, 0x45, 0x53, 0x45],0x2DFD); //change text ANY CHEESE to ODD CHEESE
+    lzwData.set([0x2F, 0x44, 0x44, 0x5F, 0x23, 0x48, 0x45, 0x45, 0x53, 0x45],0x2E2F); //change text ANY CHEESE to ODD CHEESE
+
+    rom.set([0x2F, 0x44, 0x44, 0x5F, 0x23, 0x48, 0x45, 0x45, 0x53, 0x45],0xE369) //change text WIZARD EYE to ODD CHEESE
+    rom[0xFA3B] = 0x02; //change data (setting to 02 sets the item to not be droppable)
+    rom[0xFC0D] = 0x02; //change weight
+    rom.set([0x88, 0x11, 0x89, 0x11, 0x98, 0x11, 0x9B, 0x11],0x13A57); //convert unused Wizard Eye Item sprite into Custom Sherry Item sprite(item 57)
+
+    var lzwData = decompressDataFromLZW(rom, 0x58000);
+    writeTextToAddress(lzwData, 0x42B0, 58, "There was a peculiar Odd Cheese kept in the nearby cellar."); //change Dezana CHAT text to Cheese hint
+
+    if ($('#randomize_core_items').is(':checked') || $('#randomize_chests_overworld').is(':checked') || $('#randomize_chests_dungeons').is(':checked'))
+    {
+        return;
+    }
+    else
+    {
+        var lzwData = decompressDataFromLZW(rom, 0x9D000);
+	    lzwData[0x27EB] = 0x42; //add sherry chest (magic lock)
+
+    	rom.set([0x19, 0x8D, 0x80, 0x57], 0x117CA); //convert spring water to cheese for sherry chest
+    }
 }
 
 function setPoisionFlash(buffer, flashSelection)
@@ -681,6 +714,7 @@ function removeRafts(rom)
 
 function addRafts(rom)
 {
+    //---------rafts
     //x,y - 7E7BAA, 7E7BFC - minoc ship
     //x,y - 7E7BCC, 7E7C1E - jhelom ship
     //x,y - 7E7BCE, 7E7C20 - jhelom ship
@@ -710,19 +744,37 @@ function addRafts(rom)
     //add - new maginica
     //add - serpents hold
     //add - sutek
+
+    //---------moongates
+    var lzwData = decompressDataFromLZW(rom, 0x9D000);
+	lzwData.set([0x56,0x57], 0x54D); //lycaeum - blue moongate
 }
 
 function increaseSpellbookPrices(rom)
 {
-    rom.set([0x80, 0x08], 0x5AF0C); //increase horance spellbook price
-    rom.set([0x10, 0x21], 0x4D386); //increase xiao spellbook price
-    rom.set([0x20, 0x0A, 0x07, 0x0A], 0x53312); //change nicodemus spellbook to mandrake
-    rom.set([0xD0, 0x04, 0x0E, 0x40, 0x00], 0x629A8); //change rudyom spellbook to black pearl
+    var lzwData = decompressDataFromLZW(rom, 0x4B900);
+	lzwData.set([0x88, 0x12], 0x2A72); //increase xiao spellbook price
+
+    var lzwData = decompressDataFromLZW(rom, 0x58000);
+	lzwData.set([0x88, 0x12], 0x4C3A); //increase horance spellbook price
+
+    var lzwData = decompressDataFromLZW(rom, 0x51B00);
+	lzwData.set([0x88], 0x2484); //increase nicodemus spellbook price
+
+    var lzwData = decompressDataFromLZW(rom, 0x61A00);
+	lzwData.set([0x4E, 0x0E, 0x03, 0x0E, 0x4F,
+        0x0E, 0x01, 0x0E, 0x50, 0x0E, 0x02, 0x0E, 0x52, 0x0E, 0x02, 0x0E, 0x53, 0x0E, 0x02, 0x0E, 0x54,
+        0x0E, 0x01, 0x0E, 0x34, 0x0E, 0x88, 0x05], 0x17EB); //increase rudyom spellbook price and shift to the end of the list
 }
 
-function removeUnlockAndDispelSpells(rom)
+function removeUnlockAndDispelSpellsFromShops(rom)
 {
-    rom.set([0x3A, 0x93], 0x5AF1A); //change horance unlock spell to help spell
-    rom.set([0xA0, 0x00], 0x4D396); //change xiao dispel spell to help spell
-    //rom.set([0x3A, 0x93], 0x5AF1A); //change nicodemus unlock spell to help spell
+    //change xiao dispel spell price
+    var lzwData = decompressDataFromLZW(rom, 0x4B900);
+    lzwData.set([0x0F, 0x0E, 0x86, 0x12], 0x2A82);
+
+    //swap horance disable and unlock spells and then increase unlock spell price
+    var lzwData = decompressDataFromLZW(rom, 0x58000);
+	lzwData.set([0x14, 0x0E, 0x7F], 0x4C49);
+	lzwData.set([0x0A, 0x0E, 0x86, 0x12], 0x4C55);
 }

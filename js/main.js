@@ -22,9 +22,10 @@ function doRandomize(buffer, seed)
 	if (result.errors.length == 0)
 	{
 		var url = BASEURL + '#!/' + result.seed + '/' + result.preset;
-		var category = result.category || "";
+		//var url = 'Seed:' + result.seed + ' Flags:' + result.preset;
 
-		$('#setgoal-text').val('Randomizer ' + VERSION_STRING + ' ' + category + ' - ' + url);
+		$('#setgoal-text').val('Generated: ' + url);
+		//$('#setgoal-text').val('Generated - Randomizer ' + VERSION_STRING + ' - ' + url + ' Time:' + (+new Date() - __start) + "ms");
 		$('#modal-generated-win').modal('show');
 		$('#modal-generated-win #modal-seed-text').text(result.seed);
 		$('#modal-generated-win #modal-flags-text').text(result.preset);
@@ -36,7 +37,7 @@ function doRandomize(buffer, seed)
 		//var issuebody = encodeURIComponent('ROM: ' + url + ' (' + result.checksum + ')');
 		//$('#bugreport').attr('href', 'https://github.com/Arya-Iwakura/Ultima6Randomizer/issues/new?body=' + issuebody);
 
-		if ($('#display_spoiler_log').is(':checked'))
+		if ($('#display_spoiler_log').is(':checked') && result.spoilers.length > 0)
 		{
 			$('#modal-spoiler-win #modal-spoiler-list').text("");
 			result.spoilers.sort();
@@ -129,7 +130,6 @@ $('#generate-randomized-rom').click(function(e)
 	if (ORIGINAL_ROM === true)
 	{
 		var xhr = new XMLHttpRequest();
-		//xhr.open('GET', 'u6.sfc', true);
 		xhr.open('GET', 'validation.data', true);
 		console.log("generate-randomized-rom - READING VALIDATION DATA");
 		xhr.responseType = 'arraybuffer';
@@ -151,9 +151,8 @@ $('#generate-param-rom').click(function(e)
 	var seed = parseInt($('#custom-seed').val(), 16);
 
 	var xhr = new XMLHttpRequest();
-	//xhr.open('GET', 'u6.sfc', true);
-	console.log("generate-param-rom - READING VALIDATION DATA");
 	xhr.open('GET', 'validation.data', true);
+	console.log("generate-param-rom - READING VALIDATION DATA");
 	xhr.responseType = 'arraybuffer';
 
 	xhr.onload = function(e){ doRandomize(xhr.response, seed); }
@@ -222,22 +221,21 @@ function checkInventoryFlagStatus()
 		$('#randomize_moonorb').prop('disabled', false);
 		$('#randomize_spellbook').prop('disabled', false);
 		$('#randomize_unlockanddispel').prop('disabled', false);
-
-		if($('#randomize_chests_overworld').is(':checked') == false && $('#randomize_chests_dungeons').is(':checked') == false)
-		{
-			$('#randomize_unlockanddispel').prop('disabled', true);
-			$('#randomize_unlockanddispel').prop('checked', false);
-		}
+		//$('#add_sherry_item').prop('disabled', false);
 	}
 	else
 	{
 		$('#randomize_moonorb').prop('disabled', true);
-		$('#randomize_spellbook').prop('disabled', true);
 		$('#randomize_moonorb').prop('checked', false);
+
+		$('#randomize_spellbook').prop('disabled', true);
 		$('#randomize_spellbook').prop('checked', false);
 		
 		$('#randomize_unlockanddispel').prop('disabled', true);
 		$('#randomize_unlockanddispel').prop('checked', false);
+	
+		//$('#add_sherry_item').prop('disabled', true);
+		//$('#add_sherry_item').prop('checked', false);
 	}
 }
 
@@ -872,25 +870,38 @@ function checkHash()
 {
 	if (!location.hash || location.hash.indexOf("#!/") !== 0) return;
 	var parts = location.hash.split('/').slice(1);
+	var partsPreset = parts[1].split('-');
 
 	var seed = cleanCustomSeed(parts[0]);
 	if (parts.length > 0) $('#custom-seed').val(seed);
 
-	var given = parts.length > 1 ? parts[1] : '0';
-	if (given[0] == 'x')
+	var givenChecked = partsPreset.length > 0 ? partsPreset[0] : '0';
+	var givenSelect = partsPreset.length > 1 ? partsPreset[1] : '0';
+
+	if (givenChecked[0] == 'x' && givenSelect[0] == 's')
 	{
 		$('#preset').val(0);
-		setRandomizerSettings(given.substr(1));
+		setRandomizerSettings(givenChecked.substr(1));
+		setRandomizerSettingsSelects(givenSelect.substr(1));
 	}
 	else
-	{ $('#preset').val(+parts[1]); updatePreset(); }
+	{ $('#preset').val(+partsPreset[0]+partsPreset[1]); updatePreset(); }
 
-	if (parts.length > 1)
-	{
-		$('#modal-download-win .modal-body .seed').text(seed);
-		$('#modal-download-win .modal-body .preset').text(getPresetName());
-		$('#modal-download-win').modal('show');
-	}
+	//var seedText = seed;
+	//var flagsText = givenChecked + "/" + givenSelect;
+	//if($('#hide_seed_value').is(':checked'))
+	//{
+	//	seedText = "hidden";
+	//	flagsText = "hidden";
+	//}
+
+	//if (parts.length > 1)
+	//{
+	//	$('#modal-download-win .modal-body .seed').text(seedText);
+	//	$('#modal-download-win .modal-body .flags').text(flagsText);
+	//	$('#modal-download-win .modal-body .preset').text(getPresetName());
+	//	$('#modal-download-win').modal('show');
+	//}
 }
 
 function deepClone(obj)
