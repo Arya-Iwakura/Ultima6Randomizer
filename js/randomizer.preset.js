@@ -69,13 +69,14 @@ function preset_townsfolk()
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
+	$('#randomize_castle_britannia_items').prop('checked', true);
 
 	$('#select-starting-inventory').prop('value', 0);
 	$('#select-starting-gold').prop('value', 0);
 	$('#select-day-night-cycle').prop('value', 2);
 	$('#select-karma-difficulty').prop('value', 1);
 	$('#select-spiritshrine').prop('value', 0);
-	$('#select-placedrafts').prop('value', 0);
+	$('#select-placedrafts').prop('value', 1);
 
 	$('#display_spoiler_log').prop('checked', true);
 	$('#display_hints').prop('disabled', false);
@@ -118,6 +119,7 @@ function preset_explorer()
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
+	$('#randomize_castle_britannia_items').prop('checked', true);
 
 	$('#select-starting-inventory').prop('value', 0);
 	$('#select-starting-gold').prop('value', 0);
@@ -170,6 +172,7 @@ function preset_adventurer() //standard
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
+	$('#randomize_castle_britannia_items').prop('checked', true);
 
 	$('#select-starting-inventory').prop('value', 0);
 	$('#select-starting-gold').prop('value', 0);
@@ -223,6 +226,7 @@ function preset_avatar()
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
+	$('#randomize_castle_britannia_items').prop('checked', true);
 
 	$('#select-starting-inventory').prop('value', 0);
 	$('#select-starting-gold').prop('value', 0);
@@ -277,6 +281,7 @@ function preset_guardian()
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
+	$('#randomize_castle_britannia_items').prop('checked', true);
 
 	$('#select-starting-inventory').prop('value', 0);
 	$('#select-starting-gold').prop('value', 0);
