@@ -17,7 +17,6 @@ const ITEM_HUMAN_LENS = 0x9A;
 const ITEM_GARGOYLE_LENS = 0x9C;
 const ITEM_GARGISH_TEXT = 0xAD;
 
-const ITEM_SPELL = 0xB8;
 const ITEM_ODD_CHEESE = 0x57;
 
 const ITEM_MOONSTONE_HONESTY = 0x5F;
@@ -50,271 +49,250 @@ const ITEM_GOLD_NUGGET = 0x69;
 const ITEM_TORCH = 0x6A;
 const ITEM_SLEEPING_POWDER = 0x6B;
 const ITEM_POWDER_KEG = 0x7C;
+const ITEM_MAP_1 = 0x9D;
+const ITEM_MAP_2 = 0x9E;
+const ITEM_MAP_3 = 0x9F;
+const ITEM_MAP_4 = 0xA0;
+const ITEM_MAP_5 = 0xA1;
+const ITEM_MAP_6 = 0xA2;
+const ITEM_MAP_7 = 0xA3;
+const ITEM_MAP_8 = 0xA4;
+const ITEM_MAP_9 = 0xA5;
 const ITEM_GOLD = 0xB3;
 const ITEM_BOOK = 0xB7;
+const ITEM_SPELL = 0xB8;
 const ITEM_SCROLL = 0xB9;
 
-//unlock and dispel should randomly replace some low tier item or gold (must be unrestricted for the spellbook)
 const SPELL_UNLOCK = 0xCA; //CA B8 - unlock
 const SPELL_DISPEL_FIELD = 0xCF; //CF B8 - dispel
 
 var DATA_ITEM_MOONORB =
 [
-	{"count": 1, "bytes": 2, "offset": 0x0F91D, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_MOONORB], "restrictions": [ITEM_GOLD, ITEM_MOONORB, ITEM_SPELLBOOK],
-		"requires":[], "name": "moonorb", "item": ["Moon Orb","Moon Orb"], "location": "Inventory", "type":"main", "stolen":"no", "hints":[],
-		"spellrestrictions":[SPELL_UNLOCK, SPELL_DISPEL_FIELD]},
+	{"count": 1, "bytes": 2, "offset": 0x0F91D, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_MOONORB], "restrictions": [ITEM_GOLD, ITEM_MOONORB, ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD, ITEM_SPELL],
+		"requires":[], "name": "moonorb", "item": ["Moon Orb","Moon Orb"], "location": "Inventory", "type":"main", "stolen":"no", "hints":[]},
 ];
 
 var DATA_ITEM_SPELLBOOK =
 [
-	{"count": 1, "bytes": 2, "offset": 0x0F923, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_SPELLBOOK], "restrictions": [ITEM_GOLD, ITEM_MOONORB, ITEM_SPELLBOOK],
-		"requires":[], "name": "spellbook", "item": ["Spellbook","Spellbook"], "location": "Inventory", "type":"main", "stolen":"no", "hints":[],
-		"spellrestrictions":[SPELL_UNLOCK, SPELL_DISPEL_FIELD]},
+	{"count": 1, "bytes": 2, "offset": 0x0F923, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_SPELLBOOK], "restrictions": [ITEM_GOLD, ITEM_MOONORB, ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD, ITEM_SPELL],
+		"requires":[], "name": "spellbook", "item": ["Spellbook","Spellbook"], "location": "Inventory", "type":"main", "stolen":"no", "hints":[]},
 ];
 
 var DATA_ITEM_MOONORB_REPLACEMENTS =
 [
-	{"count": 1, "bytes": 2, "offset": 0x0F91D, "flags": [0xC0, 0xC0, 0x01], "id": [0x6D], "restrictions": [ITEM_GOLD, ITEM_MOONORB, ITEM_SPELLBOOK],
-		"requires":[], "name": "sextant", "item": ["Sextant","Sextant"], "location": "Inventory", "type":"solo", "stolen":"no", "hints":[],
-		"spellrestrictions":[SPELL_UNLOCK, SPELL_DISPEL_FIELD]},
+	{"count": 1, "bytes": 2, "offset": 0x0F91D, "flags": [0xC0, 0xC0, 0x01], "id": [0x6D], "restrictions": [ITEM_GOLD, ITEM_MOONORB, ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD, ITEM_SPELL],
+		"requires":[], "name": "sextant", "item": ["Sextant","Sextant"], "location": "Inventory", "type":"solo", "stolen":"no", "hints":[]},
 ];
 
 //name is the unique identifier for each of this and must be unique
 //flags are [stolen, not stolen] and for shrine items(moonstones) are "on shrine / not on shrine"
 //offset is 0x01, 02, 03... for all dialog items or other items that need LZW decompression or otherwise custom references
+//item is [long name, short name]
 var DATA_ITEMS_CORE =
 [
 	//items
-	{"offset": 0x11D57, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_BALLOON_PLANS], "restrictions": [ITEM_SPELLBOOK],
-	 	"requires":[ITEM_SPELLBOOK], "name": "balloon-plans", "item": ["Balloon Plans","Balloon Plans"], "location": "Sutek Dungeon", "type":"main", "stolen":"no", "hints":[3,5,23,24,26,28,29],
-		"spellrestrictions":[SPELL_UNLOCK, SPELL_DISPEL_FIELD]}, //we changed this to the first item
-	{"offset": 0x11DC6, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_BROKEN_LENS], "restrictions": [ITEM_SPELLBOOK],
-		"requires":[ITEM_SPELLBOOK], "name": "lens-broken", "item": ["Broken Lens","Broken Lens"], "location": "Gargoyle Museum", "type":"main", "stolen":"no", "hints":[15,18,24],
-		"spellrestrictions":[SPELL_DISPEL_FIELD]},
-	{"offset": 0x11E14, "flags": [0x41, 0xC0, 0x01], "id": [0x60], "restrictions": [ITEM_RUNE_COMPASSION, ITEM_LEATHER_HELM, ITEM_IRON_HELM, ITEM_GOLD, ITEM_SPELL, ITEM_BOOK],
-		 "requires":[ITEM_RUNE_COMPASSION], "name": "moonstone-compassion", "item": ["Moonstone of Compassion","M. Compassion"], "location": "Shrine of Compassion", "type":"shrine", "stolen":"no", "hints":[1,4,6,18],
-		 "spellrestrictions":[SPELL_UNLOCK, SPELL_DISPEL_FIELD]},
-	{"offset": 0x11E1E, "flags": [0x41, 0xC0, 0x01], "id": [0x5F], "restrictions": [ITEM_RUNE_HONESTY, ITEM_LEATHER_HELM, ITEM_GOLD, ITEM_SPELL, ITEM_BOOK], "compassion":[0x00, 0xC3],
-		 "requires":[ITEM_RUNE_HONESTY], "name": "moonstone-honesty", "item": ["Moonstone of Honesty","M. Honesty"], "location": "Shrine of Honesty", "type":"shrine", "stolen":"no", "hints":[1,4,7,18,25],
-		 "spellrestrictions":[SPELL_UNLOCK, SPELL_DISPEL_FIELD]},
-	{"offset": 0x11E3C, "flags": [0x41, 0xC0, 0x01], "id": [0x64], "restrictions": [ITEM_RUNE_HONOR, ITEM_LEATHER_HELM, ITEM_CHAIN_COIF, ITEM_IRON_HELM, ITEM_SPIKED_HELM, ITEM_WINGED_HELM, ITEM_BRASS_HELM, ITEM_GOLD, ITEM_SPELL, ITEM_BOOK],
-		 "requires":[ITEM_RUNE_HONOR], "name": "moonstone-honor", "item": ["Moonstone of Honor","M. Honor"], "location": "Shrine of Honor", "type":"shrine", "hints":[1,4,8,18],
-		 "spellrestrictions":[SPELL_UNLOCK, SPELL_DISPEL_FIELD]},
-	{"offset": 0x11E46, "flags": [0x41, 0xC0, 0x01], "id": [0x66], "restrictions": [ITEM_RUNE_HUMILITY, ITEM_LEATHER_HELM, ITEM_CHAIN_COIF, ITEM_IRON_HELM, ITEM_SPIKED_HELM, ITEM_WINGED_HELM, ITEM_BRASS_HELM, ITEM_SPARTAN_HELM, ITEM_MAGIC_HELM, ITEM_GOLD, ITEM_SPELL, ITEM_BOOK],
-		 "requires":[ITEM_RUNE_HUMILITY], "name": "moonstone-humility", "item": ["Moonstone of Humility","M. Humility"], "location": "Shrine of Humility", "type":"shrine", "stolen":"no", "hints":[1,4,9,18,25],
-		 "spellrestrictions":[SPELL_UNLOCK, SPELL_DISPEL_FIELD]},
-	{"offset": 0x11DE2, "flags": [0x41, 0xC0, 0x01], "id": [0x62], "restrictions": [ITEM_RUNE_JUSTICE, ITEM_LEATHER_HELM, ITEM_CHAIN_COIF, ITEM_IRON_HELM, ITEM_SPIKED_HELM, ITEM_GOLD, ITEM_SPELL, ITEM_BOOK],
-		 "requires":[ITEM_RUNE_JUSTICE], "name": "moonstone-justice", "item": ["Moonstone of Justice","M. Justice"], "location": "Shrine of Justice", "type":"shrine", "hints":[1,4,10,18],
-		 "spellrestrictions":[SPELL_UNLOCK, SPELL_DISPEL_FIELD]},
-	{"offset": 0x11DF1, "flags": [0x41, 0xC0, 0x01], "id": [0x63], "restrictions": [ITEM_RUNE_SACRIFICE, ITEM_LEATHER_HELM, ITEM_CHAIN_COIF, ITEM_IRON_HELM, ITEM_SPIKED_HELM, ITEM_WINGED_HELM, ITEM_GOLD, ITEM_SPELL, ITEM_BOOK],
-		 "requires":[ITEM_RUNE_SACRIFICE], "name": "moonstone-sacrifice", "item": ["Moonstone of Sacrifice","M. Sacrifice"], "location": "Shrine of Sacrifice", "type":"shrine", "stolen":"no", "hints":[1,4,11,18],
-		 "spellrestrictions":[SPELL_UNLOCK, SPELL_DISPEL_FIELD]},
-	{"offset": 0x11686, "flags": [0x41, 0xC0, 0x01], "id": [0x65], "restrictions": [ITEM_RUNE_SPIRITUALITY, ITEM_LEATHER_HELM, ITEM_CHAIN_COIF, ITEM_IRON_HELM, ITEM_SPIKED_HELM, ITEM_WINGED_HELM, ITEM_BRASS_HELM, ITEM_SPARTAN_HELM, ITEM_GOLD, ITEM_BALLOON_PLANS, ITEM_SPELL, ITEM_BOOK],
-		 "requires":[ITEM_RUNE_SPIRITUALITY], "name": "moonstone-spirituality", "item": ["Moonstone of Spirituality","M. Spirituality"], "location": "Shrine of Spirituality", "type":"shrine", "stolen":"no", "hints":[1,12,18],
-		 "spellrestrictions":[SPELL_UNLOCK, SPELL_DISPEL_FIELD]},
-	{"offset": 0x11E37, "flags": [0x41, 0xC0, 0x01], "id": [0x61], "restrictions": [ITEM_RUNE_VALOR, ITEM_MOONORB, ITEM_LEATHER_HELM, ITEM_IRON_HELM, ITEM_CHAIN_COIF, ITEM_GOLD, ITEM_SPELL, ITEM_BOOK],
-		 "requires":[ITEM_RUNE_VALOR], "name": "moonstone-valor", "item": ["Moonstone of Valor","M. Valor"], "location": "Shrine of Valor", "type":"shrine", "stolen":"no", "hints":[1,4,13,18,25],
-		 "spellrestrictions":[SPELL_UNLOCK, SPELL_DISPEL_FIELD]},
+	{"offset": 0x11D57, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_BALLOON_PLANS], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD],
+	 	"requires":[ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "name": "balloon-plans", "item": ["Balloon Plans","Balloon Plans"], "location": "Sutek Dungeon", "type":"main", "stolen":"no", "hints":[3,5,23,24,26,28,29]}, //we changed this to the first item
+	{"offset": 0x11DC6, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_BROKEN_LENS], "restrictions": [ITEM_SPELLBOOK, SPELL_DISPEL_FIELD],
+		"requires":[ITEM_SPELLBOOK, SPELL_DISPEL_FIELD], "name": "lens-broken", "item": ["Broken Lens","Broken Lens"], "location": "Gargoyle Museum", "type":"main", "stolen":"no", "hints":[15,18,24]},
+	{"offset": 0x11E14, "flags": [0x41, 0xC0, 0x01], "id": [0x60], "restrictions": [ITEM_RUNE_COMPASSION, ITEM_LEATHER_HELM, ITEM_IRON_HELM, ITEM_GOLD, ITEM_SPELL, ITEM_BOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD],
+		 "requires":[ITEM_RUNE_COMPASSION], "name": "moonstone-compassion", "item": ["Moonstone of Compassion","M. Compassion"], "location": "Shrine of Compassion", "type":"shrine", "stolen":"no", "hints":[1,4,6,18]},
+	{"offset": 0x11E1E, "flags": [0x41, 0xC0, 0x01], "id": [0x5F], "restrictions": [ITEM_RUNE_HONESTY, ITEM_LEATHER_HELM, ITEM_GOLD, ITEM_SPELL, ITEM_BOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "compassion":[0x00, 0xC3],
+		 "requires":[ITEM_RUNE_HONESTY], "name": "moonstone-honesty", "item": ["Moonstone of Honesty","M. Honesty"], "location": "Shrine of Honesty", "type":"shrine", "stolen":"no", "hints":[1,4,7,18,25]},
+	{"offset": 0x11E3C, "flags": [0x41, 0xC0, 0x01], "id": [0x64], "restrictions": [ITEM_RUNE_HONOR, ITEM_LEATHER_HELM, ITEM_CHAIN_COIF, ITEM_IRON_HELM, ITEM_SPIKED_HELM, ITEM_WINGED_HELM, ITEM_BRASS_HELM, ITEM_GOLD, ITEM_SPELL, ITEM_BOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD],
+		 "requires":[ITEM_RUNE_HONOR], "name": "moonstone-honor", "item": ["Moonstone of Honor","M. Honor"], "location": "Shrine of Honor", "type":"shrine", "hints":[1,4,8,18]},
+	{"offset": 0x11E46, "flags": [0x41, 0xC0, 0x01], "id": [0x66], "restrictions": [ITEM_RUNE_HUMILITY, ITEM_LEATHER_HELM, ITEM_CHAIN_COIF, ITEM_IRON_HELM, ITEM_SPIKED_HELM, ITEM_WINGED_HELM, ITEM_BRASS_HELM, ITEM_SPARTAN_HELM, ITEM_MAGIC_HELM, ITEM_GOLD, ITEM_SPELL, ITEM_BOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD],
+		 "requires":[ITEM_RUNE_HUMILITY], "name": "moonstone-humility", "item": ["Moonstone of Humility","M. Humility"], "location": "Shrine of Humility", "type":"shrine", "stolen":"no", "hints":[1,4,9,18,25]},
+	{"offset": 0x11DE2, "flags": [0x41, 0xC0, 0x01], "id": [0x62], "restrictions": [ITEM_RUNE_JUSTICE, ITEM_LEATHER_HELM, ITEM_CHAIN_COIF, ITEM_IRON_HELM, ITEM_SPIKED_HELM, ITEM_GOLD, ITEM_SPELL, ITEM_BOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD],
+		 "requires":[ITEM_RUNE_JUSTICE], "name": "moonstone-justice", "item": ["Moonstone of Justice","M. Justice"], "location": "Shrine of Justice", "type":"shrine", "hints":[1,4,10,18]},
+	{"offset": 0x11DF1, "flags": [0x41, 0xC0, 0x01], "id": [0x63], "restrictions": [ITEM_RUNE_SACRIFICE, ITEM_LEATHER_HELM, ITEM_CHAIN_COIF, ITEM_IRON_HELM, ITEM_SPIKED_HELM, ITEM_WINGED_HELM, ITEM_GOLD, ITEM_SPELL, ITEM_BOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD],
+		 "requires":[ITEM_RUNE_SACRIFICE], "name": "moonstone-sacrifice", "item": ["Moonstone of Sacrifice","M. Sacrifice"], "location": "Shrine of Sacrifice", "type":"shrine", "stolen":"no", "hints":[1,4,11,18]},
+	{"offset": 0x11686, "flags": [0x41, 0xC0, 0x01], "id": [0x65], "restrictions": [ITEM_RUNE_SPIRITUALITY, ITEM_LEATHER_HELM, ITEM_CHAIN_COIF, ITEM_IRON_HELM, ITEM_SPIKED_HELM, ITEM_WINGED_HELM, ITEM_BRASS_HELM, ITEM_SPARTAN_HELM, ITEM_GOLD, ITEM_BALLOON_PLANS, ITEM_SPELL, ITEM_BOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD],
+		 "requires":[ITEM_RUNE_SPIRITUALITY], "name": "moonstone-spirituality", "item": ["Moonstone of Spirituality","M. Spirituality"], "location": "Shrine of Spirituality", "type":"shrine", "stolen":"no", "hints":[1,12,18]},
+	{"offset": 0x11E37, "flags": [0x41, 0xC0, 0x01], "id": [0x61], "restrictions": [ITEM_RUNE_VALOR, ITEM_MOONORB, ITEM_LEATHER_HELM, ITEM_IRON_HELM, ITEM_CHAIN_COIF, ITEM_GOLD, ITEM_SPELL, ITEM_BOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD],
+		 "requires":[ITEM_RUNE_VALOR], "name": "moonstone-valor", "item": ["Moonstone of Valor","M. Valor"], "location": "Shrine of Valor", "type":"shrine", "stolen":"no", "hints":[1,4,13,18,25]},
 	{"offset": 0x1192D, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_RUNE_HONESTY], "restrictions": [],
-		"requires":[], "name": "rune-honesty", "item": ["Rune of Honesty","R. Honesty"], "location": "Tomb of Beyvins", "type":"main", "stolen":"no", "hints":[1,3,7,17,18,23,26],
-		"spellrestrictions":[]}, //we changed this to the first item
+		"requires":[], "name": "rune-honesty", "item": ["Rune of Honesty","R. Honesty"], "location": "Tomb of Beyvins", "type":"main", "stolen":"no", "hints":[1,3,7,17,18,23,26]}, //we changed this to the first item
 	{"offset": 0x11E23, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_RUNE_HONOR], "restrictions": [],
-		"requires":[], "name": "rune-honor", "item": ["Rune of Honor","R. Honor"], "location": "Trinsic Town Center", "type":"main", "stolen":"no", "hints":[4,8,18],
-		"spellrestrictions":[]},
+		"requires":[], "name": "rune-honor", "item": ["Rune of Honor","R. Honor"], "location": "Trinsic Town Center", "type":"main", "stolen":"no", "hints":[4,8,18]},
 	{"offset": 0x10E56, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_RUNE_JUSTICE], "restrictions": [],
-		"requires":[], "name": "rune-justice", "item": ["Rune of Justice","R. Justice"], "location": "Potted Plant in Yew", "type":"main", "stolen":"no", "hints":[10,20],
-		"spellrestrictions":[]},
+		"requires":[], "name": "rune-justice", "item": ["Rune of Justice","R. Justice"], "location": "Potted Plant in Yew", "type":"main", "stolen":"no", "hints":[10,20]},
 	{"offset": 0x10F14, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_RUNE_SPIRITUALITY], "restrictions": [],
-		"requires":[], "name": "rune-spirituality", "item": ["Rune of Spirituality","R. Spirituality"], "location": "Skara Brae North House", "type":"main", "stolen":"no", "hints":[12,16],
-		"spellrestrictions":[]},
-	{"offset": 0x10F4F, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_RUNE_VALOR], "restrictions": [ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPELLBOOK, ITEM_SPIDERSILK, ITEM_SLEEPING_POWDER, ITEM_POWDER_KEG, ITEM_ENERGY_WAND, ITEM_SPELL, ITEM_ODD_CHEESE, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_BOOK],
-		"requires":[], "name": "rune-valor", "item": ["Rune of Valor","R. Valor"], "location": "Jhelom Tavern", "type":"main", "stolen":"no", "hints":[13,20,25],
-		"spellrestrictions":[SPELL_UNLOCK, SPELL_DISPEL_FIELD]},
-	{"offset": 0x11C37, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_VORTEX_CUBE], "restrictions": [ITEM_SPELLBOOK],
-		"requires":[ITEM_SPELLBOOK], "name": "vortexcube", "item": ["Vortex Cube","Vortex Cube"], "location": "Stonegate", "type":"main", "stolen":"no", "hints":[2,5,18,23,24,26,28,29],
-		"spellrestrictions":[SPELL_DISPEL_FIELD]},
+		"requires":[], "name": "rune-spirituality", "item": ["Rune of Spirituality","R. Spirituality"], "location": "Skara Brae North House", "type":"main", "stolen":"no", "hints":[12,16]},
+	{"offset": 0x10F4F, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_RUNE_VALOR], "restrictions": [ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPELLBOOK, ITEM_SPIDERSILK, ITEM_SLEEPING_POWDER, ITEM_POWDER_KEG, ITEM_ENERGY_WAND, ITEM_SPELL, ITEM_ODD_CHEESE, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_BOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD],
+		"requires":[], "name": "rune-valor", "item": ["Rune of Valor","R. Valor"], "location": "Jhelom Tavern", "type":"main", "stolen":"no", "hints":[13,20,25]},
+	{"offset": 0x11C37, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_VORTEX_CUBE], "restrictions": [ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK],
+		"requires":[ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK], "name": "vortexcube", "item": ["Vortex Cube","Vortex Cube"], "location": "Stonegate", "type":"main", "stolen":"no", "hints":[2,5,18,23,24,26,28,29]},
 
 	//dialog items
-	//changing the rune of compassion seems to also somehow corrupt the main menu graphics?
 	{"offset": 0x01, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_RUNE_COMPASSION], "restrictions": [ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPELLBOOK, ITEM_MOONORB, ITEM_SPIDERSILK, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_SLEEPING_POWDER],
-		"requires":[], "name": "rune-compassion", "item": ["Rune of Compassion","R. Compassion"], "location": "Pocket of Ariana", "type":"main", "stolen":"no", "hints":[6,19],
-		"spellrestrictions":[]}, //dialog special case - Ariana
+		"requires":[], "name": "rune-compassion", "item": ["Rune of Compassion","R. Compassion"], "location": "Pocket of Ariana", "type":"main", "stolen":"no", "hints":[6,19]}, //dialog special case - Ariana
 	{"offset": 0x02, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_RUNE_HUMILITY], "restrictions": [ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPIDERSILK, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_SLEEPING_POWDER],
-		"requires":[], "name": "rune-humility", "item": ["Rune of Humility","R. Humility"], "location": "Pocket of Antonio", "type":"main", "stolen":"no", "hints":[9,19],
-		"spellrestrictions":[]}, //dialog special case - Antonio
+		"requires":[], "name": "rune-humility", "item": ["Rune of Humility","R. Humility"], "location": "Pocket of Antonio", "type":"main", "stolen":"no", "hints":[9,19]}, //dialog special case - Antonio
 	{"offset": 0x03, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_RUNE_SACRIFICE], "restrictions": [ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPIDERSILK, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_SLEEPING_POWDER],
-		"requires":[], "name": "rune-sacrifice", "item": ["Rune of Sacrifice","R. Sacrifice"], "location": "Pocket of Selganor", "type":"main", "stolen":"no", "hints":[11,19],
-		"spellrestrictions":[]}, //dialog special case - Selganor
+		"requires":[], "name": "rune-sacrifice", "item": ["Rune of Sacrifice","R. Sacrifice"], "location": "Pocket of Selganor", "type":"main", "stolen":"no", "hints":[11,19]}, //dialog special case - Selganor
 	{"offset": 0x0B, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_GARGISH_TEXT], "restrictions": [ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPIDERSILK, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_SLEEPING_POWDER],
-		"requires":[], "name": "pocket-captainjohn", "item": ["Gargish Text","Gargish Text"], "location": "Pocket of Captain John", "type":"main", "stolen":"no", "hints":[19,29,30],
-		"spellrestrictions":[]}, //dialog special case - Captain John
+		"requires":[], "name": "pocket-captainjohn", "item": ["Gargish Text","Gargish Text"], "location": "Pocket of Captain John", "type":"main", "stolen":"no", "hints":[19,29,30]}, //dialog special case - Captain John
 	//{"offset": 0x0C, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_GARGOYLE_LENS], "restrictions": [ITEM_GARGISH_TEXT, ITEM_BROKEN_LENS, ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPIDERSILK, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_SLEEPING_POWDER],
-	//	"requires":[ITEM_GARGISH_TEXT, ITEM_BROKEN_LENS], "name": "pocket-lensmaker", "item": ["Gargoyle Lens","Gargoyle Lens"], "location": "Pocket of the Lensmaker", "type":"main", "stolen":"no", "hints":[15,16,19],
-	//	"spellrestrictions":[]}, //dialog special case - Gargoyle Lenscrafter
+	//	"requires":[ITEM_GARGISH_TEXT, ITEM_BROKEN_LENS], "name": "pocket-lensmaker", "item": ["Gargoyle Lens","Gargoyle Lens"], "location": "Pocket of the Lensmaker", "type":"main", "stolen":"no", "hints":[15,16,19]}, //dialog special case - Gargoyle Lenscrafter
 	//{"offset": 0x0D, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_HUMAN_LENS], "restrictions": [ITEM_GARGISH_TEXT, ITEM_GARGOYLE_LENS, ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPIDERSILK, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_SLEEPING_POWDER],
-	//	"requires":[ITEM_GARGISH_TEXT, ITEM_GARGOYLE_LENS], "name": "pocket-ephemerides", "item": ["Human Lens","Human Lens"], "location": "Pocket of Ephemerides", "type":"main", "stolen":"no", "hints":[16,19],
-	//	"spellrestrictions":[]}, //dialog special case - Human Lenscrafter
+	//	"requires":[ITEM_GARGISH_TEXT, ITEM_GARGOYLE_LENS], "name": "pocket-ephemerides", "item": ["Human Lens","Human Lens"], "location": "Pocket of Ephemerides", "type":"main", "stolen":"no", "hints":[16,19]}, //dialog special case - Human Lenscrafter
 ];
 
 var DATA_CHESTS_OVERWORLD =
 [
 	//standard chests
-	{"offset": 0x10FA6, "flags": [0x8B, 0xCB, 0x0B], "id": [0xB3], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "britain-cowhouse-01", "item": ["Gold","Gold"], "location": "Britain Cow House", "type":"stack", "stolen" : "yes", "hints":[6,16], "spellrestrictions":[SPELL_UNLOCK]},
-	{"offset": 0x110BE, "flags": [0x8D, 0xCD, 0x0D], "id": [0xB3], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK], "requires":[], "name": "britain-inn-01", "item": ["Gold","Gold"], "location": "Britain Inn", "type":"stack", "stolen" : "yes", "hints":[6,20], "spellrestrictions":[]},
-	{"offset": 0x10FF6, "flags": [0x83, 0xC3, 0x03], "id": [0x8E], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK], "requires":[], "name": "britain-bardhouse-01", "item": ["Blue Potion","Blue Potion"], "location": "Britain Bard House", "type":"stack", "stolen" : "yes", "hints":[6,16], "spellrestrictions":[]},
-	{"offset": 0x10FFA, "flags": [0x80, 0xC0, 0x01], "id": [0x76], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK], "requires":[], "name": "britain-bardhouse-02", "item": ["Lute","Lute"], "location": "Britain Bard House", "type":"solo", "stolen" : "yes", "hints":[6,16], "spellrestrictions":[]},
-	{"offset": 0x1164B, "flags": [0x80, 0xC0, 0x01], "id": [0x43], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK, ITEM_ODD_CHEESE], "requires":[], "name": "britain-guild-01", "item": ["Cheese","Cheese"], "location": "Britain Guild Shop", "type":"solo", "stolen" : "yes", "hints":[6,16,28], "spellrestrictions":[]}, //added an item as it was empty
-	{"offset": 0x11400, "flags": [0xBC, 0xFC, 0x3C], "id": [0xB3], "restrictions": [], "requires":[], "name": "bucsden-bottomlefthouse-01", "item": ["Gold","Gold"], "location": "Buccaneers Den Left House", "type":"stack", "stolen" : "yes", "hints":[16,22,25,29], "spellrestrictions":[]}, //we changed this to the first item
-	{"offset": 0x113B8, "flags": [0x80, 0xC0, 0x01], "id": [0x33], "restrictions": [], "requires":[], "name": "bucsden-budo-01", "item": ["Ring of Invisibility","Invis Ring"], "location": "Secret Budo House", "type":"solo", "stolen" : "yes", "hints":[16,22,23,25,29], "spellrestrictions":[]},
-	{"offset": 0x11032, "flags": [0x83, 0xC3, 0x03], "id": [0x8D], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK], "requires":[], "name": "castle-avatar-01", "item": ["Red Potion","Red Potion"], "location": "Avatar Room", "type":"stack", "stolen" : "no", "hints":[5], "spellrestrictions":[]}, //we changed this to the first item
-	{"offset": 0x10FBA, "flags": [0x80, 0xC0, 0x01], "id": [0x1B], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK], "requires":[], "name": "castle-lordbritish-01", "item": ["Main Gauche","Main Gauche"], "location": "Closet of Lord British", "type":"solo", "stolen" : "no", "hints":[5], "spellrestrictions":[]},
-	{"offset": 0x11062, "flags": [0x83, 0xC3, 0x03], "id": [0x2D], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK], "requires":[], "name": "castle-nystful-01", "item": ["Energy Wand","Energy Wand"], "location": "Nystful Room", "type":"stack", "stolen" : "no", "hints":[5], "spellrestrictions":[]}, //we changed this to the first item
-	{"offset": 0x10F6F, "flags": [0x82, 0xC2, 0x02], "id": [0x7C], "restrictions": [], "requires":[], "name": "jhelom-easthouse-01", "item": ["Powder Keg","Powder Keg"], "location": "Jhelom East House", "type":"stack", "stolen" : "yes", "hints":[13,16,25], "spellrestrictions":[]},
-	{"offset": 0x11100, "flags": [0x8A, 0xCA, 0x0A], "id": [0x6A], "restrictions": [], "requires":[], "name": "minoc-basketweaver-01", "item": ["Torches","Torches"], "location": "Minoc Basket Weaver", "type":"stack", "stolen" : "yes", "hints":[11], "spellrestrictions":[]},
-	{"offset": 0x11110, "flags": [0x83, 0xC3, 0x03], "id": [0x67], "restrictions": [], "requires":[], "name": "minoc-gemcutter-01", "item": ["Gems","Gems"], "location": "Minoc Gem Cutter", "type":"stack", "stolen" : "yes", "hints":[11,16], "spellrestrictions":[]},
-	{"offset": 0x111A7, "flags": [0x8A, 0xCA, 0x0A], "id": [0x53], "restrictions": [], "requires":[], "name": "paws-spinner-01", "item": ["Spidersilk","Spidersilk"], "location": "House of Arbeth", "type":"stack", "stolen" : "yes", "hints":[14], "spellrestrictions":[]}, //added an item as it was empty
-	{"offset": 0x111BF, "flags": [0x8A, 0xCA, 0x0A], "id": [0xB3], "restrictions": [], "requires":[], "name": "paws-spinner-02", "item": ["Gold","Gold"], "location": "House of Arbeth", "type":"stack", "stolen" : "yes", "hints":[14], "spellrestrictions":[]}, //added an item as it was empty
-	{"offset": 0x11193, "flags": [0x80, 0xC0, 0x01], "id": [0x40], "restrictions": [], "requires":[], "name": "paws-upperrighthouse-01", "item": ["Mutton","Mutton"], "location": "Paws Tavern House", "type":"solo", "stolen" : "yes", "hints":[14,16], "spellrestrictions":[]}, //added an item as it was empty
-	{"offset": 0x1130D, "flags": [0x8C, 0xCC, 0x0C], "id": [0xB3], "restrictions": [], "requires":[], "name": "serpentshold-castle-01", "item": ["Gold","Gold"], "location": "Serpents Hold Castle", "type":"stack", "stolen" : "yes", "hints":[5,25,29], "spellrestrictions":[]}, //we changed this to the first item
-	{"offset": 0x113A5, "flags": [0x80, 0xC0, 0x01], "id": [0x3D], "restrictions": [], "requires":[], "name": "serpentshold-southhouse-01", "item": ["Grapes","Grapes"], "location": "Serpents Hold South House", "type":"solo", "stolen" : "yes", "hints":[16,25,29], "spellrestrictions":[]}, //added an item to move the key down a slot
-	{"offset": 0x11331, "flags": [0x80, 0xC0, 0x01], "id": [0x0A], "restrictions": [], "requires":[], "name": "serpentshold-upperlefthouse-01", "item": ["Curved Heater","Curved Heater"], "location": "Serpents Hold Left House", "type":"solo", "stolen" : "yes", "hints":[16,25,29], "spellrestrictions":[]}, //we changed this to the first item
-	{"offset": 0x1122A, "flags": [0x80, 0xC0, 0x01], "id": [0x1E], "restrictions": [], "requires":[], "name": "trinsic-mayorhouse-01", "item": ["Dagger","Dagger"], "location": "Trinsic Mayor House", "type":"solo", "stolen" : "yes", "hints":[8,16,22,26], "spellrestrictions":[]},
-	{"offset": 0x1129E, "flags": [0x83, 0xC3, 0x03], "id": [0x69], "restrictions": [], "requires":[], "name": "trinsic-southhouse-01", "item": ["Gold Nuggets","Gold Nuggets"], "location": "Trinsic South House", "type":"stack", "stolen" : "yes", "hints":[8,16], "spellrestrictions":[]},
+	{"offset": 0x10FA6, "flags": [0x8B, 0xCB, 0x0B], "id": [0xB3], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK, SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK], "name": "britain-cowhouse-01", "item": ["Gold","Gold"], "location": "Britain Cow House", "type":"stack", "stolen" : "yes", "hints":[6,16]},
+	{"offset": 0x110BE, "flags": [0x8D, 0xCD, 0x0D], "id": [0xB3], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK], "requires":[], "name": "britain-inn-01", "item": ["Gold","Gold"], "location": "Britain Inn", "type":"stack", "stolen" : "yes", "hints":[6,20]},
+	{"offset": 0x10FF6, "flags": [0x83, 0xC3, 0x03], "id": [0x8E], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK], "requires":[], "name": "britain-bardhouse-01", "item": ["Blue Potion","Blue Potion"], "location": "Britain Bard House", "type":"stack", "stolen" : "yes", "hints":[6,16]},
+	{"offset": 0x10FFA, "flags": [0x80, 0xC0, 0x01], "id": [0x76], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK], "requires":[], "name": "britain-bardhouse-02", "item": ["Lute","Lute"], "location": "Britain Bard House", "type":"solo", "stolen" : "yes", "hints":[6,16]},
+	{"offset": 0x1164B, "flags": [0x80, 0xC0, 0x01], "id": [0x43], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK, ITEM_ODD_CHEESE], "requires":[], "name": "britain-guild-01", "item": ["Cheese","Cheese"], "location": "Britain Guild Shop", "type":"solo", "stolen" : "yes", "hints":[6,16,28]}, //added an item as it was empty
+	{"offset": 0x11400, "flags": [0xBC, 0xFC, 0x3C], "id": [0xB3], "restrictions": [], "requires":[], "name": "bucsden-bottomlefthouse-01", "item": ["Gold","Gold"], "location": "Buccaneers Den Left House", "type":"stack", "stolen" : "yes", "hints":[16,22,25,29]}, //we changed this to the first item
+	{"offset": 0x113B8, "flags": [0x80, 0xC0, 0x01], "id": [0x33], "restrictions": [], "requires":[], "name": "bucsden-budo-01", "item": ["Ring of Invisibility","Invis Ring"], "location": "Secret Budo House", "type":"solo", "stolen" : "yes", "hints":[16,22,23,25,29]},
+	{"offset": 0x11032, "flags": [0x83, 0xC3, 0x03], "id": [0x8D], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK], "requires":[], "name": "castle-avatar-01", "item": ["Red Potion","Red Potion"], "location": "Avatar Room", "type":"stack", "stolen" : "no", "hints":[5]}, //we changed this to the first item
+	{"offset": 0x10FBA, "flags": [0x80, 0xC0, 0x01], "id": [0x1B], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK], "requires":[], "name": "castle-lordbritish-01", "item": ["Main Gauche","Main Gauche"], "location": "Closet of Lord British", "type":"solo", "stolen" : "no", "hints":[5]},
+	{"offset": 0x11062, "flags": [0x83, 0xC3, 0x03], "id": [0x2D], "restrictions": [ITEM_MOONORB, ITEM_SPELLBOOK], "requires":[], "name": "castle-nystful-01", "item": ["Energy Wand","Energy Wand"], "location": "Nystful Room", "type":"stack", "stolen" : "no", "hints":[5]}, //we changed this to the first item
+	{"offset": 0x10F6F, "flags": [0x82, 0xC2, 0x02], "id": [0x7C], "restrictions": [], "requires":[], "name": "jhelom-easthouse-01", "item": ["Powder Keg","Powder Keg"], "location": "Jhelom East House", "type":"stack", "stolen" : "yes", "hints":[13,16,25]},
+	{"offset": 0x11100, "flags": [0x8A, 0xCA, 0x0A], "id": [0x6A], "restrictions": [], "requires":[], "name": "minoc-basketweaver-01", "item": ["Torches","Torches"], "location": "Minoc Basket Weaver", "type":"stack", "stolen" : "yes", "hints":[11]},
+	{"offset": 0x11110, "flags": [0x83, 0xC3, 0x03], "id": [0x67], "restrictions": [], "requires":[], "name": "minoc-gemcutter-01", "item": ["Gems","Gems"], "location": "Minoc Gem Cutter", "type":"stack", "stolen" : "yes", "hints":[11,16]},
+	{"offset": 0x111A7, "flags": [0x8A, 0xCA, 0x0A], "id": [0x53], "restrictions": [], "requires":[], "name": "paws-spinner-01", "item": ["Spidersilk","Spidersilk"], "location": "House of Arbeth", "type":"stack", "stolen" : "yes", "hints":[14]}, //added an item as it was empty
+	{"offset": 0x111BF, "flags": [0x8A, 0xCA, 0x0A], "id": [0xB3], "restrictions": [], "requires":[], "name": "paws-spinner-02", "item": ["Gold","Gold"], "location": "House of Arbeth", "type":"stack", "stolen" : "yes", "hints":[14]}, //added an item as it was empty
+	{"offset": 0x11193, "flags": [0x80, 0xC0, 0x01], "id": [0x40], "restrictions": [], "requires":[], "name": "paws-upperrighthouse-01", "item": ["Mutton","Mutton"], "location": "Paws Tavern House", "type":"solo", "stolen" : "yes", "hints":[14,16]}, //added an item as it was empty
+	{"offset": 0x1130D, "flags": [0x8C, 0xCC, 0x0C], "id": [0xB3], "restrictions": [], "requires":[], "name": "serpentshold-castle-01", "item": ["Gold","Gold"], "location": "Serpents Hold Castle", "type":"stack", "stolen" : "yes", "hints":[5,25,29]}, //we changed this to the first item
+	{"offset": 0x113A5, "flags": [0x80, 0xC0, 0x01], "id": [0x3D], "restrictions": [], "requires":[], "name": "serpentshold-southhouse-01", "item": ["Grapes","Grapes"], "location": "Serpents Hold South House", "type":"solo", "stolen" : "yes", "hints":[16,25,29]}, //added an item to move the key down a slot
+	{"offset": 0x11331, "flags": [0x80, 0xC0, 0x01], "id": [0x0A], "restrictions": [], "requires":[], "name": "serpentshold-upperlefthouse-01", "item": ["Curved Heater","Curved Heater"], "location": "Serpents Hold Left House", "type":"solo", "stolen" : "yes", "hints":[16,25,29]}, //we changed this to the first item
+	{"offset": 0x1122A, "flags": [0x80, 0xC0, 0x01], "id": [0x1E], "restrictions": [], "requires":[], "name": "trinsic-mayorhouse-01", "item": ["Dagger","Dagger"], "location": "Trinsic Mayor House", "type":"solo", "stolen" : "yes", "hints":[8,16,22,26]},
+	{"offset": 0x1129E, "flags": [0x83, 0xC3, 0x03], "id": [0x69], "restrictions": [], "requires":[], "name": "trinsic-southhouse-01", "item": ["Gold Nuggets","Gold Nuggets"], "location": "Trinsic South House", "type":"stack", "stolen" : "yes", "hints":[8,16]},
 
 	//magic chests
-	{"offset": 0x110A2, "flags": [0x8E, 0xCE, 0x0E], "id": [0xB3], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "britain-bank-01", "item": ["Gold","Gold"], "location": "Britain Bank", "type":"stack", "stolen" : "yes", "hints":[6,26], "spellrestrictions":[SPELL_UNLOCK]},
-	{"offset": 0x110A6, "flags": [0x88, 0xC8, 0x08], "id": [0x69], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "britain-bank-02", "item": ["Gold Nuggets","Gold Nuggets"], "location": "Britain Bank", "type":"stack", "stolen" : "yes", "hints":[6,26], "spellrestrictions":[SPELL_UNLOCK]},
-	{"offset": 0x110AA, "flags": [0x91, 0xD1, 0x11], "id": [0xB3], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "britain-bank-03", "item": ["Gold","Gold"], "location": "Britain Bank", "type":"stack", "stolen" : "yes", "hints":[6,26], "spellrestrictions":[SPELL_UNLOCK]},
-	{"offset": 0x10F73, "flags": [0x80, 0xC0, 0x01], "id": [0x4A], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "jhelom-westhouse-03", "item": ["Spring Water","Spring Water"], "location": "Jhelom West House", "type":"solo", "stolen" : "yes", "hints":[13,16,25], "spellrestrictions":[SPELL_UNLOCK]}, //added an item to move the key down a slot
-	{"offset": 0x11120, "flags": [0x8F, 0xCF, 0x0F], "id": [0x67], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "minoc-townhall-01", "item": ["Gems","Gems"], "location": "Minoc Town Hall", "type":"stack", "stolen" : "yes", "hints":[11], "spellrestrictions":[SPELL_UNLOCK]},
-	{"offset": 0x11551, "flags": [0x80, 0xC0, 0x01], "id": [0x93], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "moonglow-musichall-01", "item": ["Black Potion","Black Potion"], "location": "Moonglow Music Hall", "type":"solo", "stolen" : "yes", "hints":[7,23,25], "spellrestrictions":[SPELL_UNLOCK]},
-	{"offset": 0x1151D, "flags": [0x83, 0xC3, 0x03], "id": [0x6B], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "moonglow-penumbra-01", "item": ["Sleeping Powder","Sleeping Powder"], "location": "House of Penumbras", "type":"stack", "stolen" : "yes", "hints":[7,24,25], "spellrestrictions":[SPELL_UNLOCK, SPELL_DISPEL_FIELD]}, //we changed this to the first item
-	{"offset": 0x115B7, "flags": [0x80, 0xC0, 0x01], "id": [0x2C], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "nicodemus-house-01", "item": ["Staff","Staff"], "location": "House of Nicodemus", "type":"solo", "stolen" : "yes", "hints":[23,24], "spellrestrictions":[SPELL_UNLOCK, SPELL_DISPEL_FIELD]},
-	{"offset": 0x115BB, "flags": [0x85, 0xC5, 0x05], "id": [0x69], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "nicodemus-house-02", "item": ["Gold Nuggets","Gold Nuggets"], "location": "House of Nicodemus", "type":"stack", "stolen" : "yes", "hints":[23,24], "spellrestrictions":[SPELL_UNLOCK, SPELL_DISPEL_FIELD]},
-	{"offset": 0x1132D, "flags": [0x80, 0xC0, 0x01], "id": [0x2A], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "serpentshold-guardhouse-01", "item": ["3x Crossbow","3x Crossbow"], "location": "Serpents Hold Barracks", "type":"solo", "stolen" : "yes", "hints":[23,25,29], "spellrestrictions":[SPELL_UNLOCK]},
+	{"offset": 0x110A2, "flags": [0x8E, 0xCE, 0x0E], "id": [0xB3], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK], "name": "britain-bank-01", "item": ["Gold","Gold"], "location": "Britain Bank", "type":"stack", "stolen" : "yes", "hints":[6,26]},
+	{"offset": 0x110A6, "flags": [0x88, 0xC8, 0x08], "id": [0x69], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK], "name": "britain-bank-02", "item": ["Gold Nuggets","Gold Nuggets"], "location": "Britain Bank", "type":"stack", "stolen" : "yes", "hints":[6,26]},
+	{"offset": 0x110AA, "flags": [0x91, 0xD1, 0x11], "id": [0xB3], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK], "name": "britain-bank-03", "item": ["Gold","Gold"], "location": "Britain Bank", "type":"stack", "stolen" : "yes", "hints":[6,26]},
+	{"offset": 0x10F73, "flags": [0x80, 0xC0, 0x01], "id": [0x4A], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK], "name": "jhelom-westhouse-03", "item": ["Spring Water","Spring Water"], "location": "Jhelom West House", "type":"solo", "stolen" : "yes", "hints":[13,16,25]}, //added an item to move the key down a slot
+	{"offset": 0x11120, "flags": [0x8F, 0xCF, 0x0F], "id": [0x67], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK], "name": "minoc-townhall-01", "item": ["Gems","Gems"], "location": "Minoc Town Hall", "type":"stack", "stolen" : "yes", "hints":[11]},
+	{"offset": 0x11551, "flags": [0x80, 0xC0, 0x01], "id": [0x93], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK], "name": "moonglow-musichall-01", "item": ["Black Potion","Black Potion"], "location": "Moonglow Music Hall", "type":"solo", "stolen" : "yes", "hints":[7,23,25]},
+	{"offset": 0x1151D, "flags": [0x83, 0xC3, 0x03], "id": [0x6B], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "name": "moonglow-penumbra-01", "item": ["Sleeping Powder","Sleeping Powder"], "location": "House of Penumbras", "type":"stack", "stolen" : "yes", "hints":[7,24,25]}, //we changed this to the first item
+	{"offset": 0x115B7, "flags": [0x80, 0xC0, 0x01], "id": [0x2C], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "name": "nicodemus-house-01", "item": ["Staff","Staff"], "location": "House of Nicodemus", "type":"solo", "stolen" : "yes", "hints":[23,24]},
+	{"offset": 0x115BB, "flags": [0x85, 0xC5, 0x05], "id": [0x69], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "name": "nicodemus-house-02", "item": ["Gold Nuggets","Gold Nuggets"], "location": "House of Nicodemus", "type":"stack", "stolen" : "yes", "hints":[23,24]},
+	{"offset": 0x1132D, "flags": [0x80, 0xC0, 0x01], "id": [0x2A], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK], "name": "serpentshold-guardhouse-01", "item": ["3x Crossbow","3x Crossbow"], "location": "Serpents Hold Barracks", "type":"solo", "stolen" : "yes", "hints":[23,25,29]},
 
 	//new standard chests
-	{"offset": 0x115F0, "flags": [0x80, 0xC0, 0x01], "id": [0x7C], "restrictions": [], "requires":[], "name": "house-fighter-01", "item": ["Powder Keg","Powder Keg"], "location": "Fighter's House", "type":"solo", "stolen" : "yes", "hints":[16], "spellrestrictions":[]},
-	{"offset": 0x11D6A, "flags": [0x40, 0xC0, 0x01], "id": [0x07], "restrictions": [], "requires":[], "name": "gargoyle-nwhouse-01", "item": ["Spartan Helm","Spartan Helm"], "location": "Gargoyle North West House", "type":"solo", "stolen" : "no", "hints":[15,16], "spellrestrictions":[]},
-	{"offset": 0x10EF1, "flags": [0x98, 0xD8, 0x18], "id": [0x56], "restrictions": [], "requires":[], "name": "house-iolo-01", "item": ["Bolt","Bolt"], "location": "Iolo's House", "type":"stack", "stolen" : "no", "hints":[16], "spellrestrictions":[]},
-	{"offset": 0x115E1, "flags": [0x86, 0xC6, 0x06], "id": [0x2F], "restrictions": [], "requires":[], "name": "house-sinvraal-01", "item": ["Oil","Oil"], "location": "Sin'Vraal's House", "type":"stack", "stolen" : "yes", "hints":[15,16], "spellrestrictions":[]},
+	{"offset": 0x115F0, "flags": [0x80, 0xC0, 0x01], "id": [0x7C], "restrictions": [], "requires":[], "name": "house-fighter-01", "item": ["Powder Keg","Powder Keg"], "location": "Fighter's House", "type":"solo", "stolen" : "yes", "hints":[16]},
+	{"offset": 0x11D6A, "flags": [0x40, 0xC0, 0x01], "id": [0x07], "restrictions": [], "requires":[], "name": "gargoyle-nwhouse-01", "item": ["Spartan Helm","Spartan Helm"], "location": "Gargoyle North West House", "type":"solo", "stolen" : "no", "hints":[15,16]},
+	{"offset": 0x10EF1, "flags": [0x98, 0xD8, 0x18], "id": [0x56], "restrictions": [], "requires":[], "name": "house-iolo-01", "item": ["Bolt","Bolt"], "location": "Iolo's House", "type":"stack", "stolen" : "no", "hints":[16]},
+	{"offset": 0x115E1, "flags": [0x86, 0xC6, 0x06], "id": [0x2F], "restrictions": [], "requires":[], "name": "house-sinvraal-01", "item": ["Oil","Oil"], "location": "Sin'Vraal's House", "type":"stack", "stolen" : "yes", "hints":[15,16]},
+	{"offset": 0x110CD, "flags": [0x80, 0xC0, 0x01], "id": [0x8D], "restrictions": [], "requires":[], "name": "cove-rudyom-01", "item": ["Red Potion","Red Potion"], "location": "Rudyom Shop", "type":"solo", "stolen" : "yes", "hints":[14,16,23]},
+	{"offset": 0x11E19, "flags": [0x80, 0xC0, 0x01], "id": [0x3D], "restrictions": [], "requires":[], "name": "cove-pedestal-01", "item": ["Grapes","Grapes"], "location": "Cove Pedestal", "type":"solo", "stolen" : "yes", "hints":[4,14,18]},
 	
 	//new magic chests
-	{"offset": 0x10EA5, "flags": [0x80, 0xC0, 0x01], "id": [0x90], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "empathabbey-northhouse-01", "item": ["Green Potion","Green Potion"], "location": "Empath Abbey North House", "type":"stack", "stolen" : "yes", "hints":[16], "spellrestrictions":[SPELL_UNLOCK]},
+	{"offset": 0x10EA5, "flags": [0x80, 0xC0, 0x01], "id": [0x90], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK], "name": "empathabbey-northhouse-01", "item": ["Green Potion","Green Potion"], "location": "Empath Abbey North House", "type":"stack", "stolen" : "yes", "hints":[16]},
 
 	//quest items
-	{"offset": 0x1175E, "flags": [0x46, 0x46, 0x46], "id": [0xB7], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "lycaeum-boardgamespot-01", "item": ["Book of Boardgames","Boardgames Book"], "location": "Lycaeum - Boardgame Spot", "type":"main", "stolen" : "no", "hints":[2,5,18,24], "spellrestrictions":[SPELL_DISPEL_FIELD]},
-	{"offset": 0x1174E, "flags": [0x4B, 0x4B, 0x4B], "id": [0xB7], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "lycaeum-ozspot-01", "item": ["Book of Oz","Book of Oz"], "location": "Lycaeum - Book of Oz Spot", "type":"main", "stolen" : "no", "hints":[2,5,18,24], "spellrestrictions":[SPELL_DISPEL_FIELD]},
+	{"offset": 0x1175E, "flags": [0x46, 0x46, 0x46], "id": [0xB7], "restrictions": [ITEM_SPELLBOOK, SPELL_DISPEL_FIELD], "requires":[ITEM_SPELLBOOK, SPELL_DISPEL_FIELD], "name": "lycaeum-boardgamespot-01", "item": ["Book of Boardgames","Boardgames Book"], "location": "Lycaeum - Boardgame Spot", "type":"main", "stolen" : "no", "hints":[2,5,18,24]},
+	{"offset": 0x1174E, "flags": [0x4B, 0x4B, 0x4B], "id": [0xB7], "restrictions": [ITEM_SPELLBOOK, SPELL_DISPEL_FIELD], "requires":[ITEM_SPELLBOOK, SPELL_DISPEL_FIELD], "name": "lycaeum-ozspot-01", "item": ["Book of Oz","Book of Oz"], "location": "Lycaeum - Book of Oz Spot", "type":"main", "stolen" : "no", "hints":[2,5,18,24]},
 	
-	{"offset": 0x04, "flags": [0xC0, 0xC0, 0x01], "id": [0x3B], "restrictions": [ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPIDERSILK, ITEM_SPELL, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_SLEEPING_POWDER, ITEM_BOOK],
-		"requires":[], "name": "pocket-lord-british", "item": ["Snake Amulet","Snake Amulet"], "location": "Pocket of Lord British", "type":"solo", "stolen":"no", "hints":[5,19],
-		"spellrestrictions":[SPELL_UNLOCK, SPELL_DISPEL_FIELD]}, //dialog special case - Lord British
+	{"offset": 0x04, "flags": [0xC0, 0xC0, 0x01], "id": [0x3B], "restrictions": [ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPIDERSILK, ITEM_SPELL, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_SLEEPING_POWDER, ITEM_BOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD],
+		"requires":[], "name": "pocket-lord-british", "item": ["Snake Amulet","Snake Amulet"], "location": "Pocket of Lord British", "type":"solo", "stolen":"no", "hints":[5,19]}, //dialog special case - Lord British
 ];
 
 var DATA_CHESTS_OVERWORLD_MAPPIECE =
 [
-	{"offset": 0x116D2, "flags": [0x80, 0xC0, 0x01], "id": [0x91], "restrictions": [], "requires":[], "name": "daggerisland-basement-01", "item": ["Orange Potion","Orange Potion"], "location": "Dagger Island Basement - Unlocked Chest", "type":"solo", "stolen" : "yes", "hints":[2,16,22,29], "spellrestrictions":[]}, //added an item as it was empty
-	{"offset": 0x116C2, "flags": [0x80, 0xC0, 0x01], "id": [0x28], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "daggerisland-basement-02", "item": ["Glass Sword","Glass Sword"], "location": "Dagger Island Basement - Locked Chest", "type":"solo", "stolen" : "yes", "hints":[2,16,22,29], "spellrestrictions":[SPELL_UNLOCK]},
-	{"offset": 0x116C6, "flags": [0x80, 0xC0, 0x01], "id": [0x12], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "daggerisland-basement-03", "item": ["Leather Armor","Leather Armor"], "location": "Dagger Island Basement - Locked Chest", "type":"solo", "stolen" : "yes", "hints":[2,16,22,29], "spellrestrictions":[SPELL_UNLOCK]},
+	{"offset": 0x116D2, "flags": [0x80, 0xC0, 0x01], "id": [0x91], "restrictions": [], "requires":[], "name": "daggerisland-basement-01", "item": ["Orange Potion","Orange Potion"], "location": "Dagger Island Basement - Unlocked Chest", "type":"solo", "stolen" : "yes", "hints":[2,16,22,29]}, //added an item as it was empty
+	{"offset": 0x116C2, "flags": [0x80, 0xC0, 0x01], "id": [0x28], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK], "name": "daggerisland-basement-02", "item": ["Glass Sword","Glass Sword"], "location": "Dagger Island Basement - Locked Chest", "type":"solo", "stolen" : "yes", "hints":[2,16,22,29]},
+	{"offset": 0x116C6, "flags": [0x80, 0xC0, 0x01], "id": [0x12], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK], "name": "daggerisland-basement-03", "item": ["Leather Armor","Leather Armor"], "location": "Dagger Island Basement - Locked Chest", "type":"solo", "stolen" : "yes", "hints":[2,16,22,29]},
 ];
 
 var DATA_CHESTS_DUNGEONS_MAPPIECE =
 [
-	{"offset": 0x116E6, "flags": [0xC0, 0xC0, 0x01], "id": [0xA0], "restrictions": [], "requires":[], "name": "daggerisland-basement-01", "item": ["Map Piece 4","Map Piece 4"], "location": "Dagger Island Basement - Unlocked Chest", "type":"solo", "stolen" : "yes", "hints":[2,16,22,29], "spellrestrictions":[]}, //added an item as it was empty
-	{"offset": 0x116C2, "flags": [0x80, 0xC0, 0x01], "id": [0x28], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "daggerisland-basement-02", "item": ["Glass Sword","Glass Sword"], "location": "Dagger Island Basement - Locked Chest", "type":"solo", "stolen" : "yes", "hints":[2,16,22,29], "spellrestrictions":[SPELL_UNLOCK]},
-	{"offset": 0x116C6, "flags": [0x80, 0xC0, 0x01], "id": [0x12], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "daggerisland-basement-03", "item": ["Leather Armor","Leather Armor"], "location": "Dagger Island Basement - Locked Chest", "type":"solo", "stolen" : "yes", "hints":[2,16,22,29], "spellrestrictions":[SPELL_UNLOCK]},
+	{"offset": 0x116E6, "flags": [0xC0, 0xC0, 0x01], "id": [0xA0], "restrictions": [], "requires":[], "name": "daggerisland-basement-01", "item": ["Map Piece 4","Map Piece 4"], "location": "Dagger Island Basement - Unlocked Chest", "type":"solo", "stolen" : "yes", "hints":[2,16,22,29]}, //added an item as it was empty
+	{"offset": 0x116C2, "flags": [0x80, 0xC0, 0x01], "id": [0x28], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK], "name": "daggerisland-basement-02", "item": ["Glass Sword","Glass Sword"], "location": "Dagger Island Basement - Locked Chest", "type":"solo", "stolen" : "yes", "hints":[2,16,22,29]},
+	{"offset": 0x116C6, "flags": [0x80, 0xC0, 0x01], "id": [0x12], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK], "name": "daggerisland-basement-03", "item": ["Leather Armor","Leather Armor"], "location": "Dagger Island Basement - Locked Chest", "type":"solo", "stolen" : "yes", "hints":[2,16,22,29]},
 ];
 
 var DATA_CHESTS_DUNGEON =
 [
 	//standard chests
-	{"offset": 0x11D63, "flags": [0x80, 0xC0, 0x01], "id": [0x4C], "restrictions": [], "requires":[], "name": "dungeon-hythloth-captainjohn-01", "item": ["Juice","Juice"], "location": "House of Captain John", "type":"solo", "stolen" : "no", "hints":[16,22,30], "spellrestrictions":[]}, //added an item as it was empty
-	{"offset": 0x11742, "flags": [0x80, 0xC0, 0x01], "id": [0x38], "restrictions": [], "requires":[], "name": "dungeon-cyclops-F1-01", "item": ["Swamp Boots","Swamp Boots"], "location": "Cyclops Cave", "type":"solo", "stolen" : "no", "hints":[3], "spellrestrictions":[]},
-	{"offset": 0x11D23, "flags": [0x83, 0xC3, 0x03], "id": [0xB3], "restrictions": [ITEM_SHOVEL,ITEM_SPELLBOOK], "requires":[ITEM_SHOVEL,ITEM_SPELLBOOK], "name": "dungeon-piratecave-F4-01", "item": ["Gold","Gold"], "location": "Pirate Cave", "type":"stack", "stolen" : "no", "hints":[3,17,22,26,29], "spellrestrictions":[SPELL_DISPEL_FIELD]},
-	{"offset": 0x11CCF, "flags": [0x87, 0xC7, 0x07], "id": [0xB3], "restrictions": [ITEM_SHOVEL,ITEM_SPELLBOOK], "requires":[ITEM_SHOVEL,ITEM_SPELLBOOK], "name": "dungeon-piratecave-F4-02", "item": ["Gold","Gold"], "location": "Pirate Cave", "type":"stack", "stolen" : "no", "hints":[3,17,22,26,29], "spellrestrictions":[SPELL_DISPEL_FIELD]},
-	{"offset": 0x11C9F, "flags": [0x86, 0xC6, 0x06], "id": [0xB3], "restrictions": [ITEM_SHOVEL,ITEM_SPELLBOOK], "requires":[ITEM_SHOVEL,ITEM_SPELLBOOK], "name": "dungeon-piratecave-F4-03", "item": ["Gold","Gold"], "location": "Pirate Cave", "type":"stack", "stolen" : "no", "hints":[3,17,22,26,29], "spellrestrictions":[SPELL_DISPEL_FIELD]},
-	{"offset": 0x11C93, "flags": [0x80, 0xC0, 0x01], "id": [0x08], "restrictions": [ITEM_SHOVEL,ITEM_SPELLBOOK], "requires":[ITEM_SHOVEL,ITEM_SPELLBOOK], "name": "dungeon-piratecave-F4-04", "item": ["Magic Helm","Magic Helm"], "location": "Pirate Cave", "type":"solo", "stolen" : "no", "hints":[3,17,22,26,29], "spellrestrictions":[SPELL_DISPEL_FIELD]}, //added an item as it was empty
-	{"offset": 0x11CF7, "flags": [0x80, 0xC0, 0x01], "id": [0x31], "restrictions": [ITEM_SHOVEL,ITEM_SPELLBOOK], "requires":[ITEM_SHOVEL,ITEM_SPELLBOOK], "name": "dungeon-piratecave-F4-05", "item": ["Ring of Protection","Prot Ring"], "location": "Pirate Cave", "type":"solo", "stolen" : "no", "hints":[3,17,22,26,29], "spellrestrictions":[SPELL_DISPEL_FIELD]},
-	{"offset": 0x119C0, "flags": [0xC0, 0xC0, 0x01], "id": [0xA3], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "dungeon-wrong-mapchest-01", "item": ["Map Piece 7","Map Piece 7"], "location": "Wrong", "type":"solo", "stolen" : "no", "hints":[23,28,30], "spellrestrictions":[SPELL_UNLOCK]},
+	{"offset": 0x11D63, "flags": [0x80, 0xC0, 0x01], "id": [0x4C], "restrictions": [], "requires":[], "name": "dungeon-hythloth-captainjohn-01", "item": ["Juice","Juice"], "location": "House of Captain John", "type":"solo", "stolen" : "no", "hints":[16,22,30]}, //added an item as it was empty
+	{"offset": 0x11742, "flags": [0x80, 0xC0, 0x01], "id": [0x38], "restrictions": [], "requires":[], "name": "dungeon-cyclops-F1-01", "item": ["Swamp Boots","Swamp Boots"], "location": "Cyclops Cave", "type":"solo", "stolen" : "no", "hints":[3]},
+	{"offset": 0x11D23, "flags": [0x83, 0xC3, 0x03], "id": [0xB3], "restrictions": [ITEM_SHOVEL,ITEM_SPELLBOOK,SPELL_DISPEL_FIELD], "requires":[ITEM_SHOVEL,ITEM_SPELLBOOK,SPELL_DISPEL_FIELD], "name": "dungeon-piratecave-F4-01", "item": ["Gold","Gold"], "location": "Pirate Cave", "type":"stack", "stolen" : "no", "hints":[3,17,22,26,29]},
+	{"offset": 0x11CCF, "flags": [0x87, 0xC7, 0x07], "id": [0xB3], "restrictions": [ITEM_SHOVEL,ITEM_SPELLBOOK,SPELL_DISPEL_FIELD], "requires":[ITEM_SHOVEL,ITEM_SPELLBOOK,SPELL_DISPEL_FIELD], "name": "dungeon-piratecave-F4-02", "item": ["Gold","Gold"], "location": "Pirate Cave", "type":"stack", "stolen" : "no", "hints":[3,17,22,26,29]},
+	{"offset": 0x11C9F, "flags": [0x86, 0xC6, 0x06], "id": [0xB3], "restrictions": [ITEM_SHOVEL,ITEM_SPELLBOOK,SPELL_DISPEL_FIELD], "requires":[ITEM_SHOVEL,ITEM_SPELLBOOK,SPELL_DISPEL_FIELD], "name": "dungeon-piratecave-F4-03", "item": ["Gold","Gold"], "location": "Pirate Cave", "type":"stack", "stolen" : "no", "hints":[3,17,22,26,29]},
+	{"offset": 0x11C93, "flags": [0x80, 0xC0, 0x01], "id": [0x08], "restrictions": [ITEM_SHOVEL,ITEM_SPELLBOOK,SPELL_DISPEL_FIELD], "requires":[ITEM_SHOVEL,ITEM_SPELLBOOK,SPELL_DISPEL_FIELD], "name": "dungeon-piratecave-F4-04", "item": ["Magic Helm","Magic Helm"], "location": "Pirate Cave", "type":"solo", "stolen" : "no", "hints":[3,17,22,26,29]}, //added an item as it was empty
+	{"offset": 0x11CF7, "flags": [0x80, 0xC0, 0x01], "id": [0x31], "restrictions": [ITEM_SHOVEL,ITEM_SPELLBOOK,SPELL_DISPEL_FIELD], "requires":[ITEM_SHOVEL,ITEM_SPELLBOOK,SPELL_DISPEL_FIELD], "name": "dungeon-piratecave-F4-05", "item": ["Ring of Protection","Prot Ring"], "location": "Pirate Cave", "type":"solo", "stolen" : "no", "hints":[3,17,22,26,29]},
+	{"offset": 0x119C0, "flags": [0xC0, 0xC0, 0x01], "id": [0xA3], "restrictions": [ITEM_SPELLBOOK,SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK,SPELL_UNLOCK], "name": "dungeon-wrong-mapchest-01", "item": ["Map Piece 7","Map Piece 7"], "location": "Wrong", "type":"solo", "stolen" : "no", "hints":[23,28,30]},
 
-	{"offset": 0x11E41, "flags": [0xC0, 0xC0, 0x01], "id": [0xA4], "restrictions": [], "requires":[], "name": "overworld-shipwreck-01", "item": ["Map Piece 8","Map Piece 8"], "location": "Shipwreck", "type":"solo", "stolen" : "no", "hints":[4,22,25,29], "spellrestrictions":[]},
+	{"offset": 0x11E41, "flags": [0xC0, 0xC0, 0x01], "id": [0xA4], "restrictions": [], "requires":[], "name": "overworld-shipwreck-01", "item": ["Map Piece 8","Map Piece 8"], "location": "Shipwreck", "type":"solo", "stolen" : "no", "hints":[4,22,25,29]},
 
 	//magic chests
-	{"offset": 0x11AAC, "flags": [0x80, 0xC0, 0x01], "id": [0x33], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "britain-sewers-F3-01", "item": ["Ring of Invisibility","Invis Ring"], "location": "Phoenix Cave", "type":"solo", "stolen" : "no", "hints":[3,22], "spellrestrictions":[SPELL_UNLOCK, SPELL_DISPEL_FIELD]},
-	{"offset": 0x11A9C, "flags": [0x80, 0xC0, 0x01], "id": [0x2E], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "britain-sewers-F3-02", "item": ["Fire Wand","Fire Wand"], "location": "Phoenix Cave", "type":"solo", "stolen" : "no", "hints":[3,22], "spellrestrictions":[SPELL_UNLOCK, SPELL_DISPEL_FIELD]},
-	{"offset": 0x11AA4, "flags": [0x88, 0xC8, 0x08], "id": [0xB3], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "britain-sewers-F3-03", "item": ["Gold","Gold"], "location": "Phoenix Cave", "type":"stack", "stolen" : "no", "hints":[3,22], "spellrestrictions":[SPELL_UNLOCK, SPELL_DISPEL_FIELD]},
-	{"offset": 0x11911, "flags": [0x80, 0xC0, 0x01], "id": [0x28], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "cave-bucsden-F2-01", "item": ["Glass Sword","Glass Sword"], "location": "Buccaneers Cave", "type":"solo", "stolen" : "no", "hints":[3,22,29], "spellrestrictions":[SPELL_UNLOCK]},
-	{"offset": 0x11971, "flags": [0x98, 0xD8, 0x18], "id": [0xB3], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "dungeon-destard-F2-01", "item": ["Gold","Gold"], "location": "Destard", "type":"stack", "stolen" : "no", "hints":[30], "spellrestrictions":[SPELL_UNLOCK]},
-	{"offset": 0x11C4F, "flags": [0x80, 0xC0, 0x01], "id": [0x32], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "crypts-moonglow-F4-01", "item": ["Ring of Regeneration","Regen Ring"], "location": "Moonglow Catacombs", "type":"solo", "stolen" : "no", "hints":[1,3,7,17,23], "spellrestrictions":[SPELL_UNLOCK]},
+	{"offset": 0x11AAC, "flags": [0x80, 0xC0, 0x01], "id": [0x33], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "name": "britain-sewers-F3-01", "item": ["Ring of Invisibility","Invis Ring"], "location": "Phoenix Cave", "type":"solo", "stolen" : "no", "hints":[3,22]},
+	{"offset": 0x11A9C, "flags": [0x80, 0xC0, 0x01], "id": [0x2E], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "name": "britain-sewers-F3-02", "item": ["Fire Wand","Fire Wand"], "location": "Phoenix Cave", "type":"solo", "stolen" : "no", "hints":[3,22]},
+	{"offset": 0x11AA4, "flags": [0x88, 0xC8, 0x08], "id": [0xB3], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "name": "britain-sewers-F3-03", "item": ["Gold","Gold"], "location": "Phoenix Cave", "type":"stack", "stolen" : "no", "hints":[3,22]},
+	{"offset": 0x11911, "flags": [0x80, 0xC0, 0x01], "id": [0x28], "restrictions": [ITEM_SPELLBOOK,SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK,SPELL_UNLOCK], "name": "cave-bucsden-F2-01", "item": ["Glass Sword","Glass Sword"], "location": "Buccaneers Cave", "type":"solo", "stolen" : "no", "hints":[3,22,29]},
+	{"offset": 0x11971, "flags": [0x98, 0xD8, 0x18], "id": [0xB3], "restrictions": [ITEM_SPELLBOOK,SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK,SPELL_UNLOCK], "name": "dungeon-destard-F2-01", "item": ["Gold","Gold"], "location": "Destard", "type":"stack", "stolen" : "no", "hints":[30]},
+	{"offset": 0x11C4F, "flags": [0x80, 0xC0, 0x01], "id": [0x32], "restrictions": [ITEM_SPELLBOOK,SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK,SPELL_UNLOCK], "name": "crypts-moonglow-F4-01", "item": ["Ring of Regeneration","Regen Ring"], "location": "Moonglow Catacombs", "type":"solo", "stolen" : "no", "hints":[1,3,7,17,23]},
 
 	//new standard chests
-	{"offset": 0x11B47, "flags": [0x80, 0xC0, 0x01], "id": [0x29], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "dungeon-kingstomb-01", "item": ["Boomerang","Boomerang"], "location": "Tomb of Kings", "type":"solo", "stolen" : "no", "hints":[1,3,15,21,28], "spellrestrictions":[SPELL_UNLOCK]},
-	{"offset": 0x11BCB, "flags": [0xC0, 0xC0, 0x01], "id": [0x9D], "restrictions": [], "requires":[], "name": "dungeon-antmound-01", "item": ["Map Piece 1","Map Piece 1"], "location": "Ant Mound", "type":"solo", "stolen" : "no", "hints":[3], "spellrestrictions":[]},
-	{"offset": 0x118C9, "flags": [0x80, 0xC0, 0x01], "id": [0x18], "restrictions": [], "requires":[], "name": "dungeon-spider-01", "item": ["Spiked Collar","Spiked Collar"], "location": "Spider Cave", "type":"solo", "stolen" : "no", "hints":[3], "spellrestrictions":[]},
-	{"offset": 0x11736, "flags": [0x80, 0xC0, 0x01], "id": [0x15], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "dungeon-shame-01", "item": ["Chain Mail","Chain Mail"], "location": "Shame", "type":"solo", "stolen" : "no", "hints":[21,29,30], "spellrestrictions":[SPELL_UNLOCK]},
-	{"offset": 0x11815, "flags": [0x80, 0xC0, 0x01], "id": [0x1F], "restrictions": [], "requires":[], "name": "dungeon-swamp-01", "item": ["Mace","Mace"], "location": "Swamp Cave", "type":"solo", "stolen" : "no", "hints":[3,17], "spellrestrictions":[]},
-	{"offset": 0x11CAB, "flags": [0x80, 0xC0, 0x01], "id": [0x0D], "restrictions": [], "requires":[], "name": "dungeon-swamp-02", "item": ["Spike Shield","Spike Shield"], "location": "Swamp Cave", "type":"solo", "stolen" : "no", "hints":[3,17], "spellrestrictions":[]},
-	{"offset": 0x11B57, "flags": [0x80, 0xC0, 0x01], "id": [0x10], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "dungeon-deceit-01", "item": ["Magic Shield","Magic Shield"], "location": "Deceit", "type":"solo", "stolen" : "no", "hints":[24,29,30], "spellrestrictions":[SPELL_DISPEL_FIELD]},
-	{"offset": 0x11A68, "flags": [0x80, 0xC0, 0x01], "id": [0x17], "restrictions": [], "requires":[], "name": "dungeon-despise-01", "item": ["Magic Armor","Magic Armor"], "location": "Despise", "type":"solo", "stolen" : "no", "hints":[17,29,30], "spellrestrictions":[]},
+	{"offset": 0x11B47, "flags": [0x80, 0xC0, 0x01], "id": [0x29], "restrictions": [ITEM_SPELLBOOK,SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK,SPELL_UNLOCK], "name": "dungeon-kingstomb-01", "item": ["Boomerang","Boomerang"], "location": "Tomb of Kings", "type":"solo", "stolen" : "no", "hints":[1,3,15,21,28]},
+	{"offset": 0x11BCB, "flags": [0xC0, 0xC0, 0x01], "id": [0x9D], "restrictions": [], "requires":[], "name": "dungeon-antmound-01", "item": ["Map Piece 1","Map Piece 1"], "location": "Ant Mound", "type":"solo", "stolen" : "no", "hints":[3]},
+	{"offset": 0x118C9, "flags": [0x80, 0xC0, 0x01], "id": [0x18], "restrictions": [], "requires":[], "name": "dungeon-spider-01", "item": ["Spiked Collar","Spiked Collar"], "location": "Spider Cave", "type":"solo", "stolen" : "no", "hints":[3]},
+	{"offset": 0x11736, "flags": [0x80, 0xC0, 0x01], "id": [0x15], "restrictions": [ITEM_SPELLBOOK,SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK,SPELL_UNLOCK], "name": "dungeon-shame-01", "item": ["Chain Mail","Chain Mail"], "location": "Shame", "type":"solo", "stolen" : "no", "hints":[21,29,30]},
+	{"offset": 0x11815, "flags": [0x80, 0xC0, 0x01], "id": [0x1F], "restrictions": [], "requires":[], "name": "dungeon-swamp-01", "item": ["Mace","Mace"], "location": "Swamp Cave", "type":"solo", "stolen" : "no", "hints":[3,17]},
+	{"offset": 0x11CAB, "flags": [0x80, 0xC0, 0x01], "id": [0x0D], "restrictions": [], "requires":[], "name": "dungeon-swamp-02", "item": ["Spike Shield","Spike Shield"], "location": "Swamp Cave", "type":"solo", "stolen" : "no", "hints":[3,17]},
+	{"offset": 0x11B57, "flags": [0x80, 0xC0, 0x01], "id": [0x10], "restrictions": [ITEM_SPELLBOOK,SPELL_DISPEL_FIELD], "requires":[ITEM_SPELLBOOK,SPELL_DISPEL_FIELD], "name": "dungeon-deceit-01", "item": ["Magic Shield","Magic Shield"], "location": "Deceit", "type":"solo", "stolen" : "no", "hints":[24,29,30]},
+	{"offset": 0x11A68, "flags": [0x80, 0xC0, 0x01], "id": [0x17], "restrictions": [], "requires":[], "name": "dungeon-despise-01", "item": ["Magic Armor","Magic Armor"], "location": "Despise", "type":"solo", "stolen" : "no", "hints":[17,29,30]},
 
 	//dialog items
 	//dialog special case - Phoenix
-	{"offset": 0x05, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_GUILD_BELT], "restrictions": [ITEM_SPELLBOOK, ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPIDERSILK, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_SLEEPING_POWDER],
-		"requires":[ITEM_SPELLBOOK], "name": "pocket-phoenix", "item": ["Guild Belt","Guild Belt"], "location": "Pocket of Phoenix", "type":"main", "stolen":"no", "hints":[3,19,22,24],
-		"spellrestrictions":[SPELL_DISPEL_FIELD]},
+	{"offset": 0x05, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_GUILD_BELT], "restrictions": [ITEM_SPELLBOOK, ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPIDERSILK, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_SLEEPING_POWDER, SPELL_DISPEL_FIELD],
+		"requires":[ITEM_SPELLBOOK,SPELL_DISPEL_FIELD], "name": "pocket-phoenix", "item": ["Guild Belt","Guild Belt"], "location": "Pocket of Phoenix", "type":"main", "stolen":"no", "hints":[3,19,22,24]},
 
 	//dialog special case - Ybarra
 	{"offset": 0x06, "flags": [0xC0, 0xC0, 0x01], "id": [0xA1], "restrictions": [ITEM_GUILD_BELT, ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPIDERSILK, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_SLEEPING_POWDER],
-		"requires":[ITEM_GUILD_BELT], "name": "pocket-ybarra", "item": ["Map Piece 5","Map Piece 5"], "location": "Pocket of Ybarra", "type":"solo", "stolen":"no", "hints":[17,19,22,27,29,30],
-		"spellrestrictions":[]},
+		"requires":[ITEM_GUILD_BELT], "name": "pocket-ybarra", "item": ["Map Piece 5","Map Piece 5"], "location": "Pocket of Ybarra", "type":"solo", "stolen":"no", "hints":[17,19,22,27,29,30]},
 	
 	//dialog special case - Whitsaber
 	{"offset": 0x07, "flags": [0xC0, 0xC0, 0x01], "id": [0x9E], "restrictions": [ITEM_GUILD_BELT, ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPIDERSILK, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_SLEEPING_POWDER],
-		"requires":[ITEM_GUILD_BELT], "name": "pocket-whitsaber", "item": ["Map Piece 2","Map Piece 2"], "location": "Pocket of Whitsaber", "type":"solo", "stolen":"no", "hints":[4,8,19,22],
-		"spellrestrictions":[]},
+		"requires":[ITEM_GUILD_BELT], "name": "pocket-whitsaber", "item": ["Map Piece 2","Map Piece 2"], "location": "Pocket of Whitsaber", "type":"solo", "stolen":"no", "hints":[4,8,19,22]},
 
 	//dialog special case - Arturos
 	{"offset": 0x08, "flags": [0xC0, 0xC0, 0x01], "id": [0x9F], "restrictions": [ITEM_GUILD_BELT, ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPIDERSILK, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_SLEEPING_POWDER],
-		"requires":[ITEM_GUILD_BELT], "name": "pocket-arturos", "item": ["Map Piece 3","Map Piece 3"], "location": "Pocket of Arturos", "type":"solo", "stolen":"no", "hints":[4,19],
-		"spellrestrictions":[]},
+		"requires":[ITEM_GUILD_BELT], "name": "pocket-arturos", "item": ["Map Piece 3","Map Piece 3"], "location": "Pocket of Arturos", "type":"solo", "stolen":"no", "hints":[4,19]},
 
 	//dialog special case - Morchella
 	{"offset": 0x09, "flags": [0xC0, 0xC0, 0x01], "id": [0xA2], "restrictions": [ITEM_GUILD_BELT, ITEM_MAGIC_SHIELD, ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPIDERSILK, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_SLEEPING_POWDER],
-		"requires":[ITEM_GUILD_BELT], "name": "pocket-morchella", "item": ["Map Piece 6","Map Piece 6"], "location": "Pocket of Morchella", "type":"solo", "stolen":"no", "hints":[19,22,25,29],
-		"spellrestrictions":[]},
+		"requires":[ITEM_GUILD_BELT], "name": "pocket-morchella", "item": ["Map Piece 6","Map Piece 6"], "location": "Pocket of Morchella", "type":"solo", "stolen":"no", "hints":[19,22,25,29]},
 
 	//dialog special case - Homer
-	{"offset": 0x0A, "flags": [0xC0, 0xC0, 0x01], "id": [0xA5], "restrictions": [ITEM_GUILD_BELT, ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPIDERSILK, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_SLEEPING_POWDER],
-		"requires":[ITEM_GUILD_BELT], "name": "pocket-homer", "item": ["Map Piece 9","Map Piece 9"], "location": "Pocket of Homer", "type":"solo", "stolen":"no", "hints":[19,20,22,25,29],
-		"spellrestrictions":[]},
+	{"offset": 0x0A, "flags": [0xC0, 0xC0, 0x01], "id": [0xA5], "restrictions": [ITEM_GUILD_BELT, ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPIDERSILK, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_SLEEPING_POWDER, ITEM_MAP_1, ITEM_MAP_2, ITEM_MAP_3, ITEM_MAP_4, ITEM_MAP_5, ITEM_MAP_6, ITEM_MAP_7, ITEM_MAP_8],
+		"requires":[ITEM_GUILD_BELT, ITEM_MAP_1, ITEM_MAP_2, ITEM_MAP_3, ITEM_MAP_4, ITEM_MAP_5, ITEM_MAP_6, ITEM_MAP_7, ITEM_MAP_8], "name": "pocket-homer", "item": ["Map Piece 9","Map Piece 9"], "location": "Pocket of Homer", "type":"solo", "stolen":"no", "hints":[19,20,22,25,29]},
 ];
 
 var DATA_CHESTS_NO_SPELLS =
 [
 	//add black potion item to xiao shop chest
-	{"offset": 0x1146A, "flags": [0x80, 0xC0, 0x01], "id": [0x93], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "moonglow-xiao-01", "item": ["Black Potion","Black Potion"], "location": "Xiao Shop", "type":"solo", "stolen" : "yes", "hints":[16,25,28], "spellrestrictions":[SPELL_UNLOCK]}, //added an item as it was empty
-	//add red potion item to rudyom shop chest
-	{"offset": 0x110CD, "flags": [0x80, 0xC0, 0x01], "id": [0x8D], "restrictions": [], "requires":[], "name": "cove-rudyom-01", "item": ["Red Potion","Red Potion"], "location": "Rudyom Shop", "type":"solo", "stolen" : "yes", "hints":[14,16,23], "spellrestrictions":[SPELL_DISPEL_FIELD]},
+	{"offset": 0x1146A, "flags": [0x80, 0xC0, 0x01], "id": [0x93], "restrictions": [], "requires":[], "name": "moonglow-xiao-01", "item": ["Black Potion","Black Potion"], "location": "Xiao Shop", "type":"solo", "stolen" : "yes", "hints":[16,25,28]}, //added an item as it was empty
+	//add red potion item to horance shop chest
+	{"offset": 0x10F04, "flags": [0x80, 0xC0, 0x01], "id": [0x8D], "restrictions": [], "requires":[], "name": "skarabrae-horance-01", "item": ["Red Potion","Red Potion"], "location": "Horance Shop", "type":"solo", "stolen" : "yes", "hints":[12,16,25,29]},
 ];
 
 var DATA_CHESTS_SPELLS =
 [
 	//add dispel spell item to xiao shop chest
-	{"offset": 0x1146A, "flags": [0xCF, 0xCF, 0x0F], "id": [0xB8], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "moonglow-xiao-01", "item": ["Spell of Dispel Field","Dispel Field"], "location": "Xiao Shop", "type":"spell", "stolen" : "no", "hints":[16,25,28], "spellrestrictions":[SPELL_UNLOCK]}, //added an item as it was empty
-	//add unlock spell item to rudyom shop chest
-	{"offset": 0x110CD, "flags": [0xCA, 0xCA, 0x0A], "id": [0xB8], "restrictions": [], "requires":[], "name": "cove-rudyom-01", "item": ["Spell of Unlock","Unlock"], "location": "Rudyom Shop", "type":"spell", "stolen" : "no", "hints":[14,16,23], "spellrestrictions":[SPELL_DISPEL_FIELD]},
+	{"offset": 0x1146A, "flags": [0xCF, 0xCF, 0x0F], "id": [0xB8], "restrictions": [], "requires":[], "name": "moonglow-xiao-01", "item": ["Spell of Dispel Field","Dispel Field"], "location": "Xiao Shop", "type":"spell", "stolen" : "no", "hints":[16,25,28]}, //added an item as it was empty
+	//add unlock spell item to horance shop chest
+	{"offset": 0x10F04, "flags": [0xCA, 0xCA, 0x0A], "id": [0xB8], "restrictions": [], "requires":[], "name": "skarabrae-horance-01", "item": ["Spell of Unlock","Unlock"], "location": "Horance Shop", "type":"spell", "stolen" : "no", "hints":[12,16,25,29]},
 ];
 
 var DATA_CHESTS_NO_SHERRY_ITEM =
 [
 	//add cheese to wine cellar in skara brae
-	{"offset": 0x117CA, "flags": [0x80, 0xC0, 0x01], "id": [0x43], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "skarabrae-winecellar-01", "item": ["Cheese","Cheese"], "location": "Skara Brae Wine Cellar", "type":"solo", "stolen" : "yes", "hints":[2,12,26], "spellrestrictions":[SPELL_UNLOCK]},
+	{"offset": 0x117CA, "flags": [0x80, 0xC0, 0x01], "id": [0x43], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK], "name": "skarabrae-winecellar-01", "item": ["Cheese","Cheese"], "location": "Skara Brae Wine Cellar", "type":"solo", "stolen" : "yes", "hints":[2,12,26]},
 ];
 
 var DATA_CHESTS_SHERRY_ITEM =
 [
 	//add odd cheese to wine cellar in skara brae
-	{"offset": 0x117CA, "flags": [0xC0, 0xC0, 0x01], "id": [0x57], "restrictions": [ITEM_SPELLBOOK], "requires":[ITEM_SPELLBOOK], "name": "skarabrae-winecellar-01", "item": ["Odd Cheese","Odd Cheese"], "location": "Skara Brae Wine Cellar", "type":"main", "stolen" : "no", "hints":[2,12,26], "spellrestrictions":[SPELL_UNLOCK]},
+	{"offset": 0x117CA, "flags": [0xC0, 0xC0, 0x01], "id": [0x57], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK], "name": "skarabrae-winecellar-01", "item": ["Odd Cheese","Odd Cheese"], "location": "Skara Brae Wine Cellar", "type":"main", "stolen" : "no", "hints":[2,12,26]},
 ];
 
 var DATA_HINT_TEXT =

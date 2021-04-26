@@ -116,6 +116,7 @@ function updateAndAddChests(rom)
 	//change the graphics of pickup items to chests
 	var lzwData = decompressDataFromLZW(rom, 0x96B00);
 	lzwData[0x50DD] = 0x21; //change rune of honor location to a chest
+	lzwData[0x3911] = 0x21; //change cove grapes location to a chest
 
 	var lzwData = decompressDataFromLZW(rom, 0xCEA80);
 	lzwData[0x17D8] = 0x3D; //change rune of valor location to a chest
@@ -141,6 +142,11 @@ function updateAndAddChests(rom)
 
 	//convert items
 	rom.set([0x06, 0x04, 0x80, 0x7C], 0x115F0); //convert items
+
+	//Horance Chest
+	//add new chest graphics
+	var lzwData = decompressDataFromLZW(rom, 0xD8000);
+	lzwData.set([0x63], 0x19C4); //change red potion in horance shop to a chest
 
 	//Iolo Chest and Empath Abbey Chest
 	//add new chest graphics
@@ -263,31 +269,25 @@ function adjustArmorItems(rom)
 
 function randomizeItems(rom, random, spoilers)
 {
-	console.log("RANDOMIZING ITEMS");
-
 	var items = [];
 	var locations = [];
-	var restrictions = [];
 	var hintLocations = [];
 
 	if ($('#randomize_core_items').is(':checked'))
 	{
 		items = addDataToDataPool(items, DATA_ITEMS_CORE, 'id');
 		locations = addDataToDataPool(locations, DATA_ITEMS_CORE, 'offset');
-		restrictions = addDataToDataPool(restrictions, DATA_ITEMS_CORE, 'restrictions');
 	}
 
 	if ($('#randomize_chests_overworld').is(':checked'))
 	{
 		items = addDataToDataPool(items, DATA_CHESTS_OVERWORLD, 'id');
 		locations = addDataToDataPool(locations, DATA_CHESTS_OVERWORLD, 'offset');
-		restrictions = addDataToDataPool(restrictions, DATA_CHESTS_OVERWORLD, 'restrictions');
 		
 		if ($('#randomize_chests_dungeons').is(':checked') == false)
 		{
 			items = addDataToDataPool(items, DATA_CHESTS_OVERWORLD_MAPPIECE, 'id');
 			locations = addDataToDataPool(locations, DATA_CHESTS_OVERWORLD_MAPPIECE, 'offset');
-			restrictions = addDataToDataPool(restrictions, DATA_CHESTS_OVERWORLD_MAPPIECE, 'restrictions');
 		}
 	}
 
@@ -295,38 +295,32 @@ function randomizeItems(rom, random, spoilers)
 	{
 		items = addDataToDataPool(items, DATA_CHESTS_DUNGEON, 'id');
 		locations = addDataToDataPool(locations, DATA_CHESTS_DUNGEON, 'offset');
-		restrictions = addDataToDataPool(restrictions, DATA_CHESTS_DUNGEON, 'restrictions');
 
 		items = addDataToDataPool(items, DATA_CHESTS_DUNGEONS_MAPPIECE, 'id');
 		locations = addDataToDataPool(locations, DATA_CHESTS_DUNGEONS_MAPPIECE, 'offset');
-		restrictions = addDataToDataPool(restrictions, DATA_CHESTS_DUNGEONS_MAPPIECE, 'restrictions');
 	}
 
 	if ($('#remove_moonorb').is(':checked'))
 	{
 		items = addDataToDataPool(items, DATA_ITEM_MOONORB_REPLACEMENTS, 'id');
 		locations = addDataToDataPool(locations, DATA_ITEM_MOONORB_REPLACEMENTS, 'offset');
-		restrictions = addDataToDataPool(restrictions, DATA_ITEM_MOONORB_REPLACEMENTS, 'restrictions');
 	}
 	else if ($('#randomize_moonorb').is(':checked'))
 	{
 		items = addDataToDataPool(items, DATA_ITEM_MOONORB, 'id');
 		locations = addDataToDataPool(locations, DATA_ITEM_MOONORB, 'offset');
-		restrictions = addDataToDataPool(restrictions, DATA_ITEM_MOONORB, 'restrictions');
 	}
 
 	if ($('#randomize_spellbook').is(':checked'))
 	{
 		items = addDataToDataPool(items, DATA_ITEM_SPELLBOOK, 'id');
 		locations = addDataToDataPool(locations, DATA_ITEM_SPELLBOOK, 'offset');
-		restrictions = addDataToDataPool(restrictions, DATA_ITEM_SPELLBOOK, 'restrictions');
 	}
 
 	if ($('#randomize_unlockanddispel').is(':checked')) //randomize spells is selected
 	{
 		items = addDataToDataPool(items, DATA_CHESTS_SPELLS, 'id');
 		locations = addDataToDataPool(locations, DATA_CHESTS_SPELLS, 'offset');
-		restrictions = addDataToDataPool(restrictions, DATA_CHESTS_SPELLS, 'restrictions');
 	}
 	else
 	{
@@ -334,7 +328,6 @@ function randomizeItems(rom, random, spoilers)
 		{
 			items = addDataToDataPool(items, DATA_CHESTS_NO_SPELLS, 'id');
 			locations = addDataToDataPool(locations, DATA_CHESTS_NO_SPELLS, 'offset');
-			restrictions = addDataToDataPool(restrictions, DATA_CHESTS_NO_SPELLS, 'restrictions');
 		}
 	}
 	
@@ -342,7 +335,6 @@ function randomizeItems(rom, random, spoilers)
 	{
 		items = addDataToDataPool(items, DATA_CHESTS_SHERRY_ITEM, 'id');
 		locations = addDataToDataPool(locations, DATA_CHESTS_SHERRY_ITEM, 'offset');
-		restrictions = addDataToDataPool(restrictions, DATA_CHESTS_SHERRY_ITEM, 'restrictions');
 	}
 	else
 	{
@@ -350,9 +342,10 @@ function randomizeItems(rom, random, spoilers)
 		{
 			items = addDataToDataPool(items, DATA_CHESTS_NO_SHERRY_ITEM, 'id');
 			locations = addDataToDataPool(locations, DATA_CHESTS_NO_SHERRY_ITEM, 'offset');
-			restrictions = addDataToDataPool(restrictions, DATA_CHESTS_NO_SHERRY_ITEM, 'restrictions');
 		}
 	}
+
+	console.log("RANDOMIZING " + locations.length + " ITEMS");
 
 	if(items.length != locations.length)
 	{
@@ -363,7 +356,7 @@ function randomizeItems(rom, random, spoilers)
 	locations = shuffleLocations(random, locations);
 	items.shuffle(random);
 	hintLocations = getHintLocations();
-	var isDonePlacingItems = placeItemsInLocations(rom, random, items, locations, restrictions, spoilers, hintLocations);
+	var isDonePlacingItems = placeItemsInLocations(rom, random, items, locations, spoilers, hintLocations);
 
 	return isDonePlacingItems;
 }
@@ -384,46 +377,53 @@ function shuffleLocations(random, locations)
 	return locations;
 }
 
-function checkRestrictions(restrictions, locations, items, iLocation, iItem, itemHex, isItemAllowed)
+function checkRestrictions(location, item, itemHex, itemFlags, isItemAllowed)
 {
-	outerLoop:
-	for(var iR = 0; iR < restrictions.length; ++iR)
+	if(location.restrictions.length > 0)
 	{
-		if(restrictions[iR].name == locations[iLocation].name)
+		locationHasRestrictions = true;
+		
+		if(location.type == "shrine" && item.type == "stack") //if we are attempting to place a stacked item at a shrine then set as not allowed to place here
 		{
-			locationHasRestrictions = true;
-			
-			//if we are attempting to place a stacked item at a shrine then flag as not allowed to place here
-			if(locations[iLocation].type == "shrine" && items[iItem].type == "stack")
-			{
-				isItemAllowed = 0;
-				break outerLoop;
-			}
-			else if(locations[iLocation].id == ITEM_RUNE_VALOR && items[iItem].type == "stack")
-			{
-				isItemAllowed = 0;
-				break outerLoop;
-			}
-			else if(locations[iLocation].offset == 0x04 || locations[iLocation].offset == 0x05) //Lord British and Phoenix Special Code
+			isItemAllowed = 0;
+		}
+		else if(location.id == ITEM_RUNE_VALOR && item.type == "stack") //if we are attempting to place a stacked item at the rune of valor then set as not allowed to place here
+		{
+			isItemAllowed = 0;
+		}
+		else
+		{
+			if(location.offset == 0x04 || location.offset == 0x05) //Lord British and Phoenix Special Code
 			{
 				if(itemHex > 0x7F)
 				{
 					isItemAllowed = 0;
-					break outerLoop;
 				}
 			}
-			else
+
+			if(isItemAllowed)
 			{
 				var rArray = [];
-				rArray = rArray.concat(restrictions[iR].restrictions);
-				rArray = rArray.concat(restrictions[iR].requires);
-				rArray = rArray.concat(restrictions[iR].addedRequires);
+				rArray = rArray.concat(location.restrictions);
+				rArray = rArray.concat(location.requires);
+				rArray = rArray.concat(location.addedRequires);
 				for(var iRA = 0; iRA < rArray.length; ++iRA)
 				{
-					if(rArray[iRA] == itemHex)
+					if(itemHex == ITEM_SPELL && itemFlags > 0xC0)
 					{
-						isItemAllowed = 0;
-						break outerLoop;
+						if(rArray[iRA] == itemFlags)
+						{
+							isItemAllowed = 0;
+							break;
+						}
+					}
+					else
+					{
+						if(rArray[iRA] == itemHex)
+						{
+							isItemAllowed = 0;
+							break;
+						}
 					}
 				}
 			}
@@ -436,36 +436,11 @@ function checkRestrictions(restrictions, locations, items, iLocation, iItem, ite
 	};
 }
 
-function checkSpellRestrictions(locations, items, iLocation, iItem, isItemAllowed)
-{
-	if(isItemAllowed == 1 && items[iItem].type == "spell")
-	{
-		var rArray = [];
-		rArray = rArray.concat(locations[iLocation].spellrestrictions);
-		rArray = rArray.concat(locations[iLocation].addedSpellRequires);
-		for(var iRA = 0; iRA < rArray.length; ++iRA)
-		{
-			if(items[iItem].flags[0] == rArray[iRA])
-			{
-				isItemAllowed = 0;
-				break;
-			}
-		}
-	}
-	return {
-		isItemAllowed: isItemAllowed,
-	};
-}
-
 function clearedAddedRequirements(locations)
 {
 	for(var iLocation = 0; iLocation < locations.length; ++iLocation)
 	{
 		locations[iLocation].addedRequires = [];
-	}
-	for(var iLocation = 0; iLocation < locations.length; ++iLocation)
-	{
-		locations[iLocation].addedSpellRequires = [];
 	}
 	return locations;
 }
@@ -484,6 +459,11 @@ function updateLocationRequirements(locations, inLocation, inItem)
 				//add the placed location requirements to this location
 				locations[iLocation] = addLocationRequirements(locations[iLocation], inLocation);
 			}
+			else if( inItem.id == ITEM_SPELL && locations[iLocation].requires[iRequires] == inItem.flags[0])
+			{
+				//add the placed location requirements to this location
+				locations[iLocation] = addLocationRequirements(locations[iLocation], inLocation);
+			}
 		}
 		for(var iRequires = 0; iRequires < locations[iLocation].addedRequires.length; ++iRequires) //look through the added requirements of each location
 		{
@@ -492,23 +472,10 @@ function updateLocationRequirements(locations, inLocation, inItem)
 				//add the placed location requirements to this location
 				locations[iLocation] = addLocationRequirements(locations[iLocation], inLocation);
 			}
-		}
-
-		//do the same as above for spell requirements
-		for(var iSpellRestriction = 0; iSpellRestriction < locations[iLocation].spellrestrictions.length; ++iSpellRestriction)
-		{
-			if(locations[iLocation].spellrestrictions[iSpellRestriction] == inItem.flags[0]) //determine if this location has a requirement that is this spell
+			else if( inItem.id == ITEM_SPELL && locations[iLocation].addedRequires[iRequires] == inItem.flags[0])
 			{
-				//add the placed location spell requirements to this location
-				locations[iLocation] = addLocationSpellRequirements(locations[iLocation], inLocation);
-			}
-		}
-		for(var iSpellRestriction = 0; iSpellRestriction < locations[iLocation].spellrestrictions.length; ++iSpellRestriction)
-		{
-			if(locations[iLocation].addedSpellRequires[iSpellRestriction] == inItem.flags[0]) //determine if this location has a requirement that is this spell
-			{
-				//add the placed location spell requirements to this location
-				locations[iLocation] = addLocationSpellRequirements(locations[iLocation], inLocation);
+				//add the placed location requirements to this location
+				locations[iLocation] = addLocationRequirements(locations[iLocation], inLocation);
 			}
 		}
 	}
@@ -538,31 +505,7 @@ function addLocationRequirements(location1, location2)
 	return location1;
 }
 
-function addLocationSpellRequirements(location1, location2)
-{
-	var allRequires2 = location2.spellrestrictions.concat(location2.addedSpellRequires);
-	var allRequires1 = location1.spellrestrictions.concat(location1.addedSpellRequires);
-	for(var i = 0; i < allRequires2.length; ++i) //look through the requirements of the placed location
-	{
-		var requirementMatchFound = false;
-		for(var j = 0; j < allRequires1.length; ++j) //look through the requirements of the searched location
-		{
-			if(allRequires1[j] == allRequires2[i]) //avoid adding duplicates
-			{
-				requirementMatchFound = true;
-				break;
-			}
-		}
-		if(requirementMatchFound == false) //no duplicate found so add the requirement
-		{
-			location1.addedSpellRequires.push(allRequires2[i]);
-		}
-	}
-
-	return location1;
-}
-
-function placeItemsInLocations(rom, random, items, locations, restrictions, spoilers, hintLocations)
+function placeItemsInLocations(rom, random, items, locations, spoilers, hintLocations)
 {
 	var iItem = 0;
 	var safetyCounter = 0;
@@ -582,13 +525,9 @@ function placeItemsInLocations(rom, random, items, locations, restrictions, spoi
 			var locationHasRestrictions = false;
 
 			//check restrictions on location 
-			var restrictionResults = checkRestrictions(restrictions, locations, items, iLocation, iItem, itemHex, isItemAllowed);
+			var restrictionResults = checkRestrictions(locations[iLocation], items[iItem], itemHex, items[iItem].flags[0], isItemAllowed);
 			isItemAllowed = restrictionResults.isItemAllowed;
 			locationHasRestrictions = restrictionResults.locationHasRestrictions;
-
-			//check spell restrictions on location if we did not already fail
-			var spellRestrictionResults = checkSpellRestrictions(locations, items, iLocation, iItem, isItemAllowed)
-			isItemAllowed = spellRestrictionResults.isItemAllowed;
 
 			//we are allowed to be placed here by normal restrictions, now we check requirement restrictions
 			if(locationHasRestrictions == true)
@@ -601,7 +540,6 @@ function placeItemsInLocations(rom, random, items, locations, restrictions, spoi
 				if(locations[iLocation].offset == 0x0F91D || locations[iLocation].offset == 0x0F923) //moonorb and spellbook
 				{
 					var locHex = locations[iLocation].offset;
-					var itemHex = items[iItem].id;
 					rom[locHex] = itemHex;
 
 					if( locations[iLocation].offset == 0x0F923 )
@@ -704,22 +642,18 @@ function placeItemsInLocations(rom, random, items, locations, restrictions, spoi
 					if(locations[iLocation].type == "shrine") //if we are attempting to place at a shrine, always use the location flags
 					{
 						flagHex = locations[iLocation].flags[0];
-						//console.log("shrine");
 					}
 					else if(items[iItem].type == "main" || items[iItem].type == "shrine") //if we are placing a main/shrine item, always use the item flags to ensure that it will not count as stolen
 					{
 						flagHex = items[iItem].flags[1];
-						//console.log("main");
 					}
 					else if(locations[iLocation].stolen == "yes") //next check if the location is flagged as stolen
 					{
 						flagHex = items[iItem].flags[0];
-						//console.log("stolen");
 					}
 					else //we are not a shrine, not a main item, and not being placed in a location that is set as stolen
 					{
 						flagHex = items[iItem].flags[1];
-						//console.log("not stolen");
 					}
 
 					rom[locHex] = itemHex;

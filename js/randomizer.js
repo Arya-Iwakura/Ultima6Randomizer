@@ -1,4 +1,4 @@
-var VERSION_STRING = 'v0.6';
+var VERSION_STRING = 'v0.6a';
 
 const SUBSYSTEM_ITEMS = 0;
 const SUBSYSTEM_SPAWNERS = 1;
@@ -468,8 +468,8 @@ function testLZW(rom, random)
 	//dialogItemArturos(rom, "M. Spirituality", 0x65, 0x01);
 	//dialogItemCaptainJohn(rom, "Moonstone of Spirituality", "M. Spirituality", 0x65, 0x01);
 
-    //var lzwData = decompressDataFromLZW(rom, 0x9D000);
-	//lzwData.set([0x56,0x57], 0x54D); //lycaeum - blue moongate
+    //var lzwData = decompressDataFromLZW(rom, 0xD8000);
+	//lzwData.set([0x63], 0x19C4); //red potion in horance shop
 
 	//rom.set([0xFF], 0x9DC56); //TEST ROM CHANGE TO FIND DATA CHANGE IN DECOMPRESSED LZW FILES
 }
