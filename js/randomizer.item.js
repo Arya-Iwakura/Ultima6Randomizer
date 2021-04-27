@@ -97,7 +97,8 @@ function addSpellChests(rom)
 	//add new chest graphics
 	var lzwData = decompressDataFromLZW(rom, 0xD9500);
 	lzwData.set([0x5F], 0x1220); //remove the blue potion
-	lzwData.set([0xF1], 0x1209); //add the chest (no lock)
+	lzwData.set([0xF1], 0x1209); //add rudyom shop chest (no lock)
+	lzwData.set([0xF1], 0x115B); //add stonegate upper floor chest (no lock)
 	
 	//convert items
 	rom.set([0x25, 0x39, 0x80, 0x8D], 0x110CD); //move blue potion and convert
@@ -167,9 +168,11 @@ function updateAndAddChests(rom)
 	lzwData.set([0x41], 0x19E6); //lycaeum - oz
 	lzwData[0x5B5] = 0x41; //shame - f1 chest - add chest graphic
 	lzwData[0x5AF] = 0x00; //shame - f1 chest - remove item graphic
+	lzwData[0x216F] = 0x41; //britain sewers - f1 chest - change crate to chest graphic
 
 	rom.set([0x19, 0x8D, 0x80, 0x43], 0x117CA); //convert spring water to cheese for sherry chest
 	rom.set([0x2B, 0x5E, 0x00, 0x15], 0x11736); //move leather boots and convert for shame f1 chest
+	rom.set([0x45, 0x7D, 0x80, 0x8F], 0x1172E); //move wood ladder and convert for britain sewers f1 chest
 
 	//Underground - Floor 2 Chests
 	var lzwData = decompressDataFromLZW(rom, 0x09DA00);

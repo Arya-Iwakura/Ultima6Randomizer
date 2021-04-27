@@ -468,8 +468,8 @@ function testLZW(rom, random)
 	//dialogItemArturos(rom, "M. Spirituality", 0x65, 0x01);
 	//dialogItemCaptainJohn(rom, "Moonstone of Spirituality", "M. Spirituality", 0x65, 0x01);
 
-    //var lzwData = decompressDataFromLZW(rom, 0xD8000);
-	//lzwData.set([0x63], 0x19C4); //red potion in horance shop
+    //var lzwData = decompressDataFromLZW(rom, 0xD9500);
+	//lzwData.set([0xF1], 0x115B);
 
 	//rom.set([0xFF], 0x9DC56); //TEST ROM CHANGE TO FIND DATA CHANGE IN DECOMPRESSED LZW FILES
 }

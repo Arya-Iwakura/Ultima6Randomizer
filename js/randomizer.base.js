@@ -183,6 +183,7 @@ var DATA_CHESTS_OVERWORLD =
 	{"offset": 0x115E1, "flags": [0x86, 0xC6, 0x06], "id": [0x2F], "restrictions": [], "requires":[], "name": "house-sinvraal-01", "item": ["Oil","Oil"], "location": "Sin'Vraal's House", "type":"stack", "stolen" : "yes", "hints":[15,16]},
 	{"offset": 0x110CD, "flags": [0x80, 0xC0, 0x01], "id": [0x8D], "restrictions": [], "requires":[], "name": "cove-rudyom-01", "item": ["Red Potion","Red Potion"], "location": "Rudyom Shop", "type":"solo", "stolen" : "yes", "hints":[14,16,23]},
 	{"offset": 0x11E19, "flags": [0x80, 0xC0, 0x01], "id": [0x3D], "restrictions": [], "requires":[], "name": "cove-pedestal-01", "item": ["Grapes","Grapes"], "location": "Cove Pedestal", "type":"solo", "stolen" : "yes", "hints":[4,14,18]},
+	{"offset": 0x110C9, "flags": [0x80, 0xC0, 0x01], "id": [0x88], "restrictions": [], "requires":[], "name": "stonegate-upperfloor-01", "item": ["Fishing Rod","Fishing Rod"], "location": "Stonegate", "type":"solo", "stolen" : "no", "hints":[5,29]},
 	
 	//new magic chests
 	{"offset": 0x10EA5, "flags": [0x80, 0xC0, 0x01], "id": [0x90], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK], "name": "empathabbey-northhouse-01", "item": ["Green Potion","Green Potion"], "location": "Empath Abbey North House", "type":"stack", "stolen" : "yes", "hints":[16]},
@@ -224,10 +225,10 @@ var DATA_CHESTS_DUNGEON =
 	{"offset": 0x11E41, "flags": [0xC0, 0xC0, 0x01], "id": [0xA4], "restrictions": [], "requires":[], "name": "overworld-shipwreck-01", "item": ["Map Piece 8","Map Piece 8"], "location": "Shipwreck", "type":"solo", "stolen" : "no", "hints":[4,22,25,29]},
 
 	//magic chests
-	{"offset": 0x11AAC, "flags": [0x80, 0xC0, 0x01], "id": [0x33], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "name": "britain-sewers-F3-01", "item": ["Ring of Invisibility","Invis Ring"], "location": "Phoenix Cave", "type":"solo", "stolen" : "no", "hints":[3,22]},
-	{"offset": 0x11A9C, "flags": [0x80, 0xC0, 0x01], "id": [0x2E], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "name": "britain-sewers-F3-02", "item": ["Fire Wand","Fire Wand"], "location": "Phoenix Cave", "type":"solo", "stolen" : "no", "hints":[3,22]},
-	{"offset": 0x11AA4, "flags": [0x88, 0xC8, 0x08], "id": [0xB3], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "name": "britain-sewers-F3-03", "item": ["Gold","Gold"], "location": "Phoenix Cave", "type":"stack", "stolen" : "no", "hints":[3,22]},
-	{"offset": 0x11911, "flags": [0x80, 0xC0, 0x01], "id": [0x28], "restrictions": [ITEM_SPELLBOOK,SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK,SPELL_UNLOCK], "name": "cave-bucsden-F2-01", "item": ["Glass Sword","Glass Sword"], "location": "Buccaneers Cave", "type":"solo", "stolen" : "no", "hints":[3,22,29]},
+	{"offset": 0x11AAC, "flags": [0x80, 0xC0, 0x01], "id": [0x33], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "name": "britain-sewers-F3-01", "item": ["Ring of Invisibility","Invis Ring"], "location": "Phoenix Cave", "type":"solo", "stolen" : "no", "hints":[3,22,31]},
+	{"offset": 0x11A9C, "flags": [0x80, 0xC0, 0x01], "id": [0x2E], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "name": "britain-sewers-F3-02", "item": ["Fire Wand","Fire Wand"], "location": "Phoenix Cave", "type":"solo", "stolen" : "no", "hints":[3,22,31]},
+	{"offset": 0x11AA4, "flags": [0x88, 0xC8, 0x08], "id": [0xB3], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD], "name": "britain-sewers-F3-03", "item": ["Gold","Gold"], "location": "Phoenix Cave", "type":"stack", "stolen" : "no", "hints":[3,22,31]},
+	{"offset": 0x11911, "flags": [0x80, 0xC0, 0x01], "id": [0x28], "restrictions": [ITEM_SPELLBOOK,SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK,SPELL_UNLOCK], "name": "cave-bucsden-F2-01", "item": ["Glass Sword","Glass Sword"], "location": "Buccaneers Cave", "type":"solo", "stolen" : "no", "hints":[3,22,29,31]},
 	{"offset": 0x11971, "flags": [0x98, 0xD8, 0x18], "id": [0xB3], "restrictions": [ITEM_SPELLBOOK,SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK,SPELL_UNLOCK], "name": "dungeon-destard-F2-01", "item": ["Gold","Gold"], "location": "Destard", "type":"stack", "stolen" : "no", "hints":[30]},
 	{"offset": 0x11C4F, "flags": [0x80, 0xC0, 0x01], "id": [0x32], "restrictions": [ITEM_SPELLBOOK,SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK,SPELL_UNLOCK], "name": "crypts-moonglow-F4-01", "item": ["Ring of Regeneration","Regen Ring"], "location": "Moonglow Catacombs", "type":"solo", "stolen" : "no", "hints":[1,3,7,17,23]},
 
@@ -240,6 +241,7 @@ var DATA_CHESTS_DUNGEON =
 	{"offset": 0x11CAB, "flags": [0x80, 0xC0, 0x01], "id": [0x0D], "restrictions": [], "requires":[], "name": "dungeon-swamp-02", "item": ["Spike Shield","Spike Shield"], "location": "Swamp Cave", "type":"solo", "stolen" : "no", "hints":[3,17]},
 	{"offset": 0x11B57, "flags": [0x80, 0xC0, 0x01], "id": [0x10], "restrictions": [ITEM_SPELLBOOK,SPELL_DISPEL_FIELD], "requires":[ITEM_SPELLBOOK,SPELL_DISPEL_FIELD], "name": "dungeon-deceit-01", "item": ["Magic Shield","Magic Shield"], "location": "Deceit", "type":"solo", "stolen" : "no", "hints":[24,29,30]},
 	{"offset": 0x11A68, "flags": [0x80, 0xC0, 0x01], "id": [0x17], "restrictions": [], "requires":[], "name": "dungeon-despise-01", "item": ["Magic Armor","Magic Armor"], "location": "Despise", "type":"solo", "stolen" : "no", "hints":[17,29,30]},
+	{"offset": 0x1172E, "flags": [0x80, 0xC0, 0x01], "id": [0x8F], "restrictions": [], "requires":[], "name": "britain-sewers-F1-01", "item": ["Yellow Potion","Yellow Potion"], "location": "Britain Sewers", "type":"solo", "stolen" : "no", "hints":[2,31]},
 
 	//dialog items
 	//dialog special case - Phoenix
@@ -328,6 +330,7 @@ var DATA_HINT_TEXT =
 	" may require using a switch.", //28
 	" may require sailing or flying.", //29
 	" is in a dungeon.", //30
+	" is in or below the sewers." //31
 ];
 
 var DATA_HINT_LOCATIONS =
