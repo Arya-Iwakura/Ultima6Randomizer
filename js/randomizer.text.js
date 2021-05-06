@@ -471,7 +471,6 @@ function addHint(rom, random, inItemName, inHints, inHintLocations)
 			{
 				if(inHintLocations[i].type == "scroll")
 				{
-					//console.log("writing hint text " + hintText + " to location " + inHintLocations[i].name)
 					writeTextToBook(rom, inHintLocations[i].offset, inHintLocations[i].size, hintText);
 					inHintLocations.splice(i, 1);
 					break;
@@ -481,11 +480,12 @@ function addHint(rom, random, inItemName, inHints, inHintLocations)
 					if(inHintLocations[i].offset == 0x01)
 					{
 						addSmithHint(rom, hintText);
+						inHintLocations.splice(i, 1);
+						break;
 					}
 				}
 			}
 		}
-
 	}
 }
 

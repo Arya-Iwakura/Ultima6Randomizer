@@ -1,4 +1,4 @@
-var VERSION_STRING = 'v0.6a';
+var VERSION_STRING = 'v0.6b';
 
 const SUBSYSTEM_ITEMS = 0;
 const SUBSYSTEM_SPAWNERS = 1;

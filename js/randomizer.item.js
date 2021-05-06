@@ -164,12 +164,16 @@ function updateAndAddChests(rom)
 	//add new chest graphics
 	var lzwData = decompressDataFromLZW(rom, 0x9D000);
 	lzwData[0x27EB] = 0x42; //add sherry chest (magic lock)
+	//lzwData.set([0x41], 0x54C); //lycaeum - boardgame (shifted off the pedestal one tile)
+	//lzwData.set([0x41], 0x19E5); //lycaeum - oz (shifted off the pedestal one tile)
 	lzwData.set([0x41], 0x54B); //lycaeum - boardgame
 	lzwData.set([0x41], 0x19E6); //lycaeum - oz
 	lzwData[0x5B5] = 0x41; //shame - f1 chest - add chest graphic
 	lzwData[0x5AF] = 0x00; //shame - f1 chest - remove item graphic
 	lzwData[0x216F] = 0x41; //britain sewers - f1 chest - change crate to chest graphic
 
+	//rom.set([0xEA],0x1175E); //move book of boardgames over one tile
+	//rom.set([0xEB],0x1174E); //move book of oz over one tile
 	rom.set([0x19, 0x8D, 0x80, 0x43], 0x117CA); //convert spring water to cheese for sherry chest
 	rom.set([0x2B, 0x5E, 0x00, 0x15], 0x11736); //move leather boots and convert for shame f1 chest
 	rom.set([0x45, 0x7D, 0x80, 0x8F], 0x1172E); //move wood ladder and convert for britain sewers f1 chest
@@ -513,6 +517,7 @@ function placeItemsInLocations(rom, random, items, locations, spoilers, hintLoca
 	var iItem = 0;
 	var safetyCounter = 0;
 	var wasSuccessful = false;
+	var hintsToAddList = [];
 	
 	clearedAddedRequirements(locations);
 
@@ -554,9 +559,9 @@ function placeItemsInLocations(rom, random, items, locations, spoilers, hintLoca
 					{
 						if ($('#display_hints').is(':checked'))
 						{
-							if(items[iItem].type == "main" || items[iItem].type == "shrine" || items[iItem].type == "spell")
+							if(items[iItem].type == "main" || items[iItem].type == "shrine" || items[iItem].type == "spell" || $('#randomize_core_items').is(':checked') == false)
 							{
-								addHint(rom, random, items[iItem].item[0], locations[iLocation].hints, hintLocations);
+								addHintToHintsToAddList(items[iItem].item, locations[iLocation].hints, hintsToAddList)
 							}
 						}
 						spoilers.push(items[iItem].item[0] + ' located in ' + locations[iLocation].location);
@@ -626,9 +631,9 @@ function placeItemsInLocations(rom, random, items, locations, spoilers, hintLoca
 					{
 						if ($('#display_hints').is(':checked'))
 						{
-							if(items[iItem].type == "main" || items[iItem].type == "shrine")
+							if(items[iItem].type == "main" || items[iItem].type == "shrine" || items[iItem].type == "spell" || $('#randomize_core_items').is(':checked') == false)
 							{
-								addHint(rom, random, items[iItem].item[0], locations[iLocation].hints, hintLocations);
+								addHintToHintsToAddList(items[iItem].item, locations[iLocation].hints, hintsToAddList)
 							}
 						}
 						spoilers.push(items[iItem].item[0] + ' located in ' + locations[iLocation].location);
@@ -665,9 +670,9 @@ function placeItemsInLocations(rom, random, items, locations, spoilers, hintLoca
 					{
 						if ($('#display_hints').is(':checked'))
 						{
-							if(items[iItem].type == "main" || items[iItem].type == "shrine")
+							if(items[iItem].type == "main" || items[iItem].type == "shrine" || items[iItem].type == "spell" || $('#randomize_core_items').is(':checked') == false)
 							{
-								addHint(rom, random, items[iItem].item[0], locations[iLocation].hints, hintLocations);
+								addHintToHintsToAddList(items[iItem].item, locations[iLocation].hints, hintsToAddList)
 							}
 						}
 						spoilers.push(items[iItem].item[0] + ' located in ' + locations[iLocation].location);
@@ -698,6 +703,7 @@ function placeItemsInLocations(rom, random, items, locations, spoilers, hintLoca
 			}
 			else
 			{
+				processHintsToAddList(rom, random, hintsToAddList, hintLocations);
 				wasSuccessful = true;
 				return wasSuccessful;
 			}
@@ -708,7 +714,46 @@ function placeItemsInLocations(rom, random, items, locations, spoilers, hintLoca
 	{
 		//console.log('=== ERROR - ITEM RANDOMIZATION FAILED - RANDOMIZING AGAIN ===');
 	}
+
+	processHintsToAddList(rom, random, hintsToAddList, hintLocations);
+
 	return wasSuccessful;
+}
+
+function addHintToHintsToAddList(itemNames, locationHints, hintsToAddList)
+{
+	var hintToAdd = {"itemNames":itemNames, "locationHints":locationHints}
+	hintsToAddList.push(hintToAdd);
+}
+
+function processHintsToAddList(rom, random, hintsToAddList, hintLocations)
+{
+	for(var i = 0; i < hintsToAddList.length; i++)
+	{
+		if(hintLocations.length > 0)
+		{
+			addHint(rom, random, hintsToAddList[i].itemNames[0], hintsToAddList[i].locationHints, hintLocations);
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	if(hintLocations.length > 0 && hintsToAddList.length > 0) //we still have hints to add so use the shorter item names
+	{
+		for(var i = 0; i < hintsToAddList.length; i++)
+		{
+			if(hintLocations.length > 0)
+			{
+				addHint(rom, random, hintsToAddList[i].itemNames[1], hintsToAddList[i].locationHints, hintLocations);
+			}
+			else
+			{
+				break;
+			}
+		}
+	}
 }
 
 function dialogItemAntonio(rom, itemText, itemHex, itemQuantity)
