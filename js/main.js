@@ -307,6 +307,8 @@ function updateAllSelectionTooltips()
 	checkAISpawnNumberStatus();
 	checkAIAggressionStatus();
 	checkAIStatDifficultyStatus();
+	checkAIHealthDifficultyStatus();
+	checkAIDamageDifficultyStatus();
 	checkAISpellDifficultyStatus();
 	checkAISpellsStatus();
 	checkAIEquipmentStatus();
@@ -448,6 +450,118 @@ function checkAIStatDifficultyStatus()
 		$('#ai-stat-difficulty-tooltip-3').prop('hidden', true);
 		$('#ai-stat-difficulty-tooltip-4').prop('hidden', true);
 		$('#ai-stat-difficulty-tooltip-5').prop('hidden', false);
+	}
+}
+
+$('#select-ai-health-difficulty').click(function(e)
+{
+	checkAIHealthDifficultyStatus();
+});
+
+$('#select-ai-health-difficulty').keyup(function(e)
+{
+	checkAIHealthDifficultyStatus();
+});
+
+function checkAIHealthDifficultyStatus()
+{
+	var selection = +$('#select-ai-health-difficulty').val();
+	if (selection == 0)
+	{
+		$('#ai-health-difficulty-tooltip-1').prop('hidden', false);
+		$('#ai-health-difficulty-tooltip-2').prop('hidden', true);
+		$('#ai-health-difficulty-tooltip-3').prop('hidden', true);
+		$('#ai-health-difficulty-tooltip-4').prop('hidden', true);
+		$('#ai-health-difficulty-tooltip-5').prop('hidden', true);
+
+	}
+	else if (selection == 1)
+	{
+		$('#ai-health-difficulty-tooltip-1').prop('hidden', true);
+		$('#ai-health-difficulty-tooltip-2').prop('hidden', false);
+		$('#ai-health-difficulty-tooltip-3').prop('hidden', true);
+		$('#ai-health-difficulty-tooltip-4').prop('hidden', true);
+		$('#ai-health-difficulty-tooltip-5').prop('hidden', true);
+	}
+	else if (selection == 2)
+	{
+		$('#ai-health-difficulty-tooltip-1').prop('hidden', true);
+		$('#ai-health-difficulty-tooltip-2').prop('hidden', true);
+		$('#ai-health-difficulty-tooltip-3').prop('hidden', false);
+		$('#ai-health-difficulty-tooltip-4').prop('hidden', true);
+		$('#ai-health-difficulty-tooltip-5').prop('hidden', true);
+	}
+	else if (selection == 3)
+	{
+		$('#ai-health-difficulty-tooltip-1').prop('hidden', true);
+		$('#ai-health-difficulty-tooltip-2').prop('hidden', true);
+		$('#ai-health-difficulty-tooltip-3').prop('hidden', true);
+		$('#ai-health-difficulty-tooltip-4').prop('hidden', false);
+		$('#ai-health-difficulty-tooltip-5').prop('hidden', true);
+	}
+	else if (selection == 4)
+	{
+		$('#ai-health-difficulty-tooltip-1').prop('hidden', true);
+		$('#ai-health-difficulty-tooltip-2').prop('hidden', true);
+		$('#ai-health-difficulty-tooltip-3').prop('hidden', true);
+		$('#ai-health-difficulty-tooltip-4').prop('hidden', true);
+		$('#ai-health-difficulty-tooltip-5').prop('hidden', false);
+	}
+}
+
+$('#select-ai-damage-difficulty').click(function(e)
+{
+	checkAIDamageDifficultyStatus();
+});
+
+$('#select-ai-damage-difficulty').keyup(function(e)
+{
+	checkAIDamageDifficultyStatus();
+});
+
+function checkAIDamageDifficultyStatus()
+{
+	var selection = +$('#select-ai-damage-difficulty').val();
+	if (selection == 0)
+	{
+		$('#ai-damage-difficulty-tooltip-1').prop('hidden', false);
+		$('#ai-damage-difficulty-tooltip-2').prop('hidden', true);
+		$('#ai-damage-difficulty-tooltip-3').prop('hidden', true);
+		$('#ai-damage-difficulty-tooltip-4').prop('hidden', true);
+		$('#ai-damage-difficulty-tooltip-5').prop('hidden', true);
+
+	}
+	else if (selection == 1)
+	{
+		$('#ai-damage-difficulty-tooltip-1').prop('hidden', true);
+		$('#ai-damage-difficulty-tooltip-2').prop('hidden', false);
+		$('#ai-damage-difficulty-tooltip-3').prop('hidden', true);
+		$('#ai-damage-difficulty-tooltip-4').prop('hidden', true);
+		$('#ai-damage-difficulty-tooltip-5').prop('hidden', true);
+	}
+	else if (selection == 2)
+	{
+		$('#ai-damage-difficulty-tooltip-1').prop('hidden', true);
+		$('#ai-damage-difficulty-tooltip-2').prop('hidden', true);
+		$('#ai-damage-difficulty-tooltip-3').prop('hidden', false);
+		$('#ai-damage-difficulty-tooltip-4').prop('hidden', true);
+		$('#ai-damage-difficulty-tooltip-5').prop('hidden', true);
+	}
+	else if (selection == 3)
+	{
+		$('#ai-damage-difficulty-tooltip-1').prop('hidden', true);
+		$('#ai-damage-difficulty-tooltip-2').prop('hidden', true);
+		$('#ai-damage-difficulty-tooltip-3').prop('hidden', true);
+		$('#ai-damage-difficulty-tooltip-4').prop('hidden', false);
+		$('#ai-damage-difficulty-tooltip-5').prop('hidden', true);
+	}
+	else if (selection == 4)
+	{
+		$('#ai-damage-difficulty-tooltip-1').prop('hidden', true);
+		$('#ai-damage-difficulty-tooltip-2').prop('hidden', true);
+		$('#ai-damage-difficulty-tooltip-3').prop('hidden', true);
+		$('#ai-damage-difficulty-tooltip-4').prop('hidden', true);
+		$('#ai-damage-difficulty-tooltip-5').prop('hidden', false);
 	}
 }
 
@@ -764,6 +878,39 @@ function checkKarmaDifficultyStatus()
 		$('#karma-tooltip-1').prop('hidden', true);
 		$('#karma-tooltip-2').prop('hidden', true);
 		$('#karma-tooltip-3').prop('hidden', false);
+	}
+}
+
+$('#select-item-difficulty').click(function(e)
+{
+	checkItemDifficultyStatus();
+});
+
+$('#select-item-difficulty').keyup(function(e)
+{
+	checkItemDifficultyStatus();
+});
+
+function checkItemDifficultyStatus()
+{
+	var selection = +$('#select-item-difficulty').val();
+	if (selection == 0)
+	{
+		$('#item-difficulty-tooltip-1').prop('hidden', false);
+		$('#item-difficulty-tooltip-2').prop('hidden', true);
+		$('#item-difficulty-tooltip-3').prop('hidden', true);
+	}
+	else if (selection == 1)
+	{
+		$('#item-difficulty-tooltip-1').prop('hidden', true);
+		$('#item-difficulty-tooltip-2').prop('hidden', false);
+		$('#item-difficulty-tooltip-3').prop('hidden', true);
+	}
+	else if (selection == 2)
+	{
+		$('#item-difficulty-tooltip-1').prop('hidden', true);
+		$('#item-difficulty-tooltip-2').prop('hidden', true);
+		$('#item-difficulty-tooltip-3').prop('hidden', false);
 	}
 }
 

@@ -7,89 +7,55 @@ function updatePreset(val)
 
 	switch(preset)
 	{
-		case 1: //Very Easy
-			preset_townsfolk();
+		case 1: //overworld easy
+			preset_overworld_easy();
 			break;
-		case 2: //Easy
-			preset_explorer();
+		case 2: //overworld normal
+			preset_overworld_normal();
 			break;
-		case 3: //Standard
-			preset_adventurer();
+		case 3: //overworld hard
+			preset_overworld_hard();
 			break;
-		case 4: //Difficult
-			preset_avatar();
+		case 4: //all easy
+			preset_all_easy();
 			break;
-		case 5: //Very Difficult
-			preset_guardian();
+		case 5: //all normal
+			preset_all_normal();
 			break;
-		case 6: //TEST
+		case 6: //all hard
+			preset_all_hard();
+			break;
+		case 7: //underworld easy
+			preset_underworld_easy();
+			break;
+		case 8: //underworld normal
+			preset_underworld_normal();
+			break;
+		case 9: //underworld hard
+			preset_underworld_hard();
+			break;
+		case 10: //TEST
 			preset_test();
 			break;
 		default:
-			preset_townsfolk();
+			preset_overworld_normal();
 			break;
 	}
 
 	updateAllSelectionTooltips();
 }
 
-function preset_townsfolk()
+//--------- OVERWORLD LOCATIONS PRESETS
+function preset_overworld_easy() //easy
 {
 	$('#randomize_core_items').prop('checked', true);
 	$('#randomize_chests_overworld').prop('checked', true);
+	$('#randomize_chests_dungeons').prop('checked', false);
+	$('#randomize_moonorb').prop('checked', false);
+	$('#randomize_spellbook').prop('checked', false);
+	$('#randomize_unlockanddispel').prop('checked', false);
 	$('#add_sherry_item').prop('checked', true);
 	
-	$('#randomize_moonorb').prop('disabled', false);
-	$('#randomize_spellbook').prop('disabled', false);
-	$('#randomize_unlockanddispel').prop('disabled', false);
-	$('#add_sherry_item').prop('disabled', false);
-
-	$('#randomize_enemy_animals').prop('checked', true);
-	
-	$('#randomize_enemy_mix').prop('disabled', true);
-	$('#randomize_enemy_mix').prop('checked', false);
-
-	$('#select-ai-spawn-numbers').prop('value', 0);
-	$('#select-ai-aggression').prop('value', 0);
-	
-	$('#enemy_stats_shuffle').prop('checked', false);
-	$('#enemy_spellcasters_shuffle').prop('checked', false);
-	$('#enemy_equipmentusers_shuffle').prop('checked', false);
-	$('#enemy_droppossessors_shuffle').prop('checked', false);
-	$('#randomize_enemy_drops').prop('checked', true);
-
-	$('#select-ai-stat-difficulty').prop('value', 1);
-	$('#select-ai-spell-difficulty').prop('value', 1);
-	$('#select-ai-spells').prop('value', 0);
-	$('#select-ai-equipment').prop('value', 0);
-
-	$('#add_missing_enemies').prop('checked', true);
-	$('#add_missing_ai_spells').prop('checked', true);
-	$('#remove_moonorb').prop('checked', false);
-	$('#expanded_camping').prop('checked', true);
-	$('#enable_fast_button_mapping').prop('checked', true);
-	$('#enable_expanded_armor_items').prop('checked', true);
-	$('#randomize_castle_britannia_items').prop('checked', true);
-
-	$('#select-starting-inventory').prop('value', 0);
-	$('#select-starting-gold').prop('value', 0);
-	$('#select-day-night-cycle').prop('value', 2);
-	$('#select-karma-difficulty').prop('value', 1);
-	$('#select-spiritshrine').prop('value', 0);
-	$('#select-placedrafts').prop('value', 1);
-
-	$('#display_spoiler_log').prop('checked', true);
-	$('#display_hints').prop('disabled', false);
-	$('#display_hints').prop('checked', true);
-}
-
-function preset_explorer()
-{
-	$('#randomize_core_items').prop('checked', true);
-	$('#randomize_chests_overworld').prop('checked', true);
-	$('#randomize_moonorb').prop('checked', true);
-	$('#add_sherry_item').prop('checked', true);
-
 	$('#randomize_moonorb').prop('disabled', false);
 	$('#randomize_spellbook').prop('disabled', false);
 	$('#randomize_unlockanddispel').prop('disabled', false);
@@ -98,9 +64,10 @@ function preset_explorer()
 	$('#randomize_enemy_wild').prop('checked', true);
 	$('#randomize_enemy_animals').prop('checked', true);
 	$('#randomize_enemy_mix').prop('disabled', false);
+	$('#randomize_enemy_mix').prop('checked', false);
 
 	$('#select-ai-spawn-numbers').prop('value', 0);
-	$('#select-ai-aggression').prop('value', 0);
+	$('#select-ai-aggression').prop('value', 1);
 	
 	$('#enemy_stats_shuffle').prop('checked', false);
 	$('#enemy_spellcasters_shuffle').prop('checked', false);
@@ -109,6 +76,8 @@ function preset_explorer()
 	$('#randomize_enemy_drops').prop('checked', true);
 
 	$('#select-ai-stat-difficulty').prop('value', 2);
+	$('#select-ai-health-difficulty').prop('value', 2);
+	$('#select-ai-damage-difficulty').prop('value', 2);
 	$('#select-ai-spell-difficulty').prop('value', 1);
 	$('#select-ai-spells').prop('value', 0);
 	$('#select-ai-equipment').prop('value', 0);
@@ -120,12 +89,14 @@ function preset_explorer()
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
 	$('#randomize_castle_britannia_items').prop('checked', true);
+	$('#randomize_moon_phases').prop('checked', true);
 
-	$('#select-starting-inventory').prop('value', 0);
-	$('#select-starting-gold').prop('value', 0);
+	$('#select-starting-inventory').prop('value', 2);
+	$('#select-starting-gold').prop('value', 4);
 	$('#select-day-night-cycle').prop('value', 1);
 	$('#select-karma-difficulty').prop('value', 1);
-	$('#select-spiritshrine').prop('value', 0);
+	$('#select-item-difficulty').prop('value', 0);
+	$('#select-spiritshrine').prop('value', 1);
 	$('#select-placedrafts').prop('value', 1);
 
 	$('#display_spoiler_log').prop('checked', true);
@@ -133,66 +104,14 @@ function preset_explorer()
 	$('#display_hints').prop('checked', true);
 }
 
-function preset_adventurer() //standard
+function preset_overworld_normal() //normal
 {
 	$('#randomize_core_items').prop('checked', true);
 	$('#randomize_chests_overworld').prop('checked', true);
-	$('#randomize_chests_dungeons').prop('checked', true);
+	$('#randomize_chests_dungeons').prop('checked', false);
 	$('#randomize_moonorb').prop('checked', true);
-	$('#randomize_spellbook').prop('checked', true);
-	$('#add_sherry_item').prop('checked', true);
-
-	$('#randomize_moonorb').prop('disabled', false);
-	$('#randomize_spellbook').prop('disabled', false);
-	$('#randomize_unlockanddispel').prop('disabled', false);
-	$('#add_sherry_item').prop('disabled', false);
-
-	$('#randomize_enemy_animals').prop('checked', true);
-	$('#randomize_enemy_wild').prop('checked', true);
-	$('#randomize_enemy_mix').prop('checked', true);
-	$('#randomize_enemy_mix').prop('disabled', false);
-
-	$('#select-ai-spawn-numbers').prop('value', 0);
-	$('#select-ai-aggression').prop('value', 1);
-
-	$('#enemy_stats_shuffle').prop('checked', false);
-	$('#enemy_spellcasters_shuffle').prop('checked', false);
-	$('#enemy_equipmentusers_shuffle').prop('checked', false);
-	$('#enemy_droppossessors_shuffle').prop('checked', false);
-	$('#randomize_enemy_drops').prop('checked', true);
-
-	$('#select-ai-stat-difficulty').prop('value', 0);
-	$('#select-ai-spell-difficulty').prop('value', 0);
-	$('#select-ai-spells').prop('value', 0);
-	$('#select-ai-equipment').prop('value', 1);
-
-	$('#add_missing_enemies').prop('checked', true);
-	$('#add_missing_ai_spells').prop('checked', true);
-	$('#remove_moonorb').prop('checked', false);
-	$('#expanded_camping').prop('checked', true);
-	$('#enable_fast_button_mapping').prop('checked', true);
-	$('#enable_expanded_armor_items').prop('checked', true);
-	$('#randomize_castle_britannia_items').prop('checked', true);
-
-	$('#select-starting-inventory').prop('value', 0);
-	$('#select-starting-gold').prop('value', 0);
-	$('#select-day-night-cycle').prop('value', 0);
-	$('#select-karma-difficulty').prop('value', 0);
-	$('#select-spiritshrine').prop('value', 0);
-	$('#select-placedrafts').prop('value', 1);
-
-	$('#display_spoiler_log').prop('checked', true);
-	$('#display_hints').prop('disabled', false);
-	$('#display_hints').prop('checked', true);	
-}
-
-function preset_avatar()
-{
-	$('#randomize_core_items').prop('checked', true);
-	$('#randomize_chests_overworld').prop('checked', true);
-	$('#randomize_chests_dungeons').prop('checked', true);
-	$('#randomize_moonorb').prop('checked', true);
-	$('#randomize_spellbook').prop('checked', true);
+	$('#randomize_spellbook').prop('checked', false);
+	$('#randomize_unlockanddispel').prop('checked', true);
 	$('#add_sherry_item').prop('checked', true);
 
 	$('#randomize_moonorb').prop('disabled', false);
@@ -203,20 +122,22 @@ function preset_avatar()
 	$('#randomize_enemy_monsters').prop('checked', true);
 	$('#randomize_enemy_wild').prop('checked', true);
 	$('#randomize_enemy_animals').prop('checked', true);
-	$('#randomize_enemy_people').prop('checked', true);
 	$('#randomize_enemy_mix').prop('disabled', false);
+	$('#randomize_enemy_mix').prop('checked', false);
 
-	$('#select-ai-spawn-numbers').prop('value', 1);
-	$('#select-ai-aggression').prop('value', 0);
-
+	$('#select-ai-spawn-numbers').prop('value', 0);
+	$('#select-ai-aggression').prop('value', 1);
+	
 	$('#enemy_stats_shuffle').prop('checked', false);
 	$('#enemy_spellcasters_shuffle').prop('checked', false);
 	$('#enemy_equipmentusers_shuffle').prop('checked', false);
 	$('#enemy_droppossessors_shuffle').prop('checked', true);
 	$('#randomize_enemy_drops').prop('checked', true);
 
-	$('#select-ai-stat-difficulty').prop('value', 3);
-	$('#select-ai-spell-difficulty').prop('value', 2);
+	$('#select-ai-stat-difficulty').prop('value', 0);
+	$('#select-ai-health-difficulty').prop('value', 0);
+	$('#select-ai-damage-difficulty').prop('value', 0);
+	$('#select-ai-spell-difficulty').prop('value', 0);
 	$('#select-ai-spells').prop('value', 1);
 	$('#select-ai-equipment').prop('value', 1);
 
@@ -227,26 +148,29 @@ function preset_avatar()
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
 	$('#randomize_castle_britannia_items').prop('checked', true);
+	$('#randomize_moon_phases').prop('checked', true);
 
-	$('#select-starting-inventory').prop('value', 0);
-	$('#select-starting-gold').prop('value', 0);
-	$('#select-day-night-cycle').prop('value', 0);
-	$('#select-karma-difficulty').prop('value', 2);
-	$('#select-spiritshrine').prop('value', 0);
-	$('#select-placedrafts').prop('value', 1);
+	$('#select-starting-inventory').prop('value', 4);
+	$('#select-starting-gold').prop('value', 4);
+	$('#select-day-night-cycle').prop('value', 1);
+	$('#select-karma-difficulty').prop('value', 0);
+	$('#select-item-difficulty').prop('value', 0);
+	$('#select-spiritshrine').prop('value', 1);
+	$('#select-placedrafts').prop('value', 0);
 
 	$('#display_spoiler_log').prop('checked', true);
 	$('#display_hints').prop('disabled', false);
-	$('#display_hints').prop('checked', true);	
+	$('#display_hints').prop('checked', true);
 }
 
-function preset_guardian()
+function preset_overworld_hard() //hard
 {
 	$('#randomize_core_items').prop('checked', true);
 	$('#randomize_chests_overworld').prop('checked', true);
-	$('#randomize_chests_dungeons').prop('checked', true);
+	$('#randomize_chests_dungeons').prop('checked', false);
 	$('#randomize_moonorb').prop('checked', true);
 	$('#randomize_spellbook').prop('checked', true);
+	$('#randomize_unlockanddispel').prop('checked', true);
 	$('#add_sherry_item').prop('checked', true);
 
 	$('#randomize_moonorb').prop('disabled', false);
@@ -258,10 +182,10 @@ function preset_guardian()
 	$('#randomize_enemy_wild').prop('checked', true);
 	$('#randomize_enemy_animals').prop('checked', true);
 	$('#randomize_enemy_people').prop('checked', true);
-
-	$('#randomize_enemy_mix').prop('checked', true);
 	$('#randomize_enemy_mix').prop('disabled', false);
-	$('#select-ai-spawn-numbers').prop('value', 2);
+	$('#randomize_enemy_mix').prop('checked', true);
+
+	$('#select-ai-spawn-numbers').prop('value', 1);
 	$('#select-ai-aggression').prop('value', 2);
 	
 	$('#enemy_stats_shuffle').prop('checked', true);
@@ -270,7 +194,9 @@ function preset_guardian()
 	$('#enemy_droppossessors_shuffle').prop('checked', true);
 	$('#randomize_enemy_drops').prop('checked', true);
 
-	$('#select-ai-stat-difficulty').prop('value', 4);
+	$('#select-ai-stat-difficulty').prop('value', 0);
+	$('#select-ai-health-difficulty').prop('value', 4);
+	$('#select-ai-damage-difficulty').prop('value', 3);
 	$('#select-ai-spell-difficulty').prop('value', 2);
 	$('#select-ai-spells').prop('value', 2);
 	$('#select-ai-equipment').prop('value', 2);
@@ -282,12 +208,73 @@ function preset_guardian()
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
 	$('#randomize_castle_britannia_items').prop('checked', true);
+	$('#randomize_moon_phases').prop('checked', true);
 
-	$('#select-starting-inventory').prop('value', 0);
-	$('#select-starting-gold').prop('value', 0);
-	$('#select-day-night-cycle').prop('value', 0);
+	$('#select-starting-inventory').prop('value', 3);
+	$('#select-starting-gold').prop('value', 1);
+	$('#select-day-night-cycle').prop('value', 1);
 	$('#select-karma-difficulty').prop('value', 2);
-	$('#select-spiritshrine').prop('value', 0);
+	$('#select-item-difficulty').prop('value', 2);
+	$('#select-spiritshrine').prop('value', 1);
+	$('#select-placedrafts').prop('value', 2);
+
+	$('#display_spoiler_log').prop('checked', true);
+	$('#display_hints').prop('disabled', false);
+	$('#display_hints').prop('checked', true);
+}
+
+//--------- ALL LOCATIONS PRESETS
+function preset_all_easy() //easy
+{
+	$('#randomize_core_items').prop('checked', true);
+	$('#randomize_chests_overworld').prop('checked', true);
+	$('#randomize_chests_dungeons').prop('checked', true);
+	$('#randomize_moonorb').prop('checked', false);
+	$('#randomize_spellbook').prop('checked', false);
+	$('#randomize_unlockanddispel').prop('checked', false);
+	$('#add_sherry_item').prop('checked', true);
+	
+	$('#randomize_moonorb').prop('disabled', false);
+	$('#randomize_spellbook').prop('disabled', false);
+	$('#randomize_unlockanddispel').prop('disabled', false);
+	$('#add_sherry_item').prop('disabled', false);
+
+	$('#randomize_enemy_wild').prop('checked', true);
+	$('#randomize_enemy_animals').prop('checked', true);
+	$('#randomize_enemy_mix').prop('disabled', false);
+	$('#randomize_enemy_mix').prop('checked', false);
+
+	$('#select-ai-spawn-numbers').prop('value', 0);
+	$('#select-ai-aggression').prop('value', 1);
+	
+	$('#enemy_stats_shuffle').prop('checked', false);
+	$('#enemy_spellcasters_shuffle').prop('checked', false);
+	$('#enemy_equipmentusers_shuffle').prop('checked', false);
+	$('#enemy_droppossessors_shuffle').prop('checked', false);
+	$('#randomize_enemy_drops').prop('checked', true);
+
+	$('#select-ai-stat-difficulty').prop('value', 2);
+	$('#select-ai-health-difficulty').prop('value', 2);
+	$('#select-ai-damage-difficulty').prop('value', 2);
+	$('#select-ai-spell-difficulty').prop('value', 1);
+	$('#select-ai-spells').prop('value', 0);
+	$('#select-ai-equipment').prop('value', 0);
+
+	$('#add_missing_enemies').prop('checked', true);
+	$('#add_missing_ai_spells').prop('checked', true);
+	$('#remove_moonorb').prop('checked', false);
+	$('#expanded_camping').prop('checked', true);
+	$('#enable_fast_button_mapping').prop('checked', true);
+	$('#enable_expanded_armor_items').prop('checked', true);
+	$('#randomize_castle_britannia_items').prop('checked', true);
+	$('#randomize_moon_phases').prop('checked', true);
+
+	$('#select-starting-inventory').prop('value', 2);
+	$('#select-starting-gold').prop('value', 4);
+	$('#select-day-night-cycle').prop('value', 1);
+	$('#select-karma-difficulty').prop('value', 1);
+	$('#select-item-difficulty').prop('value', 0);
+	$('#select-spiritshrine').prop('value', 1);
 	$('#select-placedrafts').prop('value', 1);
 
 	$('#display_spoiler_log').prop('checked', true);
@@ -295,6 +282,302 @@ function preset_guardian()
 	$('#display_hints').prop('checked', true);
 }
 
+function preset_all_normal() //normal
+{
+	$('#randomize_core_items').prop('checked', true);
+	$('#randomize_chests_overworld').prop('checked', true);
+	$('#randomize_chests_dungeons').prop('checked', true);
+	$('#randomize_moonorb').prop('checked', true);
+	$('#randomize_spellbook').prop('checked', false);
+	$('#randomize_unlockanddispel').prop('checked', true);
+	$('#add_sherry_item').prop('checked', true);
+
+	$('#randomize_moonorb').prop('disabled', false);
+	$('#randomize_spellbook').prop('disabled', false);
+	$('#randomize_unlockanddispel').prop('disabled', false);
+	$('#add_sherry_item').prop('disabled', false);
+
+	$('#randomize_enemy_monsters').prop('checked', true);
+	$('#randomize_enemy_wild').prop('checked', true);
+	$('#randomize_enemy_animals').prop('checked', true);
+	$('#randomize_enemy_mix').prop('disabled', false);
+
+	$('#select-ai-spawn-numbers').prop('value', 0);
+	$('#select-ai-aggression').prop('value', 1);
+	
+	$('#enemy_stats_shuffle').prop('checked', false);
+	$('#enemy_spellcasters_shuffle').prop('checked', false);
+	$('#enemy_equipmentusers_shuffle').prop('checked', false);
+	$('#enemy_droppossessors_shuffle').prop('checked', true);
+	$('#randomize_enemy_drops').prop('checked', true);
+
+	$('#select-ai-stat-difficulty').prop('value', 0);
+	$('#select-ai-health-difficulty').prop('value', 0);
+	$('#select-ai-damage-difficulty').prop('value', 0);
+	$('#select-ai-spell-difficulty').prop('value', 0);
+	$('#select-ai-spells').prop('value', 1);
+	$('#select-ai-equipment').prop('value', 1);
+
+	$('#add_missing_enemies').prop('checked', true);
+	$('#add_missing_ai_spells').prop('checked', true);
+	$('#remove_moonorb').prop('checked', false);
+	$('#expanded_camping').prop('checked', true);
+	$('#enable_fast_button_mapping').prop('checked', true);
+	$('#enable_expanded_armor_items').prop('checked', true);
+	$('#randomize_castle_britannia_items').prop('checked', true);
+	$('#randomize_moon_phases').prop('checked', true);
+
+	$('#select-starting-inventory').prop('value', 4);
+	$('#select-starting-gold').prop('value', 4);
+	$('#select-day-night-cycle').prop('value', 1);
+	$('#select-karma-difficulty').prop('value', 0);
+	$('#select-item-difficulty').prop('value', 0);
+	$('#select-spiritshrine').prop('value', 1);
+	$('#select-placedrafts').prop('value', 0);
+
+	$('#display_spoiler_log').prop('checked', true);
+	$('#display_hints').prop('disabled', false);
+	$('#display_hints').prop('checked', true);	
+}
+
+function preset_all_hard() //hard
+{
+	$('#randomize_core_items').prop('checked', true);
+	$('#randomize_chests_overworld').prop('checked', true);
+	$('#randomize_chests_dungeons').prop('checked', true);
+	$('#randomize_moonorb').prop('checked', true);
+	$('#randomize_spellbook').prop('checked', true);
+	$('#randomize_unlockanddispel').prop('checked', true);
+	$('#add_sherry_item').prop('checked', true);
+
+	$('#randomize_moonorb').prop('disabled', false);
+	$('#randomize_spellbook').prop('disabled', false);
+	$('#randomize_unlockanddispel').prop('disabled', false);
+	$('#add_sherry_item').prop('disabled', false);
+
+	$('#randomize_enemy_monsters').prop('checked', true);
+	$('#randomize_enemy_wild').prop('checked', true);
+	$('#randomize_enemy_animals').prop('checked', true);
+	$('#randomize_enemy_people').prop('checked', true);
+	$('#randomize_enemy_mix').prop('disabled', false);
+	$('#randomize_enemy_mix').prop('checked', true);
+
+	$('#select-ai-spawn-numbers').prop('value', 1);
+	$('#select-ai-aggression').prop('value', 2);
+	
+	$('#enemy_stats_shuffle').prop('checked', true);
+	$('#enemy_spellcasters_shuffle').prop('checked', true);
+	$('#enemy_equipmentusers_shuffle').prop('checked', true);
+	$('#enemy_droppossessors_shuffle').prop('checked', true);
+	$('#randomize_enemy_drops').prop('checked', true);
+
+	$('#select-ai-stat-difficulty').prop('value', 0);
+	$('#select-ai-health-difficulty').prop('value', 4);
+	$('#select-ai-damage-difficulty').prop('value', 3);
+	$('#select-ai-spell-difficulty').prop('value', 2);
+	$('#select-ai-spells').prop('value', 2);
+	$('#select-ai-equipment').prop('value', 2);
+
+	$('#add_missing_enemies').prop('checked', true);
+	$('#add_missing_ai_spells').prop('checked', true);
+	$('#remove_moonorb').prop('checked', false);
+	$('#expanded_camping').prop('checked', true);
+	$('#enable_fast_button_mapping').prop('checked', true);
+	$('#enable_expanded_armor_items').prop('checked', true);
+	$('#randomize_castle_britannia_items').prop('checked', true);
+	$('#randomize_moon_phases').prop('checked', true);
+
+	$('#select-starting-inventory').prop('value', 3);
+	$('#select-starting-gold').prop('value', 1);
+	$('#select-day-night-cycle').prop('value', 1);
+	$('#select-karma-difficulty').prop('value', 2);
+	$('#select-item-difficulty').prop('value', 2);
+	$('#select-spiritshrine').prop('value', 1);
+	$('#select-placedrafts').prop('value', 2);
+
+	$('#display_spoiler_log').prop('checked', true);
+	$('#display_hints').prop('disabled', false);
+	$('#display_hints').prop('checked', true);
+}
+
+//--------- UNDERWORLD LOCATIONS PRESETS
+function preset_underworld_easy() //easy
+{
+	$('#randomize_core_items').prop('checked', true);
+	$('#randomize_chests_overworld').prop('checked', false);
+	$('#randomize_chests_dungeons').prop('checked', true);
+	$('#randomize_moonorb').prop('checked', false);
+	$('#randomize_spellbook').prop('checked', false);
+	$('#randomize_unlockanddispel').prop('checked', false);
+	$('#add_sherry_item').prop('checked', true);
+	
+	$('#randomize_moonorb').prop('disabled', false);
+	$('#randomize_spellbook').prop('disabled', false);
+	$('#randomize_unlockanddispel').prop('disabled', false);
+	$('#add_sherry_item').prop('disabled', false);
+
+	$('#randomize_enemy_wild').prop('checked', true);
+	$('#randomize_enemy_animals').prop('checked', true);
+	$('#randomize_enemy_mix').prop('disabled', false);
+	$('#randomize_enemy_mix').prop('checked', false);
+
+	$('#select-ai-spawn-numbers').prop('value', 0);
+	$('#select-ai-aggression').prop('value', 1);
+	
+	$('#enemy_stats_shuffle').prop('checked', false);
+	$('#enemy_spellcasters_shuffle').prop('checked', false);
+	$('#enemy_equipmentusers_shuffle').prop('checked', false);
+	$('#enemy_droppossessors_shuffle').prop('checked', false);
+	$('#randomize_enemy_drops').prop('checked', true);
+
+	$('#select-ai-stat-difficulty').prop('value', 2);
+	$('#select-ai-health-difficulty').prop('value', 2);
+	$('#select-ai-damage-difficulty').prop('value', 2);
+	$('#select-ai-spell-difficulty').prop('value', 1);
+	$('#select-ai-spells').prop('value', 0);
+	$('#select-ai-equipment').prop('value', 0);
+
+	$('#add_missing_enemies').prop('checked', true);
+	$('#add_missing_ai_spells').prop('checked', true);
+	$('#remove_moonorb').prop('checked', false);
+	$('#expanded_camping').prop('checked', true);
+	$('#enable_fast_button_mapping').prop('checked', true);
+	$('#enable_expanded_armor_items').prop('checked', true);
+	$('#randomize_castle_britannia_items').prop('checked', true);
+	$('#randomize_moon_phases').prop('checked', true);
+
+	$('#select-starting-inventory').prop('value', 2);
+	$('#select-starting-gold').prop('value', 4);
+	$('#select-day-night-cycle').prop('value', 1);
+	$('#select-karma-difficulty').prop('value', 1);
+	$('#select-item-difficulty').prop('value', 0);
+	$('#select-spiritshrine').prop('value', 1);
+	$('#select-placedrafts').prop('value', 1);
+
+	$('#display_spoiler_log').prop('checked', true);
+	$('#display_hints').prop('disabled', false);
+	$('#display_hints').prop('checked', true);
+}
+
+function preset_underworld_normal() //normal
+{
+	$('#randomize_core_items').prop('checked', true);
+	$('#randomize_chests_overworld').prop('checked', false);
+	$('#randomize_chests_dungeons').prop('checked', true);
+	$('#randomize_moonorb').prop('checked', true);
+	$('#randomize_spellbook').prop('checked', false);
+	$('#randomize_unlockanddispel').prop('checked', true);
+	$('#add_sherry_item').prop('checked', true);
+
+	$('#randomize_moonorb').prop('disabled', false);
+	$('#randomize_spellbook').prop('disabled', false);
+	$('#randomize_unlockanddispel').prop('disabled', false);
+	$('#add_sherry_item').prop('disabled', false);
+
+	$('#randomize_enemy_monsters').prop('checked', true);
+	$('#randomize_enemy_wild').prop('checked', true);
+	$('#randomize_enemy_animals').prop('checked', true);
+	$('#randomize_enemy_mix').prop('disabled', false);
+
+	$('#select-ai-spawn-numbers').prop('value', 0);
+	$('#select-ai-aggression').prop('value', 1);
+	
+	$('#enemy_stats_shuffle').prop('checked', false);
+	$('#enemy_spellcasters_shuffle').prop('checked', false);
+	$('#enemy_equipmentusers_shuffle').prop('checked', false);
+	$('#enemy_droppossessors_shuffle').prop('checked', true);
+	$('#randomize_enemy_drops').prop('checked', true);
+
+	$('#select-ai-stat-difficulty').prop('value', 0);
+	$('#select-ai-health-difficulty').prop('value', 0);
+	$('#select-ai-damage-difficulty').prop('value', 0);
+	$('#select-ai-spell-difficulty').prop('value', 0);
+	$('#select-ai-spells').prop('value', 1);
+	$('#select-ai-equipment').prop('value', 1);
+
+	$('#add_missing_enemies').prop('checked', true);
+	$('#add_missing_ai_spells').prop('checked', true);
+	$('#remove_moonorb').prop('checked', false);
+	$('#expanded_camping').prop('checked', true);
+	$('#enable_fast_button_mapping').prop('checked', true);
+	$('#enable_expanded_armor_items').prop('checked', true);
+	$('#randomize_castle_britannia_items').prop('checked', true);
+	$('#randomize_moon_phases').prop('checked', true);
+
+	$('#select-starting-inventory').prop('value', 4);
+	$('#select-starting-gold').prop('value', 4);
+	$('#select-day-night-cycle').prop('value', 1);
+	$('#select-karma-difficulty').prop('value', 0);
+	$('#select-item-difficulty').prop('value', 0);
+	$('#select-spiritshrine').prop('value', 1);
+	$('#select-placedrafts').prop('value', 0);
+
+	$('#display_spoiler_log').prop('checked', true);
+	$('#display_hints').prop('disabled', false);
+	$('#display_hints').prop('checked', true);
+}
+
+function preset_underworld_hard() //hard
+{
+	$('#randomize_core_items').prop('checked', true);
+	$('#randomize_chests_overworld').prop('checked', false);
+	$('#randomize_chests_dungeons').prop('checked', true);
+	$('#randomize_moonorb').prop('checked', true);
+	$('#randomize_spellbook').prop('checked', true);
+	$('#randomize_unlockanddispel').prop('checked', true);
+	$('#add_sherry_item').prop('checked', true);
+
+	$('#randomize_moonorb').prop('disabled', false);
+	$('#randomize_spellbook').prop('disabled', false);
+	$('#randomize_unlockanddispel').prop('disabled', false);
+	$('#add_sherry_item').prop('disabled', false);
+
+	$('#randomize_enemy_monsters').prop('checked', true);
+	$('#randomize_enemy_wild').prop('checked', true);
+	$('#randomize_enemy_animals').prop('checked', true);
+	$('#randomize_enemy_people').prop('checked', true);
+	$('#randomize_enemy_mix').prop('disabled', false);
+	$('#randomize_enemy_mix').prop('checked', true);
+
+	$('#select-ai-spawn-numbers').prop('value', 1);
+	$('#select-ai-aggression').prop('value', 2);
+	
+	$('#enemy_stats_shuffle').prop('checked', true);
+	$('#enemy_spellcasters_shuffle').prop('checked', true);
+	$('#enemy_equipmentusers_shuffle').prop('checked', true);
+	$('#enemy_droppossessors_shuffle').prop('checked', true);
+	$('#randomize_enemy_drops').prop('checked', true);
+
+	$('#select-ai-stat-difficulty').prop('value', 0);
+	$('#select-ai-health-difficulty').prop('value', 4);
+	$('#select-ai-damage-difficulty').prop('value', 3);
+	$('#select-ai-spell-difficulty').prop('value', 2);
+	$('#select-ai-spells').prop('value', 2);
+	$('#select-ai-equipment').prop('value', 2);
+
+	$('#add_missing_enemies').prop('checked', true);
+	$('#add_missing_ai_spells').prop('checked', true);
+	$('#remove_moonorb').prop('checked', false);
+	$('#expanded_camping').prop('checked', true);
+	$('#enable_fast_button_mapping').prop('checked', true);
+	$('#enable_expanded_armor_items').prop('checked', true);
+	$('#randomize_castle_britannia_items').prop('checked', true);
+	$('#randomize_moon_phases').prop('checked', true);
+
+	$('#select-starting-inventory').prop('value', 3);
+	$('#select-starting-gold').prop('value', 1);
+	$('#select-day-night-cycle').prop('value', 1);
+	$('#select-karma-difficulty').prop('value', 2);
+	$('#select-item-difficulty').prop('value', 2);
+	$('#select-spiritshrine').prop('value', 1);
+	$('#select-placedrafts').prop('value', 2);
+
+	$('#display_spoiler_log').prop('checked', true);
+	$('#display_hints').prop('disabled', false);
+	$('#display_hints').prop('checked', true);
+}
+
+//--------- OTHER PRESETS
 function preset_test()
 {
 	$('#randomize_core_items').prop('checked', false);
@@ -355,13 +638,15 @@ $('.presetoption').click(function()
 var PRESET_NAMES =
 [
 	"Custom",
-	"TownsFolk",
-	//"Trader",
-	"Explorer",
-	"Adventurer",
-	//"",
-	"Avatar",
-	"Guardian",
+	"Overworld-Easy",
+	"Overworld-Normal",
+	"Overworld-Hard",
+	"All-Easy",
+	"All-Normal",
+	"All-Hard",
+	"Underworld-Easy",
+	"Underworld-Normal",
+	"Underworld-Hard",
 ];
 
 function getPresetName(n)

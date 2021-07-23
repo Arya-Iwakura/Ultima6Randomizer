@@ -126,6 +126,20 @@ function hardKarmaMode(rom)
             ], 0xFCE0);
 }
 
+function easyItemMode(rom)
+{
+    console.log("SETTING EASY ITEM MODE");
+    rom[0x1B68E] = 0x7F; //set invis and regen to break less often
+}
+
+function hardItemMode(rom)
+{
+    console.log("SETTING HARD ITEM MODE");
+    rom[0x1B68E] = 0x0F; //set invis and regen effects to break more often
+    rom.set([0xAD, 0x01], 0x1B6F9); //set invis rings to break more often
+    rom.set([0xDE, 0x02], 0x1B72D); //set regen rings to break more often
+}
+
 function adjustDayLength(rom, desiredLength)
 {
     console.log("ADJUSTING DAY NIGHT CYCLE");

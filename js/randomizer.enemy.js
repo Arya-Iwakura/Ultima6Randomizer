@@ -786,35 +786,49 @@ function randomSpawnNumbers(rom, random)
 
 //=================================================================================
 
-function getEnemyStatsDifficultyAdjusted(enemyStats, difficulty)
+function getEnemyStatsDifficultyAdjusted(enemyStats, statDifficulty, healthDifficulty, damageDifficulty)
 {
-    if(difficulty == 1)
-    {
-        enemyStats = enemyStatAdjust(enemyStats, 0.5); //super squish those stats
-    }
-    else if(difficulty == 2)
-    {
-        enemyStats = enemyStatAdjust(enemyStats, 0.75); //squish those stats
-    }
-    else if(difficulty == 3)
-    {
-        enemyStats = enemyStatAdjust(enemyStats, 1.25); //expand those stats
-    }
-    else if(difficulty == 4)
-    {
-        enemyStats = enemyStatAdjust(enemyStats, 1.5); //super expand those stats
-    }
+    var statMultipler = getEnemyStatDifficultyMultiplier(statDifficulty);
+    var healthMultipler = getEnemyStatDifficultyMultiplier(healthDifficulty);
+    var damageMultipler = getEnemyStatDifficultyMultiplier(damageDifficulty);
+
+    enemyStats = enemyStatAdjust(enemyStats, statMultipler, healthMultipler, damageMultipler); //super squish those stats
     return enemyStats;
 }
 
-function changeEnemyStatDifficulty(rom, difficulty)
+function getEnemyStatDifficultyMultiplier(difficulty)
+{
+    if(difficulty == 0)
+    {
+        return 1; //default stats
+    }
+    if(difficulty == 1)
+    {
+        return 0.5; //super squish those stats
+    }
+    else if(difficulty == 2)
+    {
+        return 0.75; //squish those stats
+    }
+    else if(difficulty == 3)
+    {
+        return 1.25; //expand those stats
+    }
+    else if(difficulty == 4)
+    {
+        return 1.5; //super expand those stats
+    }
+    return 1; //default stats
+}
+
+function changeEnemyStatDifficulty(rom, statDifficulty, healthDifficulty, damageDifficulty)
 {
     //shuffle all stats / armor / dmg / health values
     console.log("ADJUSTING ENEMY STAT DIFFICULTY");
 
     //gather stats
     var enemyStats = gatherEnemyStats(rom);
-    enemyStats = getEnemyStatsDifficultyAdjusted(enemyStats, difficulty);
+    enemyStats = getEnemyStatsDifficultyAdjusted(enemyStats, statDifficulty, healthDifficulty, damageDifficulty);
 
     enemyStats.reverse(); //reverse the list so that the stats are in the correct order
 
@@ -838,7 +852,7 @@ function changeEnemyStatDifficulty(rom, difficulty)
     }
 }
 
-function enemyStatAdjust(enemyStats, adjustMult)
+function enemyStatAdjust(enemyStats, statMultipler, healthMultipler, damageMultipler)
 {
     for(var i = 0; i < enemyStats.length; ++i)
     {
@@ -865,14 +879,14 @@ function enemyStatAdjust(enemyStats, adjustMult)
             maxValue = 0xBF;
         }
 
-        strStat = adjustIndividualEnemyStat(strStat, adjustMult, 0x00, maxValue)
+        strStat = adjustIndividualEnemyStat(strStat, statMultipler, 0x00, maxValue)
         enemyStats[i].str = strStat + strFlags;
 
-        enemyStats[i].dex = adjustIndividualEnemyStat(enemyStats[i].dex, adjustMult, 0x00, 0xFF);
-        enemyStats[i].int = adjustIndividualEnemyStat(enemyStats[i].int, adjustMult, 0x00, 0xFF);
-        enemyStats[i].arm = adjustIndividualEnemyStat(enemyStats[i].arm, adjustMult, 0x00, 0xFF);
-        enemyStats[i].dmg = adjustIndividualEnemyStat(enemyStats[i].dmg, adjustMult, 0x00, 0xFF);
-        enemyStats[i].hp = adjustIndividualEnemyStat(enemyStats[i].hp, adjustMult, 0x00, 0xFF);
+        enemyStats[i].dex = adjustIndividualEnemyStat(enemyStats[i].dex, statMultipler, 0x00, 0xFF);
+        enemyStats[i].int = adjustIndividualEnemyStat(enemyStats[i].int, statMultipler, 0x00, 0xFF);
+        enemyStats[i].arm = adjustIndividualEnemyStat(enemyStats[i].arm, healthMultipler, 0x00, 0xFF);
+        enemyStats[i].dmg = adjustIndividualEnemyStat(enemyStats[i].dmg, damageMultipler, 0x00, 0xFF);
+        enemyStats[i].hp = adjustIndividualEnemyStat(enemyStats[i].hp, healthMultipler, 0x00, 0xFF);
     }
     
     return enemyStats;
@@ -886,14 +900,13 @@ function adjustIndividualEnemyStat(stat, adjustMult, minValue, maxValue)
     return stat;
 }
 
-function shuffleEnemyStats(rom, random, difficulty)
+function shuffleEnemyStats(rom, random)
 {
     //shuffle all stats / armor / dmg / health values
     console.log("SHUFFLING ENEMY STATS");
 
     //gather stats
     var enemyStats = gatherEnemyStats(rom);
-    enemyStats = getEnemyStatsDifficultyAdjusted(enemyStats, difficulty);
 
     //shuffle stats
     enemyStats.shuffle(random);
@@ -916,12 +929,6 @@ function shuffleEnemyStats(rom, random, difficulty)
             rom[statAddress+5] = statEntry.hp;
         }
     }
-}
-
-function randomizeEnemyStats()
-{
-    //percentage tough monsters like U4 has which also give more XP?
-    //randomize all stats / armor / dmg / health values
 }
 
 function gatherEnemyStats(rom)

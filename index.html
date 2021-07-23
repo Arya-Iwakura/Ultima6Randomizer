@@ -75,11 +75,15 @@
 						</div>
 						<select class="form-control" id="preset">
 							<option value="0">&lt;Custom&gt;</option>
-							<option value="1">Townsfolk (Light)</option>
-							<option value="2">Explorer</option>
-							<option value="3">Adventurer (Standard)</option>
-							<option value="4">Avatar</option>
-							<option value="5">Guardian (Difficult)</option>
+							<option value="1">Overworld Locations - Easy</option>
+							<option value="2">Overworld Locations - Normal</option>
+							<option value="3">Overworld Locations - Hard</option>
+							<option value="4">All Locations - Easy</option>
+							<option value="5">All Locations - Normal</option>
+							<option value="6">All Locations - Hard</option>
+							<option value="7">Underworld Locations - Easy</option>
+							<option value="8">Underworld Locations - Normal</option>
+							<option value="9">Underworld Locations - Hard</option>
 						</select>
 					</div>
 				</div>
@@ -243,7 +247,7 @@
 					<div class="checkbox">
 						<label>
 							<input type="checkbox" id="enemy_stats_shuffle" class="presetoption">
-							Shuffle AI Stats <i><small>(Stat values are shuffled between AI)</small></i>
+							Shuffle AI Stats, Health, and Damage<i><small>(Values are shuffled between AI)</small></i>
 						</label>
 					</div>
 
@@ -299,6 +303,46 @@
 						<small><i><span id="ai-stat-difficulty-tooltip-3" hidden>(AI stats are reduced)</span></small></i>
 						<small><i><span id="ai-stat-difficulty-tooltip-4" hidden>(AI stats are increased)</span></small></i>
 						<small><i><span id="ai-stat-difficulty-tooltip-5" hidden>(AI stats are greatly increased)</span></small></i>
+					</div>
+
+					<div class="input-group top-spaced">
+						<div class="input-group-addon">
+							<b>AI Health Difficulty</b>
+						</div>
+						<select class="form-control , presetselect" id="select-ai-health-difficulty">
+							<option value="1">Easier</option>
+							<option value="2">Easy</option>
+							<option value="0" selected="selected">Default</option>
+							<option value="3">Hard</option>
+							<option value="4">Harder</option>
+						</select>
+					</div>
+					<div class="input-group-addon">
+						<small><i><span id="ai-health-difficulty-tooltip-1">(AI health is the same as the base game)</span></small></i>
+						<small><i><span id="ai-health-difficulty-tooltip-2" hidden>(AI health is greatly reduced)</span></small></i>
+						<small><i><span id="ai-health-difficulty-tooltip-3" hidden>(AI health is reduced)</span></small></i>
+						<small><i><span id="ai-health-difficulty-tooltip-4" hidden>(AI health is increased)</span></small></i>
+						<small><i><span id="ai-health-difficulty-tooltip-5" hidden>(AI health is greatly increased)</span></small></i>
+					</div>
+
+					<div class="input-group top-spaced">
+						<div class="input-group-addon">
+							<b>AI Damage Difficulty</b>
+						</div>
+						<select class="form-control , presetselect" id="select-ai-damage-difficulty">
+							<option value="1">Easier</option>
+							<option value="2">Easy</option>
+							<option value="0" selected="selected">Default</option>
+							<option value="3">Hard</option>
+							<option value="4">Harder</option>
+						</select>
+					</div>
+					<div class="input-group-addon">
+						<small><i><span id="ai-damage-difficulty-tooltip-1">(AI damage is the same as the base game)</span></small></i>
+						<small><i><span id="ai-damage-difficulty-tooltip-2" hidden>(AI damage is greatly reduced)</span></small></i>
+						<small><i><span id="ai-damage-difficulty-tooltip-3" hidden>(AI damage is reduced)</span></small></i>
+						<small><i><span id="ai-damage-difficulty-tooltip-4" hidden>(AI damage is increased)</span></small></i>
+						<small><i><span id="ai-damage-difficulty-tooltip-5" hidden>(AI damage is greatly increased)</span></small></i>
 					</div>
 
 					<div class="input-group top-spaced">
@@ -402,8 +446,15 @@
 
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" id="randomize_castle_britannia_items" class="presetoption">
+							<input type="checkbox" id="randomize_castle_britannia_items" class="presetoption" checked>
 							Randomize Castle Britannia Items <i><small>(The free items in the starting castle are randomized)</small></i>
+						</label>
+					</div>
+
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="randomize_moon_phases" class="presetoption" checked>
+							Randomize Moon Cycles <i><small>(Start the moon phase cycles at a different point in the cycles)</small></i>
 						</label>
 					</div>
 
@@ -483,6 +534,22 @@
 						<small><i><span id="karma-tooltip-1">(Unchanged from base game)</span></small></i>
 						<small><i><span id="karma-tooltip-2" hidden>(Karma penalties lowered. Higher starting karma. Higher karma rewards.)</span></small></i>
 						<small><i><span id="karma-tooltip-3" hidden>(Karma penalties raised. Lower starting karma.)</span></small></i>
+					</div>
+
+					<div class="input-group top-spaced">
+						<div class="input-group-addon">
+							<b>Item Difficulty</b>
+						</div>
+						<select class="form-control , presetselect" id="select-item-difficulty">
+							<option value="1">Easy</option>
+							<option value="0" selected="selected">Default</option>
+							<option value="2">Hard</option>
+						</select>
+					</div>
+					<div class="input-group-addon">
+						<small><i><span id="item-difficulty-tooltip-1">(Unchanged from base game)</span></small></i>
+						<small><i><span id="item-difficulty-tooltip-2" hidden>(Invisibility and Regeneration are longer.)</span></small></i>
+						<small><i><span id="item-difficulty-tooltip-3" hidden>(Invisibility and Regeneration are shorter.)</span></small></i>
 					</div>
 
 					<div class="input-group top-spaced">
@@ -694,8 +761,8 @@
 						<h4>Screen Flash Adjustments</h4>
 						<select class="form-control" id="poison_flash_options">
 							<option value="0" selected="selected">Default Flash <small><i>(Unchanged from base game)</small></i></option>
-							<option value="1">Reduced Flash <small><i>(Heavily reduce the poison/lava/fire flash effect)</small></i></option>
-							<option value="2">Remove Flash <small><i>(Completely remove the poison/lava/fire flash effect)</small></i></option>
+							<option value="1">Reduced Flash <small><i>(Reduce the poison/lava/fire flash effect)</small></i></option>
+							<option value="2">Remove Flash <small><i>(Remove the poison/lava/fire flash effect)</small></i></option>
 						</select>
 
 						<button type="button" id="download-generated-rom" class="btn btn-primary btn-full-width top-spaced">
@@ -744,6 +811,15 @@
 						</h4>
 					</div>
 					<div class="modal-body">
+						<span class="badge">v0.6c</span>
+						<ul>
+							<li>Fixed seed and settings sharing feature to ensure that it shares the correct seed and settings.</li>
+							<li>Added new location descriptions for hints.</li>
+							<li>Added separate AI Health and Damage difficulty settings to allow more customization flexibility.</li>
+							<li>Added option for Moon Phases to start at a random point in their cycle.</li>
+							<li>Added item difficulty selection which adjusts Invis and Regen break chance.</li>
+							<li>Updated the presets to be more representative of expected play styles</li>
+						</ul>
 						<span class="badge">v0.6b</span>
 						<ul>
 							<li>Fixed Book of Boardgames and Book of Oz items from sometimes giving you the wrong item.</li>

@@ -1,4 +1,4 @@
-var VERSION_STRING = 'v0.6b';
+var VERSION_STRING = 'v0.6c';
 
 const SUBSYSTEM_ITEMS = 0;
 const SUBSYSTEM_SPAWNERS = 1;
@@ -42,7 +42,7 @@ function randomizeROM(buffer, seed)
 
 	var random = new Random(seed);
 	var vseed = random.seed.toHex(8);
-	var subSystemSeeds = getSubystemSeeds(seed);
+	var subSystemSeeds = getSubystemSeeds(random.seed);
 
 	//---------prepare for randomization
 	var randomizedOptionsSelected = false;
@@ -77,6 +77,15 @@ function randomizeROM(buffer, seed)
 	else if ($('#select-karma-difficulty').val() == 2)
 	{
 		hardKarmaMode(rom);
+	}
+
+	if ($('#select-item-difficulty').val() == 1)
+	{
+		easyItemMode(rom);
+	}
+	else if ($('#select-item-difficulty').val() == 2)
+	{
+		hardItemMode(rom);
 	}
 	
 	if ($('#select-starting-inventory').val() == 1)
@@ -141,6 +150,11 @@ function randomizeROM(buffer, seed)
 	if ($('#enable_expanded_armor_items').is(':checked'))
 	{
 		adjustArmorItems(rom);
+	}
+
+	if ($('#randomize_moon_phases').is(':checked'))
+	{
+		randomizeMoonPhases(rom, subSystemSeeds[SUBSYSTEM_PLAYER_GAMEPLAY]);
 	}
 
 	//---------items
@@ -215,7 +229,6 @@ function randomizeROM(buffer, seed)
 
 	if(monsterFlag || wildFlag || animalFlag || peopleFlag)
 	{
-		randomizedOptionsSelected = true;
 		if ($('#randomize_enemy_mix').is(':checked'))
 		{
 			randomizeEnemySpawnersMix(rom, subSystemSeeds[SUBSYSTEM_SPAWNERS_MIX], monsterFlag, wildFlag, animalFlag, peopleFlag, addEnemiesFlag);
@@ -232,7 +245,6 @@ function randomizeROM(buffer, seed)
 	}
 	else if ($('#select-ai-aggression').val() == 2)
 	{
-		randomizedOptionsSelected = true;
 		shuffleEnemyAggression(rom, subSystemSeeds[SUBSYSTEM_AGGRESSION]);
 	}
 	else if ($('#select-ai-aggression').val() == 3)
@@ -251,46 +263,81 @@ function randomizeROM(buffer, seed)
 
 	if ($('#enemy_stats_shuffle').is(':checked'))
 	{
-		randomizedOptionsSelected = true;
-		if ($('#select-ai-stat-difficulty').val() == 1) //easier stats
-		{
-			shuffleEnemyStats(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_STATS], 1);
-		}
-		else if ($('#select-ai-stat-difficulty').val() == 2) //easy stats
-		{
-			shuffleEnemyStats(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_STATS], 2);
-		}
-		else if ($('#select-ai-stat-difficulty').val() == 3) //hard stats
-		{
-			shuffleEnemyStats(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_STATS], 3);
-		}
-		else if ($('#select-ai-stat-difficulty').val() == 4) //harder stats
-		{
-			shuffleEnemyStats(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_STATS], 4);
-		}
-		else //default stats
-		{
-			shuffleEnemyStats(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_STATS], 0);
-		}
+		shuffleEnemyStats(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_STATS]);
 	}
-	else
+
+
+	var shouldChangeEnemyDifficulty = false;
+	var enemyStatDifficulty = 0;
+	var enemyDamageDifficulty = 0;
+	var enemyHealthDifficulty = 0;
+
+	if ($('#select-ai-stat-difficulty').val() == 1) //easier
 	{
-		if ($('#select-ai-stat-difficulty').val() == 1) //easier
-		{
-			changeEnemyStatDifficulty(rom, 1);
-		}
-		else if ($('#select-ai-stat-difficulty').val() == 2) //easy
-		{
-			changeEnemyStatDifficulty(rom, 2);
-		}
-		else if ($('#select-ai-stat-difficulty').val() == 3) //hard
-		{
-			changeEnemyStatDifficulty(rom, 3);
-		}
-		else if ($('#select-ai-stat-difficulty').val() == 4) //harder
-		{
-			changeEnemyStatDifficulty(rom, 4);
-		}
+		shouldChangeEnemyDifficulty = true;
+		enemyStatDifficulty = 1;
+	}
+	else if ($('#select-ai-stat-difficulty').val() == 2) //easy
+	{
+		shouldChangeEnemyDifficulty = true;
+		enemyStatDifficulty = 2;
+	}
+	else if ($('#select-ai-stat-difficulty').val() == 3) //hard
+	{
+		shouldChangeEnemyDifficulty = true;
+		enemyStatDifficulty = 3;
+	}
+	else if ($('#select-ai-stat-difficulty').val() == 4) //harder
+	{
+		shouldChangeEnemyDifficulty = true;
+		enemyStatDifficulty = 4;
+	}
+
+	if ($('#select-ai-health-difficulty').val() == 1) //easier
+	{
+		shouldChangeEnemyDifficulty = true;
+		enemyHealthDifficulty = 1;
+	}
+	else if ($('#select-ai-health-difficulty').val() == 2) //easy
+	{
+		shouldChangeEnemyDifficulty = true;
+		enemyHealthDifficulty = 2;
+	}
+	else if ($('#select-ai-health-difficulty').val() == 3) //hard
+	{
+		shouldChangeEnemyDifficulty = true;
+		enemyHealthDifficulty = 3;
+	}
+	else if ($('#select-ai-health-difficulty').val() == 4) //harder
+	{
+		shouldChangeEnemyDifficulty = true;
+		enemyHealthDifficulty = 4;
+	}
+
+	if ($('#select-ai-damage-difficulty').val() == 1) //easier
+	{
+		shouldChangeEnemyDifficulty = true;
+		enemyDamageDifficulty = 1;
+	}
+	else if ($('#select-ai-damage-difficulty').val() == 2) //easy
+	{
+		shouldChangeEnemyDifficulty = true;
+		enemyDamageDifficulty = 2;
+	}
+	else if ($('#select-ai-damage-difficulty').val() == 3) //hard
+	{
+		shouldChangeEnemyDifficulty = true;
+		enemyDamageDifficulty = 3;
+	}
+	else if ($('#select-ai-damage-difficulty').val() == 4) //harder
+	{
+		shouldChangeEnemyDifficulty = true;
+		enemyDamageDifficulty = 4;
+	}
+
+	if( shouldChangeEnemyDifficulty == true )
+	{
+		changeEnemyStatDifficulty(rom, enemyStatDifficulty, enemyHealthDifficulty, enemyDamageDifficulty);
 	}
 
 	if ($('#enemy_spellcasters_shuffle').is(':checked'))
@@ -301,7 +348,6 @@ function randomizeROM(buffer, seed)
 		}
 		else
 		{
-			randomizedOptionsSelected = true;
 			shuffleEnemySpellCasters(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_SPELLS]);
 		}
 	}
@@ -314,7 +360,6 @@ function randomizeROM(buffer, seed)
 		}
 		else
 		{
-			randomizedOptionsSelected = true;
 			shuffleEnemyEquipmentUsers(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_EQUIPMENT]);
 		}
 	}
@@ -327,7 +372,6 @@ function randomizeROM(buffer, seed)
 		}
 		else
 		{
-			randomizedOptionsSelected = true;
 			shuffleEnemyDropPossessors(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_DROPS]);
 		}
 	}
@@ -349,7 +393,6 @@ function randomizeROM(buffer, seed)
 		}
 		else
 		{
-			randomizedOptionsSelected = true;
 			randomizeEnemyDrops(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_DROPS]);
 		}
 	}
@@ -366,12 +409,14 @@ function randomizeROM(buffer, seed)
 
 	if ($('#select-ai-spells').val() == 1)
 	{
-		randomizedOptionsSelected = true;
 		shuffleEnemySpells(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_SPELLS], spellDifficultySetting);
 	}
 	else if ($('#select-ai-spells').val() == 2)
 	{
-		randomizedOptionsSelected = true;
+		randomizeEnemySpells(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_SPELLS], spellDifficultySetting);
+	}
+	else if (spellDifficultySetting > 0)
+	{
 		randomizeEnemySpells(rom, subSystemSeeds[SUBSYSTEM_MONSTER_DATA_SPELLS], spellDifficultySetting);
 	}
 
@@ -390,7 +435,6 @@ function randomizeROM(buffer, seed)
 	if(randomizedOptionsSelected == true)
 	{
 		bookLordBritishRandomizerBook(rom);
-		randomizeMoonPhases(rom, subSystemSeeds[SUBSYSTEM_PLAYER_GAMEPLAY]);
 		paladinJoke(rom);
 	}
 
@@ -436,10 +480,13 @@ function randomizeROM(buffer, seed)
 
 	writeCredits(rom, subSystemSeeds[SUBSYSTEM_CREDITS]);
 	fixText(rom, itemsRandomized);
+
 	recompressAllDecompressedData(rom);
 
 	// fix the checksum (not necessary, but good to do!)
 	fixChecksum(rom);
+
+	console.log("FINISHED RANDOMIZING");
 
 	return {
 		// return the modified buffer

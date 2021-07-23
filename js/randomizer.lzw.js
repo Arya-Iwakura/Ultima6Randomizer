@@ -433,6 +433,7 @@ function checkIfDecompressed(rom, startAddress)
 
 function recompressAllDecompressedData(rom)
 {
+    console.log("RECOMPRESSING LZW DATA");
     while(decompressedDataList.length)
     {
         var data = decompressedDataList.pop();
