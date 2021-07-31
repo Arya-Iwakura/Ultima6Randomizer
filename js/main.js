@@ -1389,6 +1389,7 @@ var TESTERS =
 	'chadriden': 'chadriden',
 	'cloudyshoe': 'cloudyshoe',
 	'fenyx4' : 'fenyx4',
+	'sathdresh' : 'sathdresh',
 }
 
 $('#tester-list').html(
