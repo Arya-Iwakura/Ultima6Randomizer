@@ -1,160 +1,230 @@
-<span class="badge">v0.6c</span>
-<ul>
-	<li>Fixed seed and settings sharing feature to ensure that it shares the correct seed and settings.</li>
-	<li>Added new location descriptions for hints.</li>
-	<li>Added separate AI Health and Damage difficulty settings to allow more customization flexibility.</li>
-	<li>Added option for Moon Phases to start at a random point in their cycle.</li>
-	<li>Added item difficulty selection which adjusts Invis and Regen break chance.</li>
-	<li>Updated the presets to be more representative of expected play styles</li>
-</ul>
-<span class="badge">v0.6b</span>
-<ul>
-	<li>Fixed Book of Boardgames and Book of Oz items from sometimes giving you the wrong item.</li>
-	<li>Fixed spells not always being included in the hint pool when selected to be randomized.</li>
-	<li>Added 4 new hint locations: Grave in Empath Abbey. Grave in Britain. Sign in Singularity. Book in Lycaeum.</li>
-	<li>Added 9 new location descriptions for hints.</li>
-</ul>
-<span class="badge">v0.6a</span>
-<ul>
-	<li>Added a chest in Cove on the pedestal in the village center</li>
-	<li>Added a chest in the Shop of Horance which is now the default location for the Unlock Spell if randomized</li>
-	<li>Added a chest in the Sewers on the top level under Castle Britannia</li>
-	<li>Added a chest in Stonegate on the top floor</li>
-	<li>Fixed a bug where Lord British and Phoenix could have items they were not allowed to have</li>
-	<li>Fixed a bug that could cause item lock loops resulting in a game softlock</li>
-</ul>
-<span class="badge">v0.6</span>
-<ul>
-	<li>Added an new overworld chest locations expanding the places you need to visit and explore</li>
-	<li>Added an new underworld chest locations expanding the places you need to visit and explore</li>
-	<li>Added an option for Sherry to need a special cheese delivered before she joins your party</li>
-	<li>New dialog item rewards added to main locations include Captain John.</li>
-	<li>New dialog item rewards added to overworld locations include Lord British and Dr. Cat.</li>
-	<li>New dialog item rewards added to underworld locations include Phoenix, Arturos, Homer, Ybarra, Whitsaber, and Morchella.</li>
-	<li>Added an option to Expand Armor Items which will add armor to boots, belts, and necklaces</li>
-	<li>Added an option to randomize the free items scattered throughout the starting castle</li>
-	<li>Efram the Guild Shop owner in Britain has moved their chest into the locked area of their shop</li>
-	<li>Smith the Horse will now give a clue to an item location</li>
-	<li>All dialog item givers will tell you what item they gave you now during their dialog</li>
-	<li>When Unlock & Dispel Field spells are shuffled, they are no longer removed from shops, but are made more expensive</li>
-	<li>Moonphases will now start at a random point in the moonphase table</li>
-	<li>Added a ladder back to the surface if you add the Shrine if Spirituality island</li>
-	<li>Reduced Shrine of Spirituality island random chance to be balloon blocked from 50% to 20%</li>
-	<li>Changed how seed and flag sharing works to make it more reliable</li>
-	<li>Shifted all systems to use the LZW decompressor / compressor where appropriate</li>
-	<li>Optimized how LZW decompressing and compressing works to allow for faster generation</li>
-	<li>Fixed a bug that would prevent the creating a game with no items shuffled and spoilers enabled</li>
-	<li>Fixed a bug with Passive aggression setting causing mobs to sometimes not be passive</li>
-	<li>Fixed a bug with Passive aggression setting causing invisible collision around some spawners</li>
-</ul>
-<span class="badge">v0.5f</span>
-<ul>
-	<li>Added a fix that should resolve all dependency chain and loop soft-lock issues</li>
-</ul>
-<span class="badge">v0.5e</span>
-<ul>
-	<li>Fixed an issue with spells spawning where they should not if they were included in the item pool</li>
-</ul>
-<span class="badge">v0.5d</span>
-<ul>
-	<li>Added Rune of Compassion item and location to the Main Items pool</li>
-	<li>Added Rune of Sacrifice item and location to the Main Items pool</li>
-	<li>Added Rune of Humility item and location to the Main Items pool</li>
-	<li>Added option to add Unlock and Dispel Field spells to the item randomization pool and remove them from shops</li>
-	<li>When the spellbook is included in the item randomization pool, purchasable books are now replaced or more expensive</li>
-	<li>Fixed a bug where cleansing a shrine while the corresponding moonstone was buried would cause a soft lock</li>
-	<li>Fixed a bug with the base game in which the moon phase graphics were incorrect and corrupt</li>
-	<li>Updated Credits</li>
-</ul>
-<span class="badge">v0.5c</span>
-<ul>
-	<li>Separated systems out to allow base game rom changes without any randomization additions</li>
-	<li>Fixed a bug that would give a null item if Remove Moon Orb was selected and no items were randomized</li>
-	<li>Fixed an issue where add safety rafts ways always enabled</li>
-</ul>
-<span class="badge">v0.5b</span>
-<ul>
-	<li>Added Remove Moon Orb option to completely remove the Moon Orb from the game</li>
-	<li>Added options to add a new island with a warp to the Shrine of Spirituality (recommended if Remove Moon Orb selected)</li>
-	<li>Added option to add safety rafts to shrine islands as well as an option to trap all placed rafts</li>
-	<li>Fixed issue where you could not leave the Shrine of Spirituality if you had cleansed all shrines and had no Moon Orb</li>
-	<li>Fixed an issue where you would receive null items when selecting none as a starting inventory</li>
-	<li>Fixed an issue where spawn numbers were not following the selected spawn number settings</li>
-	<li>Fixed an issue where character selection sometimes would not give you the character you had selected</li>
-</ul>
-<span class="badge">v0.5a</span>
-<ul>
-	<li>Fixed an issue with time settings and karma settings not working well together</li>
-	<li>Fixed an issue that would cause the time code to occasionally ignore the selected settings in game</li>
-	<li>Fixed an issue where removing or reducing flash would occasionally cause broken color palettes to be loaded</li>
-</ul>
-<span class="badge">v0.5</span>
-<ul>
-	<li>Added AI Stat Difficulty options</li>
-	<li>Added Shuffle AI Spellcasters option which shuffles which enemies in the game can cast spells</li>
-	<li>Added AI Spell Difficulty options which will either remove some spells or add some higher level spells</li>
-	<li>Added Shuffle AI Spell option which shuffles the spells the AI have in the game around</li>
-	<li>Added Randomize AI Spell option which randomly sets spells to the AI spell lists</li>
-	<li>Added Shuffle AI Equipment Users option which will shuffle which AI have armor and weapons</li>
-	<li>Added Shuffle AI Drop Possessors option which will shuffle which AI have non-equipment drops</li>
-	<li>Added AI Equipment randomization and shuffling options</li>
-	<li>Added AI Drops randomization and shuffling options</li>
-	<li>Added an option to "Maintain Believable Spellcasters, Equipment, and Drops"</li>
-	<li>Added Expanded Camping option to allow camping in towns</li>
-	<li>Added Starting Player and Party Equipment and Inventories options</li>
-	<li>Added Starting Gold options</li>
-	<li>Updated shrine item pickup text to tell you what item you received</li>
-	<li>Changed Show Symbols and Seed to always be on and replaced with a "Hide Seed in Game" option</li>
-	<li>Fixed camping bug where sleeping with longer days selected resulted in sleeping for the incorrect time</li>
-	<li>Fixed an issue where some items Sherry was unable to pick up would spawn in the Sherry chest</li>
-	<li>Updated the reduce flashing option to include lava and fire as well</li>
-	<li>Restructured the frontend to be less noisy and easier to read</li>
-	<li>Updated credits</li>
-</ul>
-<span class="badge">v0.4</span>
-<ul>
-	<li>Added error reporting dialog box</li>
-	<li>Added system to isolate randomization systems from one another(changes in one system will no longer cascade into the others)</li>
-	<li>Fixed sprites with incorrectly assigned palettes</li>
-	<li>Added the Zu Flower (Tangle Vine) back to the game as the port of the enemy was never finished for the SNES port</li>
-	<li>Added the Silver Serpent back to the game as the port of the enemy was never finished for the SNES port (thanks BinarySplit!)</li>
-	<li>Added option for additional controller buttons assigned to actions other than only D-Pad and A (thanks BinarySplit!)</li>
-	<li>Added Easy Karma and Hard Karma options</li>
-	<li>Added option to allow day light hours to last 2x or 3x as long or to be equal to the PC version (2x longer days and nights)</li>
-	<li>Added option reducing or removing the screen flash while poisoned</li>
-	<li>Added Intuitive and Passive options for creature aggression</li>
-	<li>Added options to allow randomizing or shuffling creature spawn numbers</li>
-	<li>Added new character sprite options</li>
-	<li>Updated credits</li>
-</ul>
-<span class="badge">v0.3</span>
-<ul>
-	<li>Added option to download spoiler log as a text file</li>
-	<li>Added option to remove seed and flags from filename</li>
-	<li>Added hints option and changed Lord British's book text to give flavor to the randomizer</li>
-	<li>Added fire palette option for sprites</li>
-	<li>Sleeping sprite now changes based on selected character</li>
-	<li>Adjusted how much Sherry can carry allowing more items into the Rune of Valor location</li>
-	<li>Adjusted in game text to be more accurate (For example: You find a Moonstone at shrines is now You find an Item)</li>
-</ul>
-<span class="badge">v0.2</span>
-<ul>
-	<li>Added underground chests randomization</li>
-	<li>Added seed and flag display to the start sequence</li>
-	<li>Added credits text to the final credits screens</li>
-	<li>Added option to change Avatar sprite</li>
-	<li>Added spoiler list flag</li>
-	<li>Added flag to show symbol identifier instead of seed value in game</li>
-	<li>Added monster randomization</li>
-	<li>Added wild animal randomization</li>
-	<li>Added friendly animal randomization</li>
-	<li>Added people randomization</li>
-	<li>Added enemy mix flag</li>
-	<li>Added random aggression flag</li>
-</ul>
-<span class="badge">v0.1</span>
-<ul>
-	<li>Added main item randomization</li>
-	<li>Added overworld chests randomization</li>
-	<li>Added inventory randomization of moonorb and spellbook</li>
-</ul>
+<!doctype html>
+<html class="no-js" lang="">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>Ultima 6 Randomizer (SNES) - Changelog</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@">
+		<meta name="twitter:creator" content="@_squibbons">
+		<meta name="twitter:title" content="Ultima VI SNES Randomizer - Changelog">
+		<meta name="twitter:description" content="Changelog for the Ultima 6 (SNES) Randomizer">
+		<meta name="twitter:image" content="https://arya-iwakura.github.io/Ultima6Randomizer/img/twitter-card.png?1">
+		<meta name="twitter:image" content="">
+
+		<link rel="icon" type="image/x-icon" href="shield.ico">
+		<link rel="icon" type="image/png" href="shield.png">
+
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<style>
+			body {
+				padding-top: 50px;
+				padding-bottom: 20px;
+			}
+		</style>
+		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css">
+
+		<script src="js/vendor/modernizr-2.8.3.min.js"></script>
+	</head>
+	<body>
+    <!-- Main  -->
+    <div class="container">
+        <div class="float-left">
+            <h2 class="header">Ultima 6 SNES Randomizer - Changelog</h2>
+                <p>by <span id="squibbons"><a href="https://twitter.com/squibbons">squibbons</a></span></p>
+        </div>
+
+        <div class="float-right">
+            <a class="btn btn-info btn-lg" id="guide-goto-randomizer" href="./index.html">
+                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                Goto Randomizer
+            </a>
+        </div>
+    </div>
+    <hr />
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Changelog</h3>
+				
+				<h4><b>v0.6d</b></h4>
+				<ul>
+					<li>Added randomization of all 300+ misc items found when searching things in the world.</li>
+					<li>Added missing text describing what item you got from Selganor when asking about it.</li>
+					<li>Replaced Spellbooks at Horance, Xiao, and Rudyom when randomizing the Spellbook.</li>
+					<li>Replaced Unlock and Dispel Field spells at Horance and Xiao when randomizing those spells.</li>
+					<li>Added Open Shrine of the Avatar option which removes the need to do the Gargoyle Shrines.</li>
+					<li>Added the Human and Gargoyle Lenscrafter items into the main item pool.</li>
+					<li>Moved the changelog and information pages to seperate pages instead of being modal popups.</li>
+				</ul>
+				<h4><b>v0.6c</b></h4>
+				<ul>
+					<li>Fixed seed and settings sharing feature to ensure that it shares the correct seed and settings.</li>
+					<li>Added new location descriptions for hints.</li>
+					<li>Added separate AI Health and Damage difficulty settings to allow more customization flexibility.</li>
+					<li>Added option for Moon Phases to start at a random point in their cycle.</li>
+					<li>Added item difficulty selection which adjusts Invis and Regen break chance.</li>
+					<li>Updated the presets to be more representative of expected play styles</li>
+				</ul>
+				<h4><b>v0.6b</b></h4>
+				<ul>
+					<li>Fixed Book of Boardgames and Book of Oz items from sometimes giving you the wrong item.</li>
+					<li>Fixed spells not always being included in the hint pool when selected to be randomized.</li>
+					<li>Added 4 new hint locations: Grave in Empath Abbey. Grave in Britain. Sign in Singularity. Book in Lycaeum.</li>
+					<li>Added 9 new location descriptions for hints.</li>
+				</ul>
+				<h4><b>v0.6a</b></h4>
+				<ul>
+					<li>Added a chest in Cove on the pedestal in the village center</li>
+					<li>Added a chest in the Shop of Horance which is now the default location for the Unlock Spell if randomized</li>
+					<li>Added a chest in the Sewers on the top level under Castle Britannia</li>
+					<li>Added a chest in Stonegate on the top floor</li>
+					<li>Fixed a bug where Lord British and Phoenix could have items they were not allowed to have</li>
+					<li>Fixed a bug that could cause item lock loops resulting in a game softlock</li>
+				</ul>
+				<h4><b>v0.6</b></h4>
+				<ul>
+					<li>Added an new overworld chest locations expanding the places you need to visit and explore</li>
+					<li>Added an new underworld chest locations expanding the places you need to visit and explore</li>
+					<li>Added an option for Sherry to need a special cheese delivered before she joins your party</li>
+					<li>New dialog item rewards added to main locations include Captain John.</li>
+					<li>New dialog item rewards added to overworld locations include Lord British and Dr. Cat.</li>
+					<li>New dialog item rewards added to underworld locations include Phoenix, Arturos, Homer, Ybarra, Whitsaber, and Morchella.</li>
+					<li>Added an option to Expand Armor Items which will add armor to boots, belts, and necklaces</li>
+					<li>Added an option to randomize the free items scattered throughout the starting castle</li>
+					<li>Efram the Guild Shop owner in Britain has moved their chest into the locked area of their shop</li>
+					<li>Smith the Horse will now give a clue to an item location</li>
+					<li>All dialog item givers will tell you what item they gave you now during their dialog</li>
+					<li>When Unlock & Dispel Field spells are shuffled, they are no longer removed from shops, but are made more expensive</li>
+					<li>Moonphases will now start at a random point in the moonphase table</li>
+					<li>Added a ladder back to the surface if you add the Shrine if Spirituality island</li>
+					<li>Reduced Shrine of Spirituality island random chance to be balloon blocked from 50% to 20%</li>
+					<li>Changed how seed and flag sharing works to make it more reliable</li>
+					<li>Shifted all systems to use the LZW decompressor / compressor where appropriate</li>
+					<li>Optimized how LZW decompressing and compressing works to allow for faster generation</li>
+					<li>Fixed a bug that would prevent the creating a game with no items shuffled and spoilers enabled</li>
+					<li>Fixed a bug with Passive aggression setting causing mobs to sometimes not be passive</li>
+					<li>Fixed a bug with Passive aggression setting causing invisible collision around some spawners</li>
+				</ul>
+				<h4><b>v0.5f</b></h4>
+				<ul>
+					<li>Added a fix that should resolve all dependency chain and loop soft-lock issues</li>
+				</ul>
+				<h4><b>v0.5e</b></h4>
+				<ul>
+					<li>Fixed an issue with spells spawning where they should not if they were included in the item pool</li>
+				</ul>
+				<h4><b>v0.5d</b></h4>
+				<ul>
+					<li>Added Rune of Compassion item and location to the Main Items pool</li>
+					<li>Added Rune of Sacrifice item and location to the Main Items pool</li>
+					<li>Added Rune of Humility item and location to the Main Items pool</li>
+					<li>Added option to add Unlock and Dispel Field spells to the item randomization pool and remove them from shops</li>
+					<li>When the spellbook is included in the item randomization pool, purchasable books are now replaced or more expensive</li>
+					<li>Fixed a bug where cleansing a shrine while the corresponding moonstone was buried would cause a soft lock</li>
+					<li>Fixed a bug with the base game in which the moon phase graphics were incorrect and corrupt</li>
+					<li>Updated Credits</li>
+				</ul>
+				<h4><b>v0.5c</b></h4>
+				<ul>
+					<li>Separated systems out to allow base game rom changes without any randomization additions</li>
+					<li>Fixed a bug that would give a null item if Remove Moon Orb was selected and no items were randomized</li>
+					<li>Fixed an issue where add safety rafts ways always enabled</li>
+				</ul>
+				<h4><b>v0.5b</b></h4>
+				<ul>
+					<li>Added Remove Moon Orb option to completely remove the Moon Orb from the game</li>
+					<li>Added options to add a new island with a warp to the Shrine of Spirituality (recommended if Remove Moon Orb selected)</li>
+					<li>Added option to add safety rafts to shrine islands as well as an option to trap all placed rafts</li>
+					<li>Fixed issue where you could not leave the Shrine of Spirituality if you had cleansed all shrines and had no Moon Orb</li>
+					<li>Fixed an issue where you would receive null items when selecting none as a starting inventory</li>
+					<li>Fixed an issue where spawn numbers were not following the selected spawn number settings</li>
+					<li>Fixed an issue where character selection sometimes would not give you the character you had selected</li>
+				</ul>
+				<h4><b>v0.5a</b></h4>
+				<ul>
+					<li>Fixed an issue with time settings and karma settings not working well together</li>
+					<li>Fixed an issue that would cause the time code to occasionally ignore the selected settings in game</li>
+					<li>Fixed an issue where removing or reducing flash would occasionally cause broken color palettes to be loaded</li>
+				</ul>
+				<h4><b>v0.5</b></h4>
+				<ul>
+					<li>Added AI Stat Difficulty options</li>
+					<li>Added Shuffle AI Spellcasters option which shuffles which enemies in the game can cast spells</li>
+					<li>Added AI Spell Difficulty options which will either remove some spells or add some higher level spells</li>
+					<li>Added Shuffle AI Spell option which shuffles the spells the AI have in the game around</li>
+					<li>Added Randomize AI Spell option which randomly sets spells to the AI spell lists</li>
+					<li>Added Shuffle AI Equipment Users option which will shuffle which AI have armor and weapons</li>
+					<li>Added Shuffle AI Drop Possessors option which will shuffle which AI have non-equipment drops</li>
+					<li>Added AI Equipment randomization and shuffling options</li>
+					<li>Added AI Drops randomization and shuffling options</li>
+					<li>Added an option to "Maintain Believable Spellcasters, Equipment, and Drops"</li>
+					<li>Added Expanded Camping option to allow camping in towns</li>
+					<li>Added Starting Player and Party Equipment and Inventories options</li>
+					<li>Added Starting Gold options</li>
+					<li>Updated shrine item pickup text to tell you what item you received</li>
+					<li>Changed Show Symbols and Seed to always be on and replaced with a "Hide Seed in Game" option</li>
+					<li>Fixed camping bug where sleeping with longer days selected resulted in sleeping for the incorrect time</li>
+					<li>Fixed an issue where some items Sherry was unable to pick up would spawn in the Sherry chest</li>
+					<li>Updated the reduce flashing option to include lava and fire as well</li>
+					<li>Restructured the frontend to be less noisy and easier to read</li>
+					<li>Updated credits</li>
+				</ul>
+				<h4><b>v0.4</b></h4>
+				<ul>
+					<li>Added error reporting dialog box</li>
+					<li>Added system to isolate randomization systems from one another(changes in one system will no longer cascade into the others)</li>
+					<li>Fixed sprites with incorrectly assigned palettes</li>
+					<li>Added the Zu Flower (Tangle Vine) back to the game as the port of the enemy was never finished for the SNES port</li>
+					<li>Added the Silver Serpent back to the game as the port of the enemy was never finished for the SNES port (thanks BinarySplit!)</li>
+					<li>Added option for additional controller buttons assigned to actions other than only D-Pad and A (thanks BinarySplit!)</li>
+					<li>Added Easy Karma and Hard Karma options</li>
+					<li>Added option to allow day light hours to last 2x or 3x as long or to be equal to the PC version (2x longer days and nights)</li>
+					<li>Added option reducing or removing the screen flash while poisoned</li>
+					<li>Added Intuitive and Passive options for creature aggression</li>
+					<li>Added options to allow randomizing or shuffling creature spawn numbers</li>
+					<li>Added new character sprite options</li>
+					<li>Updated credits</li>
+				</ul>
+				<h4><b>v0.3</b></h4>
+				<ul>
+					<li>Added option to download spoiler log as a text file</li>
+					<li>Added option to remove seed and flags from filename</li>
+					<li>Added hints option and changed Lord British's book text to give flavor to the randomizer</li>
+					<li>Added fire palette option for sprites</li>
+					<li>Sleeping sprite now changes based on selected character</li>
+					<li>Adjusted how much Sherry can carry allowing more items into the Rune of Valor location</li>
+					<li>Adjusted in game text to be more accurate (For example: You find a Moonstone at shrines is now You find an Item)</li>
+				</ul>
+				<h4><b>v0.2</b></h4>
+				<ul>
+					<li>Added underground chests randomization</li>
+					<li>Added seed and flag display to the start sequence</li>
+					<li>Added credits text to the final credits screens</li>
+					<li>Added option to change Avatar sprite</li>
+					<li>Added spoiler list flag</li>
+					<li>Added flag to show symbol identifier instead of seed value in game</li>
+					<li>Added monster randomization</li>
+					<li>Added wild animal randomization</li>
+					<li>Added friendly animal randomization</li>
+					<li>Added people randomization</li>
+					<li>Added enemy mix flag</li>
+					<li>Added random aggression flag</li>
+				</ul>
+				<h4><b>v0.1</b></h4>
+				<ul>
+					<li>Added main item randomization</li>
+					<li>Added overworld chests randomization</li>
+					<li>Added inventory randomization of moonorb and spellbook</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<hr />
+	</body>
+</html>

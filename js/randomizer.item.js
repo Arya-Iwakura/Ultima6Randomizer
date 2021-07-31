@@ -157,7 +157,7 @@ function updateAndAddChests(rom)
 
 	//convert items
 	rom.set([0x82, 0x32, 0xD8, 0x56], 0x10EF1); //swap item placements in iolo hut
-	rom.set([0x82, 0x32, 0xE3, 0x55], 0x10EF5); //swap item placements in iolo hut
+	rom.set([0x85, 0x31, 0xE3, 0x55], 0x10EF5); //swap item placements in iolo hut
 	rom.set([0x85, 0x31, 0xC8, 0x6A], 0x10EF9); //swap item placements in iolo hut
 
 	//Underground - Floor 1 Chests
@@ -585,7 +585,7 @@ function placeItemsInLocations(rom, random, items, locations, spoilers, hintLoca
 					}
 					else if(locations[iLocation].offset == 0x03) //pocket of selganor
 					{
-						dialogItemSelganor(rom, items[iItem].item[0], itemHex, flagHex);
+						dialogItemSelganor(rom, items[iItem].item[0], items[iItem].item[1], itemHex, flagHex);
 					}
 					else if(locations[iLocation].offset == 0x04) //pocket of lord british
 					{
@@ -788,14 +788,15 @@ function dialogItemLordBritish(rom, itemText, itemHex, itemQuantity)
 	lzwData.set([0x0E], 0x1F8C + itemText.length);
 }
 
-function dialogItemSelganor(rom, itemText, itemHex, itemQuantity)
+function dialogItemSelganor(rom, itemTextLong, itemTextShort, itemHex, itemQuantity)
 {
 	var lzwData = decompressDataFromLZW(rom, 0x53900);
 	lzwData[0x161F] = itemHex;
 	lzwData[0x1621] = itemQuantity;
 	lzwData.set([0x47, 0x49, 0x56, 0x45], 0x1B4A); //change HANDS to say GIVES
-	writeTextToAddress(lzwData, 0x1B50, 29, itemText);
-	lzwData.set([0x0E], 0x1B50 + itemText.length);
+	writeTextToAddress(lzwData, 0x1B50, 29, itemTextLong);
+	lzwData.set([0x0E], 0x1B50 + itemTextLong.length);
+	writeTextToAddress(lzwData, 0x16BE, 0x1E, "You got " + itemTextShort);
 }
 
 function dialogItemPhoenix(rom, itemText, itemHex, itemQuantity)
@@ -949,11 +950,10 @@ function dialogItemLensmaker(rom, itemTextLong, itemTextShort, itemHex, itemQuan
 	lzwData[0xB9] = itemHex;
 	lzwData[0xBB] = itemQuantity;
 
-	//writeTextToAddress(lzwData, 0x10C9, 0x2A, "Take this ");
-	//writeTextToAddress(lzwData, 0x10D3, 0, itemTextShort);
-	//lzwData.set([0x0E, 0xF3], 0x10D3 + itemTextShort.length);
-	//writeTextToAddress(lzwData, 0x10E4, 0, "Learn the basic ");
-	//writeTextToAddress(lzwData, 0x110E, 0, "You must use the scroll");
+	writeTextToAddress(lzwData, 0x734, 0x1E, itemTextShort + ", smuggly.");
+	var gargoyleLenscrafterPostText = "to give " + itemTextShort + ".";
+	writeTextToAddress(lzwData, 0x3B4, 0x1D, gargoyleLenscrafterPostText);
+	lzwData.set([0x02], 0x3B4 + gargoyleLenscrafterPostText.length);
 }
 
 function dialogItemEphemerides(rom, itemTextLong, itemTextShort, itemHex, itemQuantity)
@@ -962,11 +962,10 @@ function dialogItemEphemerides(rom, itemTextLong, itemTextShort, itemHex, itemQu
 	lzwData[0x2037] = itemHex;
 	lzwData[0x2039] = itemQuantity;
 
-	//writeTextToAddress(lzwData, 0x10C9, 0x2A, "Take this ");
-	//writeTextToAddress(lzwData, 0x10D3, 0, itemTextShort);
-	//lzwData.set([0x0E, 0xF3], 0x10D3 + itemTextShort.length);
-	//writeTextToAddress(lzwData, 0x10E4, 0, "Learn the basic ");
-	//writeTextToAddress(lzwData, 0x110E, 0, "You must use the scroll");
+	writeTextToAddress(lzwData, 0x2831, 0x25, itemTextLong + ".");
+	var ephemeridesPostText = itemTextLong + " proves suitable.";
+	writeTextToAddress(lzwData, 0x2423, 0x2D, ephemeridesPostText);
+	lzwData.set([0x02], 0x2423 + ephemeridesPostText.length);
 }
 
 function setDrCatReward(rom, random)
@@ -1005,46 +1004,177 @@ function setRandomWorldItem(rom, random, itemPool, address)
 {
 	var chosenPool = random.fromWeighted(itemPool)
 	var chosenItem = random.nextIntRange(0,chosenPool.items.length);
-	var randQuantity = random.nextIntRange(0xC1,chosenPool.quantity[chosenItem]);
+	var randQuantity = 0x00;
+
+	if(rom[address] > 0xBF)
+	{
+		randQuantity = random.nextIntRange(0x01,chosenPool.quantity[chosenItem]) + 0xC0;
+	}
+	else if(rom[address] > 0x7F)
+	{
+		randQuantity = random.nextIntRange(0x01,chosenPool.quantity[chosenItem]) + 0x80;
+	}
+	else if(rom[address] > 0x3F)
+	{
+		randQuantity = random.nextIntRange(0x01,chosenPool.quantity[chosenItem]) + 0x40;
+	}
+	else
+	{
+		randQuantity = random.nextIntRange(0x01,chosenPool.quantity[chosenItem]);
+	}
 
 	rom.set([randQuantity, chosenPool.items[chosenItem]], address);
 }
 
-function randomizeCastleBritanniaContents(rom, random)
+function randomizeJunkContentsPool(rom, random, inItemPool, inLootLocations)
 {
 	var itemPool = [];
-	itemPool = getItemsFromPool(DATA_CASTLE_BRITANNIA_ITEMS);
+	itemPool = getItemsFromPool(inItemPool);
 
-	//Lord British's Closet
-	setRandomWorldItem(rom, random, itemPool, 0x10FBE+2);
-	setRandomWorldItem(rom, random, itemPool, 0x10FC2+2);
-	setRandomWorldItem(rom, random, itemPool, 0x10FC6+2);
-	setRandomWorldItem(rom, random, itemPool, 0x10FB2+2);
-	setRandomWorldItem(rom, random, itemPool, 0x10FB6+2);
+	for(var i = 0; i < inLootLocations.length; ++i)
+    {
+        setRandomWorldItem(rom, random, itemPool, inLootLocations[i]);;
+    }
+}
 
-	//Avatar Room
-	setRandomWorldItem(rom, random, itemPool, 0x11036+2);
-	setRandomWorldItem(rom, random, itemPool, 0x1103A+2);
-	setRandomWorldItem(rom, random, itemPool, 0x1103E+2);
-	setRandomWorldItem(rom, random, itemPool, 0x11042+2);
-	setRandomWorldItem(rom, random, itemPool, 0x11046+2);
-	setRandomWorldItem(rom, random, itemPool, 0x1104A+2);
-	setRandomWorldItem(rom, random, itemPool, 0x1104E+2);
-	setRandomWorldItem(rom, random, itemPool, 0x11052+2);
-	setRandomWorldItem(rom, random, itemPool, 0x11056+2);
-	setRandomWorldItem(rom, random, itemPool, 0x1105A+2);
-	setRandomWorldItem(rom, random, itemPool, 0x1105E+2);
+function randomizeJunkContents(rom, random)
+{
+	console.log("RANDOMIZING JUNK ITEMS");
+	randomizeJunkContentsPool(rom, random, DATA_CASTLE_BRITANNIA_ITEMS, DATA_CASTLE_BRITANNIA_LOCATIONS);
+	randomizeJunkContentsPool(rom, random, DATA_OVERWORLD_LOOT_ITEMS, DATA_OVERWORLD_LOOT_LOCATIONS);
+	randomizeJunkContentsPool(rom, random, DATA_OVERWORLD_LOOT_ITEMS, DATA_OVERWORLD_LOOT_LOCATIONS_MAGIC);
+	randomizeJunkContentsPool(rom, random, DATA_UNDERWORLD_LOOT_ITEMS, DATA_UNDERWORLD_LOOT_LOCATIONS);
+	randomizeJunkContentsPool(rom, random, DATA_UNDERWORLD_LOOT_ITEMS, DATA_UNDERWORLD_LOOT_LOCATIONS_MAGIC);
+}
 
-	//Nystful Room
-	setRandomWorldItem(rom, random, itemPool, 0x1106A+2);
+function getJunkShuffleLocationPool(inLocationPool, inLootLocations)
+{
+	var locationsPool = [];
+	for(var i = 0; i < inLootLocations.length; ++i)
+    {
+		locationsPool.push(inLootLocations[i]);
+	}
+	var outPool = inLocationPool.concat(locationsPool);
+	return outPool;
+}
 
-	//NW Tower
-	setRandomWorldItem(rom, random, itemPool, 0x10FAA+2);
+function getJunkShuffleItemPool(rom, inItemPool, inLootLocations)
+{
+	var itemPool = [];
+	for(var i = 0; i < inLootLocations.length; ++i)
+    {
+		var locationQuantity = rom[inLootLocations[i]];
+		var strippedQuantity = 0x00;
 
-	//SE Storage
-	setRandomWorldItem(rom, random, itemPool, 0x11096+2);
-	setRandomWorldItem(rom, random, itemPool, 0x1109A+2);
-	setRandomWorldItem(rom, random, itemPool, 0x11092+2);
+		if(locationQuantity > 0xBF)
+		{
+			strippedQuantity = locationQuantity - 0xC0;
+		}
+		else if(locationQuantity > 0x7F)
+		{
+			strippedQuantity = locationQuantity - 0x80;
+		}
+		else if(locationQuantity > 0x3F)
+		{
+			strippedQuantity = locationQuantity - 0x40;
+		}
+		else
+		{
+			strippedQuantity = locationQuantity; 
+		}
+		
+		var itemEntry = {	"quantity":strippedQuantity,
+							"id":rom[inLootLocations[i]+1]
+						};
+		itemPool.push(itemEntry);
+	}
+	var outPool = itemPool.concat(inItemPool);
+	return outPool;
+}
+
+function assignJunkShuffleItemQuantity(locationQuantity, itemQuantity)
+{
+	var returnQuantity = 0x00;
+	if(locationQuantity > 0xBF)
+	{
+		returnQuantity = itemQuantity + 0xC0;
+	}
+	else if(locationQuantity > 0x7F)
+	{
+		returnQuantity = itemQuantity + 0x80;
+	}
+	else if(locationQuantity > 0x3F)
+	{
+		returnQuantity = itemQuantity + 0x40;
+	}
+	else
+	{
+		returnQuantity = itemQuantity; 
+	}
+	return returnQuantity;
+}
+
+function shuffleJunkContentsPool(rom, random, poolList)
+{
+	var locationsPool = [];
+	var itemPool = [];
+
+	for(var i = 0; i < poolList.length; ++i)
+	{
+		locationsPool = getJunkShuffleLocationPool(locationsPool, poolList[i]);	
+		itemPool = getJunkShuffleItemPool(rom, itemPool, poolList[i]);
+	}
+
+	locationsPool.shuffle(random);
+	itemPool.shuffle(random);
+
+	for(var i = 0; i < locationsPool.length; ++i)
+    {
+		var locationQuantity = rom[locationsPool[i]];
+		var canPlaceItem = false;
+		var placeChance = 0.1;
+		
+		for(var j = 0; j < itemPool.length; ++j)
+    	{
+			canPlaceItem = checkJunkShufflePlacement(DATA_CASTLE_BRITANNIA_LOCATIONS, DATA_CASTLE_BRITANNIA_ITEMS[0], locationsPool[i], itemPool[j].id);
+			if(canPlaceItem == true || j == itemPool.length-1 || random.flipCoin(placeChance))
+			{
+				rom[locationsPool[i]+1] = itemPool[j].id;
+				rom[locationsPool[i]] = assignJunkShuffleItemQuantity(locationQuantity, itemPool[j].quantity);
+				itemPool.splice(j,1);
+				placeChance = 0.1;
+				break;
+			}
+			else
+			{
+				placeChance = placeChance + 0.1;
+			}
+		}
+	}
+}
+
+function checkJunkShufflePlacement(locationRestrictions, itemRestrictions, location, item)
+{
+	if(locationRestrictions.includes(location))
+	{
+		if(itemRestrictions.items.includes(item))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+function shuffleJunkContents(rom, random)
+{
+	console.log("SHUFFLING JUNK ITEMS");
+	shuffleJunkContentsPool(rom, random, [DATA_CASTLE_BRITANNIA_LOCATIONS, DATA_OVERWORLD_LOOT_LOCATIONS, DATA_OVERWORLD_LOOT_LOCATIONS_MAGIC, DATA_UNDERWORLD_LOOT_LOCATIONS, DATA_UNDERWORLD_LOOT_LOCATIONS_MAGIC]);
+	//shuffleJunkContentsPool(rom, random, [DATA_CASTLE_BRITANNIA_LOCATIONS, DATA_OVERWORLD_LOOT_LOCATIONS, DATA_OVERWORLD_LOOT_LOCATIONS_MAGIC]);
+	//shuffleJunkContentsPool(rom, random, [DATA_UNDERWORLD_LOOT_LOCATIONS, DATA_UNDERWORLD_LOOT_LOCATIONS_MAGIC]);
 }
 
 function fixShrines(rom)

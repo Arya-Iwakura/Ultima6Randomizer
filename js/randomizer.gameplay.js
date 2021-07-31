@@ -767,28 +767,68 @@ function addRafts(rom)
 function increaseSpellbookPrices(rom)
 {
     var lzwData = decompressDataFromLZW(rom, 0x4B900);
-	lzwData.set([0x88, 0x12], 0x2A72); //increase xiao spellbook price
+	//lzwData.set([0x88, 0x12], 0x2A72); //increase xiao spellbook price
+    lzwData.set([0x2D, 0x0E, 0x7F, 0x12], 0x2A70); //replace xiao spellbook with energy wand
 
     var lzwData = decompressDataFromLZW(rom, 0x58000);
-	lzwData.set([0x88, 0x12], 0x4C3A); //increase horance spellbook price
+	//lzwData.set([0x88, 0x12], 0x4C3A); //increase horance spellbook price
+    lzwData.set([0x2E, 0x0E, 0x7F, 0x12], 0x4C38); //replace horance spellbook with fire wand
 
     var lzwData = decompressDataFromLZW(rom, 0x51B00);
-	lzwData.set([0x88], 0x2484); //increase nicodemus spellbook price
+	//lzwData.set([0x88], 0x2484); //increase nicodemus spellbook price
 
     var lzwData = decompressDataFromLZW(rom, 0x61A00);
-	lzwData.set([0x4E, 0x0E, 0x03, 0x0E, 0x4F,
-        0x0E, 0x01, 0x0E, 0x50, 0x0E, 0x02, 0x0E, 0x52, 0x0E, 0x02, 0x0E, 0x53, 0x0E, 0x02, 0x0E, 0x54,
-        0x0E, 0x01, 0x0E, 0x34, 0x0E, 0x88, 0x05], 0x17EB); //increase rudyom spellbook price and shift to the end of the list
+	//lzwData.set([0x4E, 0x0E, 0x03, 0x0E, 0x4F,
+    //    0x0E, 0x01, 0x0E, 0x50, 0x0E, 0x02, 0x0E, 0x52, 0x0E, 0x02, 0x0E, 0x53, 0x0E, 0x02, 0x0E, 0x54,
+    //    0x0E, 0x01, 0x0E, 0x34, 0x0E, 0x88, 0x05], 0x17EB); //increase rudyom spellbook price and shift to the end of the list
+    lzwData.set([0x32, 0x0E, 0x7F], 0x17EB); //replace rudyom spellbook with regen ring
 }
 
 function removeUnlockAndDispelSpellsFromShops(rom)
 {
-    //change xiao dispel spell price
     var lzwData = decompressDataFromLZW(rom, 0x4B900);
-    lzwData.set([0x0F, 0x0E, 0x86, 0x12], 0x2A82);
+    //lzwData.set([0x0F, 0x0E, 0x86, 0x12], 0x2A82); //change xiao dispel field spell price
+    lzwData.set([0x11, 0x0E, 0x80, 0x8C], 0x2A82); //change xiao dispel field spell to protection spell
 
-    //swap horance disable and unlock spells and then increase unlock spell price
+
     var lzwData = decompressDataFromLZW(rom, 0x58000);
-	lzwData.set([0x14, 0x0E, 0x7F], 0x4C49);
-	lzwData.set([0x0A, 0x0E, 0x86, 0x12], 0x4C55);
+	//lzwData.set([0x14, 0x0E, 0x7F], 0x4C49); //swap horance disable and unlock spells and then increase unlock spell price
+	//lzwData.set([0x0A, 0x0E, 0x86, 0x12], 0x4C55); //swap horance disable and unlock spells and then increase unlock spell price
+    lzwData.set([0x09, 0x0E, 0x3C], 0x4C49); //change horance unlock spell to sleep spell
+}
+
+function alwaysAllowLensPlacement(rom)
+{
+    console.log("ALWAYS ALLOW LENS PLACEMENT");
+    //remove the need for the lenscrafters to be spoken to in order to complete the game
+    rom.set([0xEA, 0xEA, 0xEA, 0xEA, 0xEA, 0xEA, 0xEA, 0xEA, 0xEA, 0xEA], 0x13E28); //remove checks for the Human Lens
+    rom.set([0xEA, 0xEA, 0xEA, 0xEA, 0xEA, 0xEA, 0xEA, 0xEA, 0xEA, 0xEA], 0x13E42); //remove checks for the Gargoyle Lens
+    rom.set([0xEA, 0xEA, 0xEA, 0xEA], 0x13E6E); //remove removing the two lens from your inventory when placed
+
+    //unlockLensKeywordFromStart(rom);
+}
+
+function openAvatarShrine(rom)
+{
+    console.log("OPEN AVATAR SHRINE");
+    //remove the need to talk to the shrine of singularity to complete the game
+    rom.set([0x80], 0x133D); //remove need to talk to the singularity shrine
+}
+
+function insertEndGameCall(rom, inAddress)
+{
+    rom.set([0x22, 0x62, 0x96, 0x01, 0x5C, 0x2B, 0xAA, 0x03], inAddress); //insert end game function at target address - requires 8 bytes of space
+}
+
+function unlockLensKeywordFromStart(rom)
+{
+    rom.set([0x20, 0xA0, 0xFD], 0x8089); //override STA function
+    rom.set([0x8D, 0x00, 0xA1], 0xFDA0); //add back overridden STA function
+
+    //add the lens keyword as already known
+    rom.set([
+                0xA9, 0x20, //LDA 20 - load 0x20 into the accumulator
+                0x8D, 0x11, 0xA1, //STA A111 - unlock keyword lens in RAM
+                0x60 //RTS - return
+            ], 0xFDA3);
 }

@@ -88,10 +88,11 @@ function preset_overworld_easy() //easy
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
-	$('#randomize_castle_britannia_items').prop('checked', true);
 	$('#randomize_moon_phases').prop('checked', true);
+	$('#open_avatar_shrine').prop('checked', true);
 
-	$('#select-starting-inventory').prop('value', 2);
+	$('#select-junk-items').prop('value', 1);
+	$('#select-starting-inventory').prop('value', 4);
 	$('#select-starting-gold').prop('value', 4);
 	$('#select-day-night-cycle').prop('value', 1);
 	$('#select-karma-difficulty').prop('value', 1);
@@ -147,10 +148,11 @@ function preset_overworld_normal() //normal
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
-	$('#randomize_castle_britannia_items').prop('checked', true);
 	$('#randomize_moon_phases').prop('checked', true);
+	$('#open_avatar_shrine').prop('checked', false);
 
-	$('#select-starting-inventory').prop('value', 4);
+	$('#select-junk-items').prop('value', 1);
+	$('#select-starting-inventory').prop('value', 3);
 	$('#select-starting-gold').prop('value', 4);
 	$('#select-day-night-cycle').prop('value', 1);
 	$('#select-karma-difficulty').prop('value', 0);
@@ -207,10 +209,11 @@ function preset_overworld_hard() //hard
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
-	$('#randomize_castle_britannia_items').prop('checked', true);
 	$('#randomize_moon_phases').prop('checked', true);
+	$('#open_avatar_shrine').prop('checked', false);
 
-	$('#select-starting-inventory').prop('value', 3);
+	$('#select-junk-items').prop('value', 1);
+	$('#select-starting-inventory').prop('value', 1);
 	$('#select-starting-gold').prop('value', 1);
 	$('#select-day-night-cycle').prop('value', 1);
 	$('#select-karma-difficulty').prop('value', 2);
@@ -266,10 +269,11 @@ function preset_all_easy() //easy
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
-	$('#randomize_castle_britannia_items').prop('checked', true);
 	$('#randomize_moon_phases').prop('checked', true);
+	$('#open_avatar_shrine').prop('checked', true);
 
-	$('#select-starting-inventory').prop('value', 2);
+	$('#select-junk-items').prop('value', 1);	
+	$('#select-starting-inventory').prop('value', 4);
 	$('#select-starting-gold').prop('value', 4);
 	$('#select-day-night-cycle').prop('value', 1);
 	$('#select-karma-difficulty').prop('value', 1);
@@ -324,10 +328,11 @@ function preset_all_normal() //normal
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
-	$('#randomize_castle_britannia_items').prop('checked', true);
 	$('#randomize_moon_phases').prop('checked', true);
+	$('#open_avatar_shrine').prop('checked', false);
 
-	$('#select-starting-inventory').prop('value', 4);
+	$('#select-junk-items').prop('value', 1);
+	$('#select-starting-inventory').prop('value', 3);
 	$('#select-starting-gold').prop('value', 4);
 	$('#select-day-night-cycle').prop('value', 1);
 	$('#select-karma-difficulty').prop('value', 0);
@@ -384,10 +389,11 @@ function preset_all_hard() //hard
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
-	$('#randomize_castle_britannia_items').prop('checked', true);
 	$('#randomize_moon_phases').prop('checked', true);
+	$('#open_avatar_shrine').prop('checked', false);
 
-	$('#select-starting-inventory').prop('value', 3);
+	$('#select-junk-items').prop('value', 1);
+	$('#select-starting-inventory').prop('value', 1);
 	$('#select-starting-gold').prop('value', 1);
 	$('#select-day-night-cycle').prop('value', 1);
 	$('#select-karma-difficulty').prop('value', 2);
@@ -443,10 +449,11 @@ function preset_underworld_easy() //easy
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
-	$('#randomize_castle_britannia_items').prop('checked', true);
 	$('#randomize_moon_phases').prop('checked', true);
+	$('#open_avatar_shrine').prop('checked', true);
 
-	$('#select-starting-inventory').prop('value', 2);
+	$('#select-junk-items').prop('value', 1);
+	$('#select-starting-inventory').prop('value', 4);
 	$('#select-starting-gold').prop('value', 4);
 	$('#select-day-night-cycle').prop('value', 1);
 	$('#select-karma-difficulty').prop('value', 1);
@@ -501,10 +508,11 @@ function preset_underworld_normal() //normal
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
-	$('#randomize_castle_britannia_items').prop('checked', true);
 	$('#randomize_moon_phases').prop('checked', true);
+	$('#open_avatar_shrine').prop('checked', false);
 
-	$('#select-starting-inventory').prop('value', 4);
+	$('#select-junk-items').prop('value', 1);
+	$('#select-starting-inventory').prop('value', 3);
 	$('#select-starting-gold').prop('value', 4);
 	$('#select-day-night-cycle').prop('value', 1);
 	$('#select-karma-difficulty').prop('value', 0);
@@ -561,10 +569,11 @@ function preset_underworld_hard() //hard
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
-	$('#randomize_castle_britannia_items').prop('checked', true);
 	$('#randomize_moon_phases').prop('checked', true);
+	$('#open_avatar_shrine').prop('checked', false);
 
-	$('#select-starting-inventory').prop('value', 3);
+	$('#select-junk-items').prop('value', 1);
+	$('#select-starting-inventory').prop('value', 1);
 	$('#select-starting-gold').prop('value', 1);
 	$('#select-day-night-cycle').prop('value', 1);
 	$('#select-karma-difficulty').prop('value', 2);

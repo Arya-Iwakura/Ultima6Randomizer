@@ -181,18 +181,6 @@ $('form').submit(function(e)
 	return false;
 });
 
-$('#view-changelog').click(function(e)
-{
-	//$('#modal-changelog-win .modal-body').load('changelog.html');
-	$('#modal-changelog-win').modal('show');
-});
-
-$('#view-information').click(function(e)
-{
-	//$('#modal-information-win .modal-body').load('information.html');
-	$('#modal-information-win').modal('show');
-});
-
 $('#view-spoiler-list').click(function(e)
 {
 	$('#modal-spoiler-win').modal('show');
@@ -661,6 +649,39 @@ function checkAIEquipmentStatus()
 		$('#ai-equipment-tooltip-1').prop('hidden', true);
 		$('#ai-equipment-tooltip-2').prop('hidden', true);
 		$('#ai-equipment-tooltip-3').prop('hidden', false);
+	}
+}
+
+$('#select-junk-items').click(function(e)
+{
+	checkJunkItemStatus();
+});
+
+$('#select-junk-items').keyup(function(e)
+{
+	checkJunkItemStatus();
+});
+
+function checkJunkItemStatus()
+{
+	var selection = +$('#select-junk-items').val();
+	if (selection == 0)
+	{
+		$('#junk-item-tooltip-1').prop('hidden', false);
+		$('#junk-item-tooltip-2').prop('hidden', true);
+		$('#junk-item-tooltip-3').prop('hidden', true);
+	}
+	else if (selection == 1)
+	{
+		$('#junk-item-tooltip-1').prop('hidden', true);
+		$('#junk-item-tooltip-2').prop('hidden', false);
+		$('#junk-item-tooltip-3').prop('hidden', true);
+	}
+	else if (selection == 2)
+	{
+		$('#junk-item-tooltip-1').prop('hidden', true);
+		$('#junk-item-tooltip-2').prop('hidden', true);
+		$('#junk-item-tooltip-3').prop('hidden', false);
 	}
 }
 

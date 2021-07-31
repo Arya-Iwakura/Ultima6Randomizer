@@ -1,4 +1,4 @@
-var VERSION_STRING = 'v0.6c';
+var VERSION_STRING = 'v0.6d';
 
 const SUBSYSTEM_ITEMS = 0;
 const SUBSYSTEM_SPAWNERS = 1;
@@ -178,10 +178,6 @@ function randomizeROM(buffer, seed)
 	{
 		overrideMoongateShrineCheck(rom);
 	}
-	if ($('#randomize_castle_britannia_items').is(':checked'))
-	{
-		randomizeCastleBritanniaContents(rom, subSystemSeeds[SUBSYSTEM_ITEMS]);
-	}
 	if ($('#randomize_core_items').is(':checked') || $('#randomize_chests_overworld').is(':checked') || $('#randomize_chests_dungeons').is(':checked')) 
 	{
 		randomizedOptionsSelected = true;
@@ -207,6 +203,24 @@ function randomizeROM(buffer, seed)
 		
 		fixShrines(rom); //after item randomization the shrines must be fixed for the new items
 		updateShrineText(rom);
+	}
+
+	if ($('#randomize_core_items').is(':checked'))
+	{
+		alwaysAllowLensPlacement(rom);
+	}
+	if ($('#open_avatar_shrine').is(':checked') )
+	{
+		openAvatarShrine(rom);
+	}
+
+	if ($('#select-junk-items').val() == 1 )
+	{
+		shuffleJunkContents(rom, subSystemSeeds[SUBSYSTEM_ITEMS]);
+	}
+	else if ($('#select-junk-items').val() == 2 )
+	{
+		randomizeJunkContents(rom, subSystemSeeds[SUBSYSTEM_ITEMS]);
 	}
 
 	//---------monsters
