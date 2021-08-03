@@ -51,16 +51,19 @@
         <div class="row">
             <div class="col-md-12">
                 <h3>Location Tracker</h3>
-                The Ultima 6 SNES Randomizer location tracker.
+                The Ultima 6 SNES Randomizer location tracker. The Moon Orb coordinates for each location are recommended destinations to warp to when using the Moon Orb. The tooltips will often reference these destinations as starting points for how to reach a specific item location.
                 <div class="checkbox"><label title="test"><input type="checkbox" class="tracker_locations_main" checked>Include Main Item Locations</label></div>
                 <div class="checkbox"><label title="test"><input type="checkbox" class="tracker_locations_overworld" checked>Include Overworld Item Locations</label></div>
-                <!--<div class="checkbox"><label title="test"><input type="checkbox" class="tracker_locations_underworld" checked>Include Underworld Item Locations</label></div>-->
+                <div class="checkbox"><label title="test"><input type="checkbox" class="tracker_locations_underworld" checked>Include Underworld Item Locations</label></div>
+                <!--<div class="checkbox"><label title="test"><input type="checkbox" class="tracker_locations_spells" checked>Include Unlock and Dispel Field Chest Locations</label></div>-->
+                <!--<div class="checkbox"><label title="test"><input type="checkbox" class="tracker_locations_sherrychest" checked>Include Sherry Item Chest Location</label></div>-->
                 </br>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <h3>Items Found</h3>
+                <h3>Progression Items Found</h3>
+                These items unlock other location checks.
             </div>
         </div>
         <div class="row">
@@ -69,9 +72,10 @@
                 <div class="checkbox"><label title="Found item given to Lord British in Castle Britannia."><input type="checkbox" class="tracker_item_bookofoz">Book of Oz</label></div>
                 <div class="checkbox"><label title="Found item given to the Gargoyle Lenscrafter."><input type="checkbox" class="tracker_item_brokenlens">Broken Lens</label></div>
                 <div class="checkbox"><label title="Found item required to speak with Gargoyles."><input type="checkbox" class="tracker_item_gargishtext">Gargish Text</label></div>
+                <div class="checkbox"><label title="Found item given to the Human Lenscrafter."><input type="checkbox" class="tracker_item_gargoylelens">Gargoyle Lens</label></div>
             </div>
             <div class="col-md-3">
-                <div class="checkbox"><label title="Found item given to the Human Lenscrafter."><input type="checkbox" class="tracker_item_gargoylelens">Gargoyle Lens</label></div>
+                <div class="checkbox"><label title="Found item shown to Homer to start the map quest."><input type="checkbox" class="tracker_item_guildbelt">Guild Belt</label></div>
                 <div class="checkbox"><label title="Sherry joins the party after being given the item she wants in Castle Britannia."><input type="checkbox" class="tracker_item_sherry">Sherry the Mouse</label></div>
                 <div class="checkbox"><label title="Spell bought from Xiao in Moonglow."><input type="checkbox" class="tracker_spell_dispelfield">Spell - Dispel Field</label></div>
                 <div class="checkbox"><label title="Spell bought from Horance in Skara Brae."><input type="checkbox" class="tracker_spell_unlock">Spell - Unlock</label></div>
@@ -92,126 +96,277 @@
         <hr />
         <div class="row">
             <div class="col-md-3">
-                <h3 class="location_title">Britain</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Up</i></h5>
-                <div class="checkbox overworld_item"><label title="Found W of the castle gates in the house. This house is made of stone."><input type="checkbox">Bard House Chest #1</label></div>
-                <div class="checkbox overworld_item"><label title="Found W of the castle gates in the house. This house is made of stone."><input type="checkbox">Bard House Chest #2</label></div>
-                <div class="checkbox overworld_item"><label class="tracker_locked" title="Found in the large building SE of the castle gates. Behind locked door in upper room."><input type="checkbox" class="tracker_locked">Bank Chest #1</label></div>
-                <div class="checkbox overworld_item"><label class="tracker_locked" title="Found in the large building SE of the castle gates. Behind locked door in upper room."><input type="checkbox" class="tracker_locked">Bank Chest #2</label></div>
-                <div class="checkbox overworld_item"><label class="tracker_locked" title="Found in the large building SE of the castle gates. Behind locked door in upper room."><input type="checkbox" class="tracker_locked">Bank Chest #3</label></div>
-                <div class="checkbox overworld_item"><label class="tracker_locked" title="Found NW of the castle gates in the house. This house has a fence on the right side."><input type="checkbox" class="tracker_locked">Cow House Chest</label></div>
-                <div class="checkbox overworld_item"><label title="Found SE of the castle gates in the INN."><input type="checkbox">Inn Chest</label></div>
-                <div class="checkbox main_item"><label title="She can be found in the music hall just south west of the castle gates. You can lie to her to get the item."><input type="checkbox">Pocket of Ariana</label></div>
-                <div class="checkbox overworld_item"><label title="Found E of the castle gates in the shop."><input type="checkbox">Provisioner Chest</label></div>
+                <div class="location_overworld location_main">
+                    <h3 class="location_title">Britain</h3><h5 class="moon_orb_destination"><i>Moon Orb - 1 Up</i></h5>
+                    <div class="checkbox overworld_item"><label title="Found W of the castle gates in the house. This house is made of stone."><input type="checkbox">Bard House Chest #1</label></div>
+                    <div class="checkbox overworld_item"><label title="Found W of the castle gates in the house. This house is made of stone."><input type="checkbox">Bard House Chest #2</label></div>
+                    <div class="checkbox overworld_item"><label class="tracker_locked" title="Found in the large building SE of the castle gates. Behind locked door in upper room."><input type="checkbox" class="tracker_locked">Bank Chest #1</label></div>
+                    <div class="checkbox overworld_item"><label class="tracker_locked" title="Found in the large building SE of the castle gates. Behind locked door in upper room."><input type="checkbox" class="tracker_locked">Bank Chest #2</label></div>
+                    <div class="checkbox overworld_item"><label class="tracker_locked" title="Found in the large building SE of the castle gates. Behind locked door in upper room."><input type="checkbox" class="tracker_locked">Bank Chest #3</label></div>
+                    <div class="checkbox overworld_item"><label class="tracker_locked" title="Found NW of the castle gates in the house. This house has a fence on the right side."><input type="checkbox" class="tracker_locked">Cow House Chest</label></div>
+                    <div class="checkbox overworld_item"><label title="Found SE of the castle gates in the INN."><input type="checkbox">Inn Chest</label></div>
+                    <div class="checkbox main_item"><label title="She can be found in the music hall just south west of the castle gates. You can lie to her to get the item."><input type="checkbox">Pocket of Ariana</label></div>
+                    <div class="checkbox overworld_item"><label title="Found E of the castle gates in the shop."><input type="checkbox">Provisioner Chest</label></div>
+                </div>
                 
-                <h3 class="location_title">Buccaneer's Den</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Left</i></h5>
-                <div class="checkbox overworld_item"><label title="Sail west from the north part of New Magincia. Secret door in the tarvern kitchen will lead to the house."><input type="checkbox">Budo Secret House Chest</label></div>
-                <div class="checkbox overworld_item"><label title="Sail west from the north part of New Magincia. House is in the SW of the town."><input type="checkbox">South West House Chest</label></div>
+                <div class="location_overworld">
+                    <h3 class="location_title">Buccaneer's Den</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Left</i></h5>
+                    <div class="checkbox overworld_item"><label title="Sail west from the north part of New Magincia. Secret door in the tarvern kitchen will lead to the house."><input type="checkbox">Budo Secret House Chest</label></div>
+                    <div class="checkbox overworld_item"><label title="Sail west from the north part of New Magincia. House is in the SW of the town."><input type="checkbox">South West House Chest</label></div>
+                </div>
 
-                <h3 class="location_title">Castle Britannia</h3><h5 class="moon_orb_destination"><i>Moon Orb - 1 Up</i></h5>
-                <div class="checkbox overworld_item"><label title="Found in the starting castle. Large bedroom south of Lord British's bedroom."><input type="checkbox">Avatar's Room Chest</label></div>
-                <div class="checkbox overworld_item"><label class="tracker_requiresbook" title="Make sure to talk to Nystful to learn the BOOK keyword. Give Lord British the Book of Oz when you find it."><input type="checkbox" class="tracker_requiresbook">Book of Oz Reward</label></div>
-                <div class="checkbox overworld_item"><label title="Found in the starting castle. Large bedroom to the left of the throne room."><input type="checkbox">Lord British's Room Chest</label></div>
-                <div class="checkbox overworld_item"><label title="Found in the starting castle. Small bedroom in the west of the castle."><input type="checkbox">Nystful's Room Chest</label></div>
+                <div class="location_overworld">
+                    <h3 class="location_title">Castle Britannia</h3><h5 class="moon_orb_destination"><i>Moon Orb - 1 Up</i></h5>
+                    <div class="checkbox overworld_item"><label title="Found in the starting castle. Large bedroom south of Lord British's bedroom."><input type="checkbox">Avatar's Room Chest</label></div>
+                    <div class="checkbox overworld_item"><label class="tracker_requiresbook" title="Make sure to talk to Nystful to learn the BOOK keyword. Give Lord British the Book of Oz when you find it."><input type="checkbox" class="tracker_requiresbook">Book of Oz Reward</label></div>
+                    <div class="checkbox overworld_item"><label title="Found in the starting castle. Large bedroom to the left of the throne room."><input type="checkbox">Lord British's Room Chest</label></div>
+                    <div class="checkbox overworld_item"><label title="Found in the starting castle. Small bedroom in the west of the castle."><input type="checkbox">Nystful's Room Chest</label></div>
+                </div>
 
-                <h3 class="location_title">Cove</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Up 1 Right</i></h5>
-                <div class="checkbox overworld_item"><label title="Walk east into town and it will be on a pedestal."><input type="checkbox">Pedestal in Town Center Chest</label></div>
-                <div class="checkbox overworld_item"><label title="Walk east into town and visit the shop on the far right. There is a secret room behind the counter here."><input type="checkbox">Rudyom Shop Secret Chest</label></div>
+                <div class="location_overworld">
+                    <h3 class="location_title">Cove</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Up 1 Right</i></h5>
+                    <div class="checkbox overworld_item"><label title="Walk east into town and it will be on a pedestal."><input type="checkbox">Pedestal in Town Center Chest</label></div>
+                    <div class="checkbox overworld_item"><label title="Walk east into town and visit the shop on the far right. There is a secret room behind the counter here."><input type="checkbox">Rudyom Shop Secret Chest</label></div>
+                </div>
 
-                <h3 class="location_title">Dagger Island</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Up 1 Left</i></h5>
-                <div class="checkbox overworld_item"><label title="From the Shrine of Honesty sail east and north to the house. Land after the land turns back left."><input type="checkbox">Bonn's Basement Chest #1</label></div>
-                <div class="checkbox overworld_item"><label class="tracker_locked" title="From the Shrine of Honesty sail east and north to the house. Land after the land turns back left."><input type="checkbox" class="tracker_locked">Bonn's Basement Chest #2</label></div>
-                <div class="checkbox overworld_item"><label class="tracker_locked" title="From the Shrine of Honesty sail east and north to the house. Land after the land turns back left."><input type="checkbox" class="tracker_locked">Bonn's Basement Chest #3</label></div>
+                <div class="location_daggerisland_overworld location_overworld">
+                    <h3 class="location_title">Dagger Island</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Up 1 Left</i></h5>
+                    <div class="checkbox overworld_item"><label title="From the Shrine of Honesty sail east and north to the house. Land after the land turns back left."><input type="checkbox">Bonn's Basement Chest #1</label></div>
+                    <div class="checkbox overworld_item"><label class="tracker_locked" title="From the Shrine of Honesty sail east and north to the house. Land after the land turns back left."><input type="checkbox" class="tracker_locked">Bonn's Basement Chest #2</label></div>
+                    <div class="checkbox overworld_item"><label class="tracker_locked" title="From the Shrine of Honesty sail east and north to the house. Land after the land turns back left."><input type="checkbox" class="tracker_locked">Bonn's Basement Chest #3</label></div>
+                </div>
             </div><div class="col-md-3">
-                <h3 class="location_title">Deep Forest</h3><h5 class="moon_orb_destination"><i>Moon Orb - 1 Up</i></h5>
-                <div class="checkbox overworld_item"><label class="tracker_requires_unlockandfield" title="Head north out of the castle. Then north past the fields, north through the the mountains, then north more to the house hidden in the forest. There is a secret room in the bedroom with the chests."><input type="checkbox" class="tracker_requires_unlockandfield">Nicodemus's House - Secret Chest #1</label></div>
-                <div class="checkbox overworld_item"><label class="tracker_requires_unlockandfield" title="Head north out of the castle. Then north past the fields, north through the the mountains, then north more to the house hidden in the forest. There is a secret room in the bedroom with the chests."><input type="checkbox" class="tracker_requires_unlockandfield">Nicodemus's House - Secret Chest #2</label></div>
+                <div class="location_overworld">
+                    <h3 class="location_title">Deep Forest</h3><h5 class="moon_orb_destination"><i>Moon Orb - 1 Up</i></h5>
+                    <div class="checkbox overworld_item"><label class="tracker_requires_unlockandfield" title="Head north out of the castle. Then north past the fields, north through the the mountains, then north more to the house hidden in the forest. There is a secret room in the bedroom with the chests."><input type="checkbox" class="tracker_requires_unlockandfield">Nicodemus's House - Secret Chest #1</label></div>
+                    <div class="checkbox overworld_item"><label class="tracker_requires_unlockandfield" title="Head north out of the castle. Then north past the fields, north through the the mountains, then north more to the house hidden in the forest. There is a secret room in the bedroom with the chests."><input type="checkbox" class="tracker_requires_unlockandfield">Nicodemus's House - Secret Chest #2</label></div>
+                </div>
 
-                <h3 class="location_title">Desert</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Down 1 Right</i></h5>
-                <div class="checkbox overworld_item"><label title="Walk south of the Shrine of Sacrifice and slightly west to the bottom of the desert to find the house."><input type="checkbox">Sin Vrall's House Chest</label></div>
+                <div class="location_overworld">
+                    <h3 class="location_title">Desert</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Down 1 Right</i></h5>
+                    <div class="checkbox overworld_item"><label title="Walk south of the Shrine of Sacrifice and slightly west to the bottom of the desert to find the house."><input type="checkbox">Sin Vrall's House Chest</label></div>
+                </div>
 
-                <h3 class="location_title">Empath Abbey</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Right</i></h5>
-                <div class="checkbox overworld_item"><label class="tracker_locked" title="Go west along the road from Yew and it will be the house in the NW when you enter town."><input type="checkbox" class="tracker_locked">NW of Castle House Chest</label></div>
-                <div class="checkbox overworld_item"><label title="Go west along the road from Yew then south through the town and then go east into the woods at the sign to find a hidden house in the woods."><input type="checkbox">Iolo's Hut Chest</label></div>
+                <div class="location_overworld">
+                    <h3 class="location_title">Empath Abbey</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Right</i></h5>
+                    <div class="checkbox overworld_item"><label class="tracker_locked" title="Go west along the road from Yew and it will be the house in the NW when you enter town."><input type="checkbox" class="tracker_locked">NW of Castle House Chest</label></div>
+                    <div class="checkbox overworld_item"><label title="Go west along the road from Yew then south through the town and then go east into the woods at the sign to find a hidden house in the woods."><input type="checkbox">Iolo's Hut Chest</label></div>
+                </div>
 
-                <h3 class="location_title">Gargoyle City</h3><h5 class="moon_orb_destination"><i>Moon Orb - 1 Down 1 Left</i></h5>
-                <div class="checkbox overworld_item"><label title="West of where the moon orb takes you."><input type="checkbox">NW Building Chest</label></div>
-                <div class="checkbox main_item"><label class="tracker_blockedbyfield" title="Directly far south of where the moon orb takes you."><input type="checkbox" class="tracker_blockedbyfield">Museum Chest</label></div>
-                <div class="checkbox main_item"><label class="tracker_requires_brokenlensandgargishtext" title="East side of the village. Read the quickstart guide for the quest order here."><input type="checkbox" class="tracker_requires_brokenlensandgargishtext">Pocket of Gargoyle Lenscrafter</label></div>
+                <div class="location_overworld location_main">
+                    <h3 class="location_title">Gargoyle City</h3><h5 class="moon_orb_destination"><i>Moon Orb - 1 Down 1 Left</i></h5>
+                    <div class="checkbox overworld_item"><label title="West of where the moon orb takes you."><input type="checkbox">NW Building Chest</label></div>
+                    <div class="checkbox main_item"><label class="tracker_blockedbyfield" title="Directly far south of where the moon orb takes you."><input type="checkbox" class="tracker_blockedbyfield">Museum Chest</label></div>
+                    <div class="checkbox main_item"><label class="tracker_requires_brokenlensandgargishtext" title="East side of the village. Read the quickstart guide for the quest order here."><input type="checkbox" class="tracker_requires_brokenlensandgargishtext">Pocket of Gargoyle Lenscrafter</label></div>
+                </div>
 
-                <h3 class="location_title">Hythloth</h3><h5 class="moon_orb_destination"><i>Moon Orb - 1 Down</i></h5>
-                <div class="checkbox main_item"><label title="Go east then sail east and walk north into the mountains to enter a cave. Captain John will be not far inside. Ask about gargoyles and then langauge to get an item."><input type="checkbox">Pocket of Captain John</label></div>
+                <div class="location_main">
+                    <h3 class="location_title">Hythloth</h3><h5 class="moon_orb_destination"><i>Moon Orb - 1 Down</i></h5>
+                    <div class="checkbox main_item"><label title="Go east then sail east and walk north into the mountains to enter a cave. Captain John will be not far inside. Ask about gargoyles and then langauge to get an item."><input type="checkbox">Pocket of Captain John</label></div>
+                </div>
 
-                <h3 class="location_title">Jhelom</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Up 2 Right</i></h5>
-                <div class="checkbox main_item"><label title="The tavern is north east in town. Requires Sherry the mouse to enter it." class="tracker_requires_sherry"><input type="checkbox" class="tracker_requires_sherry">Tavern Mouse Hole Chest</label></div>
-                <div class="checkbox overworld_item"><label title="House is east of the moongate."><input type="checkbox">East House Chest</label></div>
-                <div class="checkbox overworld_item"><label class="tracker_locked" title="House is west of the moongate."><input type="checkbox" class="tracker_locked">West House Chest</label></div>
+                <div class="location_overworld location_main">
+                    <h3 class="location_title">Jhelom</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Up 2 Right</i></h5>
+                    <div class="checkbox main_item"><label title="The tavern is north east in town. Requires Sherry the mouse to enter it." class="tracker_requires_sherry"><input type="checkbox" class="tracker_requires_sherry">Tavern Mouse Hole Chest</label></div>
+                    <div class="checkbox overworld_item"><label title="House is east of the moongate."><input type="checkbox">East House Chest</label></div>
+                    <div class="checkbox overworld_item"><label class="tracker_locked" title="House is west of the moongate."><input type="checkbox" class="tracker_locked">West House Chest</label></div>
+                </div>
                 
-                <h3 class="location_title">Minoc</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Down 2 Right</i></h5>
-                <div class="checkbox overworld_item"><label title="Walk west along the mountains into town. Basket weaver is in the west of town."><input type="checkbox">Basket Weaver Chest</label></div>
-                <div class="checkbox overworld_item"><label title="Walk west along the mountains into town. Gem cutter is in the north west of town."><input type="checkbox">Gem Cutter Chest</label></div>
-                <div class="checkbox main_item"><label title="Walk west along the mountains into town. The music hall is in the middle of town and will have Selganor. You need to buy a LOG in Yew, cut it into BOARDS in Minoc, then turn it into PANPIPES in Minoc, then learn the STONES song in Minoc."><input type="checkbox">Selganor Rune Dialog Quest</label></div>
-                <div class="checkbox overworld_item"><label class="tracker_locked" title="Walk west along the mountains into town. The Town hall is the first big building."><input type="checkbox" class="tracker_locked">Town Hall Chest</label></div>
+                <div class="location_overworld location_main">
+                    <h3 class="location_title">Minoc</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Down 2 Right</i></h5>
+                    <div class="checkbox overworld_item"><label title="Walk west along the mountains into town. Basket weaver is in the west of town."><input type="checkbox">Basket Weaver Chest</label></div>
+                    <div class="checkbox overworld_item"><label title="Walk west along the mountains into town. Gem cutter is in the north west of town."><input type="checkbox">Gem Cutter Chest</label></div>
+                    <div class="checkbox main_item"><label title="Walk west along the mountains into town. The music hall is in the middle of town and will have Selganor. You need to buy a LOG in Yew, cut it into BOARDS in Minoc, then turn it into PANPIPES in Minoc, then learn the STONES song in Minoc."><input type="checkbox">Selganor Rune Dialog Quest</label></div>
+                    <div class="checkbox overworld_item"><label class="tracker_locked" title="Walk west along the mountains into town. The Town hall is the first big building."><input type="checkbox" class="tracker_locked">Town Hall Chest</label></div>
+                </div>
             </div><div class="col-md-3">
-                <h3 class="location_title">Moonglow / Lycaeum</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Up 2 Left</i></h5>
-                <div class="checkbox overworld_item"><label class="tracker_requires_unlockandfield" title="House is directly east of the moongate. Chest is in the magically locked closet."><input type="checkbox" class="tracker_requires_unlockandfield">House of Penumbra Chest</label></div>
-                <div class="checkbox main_item"><label class="tracker_requires_gargoylelens" title="House is in the far north east of town. Just follow the road north and east."><input type="checkbox" class="tracker_requires_gargoylelens">Pocket of Ephemerides the Lenscrafter</label></div>
-                <div class="checkbox overworld_item"><label class="tracker_blockedbyfield" title="Large castle north of the moongate. Requires Dispel Field to reach the lower floors. Item is in the east part. Item is in the north east part of the lower levels."><input type="checkbox" class="tracker_blockedbyfield">Lycaeum Lower Floors Chest #1</label></div>
-                <div class="checkbox overworld_item"><label class="tracker_blockedbyfield" title="Large castle north of the moongate. Requires Dispel Field to reach the lower floors. Item is in the north east part of the lower levels."><input type="checkbox" class="tracker_blockedbyfield">Lycaeum Lower Floors Chest #2</label></div>
-                <div class="checkbox overworld_item"><label class="tracker_locked"title="Music Hall is located 2 buildings south of the moongate. The item is in a chest behind a secret wall on the west side of the hall."><input type="checkbox" class="tracker_locked">Music Hall Chest</label></div>
-                <div class="checkbox overworld_item"><label class="tracker_locked" title="Xiao's Shop is far in the north west of the town. Follow the road as far north and west as it goes."><input type="checkbox" class="tracker_locked">Xiao's Shop Chest</label></div>
-                <div class="checkbox main_item"><label title="The tomb is located behind a secret passage in the right side of the tavern in the storage area. Tavern is SE of the moongate. The tomb is on the second floor down (just go west along the tunnel to the ladder down). There is a scroll and a flower pot in front of it. Search the bones on the pedestal."><input type="checkbox">Tomb of Beyvin Bone Pile</label></div>
+                <div class="location_overworld location_main">
+                    <h3 class="location_title">Moonglow / Lycaeum</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Up 2 Left</i></h5>
+                    <div class="checkbox overworld_item"><label class="tracker_requires_unlockandfield" title="House is directly east of the moongate. Chest is in the magically locked closet."><input type="checkbox" class="tracker_requires_unlockandfield">House of Penumbra Chest</label></div>
+                    <div class="checkbox main_item"><label class="tracker_requires_gargoylelens" title="House is in the far north east of town. Just follow the road north and east."><input type="checkbox" class="tracker_requires_gargoylelens">Pocket of Ephemerides the Lenscrafter</label></div>
+                    <div class="checkbox overworld_item"><label class="tracker_blockedbyfield" title="Large castle north of the moongate. Requires Dispel Field to reach the lower floors. Item is in the east part. Item is in the north east part of the lower levels."><input type="checkbox" class="tracker_blockedbyfield">Lycaeum Lower Floors Chest #1</label></div>
+                    <div class="checkbox overworld_item"><label class="tracker_blockedbyfield" title="Large castle north of the moongate. Requires Dispel Field to reach the lower floors. Item is in the north east part of the lower levels."><input type="checkbox" class="tracker_blockedbyfield">Lycaeum Lower Floors Chest #2</label></div>
+                    <div class="checkbox overworld_item"><label class="tracker_locked"title="Music Hall is located 2 buildings south of the moongate. The item is in a chest behind a secret wall on the west side of the hall."><input type="checkbox" class="tracker_locked">Music Hall Chest</label></div>
+                    <div class="checkbox overworld_item"><label class="tracker_locked" title="Xiao's Shop is far in the north west of the town. Follow the road as far north and west as it goes."><input type="checkbox" class="tracker_locked">Xiao's Shop Chest</label></div>
+                    <div class="checkbox main_item"><label title="The tomb is located behind a secret passage in the right side of the tavern in the storage area. Tavern is SE of the moongate. The tomb is on the second floor down (just go west along the tunnel to the ladder down). There is a scroll and a flower pot in front of it. Search the bones on the pedestal."><input type="checkbox">Tomb of Beyvin Bone Pile</label></div>
+                </div>
 
-                <h3 class="location_title">New Magincia</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Left</i></h5>
-                <div class="checkbox main_item"><label title="Talk to Antonio the Mayor about the Rune. William the farmer, Aurendir the herder, Conor the dock worker, Charlotte the weaver, Dunbar the cook, and then Antonio again."><input type="checkbox">Antonio Rune Dialog Quest</label></div>
+                <div class="location_main">
+                    <h3 class="location_title">New Magincia</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Left</i></h5>
+                    <div class="checkbox main_item"><label title="Talk to Antonio the Mayor about the Rune. William the farmer, Aurendir the herder, Conor the dock worker, Charlotte the weaver, Dunbar the cook, and then Antonio again."><input type="checkbox">Antonio Rune Dialog Quest</label></div>
+                </div>
 
-                <h3 class="location_title">Paws</h3><h5 class="moon_orb_destination"><i>Moon Orb - 1 Up</i></h5>
-                <div class="checkbox overworld_item"><label title="Walk south out of the castle then follow the road south and east until you reach the town. House is located in the SE of town."><input type="checkbox">Arbeth House Chest #1</label></div>
-                <div class="checkbox overworld_item"><label title="Walk south out of the castle then follow the road south and east until you reach the town. House is located in the SE of town."><input type="checkbox">Arbeth House Chest #2</label></div>
-                <div class="checkbox overworld_item"><label title="Walk south out of the castle then follow the road south and east until you reach the town. House is located in the NE of town next to the tavern."><input type="checkbox">Tavern House Chest</label></div>
-                <div class="checkbox overworld_item"><label class="tracker_requiresboardgames" title="Walk south out of the castle then follow the road south and east until you reach the town. The tavern is where Dr Cat stays and they will give gold for the Boardgame."><input type="checkbox" class="tracker_requiresboardgames">Book of Boardgames Reward</label></div>
+                <div class="location_overworld">
+                    <h3 class="location_title">Paws</h3><h5 class="moon_orb_destination"><i>Moon Orb - 1 Up</i></h5>
+                    <div class="checkbox overworld_item"><label title="Walk south out of the castle then follow the road south and east until you reach the town. House is located in the SE of town."><input type="checkbox">Arbeth House Chest #1</label></div>
+                    <div class="checkbox overworld_item"><label title="Walk south out of the castle then follow the road south and east until you reach the town. House is located in the SE of town."><input type="checkbox">Arbeth House Chest #2</label></div>
+                    <div class="checkbox overworld_item"><label title="Walk south out of the castle then follow the road south and east until you reach the town. House is located in the NE of town next to the tavern."><input type="checkbox">Tavern House Chest</label></div>
+                    <div class="checkbox overworld_item"><label class="tracker_requiresboardgames" title="Walk south out of the castle then follow the road south and east until you reach the town. The tavern is where Dr Cat stays and they will give gold for the Boardgame."><input type="checkbox" class="tracker_requiresboardgames">Book of Boardgames Reward</label></div>
+                </div>
 
-                <h3 class="location_title">Road to Skara Brae</h3><h5 class="moon_orb_destination"><i>Moon Orb - 1 Up</i></h5>
-                <div class="checkbox overworld_item"><label title="Walk south out of the castle then follow the road south and west out of town to the house."><input type="checkbox">Fighter House Chest</label></div>
+                <div class="location_overworld">
+                    <h3 class="location_title">Road to Skara Brae</h3><h5 class="moon_orb_destination"><i>Moon Orb - 1 Up</i></h5>
+                    <div class="checkbox overworld_item"><label title="Walk south out of the castle then follow the road south and west out of town to the house."><input type="checkbox">Fighter House Chest</label></div>
+                </div>
 
-                <h3 class="location_title">Serpent's Hold</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Down</i></h5>
-                <div class="checkbox overworld_item"><label title="Walk east to the water. Then sail SE until you hit land. The bedroom is in the top left section of the castle."><input type="checkbox">Bedroom in Castle Chest</label></div>
-                <div class="checkbox overworld_item"><label title="Walk east to the water. Then sail SE until you hit land. House is in the south of town."><input type="checkbox">House South of Castle Chest</label></div>
-                <div class="checkbox overworld_item"><label title="Walk east to the water. Then sail SE until you hit land. House is in the west of town."><input type="checkbox">House West of Castle Chest</label></div>
-                <div class="checkbox overworld_item"><label class="tracker_locked" title="Walk east to the water. Then sail SE until you hit land. There is a secret wall in the top left corner of the barracks."><input type="checkbox" class="tracker_locked">Barracks West of Castle Secret Chest</label></div>
+                <div class="location_overworld">
+                    <h3 class="location_title">Serpent's Hold</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Down</i></h5>
+                    <div class="checkbox overworld_item"><label title="Walk east to the water. Then sail SE until you hit land. The bedroom is in the top left section of the castle."><input type="checkbox">Bedroom in Castle Chest</label></div>
+                    <div class="checkbox overworld_item"><label title="Walk east to the water. Then sail SE until you hit land. House is in the south of town."><input type="checkbox">House South of Castle Chest</label></div>
+                    <div class="checkbox overworld_item"><label title="Walk east to the water. Then sail SE until you hit land. House is in the west of town."><input type="checkbox">House West of Castle Chest</label></div>
+                    <div class="checkbox overworld_item"><label class="tracker_locked" title="Walk east to the water. Then sail SE until you hit land. There is a secret wall in the top left corner of the barracks."><input type="checkbox" class="tracker_locked">Barracks West of Castle Secret Chest</label></div>
+                </div>
             </div><div class="col-md-3">
-                <h3 class="location_title">Shrines</h3>
-                <div class="checkbox main_item"><label class="tracker_requires_runecompassion" title="Need the Rune of Compassion."><input type="checkbox" class="tracker_requires_runecompassion">Shrine of Compassion<span><i><small> - 2 Up 1 Right</small></i></span></label></div>
-                <div class="checkbox main_item"><label class="tracker_requires_runehonesty" title="Need the Rune of Honesty."><input type="checkbox" class="tracker_requires_runehonesty">Shrine of Honesty<span><i><small> - 2 Up 1 Left</small></i></span></label></div>
-                <div class="checkbox main_item"><label class="tracker_requires_runehonor" title="Need the Rune of Honor."><input type="checkbox" class="tracker_requires_runehonor">Shrine of Honor<span><i><small> - 2 Down 1 Left</small></i></span></label></div>
-                <div class="checkbox main_item"><label class="tracker_requires_runehumilty" title="Need the Rune of Humility."><input type="checkbox" class="tracker_requires_runehumilty">Shrine of Humility<span><i><small> - 1 Up 2 Left</small></i></span></label></div>
-                <div class="checkbox main_item"><label class="tracker_requires_runejustice" title="Need the Rune of Justice."><input type="checkbox" class="tracker_requires_runejustice">Shrine of Justice<span><i><small> -1 Down 2 Right</small></i></span></label></div>
-                <div class="checkbox main_item"><label class="tracker_requires_runesacrifice" title="Need the Rune of Sacrifice."><input type="checkbox" class="tracker_requires_runesacrifice">Shrine of Sacrifice<span><i><small> - 2 Down 1 Right</small></i></span></label></div>
-                <div class="checkbox main_item"><label class="tracker_requires_runespirituality" title="Need the Rune of Spirituality."><input type="checkbox" class="tracker_requires_runespirituality">Shrine of Spirituality<span><i><small> - 1 Down 2 Left</small></i></span></label></div>
-                <div class="checkbox main_item"><label class="tracker_requires_runevalor" title="Need the Rune of Valor."><input type="checkbox" class="tracker_requires_runevalor">Shrine of Valor<span><i><small> - 1 Up 2 Right</small></i></span></label></div>
+                <div class="location_main">
+                    <h3 class="location_title">Shrines</h3>
+                    <div class="checkbox main_item"><label class="tracker_requires_runecompassion" title="Need the Rune of Compassion."><input type="checkbox" class="tracker_requires_runecompassion">Shrine of Compassion<span><i><small> - 2 Up 1 Right</small></i></span></label></div>
+                    <div class="checkbox main_item"><label class="tracker_requires_runehonesty" title="Need the Rune of Honesty."><input type="checkbox" class="tracker_requires_runehonesty">Shrine of Honesty<span><i><small> - 2 Up 1 Left</small></i></span></label></div>
+                    <div class="checkbox main_item"><label class="tracker_requires_runehonor" title="Need the Rune of Honor."><input type="checkbox" class="tracker_requires_runehonor">Shrine of Honor<span><i><small> - 2 Down 1 Left</small></i></span></label></div>
+                    <div class="checkbox main_item"><label class="tracker_requires_runehumilty" title="Need the Rune of Humility."><input type="checkbox" class="tracker_requires_runehumilty">Shrine of Humility<span><i><small> - 1 Up 2 Left</small></i></span></label></div>
+                    <div class="checkbox main_item"><label class="tracker_requires_runejustice" title="Need the Rune of Justice."><input type="checkbox" class="tracker_requires_runejustice">Shrine of Justice<span><i><small> -1 Down 2 Right</small></i></span></label></div>
+                    <div class="checkbox main_item"><label class="tracker_requires_runesacrifice" title="Need the Rune of Sacrifice."><input type="checkbox" class="tracker_requires_runesacrifice">Shrine of Sacrifice<span><i><small> - 2 Down 1 Right</small></i></span></label></div>
+                    <div class="checkbox main_item"><label class="tracker_requires_runespirituality" title="Need the Rune of Spirituality."><input type="checkbox" class="tracker_requires_runespirituality">Shrine of Spirituality<span><i><small> - 1 Down 2 Left</small></i></span></label></div>
+                    <div class="checkbox main_item"><label class="tracker_requires_runevalor" title="Need the Rune of Valor."><input type="checkbox" class="tracker_requires_runevalor">Shrine of Valor<span><i><small> - 1 Up 2 Right</small></i></span></label></div>
+                </div>
 
-                <h3 class="location_title">Skara Brae</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Down 2 Left</i></h5>
-                <div class="checkbox overworld_item"><label title="Shop is north of the moongate across the water from the dock."><input type="checkbox">Horance Shop Chest</label></div>
-                <div class="checkbox main_item"><label title="House is north of the moongate."><input type="checkbox">North House Chest</label></div>
-                <div class="checkbox overworld_item"><label class="tracker_locked" title="Winery is in the south of town and the basement has an item. Use a powder keg to explode the door."><input type="checkbox" class="tracker_locked">Wine Cellar Chest</label></div>
+                <div class="location_overworld location_main">
+                    <h3 class="location_title">Skara Brae</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Down 2 Left</i></h5>
+                    <div class="checkbox overworld_item"><label title="Shop is north of the moongate across the water from the dock."><input type="checkbox">Horance Shop Chest</label></div>
+                    <div class="checkbox main_item"><label title="House is north of the moongate."><input type="checkbox">North House Chest</label></div>
+                    <div class="checkbox overworld_item"><label class="tracker_locked" title="Winery is in the south of town and the basement has an item. Use a powder keg to explode the door."><input type="checkbox" class="tracker_locked">Wine Cellar Chest</label></div>
+                </div>
 
-                <h3 class="location_title">Stonegate</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Down 2 Right</i></h5>
-                <div class="checkbox overworld_item"><label title="From Minoc, go southwest to the docks then sail south to the castle Stonegate."><input type="checkbox">First Floor Chest</label></div>
-                <div class="checkbox main_item"><label class="tracker_requires_unlockandfield" title="From Minoc, go southwest to the docks then sail south to the castle Stonegate."><input type="checkbox" class="tracker_requires_unlockandfield">Bottom Floor Chest</label></div>
+                <div class="location_overworld location_main">
+                    <h3 class="location_title">Stonegate</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Down 2 Right</i></h5>
+                    <div class="checkbox overworld_item"><label title="From Minoc, go southwest to the docks then sail south to the castle Stonegate."><input type="checkbox">First Floor Chest</label></div>
+                    <div class="checkbox main_item"><label class="tracker_requires_unlockandfield" title="From Minoc, go southwest to the docks then sail south to the castle Stonegate."><input type="checkbox" class="tracker_requires_unlockandfield">Bottom Floor Chest</label></div>
+                </div>
 
-                <h3 class="location_title">Sutek's Castle</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Left</i></h5>
-                <div class="checkbox main_item"><label class="tracker_requires_unlockandfield" title="Go to the docks in the SE and then sail straight south to the big island. Entrance is on the south side. This is a large dungeon with lots of switches and secret doors. Item is on the very bottom floor."><input type="checkbox" class="tracker_requires_unlockandfield">Body on Lowest Floor</label></div>
-                
-                <h3 class="location_title">Trinsic</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Down</i></h5>
-                <div class="checkbox overworld_item"><label title="Enter town to the north and check the house in the center of town. Use a powder keg to explode the door."><input type="checkbox">Mayor House Locked Door Chest</label></div>
-                <div class="checkbox main_item"><label title="Enter town to the north and the chest is in the center of town on a pedestal"><input type="checkbox">Town Center Chest</label></div>
-                <div class="checkbox overworld_item"><label title="Small house to the south of town (just east and north of the moongate)."><input type="checkbox">South House Chest</label></div>
+                <div class="location_main">
+                    <h3 class="location_title">Sutek's Castle</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Left</i></h5>
+                    <div class="checkbox main_item"><label class="tracker_requires_unlockandfield" title="Go to the docks in the SE and then sail straight south to the big island. Entrance is on the south side. This is a large dungeon with lots of switches and secret doors. Item is on the very bottom floor."><input type="checkbox" class="tracker_requires_unlockandfield">Body on Lowest Floor</label></div>
+                </div>
 
-                <h3 class="location_title">Yew</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Right</i></h5>
-                <div class="checkbox main_item"><label title="Tavern is south of the moongate. Check the potted plant."><input type="checkbox">Tavern Potted Plant</label></div>
+                <div class="location_overworld location_main">
+                    <h3 class="location_title">Trinsic</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Down</i></h5>
+                    <div class="checkbox overworld_item"><label title="Enter town to the north and check the house in the center of town. Use a powder keg to explode the door."><input type="checkbox">Mayor House Locked Door Chest</label></div>
+                    <div class="checkbox main_item"><label title="Enter town to the north and the chest is in the center of town on a pedestal"><input type="checkbox">Town Center Chest</label></div>
+                    <div class="checkbox overworld_item"><label title="Small house to the south of town (just east and north of the moongate)."><input type="checkbox">South House Chest</label></div>
+                </div>
 
+                <div class="location_main">
+                    <h3 class="location_title">Yew</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Right</i></h5>
+                    <div class="checkbox main_item"><label title="Tavern is south of the moongate. Check the potted plant."><input type="checkbox">Tavern Potted Plant</label></div>
+                </div>
                 </br>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <hr />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="location_underworld">
+                    <h3 class="location_title">Ant Mound</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Down 1 Right</i></h5>
+                    <div class="checkbox underworld_item"><label title="TempText"><input type="checkbox">F4 Body</label></div>
+                </div>
+
+                <div class="location_underworld">
+                    <h3 class="location_title">Britain Sewers / Buccaneer's Cave</h3><h5 class="moon_orb_destination"><i>Moon Orb - 1 Up</i></h5>
+                    <div class="checkbox underworld_item"><label title="TempText"><input type="checkbox">F1 Daros Room Chest</label></div>
+                    <div class="checkbox underworld_item"><label class="tracker_locked" title="TempText"><input class="tracker_locked"  type="checkbox">F2 Buccanneer's Den Entrance Chest</label></div>
+                    <div class="checkbox underworld_item"><label class="tracker_requires_unlockandfield" title="TempText"><input class="tracker_requires_unlockandfield" type="checkbox">F3 Phoenix Chest #1</label></div>
+                    <div class="checkbox underworld_item"><label class="tracker_requires_unlockandfield" title="TempText"><input class="tracker_requires_unlockandfield" type="checkbox">F3 Phoenix Chest #1</label></div>
+                    <div class="checkbox underworld_item"><label class="tracker_requires_unlockandfield" title="TempText"><input class="tracker_requires_unlockandfield" type="checkbox">F3 Phoenix Chest #1</label></div>
+                    <div class="checkbox underworld_item"><label class="tracker_requires_unlockandfield" title="TempText"><input class="tracker_requires_unlockandfield" type="checkbox">F3 Phoenix Quest Item</label></div>
+                </div>
+
+                <div class="location_underworld">
+                    <h3 class="location_title">Cyclops Cave</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Down 2 Left</i></h5>
+                    <div class="checkbox underworld_item"><label title="TempText"><input type="checkbox">F1 West Chest</label></div>
+                </div>
+
+                <div class="location_underworld location_daggerisland_underworld">
+                    <h3 class="location_title">Dagger Island</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Up 1 Left</i></h5>
+                    <div class="checkbox underworld_item"><label title="From the Shrine of Honesty sail east and north to the house. Land after the land turns back left."><input type="checkbox">Bonn's Basement Chest #1</label></div>
+                    <div class="checkbox underworld_item"><label class="tracker_locked" title="From the Shrine of Honesty sail east and north to the house. Land after the land turns back left."><input type="checkbox" class="tracker_locked">Bonn's Basement Chest #2</label></div>
+                    <div class="checkbox underworld_item"><label class="tracker_locked" title="From the Shrine of Honesty sail east and north to the house. Land after the land turns back left."><input type="checkbox" class="tracker_locked">Bonn's Basement Chest #3</label></div>
+                </div>
+            </div><div class="col-md-3">
+                <div class="location_underworld">
+                    <h3 class="location_title">Deceit</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Up 1 Left</i></h5>
+                    <div class="checkbox underworld_item"><label class="tracker_blockedbyfield" title="TempText"><input class="tracker_blockedbyfield" type="checkbox">F4 Energy Field Chest</label></div>
+                </div>
+
+                <div class="location_underworld">
+                    <h3 class="location_title">Despise</h3><h5 class="moon_orb_destination"><i>Moon Orb - 1 Up</i></h5>
+                    <div class="checkbox underworld_item"><label title="TempText"><input type="checkbox">F3 Potion Room Chest</label></div>
+                </div>
+
+                <div class="location_underworld">
+                    <h3 class="location_title">Destard</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Down</i></h5>
+                    <div class="checkbox underworld_item"><label class="tracker_locked" title="TempText"><input class="tracker_locked" type="checkbox">F2 West Side Chest</label></div>
+                </div>
+
+                <div class="location_underworld">
+                    <h3 class="location_title">Hythloth</h3><h5 class="moon_orb_destination"><i>Moon Orb - 1 Down</i></h5>
+                    <div class="checkbox underworld_item"><label title="TempText"><input type="checkbox">Captain John's House Chest</label></div>
+                </div>
+
+                <div class="location_underworld">
+                    <h3 class="location_title">Moonglow Catacombs</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Up 2 Left</i></h5>
+                    <div class="checkbox underworld_item"><label class="tracker_locked" title="TempText"><input class="tracker_locked" type="checkbox">F4 West Room Chest</label></div>
+                </div>
+            </div><div class="col-md-3">
+                <div class="location_underworld">
+                    <h3 class="location_title">Pirate Cave</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Left</i></h5>
+                    <div class="checkbox underworld_item"><label class="tracker_blockedbyfield" title="TempText"><input class="tracker_blockedbyfield" type="checkbox">F4 Treasure Room Chest #1</label></div>
+                    <div class="checkbox underworld_item"><label class="tracker_blockedbyfield" title="TempText"><input class="tracker_blockedbyfield" type="checkbox">F4 Treasure Room Chest #2</label></div>
+                    <div class="checkbox underworld_item"><label class="tracker_blockedbyfield" title="TempText"><input class="tracker_blockedbyfield" type="checkbox">F4 Treasure Room Chest #3</label></div>
+                    <div class="checkbox underworld_item"><label class="tracker_blockedbyfield" title="TempText"><input class="tracker_blockedbyfield" type="checkbox">F4 Treasure Room Chest #4</label></div>
+                    <div class="checkbox underworld_item"><label class="tracker_blockedbyfield" title="TempText"><input class="tracker_blockedbyfield" type="checkbox">F4 Treasure Room Chest #5</label></div>
+                </div>
+
+                <div class="location_underworld">
+                    <h3 class="location_title">Serpent's Hold</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Down</i></h5>
+                    <div class="checkbox underworld_item"><label class="tracker_requires_guildbelt" title="TempText"><input class="tracker_requires_guildbelt" type="checkbox">Morchella Quest Item</label></div>
+                </div>
+
+                <div class="location_underworld">
+                    <h3 class="location_title">Shame</h3><h5 class="moon_orb_destination"><i>Moon Orb - 1 Up</i></h5>
+                    <div class="checkbox underworld_item"><label class="tracker_locked" title="TempText"><input class="tracker_locked" type="checkbox">F1 Locked House Chest</label></div>
+                    <div class="checkbox underworld_item"><label class="tracker_requires_guildbelt" title="TempText"><input class="tracker_requires_guildbelt" type="checkbox">Ybarra Quest Item</label></div>
+                </div>
+
+                <div class="location_underworld">
+                    <h3 class="location_title">Spider Cave</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Right</i></h5>
+                    <div class="checkbox underworld_item"><label title="TempText"><input type="checkbox">F2 Chest</label></div>
+                </div>
+            </div><div class="col-md-3">
+                <div class="location_underworld">
+                    <h3 class="location_title">Swamp Cave</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Up</i></h5>
+                    <div class="checkbox underworld_item"><label title="TempText"><input type="checkbox">F2 Treasure Room Chest</label></div>
+                    <div class="checkbox underworld_item"><label title="TempText"><input type="checkbox">F4 Camp Body</label></div>
+                </div>
+
+                <div class="location_underworld">
+                    <h3 class="location_title">Tomb of Kings</h3><h5 class="moon_orb_destination"><i>Moon Orb - 1 Down 1 Left</i></h5>
+                    <div class="checkbox underworld_item"><label class="tracker_locked" title="TempText"><input class="tracker_locked" type="checkbox">F1 North Chamber Chest</label></div>
+                </div>
+                <div class="location_underworld">
+                    <h3 class="location_title">Trinsic</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Down</i></h5>
+                    <div class="checkbox underworld_item"><label class="tracker_requires_guildbelt" title="TempText"><input class="tracker_requires_guildbelt" type="checkbox">Arturos Quest Item</label></div>
+                    <div class="checkbox underworld_item"><label class="tracker_requires_guildbelt" title="TempText"><input class="tracker_requires_guildbelt" type="checkbox">Lord Whitsaber Quest Item</label></div>
+                </div>
+                <div class="location_underworld">
+                    <h3 class="location_title">Wrong / Covetous</h3><h5 class="moon_orb_destination"><i>Moon Orb - 2 Down 2 Right</i></h5>
+                    <div class="checkbox underworld_item"><label class="tracker_locked" title="TempText"><input class="tracker_locked" type="checkbox">F3 Secret Area Chest</label></div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-12">
                 <hr />

@@ -7,6 +7,7 @@ function pageInit()
     setItemStatusSingle(    ".tracker_item_bookofboardgames", ".tracker_requiresboardgames:checkbox", "tracker_requiresboardgames", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     setItemStatusSingle(    ".tracker_item_sherry", ".tracker_requires_sherry:checkbox", "tracker_requires_sherry", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     setItemStatusSingle(    ".tracker_item_gargoylelens", ".tracker_requires_gargoylelens:checkbox", "tracker_requires_gargoylelens", TEXT_COLOR_ON, TEXT_COLOR_OFF);
+    setItemStatusSingle(    ".tracker_item_guildbelt", ".tracker_requires_guildbelt:checkbox", "tracker_requires_guildbelt", TEXT_COLOR_ON, TEXT_COLOR_OFF);
 
     setItemStatusSingle(    ".tracker_item_runecompassion", ".tracker_requires_runecompassion:checkbox", "tracker_requires_runecompassion", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     setItemStatusSingle(    ".tracker_item_runehonor", ".tracker_requires_runehonesty:checkbox", "tracker_requires_runehonesty", TEXT_COLOR_ON, TEXT_COLOR_OFF);
@@ -34,14 +35,15 @@ $( window ).on( "load", pageInit );
 
 $(document).ready(function()
 {
-    toggleClassDisplayPropOnClick(".tracker_locations_main", "main_item");
-    toggleClassDisplayPropOnClick(".tracker_locations_overworld", "overworld_item");
-    toggleClassDisplayPropOnClick(".tracker_locations_underworld", "underworld_item");
+    toggleClassDisplayPropOnClick(".tracker_locations_main", "main_item", "location_main");
+    toggleClassDisplayPropOnClick(".tracker_locations_overworld", "overworld_item", "location_overworld");
+    toggleClassDisplayPropOnClick(".tracker_locations_underworld", "underworld_item", "location_underworld");
     
     setItemStatusSingleOnClick( ".tracker_item_bookofoz", ".tracker_requiresbook:checkbox", "tracker_requiresbook", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     setItemStatusSingleOnClick( ".tracker_item_bookofboardgames", ".tracker_requiresboardgames:checkbox", "tracker_requiresboardgames", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     setItemStatusSingleOnClick( ".tracker_item_sherry", ".tracker_requires_sherry:checkbox", "tracker_requires_sherry", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     setItemStatusSingleOnClick( ".tracker_item_gargoylelens", ".tracker_requires_gargoylelens:checkbox", "tracker_requires_gargoylelens", TEXT_COLOR_ON, TEXT_COLOR_OFF);
+    setItemStatusSingleOnClick( ".tracker_item_guildbelt", ".tracker_requires_guildbelt:checkbox", "tracker_requires_guildbelt", TEXT_COLOR_ON, TEXT_COLOR_OFF);
 
     setItemStatusSingleOnClick( ".tracker_item_runecompassion", ".tracker_requires_runecompassion:checkbox", "tracker_requires_runecompassion", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     setItemStatusSingleOnClick( ".tracker_item_runehonor", ".tracker_requires_runehonesty:checkbox", "tracker_requires_runehonesty", TEXT_COLOR_ON, TEXT_COLOR_OFF);
@@ -136,15 +138,15 @@ function setClassDisplayProp(inClass, inProp)
     }
 }
 
-function toggleClassDisplayPropOnClick(inClickTarget, inClass)
+function toggleClassDisplayPropOnClick(inClickTarget, inClass, inLocationSet)
 {
     $(inClickTarget).click(function()
     {
-        toggleClassDisplayProp(inClass);
+        toggleClassDisplayProp(inClass, inLocationSet);
     });    
 }
 
-function toggleClassDisplayProp(inClass)
+function toggleClassDisplayProp(inClass, inLocationSet)
 {
     var all = document.getElementsByClassName(inClass);
     for (var i = 0; i < all.length; i++)
@@ -152,12 +154,82 @@ function toggleClassDisplayProp(inClass)
         if(all[i].style.display == "none")
         {
             all[i].style.display = "";
-            console.log("test");
         }
         else
         {
-            console.log("test2");
             all[i].style.display = "none";
+        }
+    }
+    checkHiddenElements(inClass, inLocationSet);
+
+    /*
+    var all = document.getElementsByClassName(inLocationSet);
+    for (var i = 0; i < all.length; i++)
+    {
+        if(all[i].style.display == "none")
+        {
+            all[i].style.display = "";
+        }
+        else
+        {
+            all[i].style.display = "none";
+        }
+    }*/
+
+    toggleSharedLocations();
+}
+
+function toggleSharedLocations()
+{
+    if($('.tracker_locations_overworld').is(':checked') && $('.tracker_locations_underworld').is(':checked'))
+    {
+        var all = document.getElementsByClassName('location_daggerisland_underworld');
+        for (var i = 0; i < all.length; i++)
+        {
+            all[i].style.display = "none";
+        }
+    }
+    else
+    {
+        var all = document.getElementsByClassName('location_daggerisland_underworld');
+        for (var i = 0; i < all.length; i++)
+        {
+            if($('.tracker_locations_underworld').is(':checked'))
+            {
+                all[i].style.display = "";
+            }
+            else
+            {
+                all[i].style.display = "none";
+            }
+        }
+    }
+}
+
+function checkHiddenElements(inItemClass, inLocationSet)
+{
+    var all = document.getElementsByClassName(inLocationSet);
+    for (var i = 0; i < all.length; i++)
+    {
+        var inputElements = all[i].getElementsByTagName('div');
+        var totalInputElements = inputElements.length;
+        var totalHiddenElements = 0;
+        
+        for (var j = 0; j < inputElements.length; j++)
+        {
+            if(inputElements[j].style.display == "none")
+            {
+                totalHiddenElements += 1;
+            }
+        }
+
+        if(totalInputElements == totalHiddenElements)
+        {
+            all[i].style.display = "none";
+        }
+        else
+        {
+            all[i].style.display = "";
         }
     }
 }
