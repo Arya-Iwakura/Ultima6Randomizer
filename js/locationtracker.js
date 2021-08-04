@@ -9,6 +9,12 @@ function pageInit()
     setItemStatusSingle(    ".tracker_item_gargoylelens", ".tracker_requires_gargoylelens:checkbox", "tracker_requires_gargoylelens", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     setItemStatusSingle(    ".tracker_item_guildbelt", ".tracker_requires_guildbelt:checkbox", "tracker_requires_guildbelt", TEXT_COLOR_ON, TEXT_COLOR_OFF);
 
+    setItemStatusDouble(    ".tracker_item_guildbelt", ".tracker_requires_guildbelt:checkbox", "tracker_requires_guildbelt",
+                            ".tracker_item_map", ".tracker_requires_beltandmap:checkbox", "tracker_requires_beltandmap", TEXT_COLOR_ON, TEXT_COLOR_OFF);
+
+    setItemStatusDouble( ".tracker_item_map", ".tracker_requires_map:checkbox", "tracker_requires_map",
+                            ".tracker_item_guildbelt", ".tracker_requires_beltandmap:checkbox", "tracker_requires_beltandmap", TEXT_COLOR_ON, TEXT_COLOR_OFF);
+
     setItemStatusSingle(    ".tracker_item_runecompassion", ".tracker_requires_runecompassion:checkbox", "tracker_requires_runecompassion", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     setItemStatusSingle(    ".tracker_item_runehonor", ".tracker_requires_runehonesty:checkbox", "tracker_requires_runehonesty", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     setItemStatusSingle(    ".tracker_item_runehonesty", ".tracker_requires_runehonor:checkbox", "tracker_requires_runehonor", TEXT_COLOR_ON, TEXT_COLOR_OFF);
@@ -43,7 +49,11 @@ $(document).ready(function()
     setItemStatusSingleOnClick( ".tracker_item_bookofboardgames", ".tracker_requiresboardgames:checkbox", "tracker_requiresboardgames", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     setItemStatusSingleOnClick( ".tracker_item_sherry", ".tracker_requires_sherry:checkbox", "tracker_requires_sherry", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     setItemStatusSingleOnClick( ".tracker_item_gargoylelens", ".tracker_requires_gargoylelens:checkbox", "tracker_requires_gargoylelens", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingleOnClick( ".tracker_item_guildbelt", ".tracker_requires_guildbelt:checkbox", "tracker_requires_guildbelt", TEXT_COLOR_ON, TEXT_COLOR_OFF);
+    setItemStatusDoubleOnClick( ".tracker_item_guildbelt", ".tracker_requires_guildbelt:checkbox", "tracker_requires_guildbelt",
+                                ".tracker_item_map", ".tracker_requires_beltandmap:checkbox", "tracker_requires_beltandmap", TEXT_COLOR_ON, TEXT_COLOR_OFF);
+
+    setItemStatusDoubleOnClick( ".tracker_item_map", ".tracker_requires_map:checkbox", "tracker_requires_map",
+                                ".tracker_item_guildbelt", ".tracker_requires_beltandmap:checkbox", "tracker_requires_beltandmap", TEXT_COLOR_ON, TEXT_COLOR_OFF);
 
     setItemStatusSingleOnClick( ".tracker_item_runecompassion", ".tracker_requires_runecompassion:checkbox", "tracker_requires_runecompassion", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     setItemStatusSingleOnClick( ".tracker_item_runehonor", ".tracker_requires_runehonesty:checkbox", "tracker_requires_runehonesty", TEXT_COLOR_ON, TEXT_COLOR_OFF);
