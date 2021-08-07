@@ -81,8 +81,6 @@ function formatSpoilerLogProgressionList(inSpoilers)
     var progressionList = buildProgressionList(inSpoilers);
 
     progressionList.sort(spoilerSortCompareItems);
-    console.log("PROGRESSION LIST");
-    console.log(progressionList);
     var tierList = buildProgressionTiers(progressionList);
 
     outputText += '\r\n';
@@ -237,7 +235,6 @@ function buildProgressionTiers(progressionList)
                 progressionList.push(node);
             }
         }
-        console.log("tier:" + currentTier + " length:" + progressionList.length + " startLength:" + startLength);
         if(startLength == progressionList.length)
         {
             console.log("FAILED SPOILER LOG FINAL TIER CREATION");
@@ -247,8 +244,6 @@ function buildProgressionTiers(progressionList)
 
         currentTier += 1;
     }
-    console.log("TIERS");
-    console.log(tiers);
     return tiers;
 }
 
