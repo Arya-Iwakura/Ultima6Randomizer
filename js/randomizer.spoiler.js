@@ -237,7 +237,7 @@ function buildProgressionTiers(progressionList)
         }
         if(startLength == progressionList.length)
         {
-            console.log("FAILED SPOILER LOG FINAL TIER CREATION");
+            //we may reach this point if some items are not randomized, such as the spells
             tiers[currentTier] = progressionList;
             break;
         }
