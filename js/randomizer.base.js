@@ -78,19 +78,25 @@ const SPELL_DISPEL_FIELD = 0xCF; //CF B8 - dispel
 var DATA_ITEM_MOONORB =
 [
 	{"count": 1, "bytes": 2, "offset": 0x0F91D, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_MOONORB], "restrictions": [ITEM_GOLD, ITEM_MOONORB, ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD, ITEM_SPELL],
-		"requires":[], "name": "moonorb", "item": ["Moon Orb","Moon Orb"], "location": "Slot #1", "type":"main", "stolen":"no", "hints":[],"location_set":"Starting Inventory","progression_set":3},
+		"requires":[], "addedRequires":[], "name": "moonorb", "item": ["Moon Orb","Moon Orb"], "location": "Slot #1", "type":"main", "stolen":"no", "hints":[],"location_set":"Starting Inventory","progression_set":3},
 ];
 
 var DATA_ITEM_SPELLBOOK =
 [
 	{"count": 1, "bytes": 2, "offset": 0x0F923, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_SPELLBOOK], "restrictions": [ITEM_GOLD, ITEM_MOONORB, ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD, ITEM_SPELL],
-		"requires":[], "name": "spellbook", "item": ["Spellbook","Spellbook"], "location": "Slot #2", "type":"main", "stolen":"no", "hints":[],"location_set":"Starting Inventory","progression_set":3},
+		"requires":[], "addedRequires":[], "name": "spellbook", "item": ["Spellbook","Spellbook"], "location": "Slot #2", "type":"main", "stolen":"no", "hints":[],"location_set":"Starting Inventory","progression_set":3},
 ];
 
 var DATA_ITEM_MOONORB_REPLACEMENTS =
 [
 	{"count": 1, "bytes": 2, "offset": 0x0F91D, "flags": [0xC0, 0xC0, 0x01], "id": [0x6D], "restrictions": [ITEM_GOLD, ITEM_MOONORB, ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD, ITEM_SPELL],
-		"requires":[], "name": "sextant", "item": ["Sextant","Sextant"], "location": "Slot #1", "type":"solo", "stolen":"no", "hints":[],"location_set":"Starting Inventory","progression_set":0},
+		"requires":[], "addedRequires":[], "name": "sextant", "item": ["Sextant","Sextant"], "location": "Slot #1", "type":"solo", "stolen":"no", "hints":[],"location_set":"Starting Inventory","progression_set":0},
+];
+
+var DATA_ITEM_SPELLS_NOT_RANDOMIZED =
+[
+	{"flags": [SPELL_DISPEL_FIELD, SPELL_DISPEL_FIELD, 0x0F], "id": [ITEM_SPELL], "restrictions": [], "requires":[], "addedRequires":[], "name": "non-random-spell-dispelfield", "item": ["Spell of Dispel Field","Dispel Field"], "location": "Xiao Shop Purchasables", "location_set":"Shop Inventory", "progression_set":3},
+	{"flags": [SPELL_UNLOCK, SPELL_UNLOCK, 0x0A], "id": [ITEM_SPELL], "restrictions": [], "requires":[], "addedRequires":[], "name": "non-random-spell-unlock", "item": ["Spell of Unlock","Unlock"], "location": "Horance Shop Purchasables", "location_set":"Shop Inventory", "progression_set":3},
 ];
 
 //name is the unique identifier for each of this and must be unique

@@ -37,6 +37,19 @@ function getSpoilerLogLineString(inSpoiler)
     return lineString;
 }
 
+function addMissingItems(inSpoiler)
+{
+    if ($('#randomize_unlockanddispel').is(':checked') == false)
+    {
+        inSpoiler.push({item:DATA_ITEM_SPELLS_NOT_RANDOMIZED[0], location:DATA_ITEM_SPELLS_NOT_RANDOMIZED[0]});
+        inSpoiler.push({item:DATA_ITEM_SPELLS_NOT_RANDOMIZED[1], location:DATA_ITEM_SPELLS_NOT_RANDOMIZED[1]});
+    }
+    if ($('#randomize_spellbook').is(':checked') == false)
+    {
+        inSpoiler.push({item:DATA_ITEM_SPELLBOOK[0], location:DATA_ITEM_SPELLBOOK[0]});
+    }
+}
+
 function formatOptionAvatarSprite()
 {
     var optionAvatarSprite = getCharacterNameByOptionID($('#select-avatar-sprite').val());
@@ -78,6 +91,9 @@ function formatSpoilerLog(inSpoilers, inSeed, inPreset)
 function formatSpoilerLogProgressionList(inSpoilers)
 {
     var outputText = "";
+
+    addMissingItems(inSpoilers);
+
     var progressionList = buildProgressionList(inSpoilers);
 
     progressionList.sort(spoilerSortCompareItems);
@@ -238,6 +254,7 @@ function buildProgressionTiers(progressionList)
         if(startLength == progressionList.length)
         {
             //we may reach this point if some items are not randomized, such as the spells
+            console.log("ERROR: ITEMS COULD NOT BE PLACED IN A TIER - ADDING TO FINAL TIER")
             tiers[currentTier] = progressionList;
             break;
         }
