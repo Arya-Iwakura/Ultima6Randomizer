@@ -38,6 +38,20 @@ var DATA_PLAYER_CHARACTERS =
     {"characterID":0x2D, "spriteID":0x25, "paletteID":0x01, "sleepingID":0x03, "id":35, "name":"Troll (Pink)", "tags":["wild", "monster"]},
 ];
 
+function getCharacterNameByOptionID(inID)
+{
+    for(var i = 0; i < DATA_PLAYER_CHARACTERS.length; ++i)
+    {
+        if(inID == DATA_PLAYER_CHARACTERS[i].id)
+        {
+            return DATA_PLAYER_CHARACTERS[i].name;
+        }
+    }
+    if(inID == 0){ return "Random (All)";}
+    if(inID == 1){ return "Random (Realistic People Only)";}
+    return DATA_PLAYER_CHARACTERS[0].name; //return avatar if no character found
+}
+
 function getCharacterIDByOptionID(inID)
 {
     for(var i = 0; i < DATA_PLAYER_CHARACTERS.length; ++i)

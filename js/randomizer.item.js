@@ -518,6 +518,7 @@ function placeItemsInLocations(rom, random, items, locations, spoilers, hintLoca
 	var safetyCounter = 0;
 	var wasSuccessful = false;
 	var hintsToAddList = [];
+	var spoilersToAddList = [];
 	
 	clearedAddedRequirements(locations);
 
@@ -564,7 +565,7 @@ function placeItemsInLocations(rom, random, items, locations, spoilers, hintLoca
 								addHintToHintsToAddList(items[iItem].item, locations[iLocation].hints, hintsToAddList)
 							}
 						}
-						spoilers.push(items[iItem].item[0] + ' located in ' + locations[iLocation].location);
+						spoilersToAddList.push({item:items[iItem], location:locations[iLocation]});
 					}
 					items.splice(iItem, 1);
 					locations.splice(iLocation, 1);
@@ -636,7 +637,7 @@ function placeItemsInLocations(rom, random, items, locations, spoilers, hintLoca
 								addHintToHintsToAddList(items[iItem].item, locations[iLocation].hints, hintsToAddList)
 							}
 						}
-						spoilers.push(items[iItem].item[0] + ' located in ' + locations[iLocation].location);
+						spoilersToAddList.push({item:items[iItem], location:locations[iLocation]});
 					}
 					items.splice(iItem, 1);
 					locations.splice(iLocation, 1);
@@ -675,7 +676,7 @@ function placeItemsInLocations(rom, random, items, locations, spoilers, hintLoca
 								addHintToHintsToAddList(items[iItem].item, locations[iLocation].hints, hintsToAddList)
 							}
 						}
-						spoilers.push(items[iItem].item[0] + ' located in ' + locations[iLocation].location);
+						spoilersToAddList.push({item:items[iItem], location:locations[iLocation]});
 					}
 					items.splice(iItem, 1);
 					locations.splice(iLocation, 1);
@@ -704,6 +705,7 @@ function placeItemsInLocations(rom, random, items, locations, spoilers, hintLoca
 			else
 			{
 				processHintsToAddList(rom, random, hintsToAddList, hintLocations);
+				spoilers = processSpoilersToAddList(spoilersToAddList, spoilers);
 				wasSuccessful = true;
 				return wasSuccessful;
 			}
@@ -716,8 +718,20 @@ function placeItemsInLocations(rom, random, items, locations, spoilers, hintLoca
 	}
 
 	processHintsToAddList(rom, random, hintsToAddList, hintLocations);
+	processSpoilersToAddList(spoilersToAddList, spoilers);
 
 	return wasSuccessful;
+}
+
+function processSpoilersToAddList(spoilersToAddList, spoilers)
+{
+	for(var i = 0; i < spoilersToAddList.length; i++)
+	{
+		var listItem = spoilersToAddList[i].item;
+		var listLocation = spoilersToAddList[i].location;
+
+		spoilers.push({item:listItem, location:listLocation});
+	}
 }
 
 function addHintToHintsToAddList(itemNames, locationHints, hintsToAddList)

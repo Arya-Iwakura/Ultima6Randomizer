@@ -39,12 +39,7 @@ function doRandomize(buffer, seed)
 
 		if ($('#display_spoiler_log').is(':checked') && result.spoilers.length > 0)
 		{
-			$('#modal-spoiler-win #modal-spoiler-list').text("");
-			result.spoilers.sort();
-			for (var i = 0; i < result.spoilers.length; ++i)
-			{
-				$('#modal-spoiler-win #modal-spoiler-list').append($('<li>').text(result.spoilers[i]).addClass('mono'));
-			}
+			createModalSpoilerList(result.spoilers);
 
 			$('#view-spoiler-list').prop('disabled', false);
 			$('#download-spoiler-log').prop('disabled', false);
@@ -92,33 +87,6 @@ $('#download-last-generated-rom').click(function(e)
 {
 	$('#modal-generated-win').modal('show');
 });
-
-$('#download-spoiler-log').click(function(e)
-{
-	downloadSpoilerLog(e);
-});
-
-$('#download-spoiler-log-from-view').click(function(e)
-{
-	downloadSpoilerLog(e);
-});
-
-function downloadSpoilerLog(e)
-{
-	var fileName = "";
-	fileName = prefix + '-' + result.seed + '-' + result.preset + "-spoiler" + ".txt";
-	if ($('#hide_filename_spoiler').is(':checked'))
-	{
-		fileName = prefix + '-' + Date.now() + "-spoiler" + ".txt";
-	}
-
-	var outputText = "";
-	for(var i = 0; i < result.spoilers.length; ++i)
-	{
-		outputText += result.spoilers[i] + '\r\n';
-	}
-	saveAs(new Blob([outputText], {type: "otext/plain;charset=utf-8"}), fileName);
-}
 
 $('#generate-randomized-rom').click(function(e)
 {
