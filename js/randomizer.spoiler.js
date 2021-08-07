@@ -107,14 +107,7 @@ function formatSpoilerLogProgressionList(inSpoilers)
         for(var iNode = 0; iNode < tierList[iTier].length; ++iNode)
 	    {
             var node = tierList[iTier][iNode];
-            if(node.location.location_set == "shrines")
-            {
-                var itemLine = "    " + node.item.item[0] + ' located in ' + node.location.location_set + " - " + node.location.location;    
-            }
-            else
-            {
-                var itemLine = "    " + node.item.item[0] + ' located in ' + node.location.location_set + " - " + node.location.location;
-            }
+            var itemLine = "    " + node.item.item[0] + ' located in ' + node.location.location_set + " - " + node.location.location;
             outputText += itemLine + '\r\n';
         }
     }

@@ -227,11 +227,11 @@ var DATA_CHESTS_OVERWORLD =
 	{"offset": 0x10EA5, "flags": [0x80, 0xC0, 0x01], "id": [0x90], "restrictions": [ITEM_SPELLBOOK, SPELL_UNLOCK], "requires":[ITEM_SPELLBOOK, SPELL_UNLOCK], "name": "empathabbey-northhouse-01", "item": ["Green Potion","Green Potion"], "location": "North House Chest", "type":"stack", "stolen" : "yes", "hints":[5,16,33,40],"location_set":"Empath Abbey","progression_set":0},
 
 	//quest items
-	{"offset": 0x1175E, "flags": [0xC0, 0xC0, 0x01], "id": [0x5B], "restrictions": [ITEM_SPELLBOOK, SPELL_DISPEL_FIELD], "requires":[ITEM_SPELLBOOK, SPELL_DISPEL_FIELD], "name": "lycaeum-boardgamespot-01", "item": ["Book of Boardgames","Boardgames Book"], "location": "F1 East Chest", "type":"solo", "stolen" : "no", "hints":[2,5,18,24,32,36,41],"location_set":"Lycaeum Lower Levels","progression_set":0},
-	{"offset": 0x1174E, "flags": [0xC0, 0xC0, 0x01], "id": [0x5D], "restrictions": [ITEM_SPELLBOOK, SPELL_DISPEL_FIELD], "requires":[ITEM_SPELLBOOK, SPELL_DISPEL_FIELD], "name": "lycaeum-ozspot-01", "item": ["Book of Oz","Book of Oz"], "location": "F1 North East Chest", "type":"main", "stolen" : "no", "hints":[2,5,18,24,32,36,41],"location_set":"Lycaeum Lower Levels","progression_set":0},
+	{"offset": 0x1175E, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_BOOK_BOARDGAMES], "restrictions": [ITEM_SPELLBOOK, SPELL_DISPEL_FIELD], "requires":[ITEM_SPELLBOOK, SPELL_DISPEL_FIELD], "name": "lycaeum-boardgamespot-01", "item": ["Book of Boardgames","Boardgames Book"], "location": "F1 East Chest", "type":"solo", "stolen" : "no", "hints":[2,5,18,24,32,36,41],"location_set":"Lycaeum Lower Levels","progression_set":0},
+	{"offset": 0x1174E, "flags": [0xC0, 0xC0, 0x01], "id": [ITEM_BOOK_OZ], "restrictions": [ITEM_SPELLBOOK, SPELL_DISPEL_FIELD], "requires":[ITEM_SPELLBOOK, SPELL_DISPEL_FIELD], "name": "lycaeum-ozspot-01", "item": ["Book of Oz","Book of Oz"], "location": "F1 North East Chest", "type":"main", "stolen" : "no", "hints":[2,5,18,24,32,36,41],"location_set":"Lycaeum Lower Levels","progression_set":0},
 	
 	{"offset": 0x04, "flags": [0xC0, 0xC0, 0x01], "id": [0x3B], "restrictions": [ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPIDERSILK, ITEM_SPELL, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_SLEEPING_POWDER, ITEM_BOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD, ITEM_BOOK_OZ],
-		"requires":[], "name": "pocket-lord-british", "item": ["Snake Amulet","Snake Amulet"], "location": "Pocket of Lord British", "type":"solo", "stolen":"no", "hints":[5,19,33],"location_set":"Castle Britannia","progression_set":0}, //dialog special case - Lord British
+		"requires":[ITEM_BOOK_OZ], "name": "pocket-lord-british", "item": ["Snake Amulet","Snake Amulet"], "location": "Pocket of Lord British", "type":"solo", "stolen":"no", "hints":[5,19,33],"location_set":"Castle Britannia","progression_set":0}, //dialog special case - Lord British
 ];
 
 var DATA_CHESTS_OVERWORLD_MAPPIECE =
