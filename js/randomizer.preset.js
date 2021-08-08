@@ -1,3 +1,18 @@
+const PRESET_DAILY_CHALLENGE = 10;
+const PRESET_RANDOM_CHALLENGE = 11;
+
+$('#custom-seed').change(function()
+{
+	if ($('#preset').val() == PRESET_DAILY_CHALLENGE)
+    {
+		dailyChallengeInit();
+	}
+	else if ($('#preset').val() == PRESET_RANDOM_CHALLENGE)
+    {
+		randomChallengeInit();
+	}
+});
+
 function updatePreset(val)
 {
 	var preset = val instanceof Number ? val : +$('#preset').val();
@@ -34,8 +49,11 @@ function updatePreset(val)
 		case 9: //underworld hard
 			preset_underworld_hard();
 			break;
-		case 10: //TEST
-			preset_test();
+		case 10: //daily challenge
+			preset_daily_challenge();
+			break;
+		case 11: //random challenge
+			preset_random_challenge();
 			break;
 		default:
 			preset_overworld_normal();
@@ -586,55 +604,19 @@ function preset_underworld_hard() //hard
 	$('#display_hints').prop('checked', true);
 }
 
-//--------- OTHER PRESETS
-function preset_test()
+//--------- DAILY CHALLENGE PRESET
+function preset_daily_challenge()
 {
-	$('#randomize_core_items').prop('checked', false);
-	$('#randomize_chests_overworld').prop('checked', false);
-	$('#randomize_chests_dungeons').prop('checked', false);
-	
-	$('#randomize_moonorb').prop('disabled', false);
-	$('#randomize_spellbook').prop('disabled', false);
-	$('#randomize_unlockanddispel').prop('disabled', false);
-	$('#add_sherry_item').prop('disabled', false);
-	
-	$('#randomize_enemy_animals').prop('checked', false);
-	
-	$('#randomize_enemy_mix').prop('disabled', true);
-	$('#randomize_enemy_mix').prop('checked', false);
-
-	$('#select-ai-spawn-numbers').prop('value', 0);
-	$('#select-ai-aggression').prop('value', 3);
-	
-	$('#enemy_stats_shuffle').prop('checked', false);
-	$('#enemy_spellcasters_shuffle').prop('checked', false);
-	$('#enemy_equipmentusers_shuffle').prop('checked', false);
-	$('#enemy_droppossessors_shuffle').prop('checked', false);
-	$('#randomize_enemy_drops').prop('checked', false);
-
-	$('#select-ai-stat-difficulty').prop('value', 0);
-	$('#select-ai-spell-difficulty').prop('value', 0);
-	$('#select-ai-spells').prop('value', 0);
-	$('#select-ai-equipment').prop('value', 0);
-
-	$('#add_missing_enemies').prop('checked', true);
-	$('#add_missing_ai_spells').prop('checked', true);
-	$('#remove_moonorb').prop('checked', false);
-	$('#expanded_camping').prop('checked', true);
-	$('#enable_fast_button_mapping').prop('checked', true);
-	$('#enable_expanded_armor_items').prop('checked', true);
-	
-	$('#select-starting-inventory').prop('value', 0);
-	$('#select-starting-gold').prop('value', 0);
-	$('#select-day-night-cycle').prop('value', 2);
-	$('#select-karma-difficulty').prop('value', 0);
-	$('#select-spiritshrine').prop('value', 0);
-	$('#select-placedrafts').prop('value', 0);
-	
-	$('#display_spoiler_log').prop('checked', false);
-	$('#display_hints').prop('disabled', true);
-	$('#display_hints').prop('checked', false);
+	dailyChallengeInit();
 }
+
+//--------- RANDOM CHALLENGE PRESET
+function preset_random_challenge()
+{
+	randomChallengeInit();
+}
+
+//--------- OTHER
 
 $('#preset').change(updatePreset);
 
@@ -656,6 +638,8 @@ var PRESET_NAMES =
 	"Underworld-Easy",
 	"Underworld-Normal",
 	"Underworld-Hard",
+	"Daily Challenge",
+	"Random Challenge",
 ];
 
 function getPresetName(n)

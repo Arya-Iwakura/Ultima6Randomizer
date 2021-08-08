@@ -92,8 +92,7 @@ $('#generate-randomized-rom').click(function(e)
 {
 	if (!ORIGINAL_ROM) return;
 
-	// maybe this will be a NaN?
-	var seed = parseInt($('#custom-seed').val(), 16);
+	var seed = getSeedForGenerator();
 
 	if (ORIGINAL_ROM === true)
 	{
@@ -115,8 +114,7 @@ $('#generate-randomized-rom').click(function(e)
 
 $('#generate-param-rom').click(function(e)
 {
-	// maybe this will be a NaN?
-	var seed = parseInt($('#custom-seed').val(), 16);
+	var seed = getSeedForGenerator();
 
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', 'validation.data', true);
@@ -126,6 +124,24 @@ $('#generate-param-rom').click(function(e)
 	xhr.onload = function(e){ doRandomize(xhr.response, seed); }
 	xhr.send();
 });
+
+function getSeedForGenerator()
+{
+	var seed = NaN;
+
+	if ($('#preset').val() == PRESET_DAILY_CHALLENGE)
+    {
+        //preset mode set to DAILY CHALLENGE
+		seed = getDailyChallengeSeed();
+    }
+	else
+	{
+		//preset mode set to anything else
+		seed = parseInt($('#custom-seed').val(), 16); //if nothing is input this will return as NaN - this is expected
+	}
+	
+	return seed;
+}
 
 function getMD5(file, callback)
 {

@@ -73,7 +73,15 @@ function formatSpoilerLog(inSpoilers, inSeed, inPreset)
 
     outputText += "Ultima 6 Randomizer (SNES) " + VERSION_STRING + '\r\n';
     outputText += "Seed: " + inSeed + '\r\n';
-    outputText += "Preset: " + inPreset + '\r\n';
+    outputText += "Flags: " + inPreset + '\r\n';
+    if ($('#preset').val() == PRESET_DAILY_CHALLENGE)
+    {
+        outputText += "Preset: " + getPresetName($('#preset').val()) + " - " + getReadableDateAsString() + '\r\n';
+    }
+    else
+    {
+        outputText += "Preset: " + getPresetName($('#preset').val()) + '\r\n';
+    }
     outputText += "Player Sprite: " + formatOptionAvatarSprite() + '\r\n';
     outputText += "Poison Flash: " + formatOptionPoison() + '\r\n';
 

@@ -714,7 +714,7 @@ function placeItemsInLocations(rom, random, items, locations, spoilers, hintLoca
 
 	if(wasSuccessful == false)
 	{
-		//console.log('=== ERROR - ITEM RANDOMIZATION FAILED - RANDOMIZING AGAIN ===');
+		console.log('=== ERROR - ITEM RANDOMIZATION FAILED - RANDOMIZING AGAIN ===');
 	}
 
 	processHintsToAddList(rom, random, hintsToAddList, hintLocations);
