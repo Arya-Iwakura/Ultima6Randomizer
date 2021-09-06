@@ -190,14 +190,12 @@ function setRandomChallengeSettings(dailySeed)
     var dataObject = {random:random};
     //var day = 0; - TODO: get day of the week to determine weights
 
-    $('#randomize_core_items').prop('checked', true); //always include core items
-
-    getRandomOverworldShuffleSetting(dataObject);
-    getRandomUnderworldShuffleSetting(dataObject);
     getRandomMoonOrbShuffleSetting(dataObject);
     getRandomSpellbookShuffleSetting(dataObject);
-    getRandomProgressionSpellsShuffleSetting(dataObject);
     getRandomSherryItemSetting(dataObject);
+    getRandomItemShuffleSettings(dataObject);
+
+    getRandomProgressionSpellsShuffleSetting(dataObject);
     getRandomEnemyMonstersSetting(dataObject);
     getRandomEnemyWildSetting(dataObject);
     getRandomEnemyAnimalsSetting(dataObject);
@@ -225,7 +223,10 @@ function setRandomChallengeSettings(dailySeed)
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
 	$('#randomize_moon_phases').prop('checked', true);
+    $('#skip_intro_cinematic').prop('checked', true);
 	
+    getRandomPlayerStartSetting(dataObject);
+    getRandomMoonOrbDestiantionsSetting(dataObject);
     getRandomOpenAvatarShrineSetting(dataObject);
     getRandomJunkItemsSetting(dataObject);
     getRandomStartinInventorySetting(dataObject);
@@ -241,14 +242,74 @@ function setRandomChallengeSettings(dailySeed)
 	$('#display_hints').prop('checked', true);
 }
 
-function getRandomOverworldShuffleSetting(dataObject)
+function getRandomItemShuffleSettings(dataObject)
 {
-    $('#randomize_chests_overworld').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
+    var neededCount = PROGRESSION_CORE.length;
+
+    var checkedList = [];
+    var options = [0,1,2,3,4,5,6,7,8,9,10,11];
+    options.shuffle(dataObject.random);
+    for(var i = 0; i < options.length; ++i)
+    {
+        checkedList.push(getRandomTrueFalse(dataObject.random, 0.6));
+        setRandomLocationTypeSelection(options[i], checkedList[i]);
+    }
+
+    var currentCount = 0;
+    var loopCount = 0;
+
+    while(currentCount <= neededCount && loopCount < 10)
+    {
+        var selectedLocationTypes = getSelectedLocationTypesList();
+	    var selectedLocations = buildSelectedLocationsList(selectedLocationTypes.selectedLocations);
+        var requiredProgressionItems = getSelectedProgressionItemsList();
+        neededCount = requiredProgressionItems.length;
+        currentCount = selectedLocations.length;
+        if(currentCount <= neededCount)
+        {
+            for(var i = 0; i < options.length; ++i)
+            {
+                if(checkedList[i] == false)
+                {
+                    checkedList[i] = true;
+                    setRandomLocationTypeSelection(options[i], checkedList[i]);
+                    break;
+                }
+            }
+        }
+        loopCount += 1;
+    }
 }
 
-function getRandomUnderworldShuffleSetting(dataObject)
+function setRandomLocationTypeSelection(selection, value)
 {
-    $('#randomize_chests_dungeons').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
+    switch(selection)
+    {
+        case 0:
+            $('#randomize_locations_overworld').prop('checked', value);
+        case 1:
+	        $('#randomize_locations_townsvirtue').prop('checked', value);
+        case 2:
+	        $('#randomize_locations_townsnonvirtue').prop('checked', value);
+        case 3:
+	        $('#randomize_locations_castles').prop('checked', value);
+        case 4:
+            $('#randomize_locations_dialog').prop('checked', value);
+        case 5:
+	        $('#randomize_locations_treasuremap').prop('checked', value);
+        case 6:
+	        $('#randomize_locations_caves').prop('checked', value);
+        case 7:
+	        $('#randomize_locations_tombs').prop('checked', value);
+        case 8:
+	        $('#randomize_locations_dungeons').prop('checked', value);
+        case 9:
+	        $('#randomize_locations_shrines').prop('checked', value);
+        case 10:
+	        $('#randomize_locations_gargoylecity').prop('checked', value);
+        case 11:
+	        $('#randomize_locations_joinablepartymembers').prop('checked', value);
+    }
 }
 
 function getRandomMoonOrbShuffleSetting(dataObject)
@@ -258,17 +319,17 @@ function getRandomMoonOrbShuffleSetting(dataObject)
 
 function getRandomSpellbookShuffleSetting(dataObject)
 {
-    $('#randomize_spellbook').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
+    $('#randomize_spellbook').prop('checked', getRandomTrueFalse(dataObject.random, 0.75));
 }
 
 function getRandomProgressionSpellsShuffleSetting(dataObject)
 {
-    $('#randomize_unlockanddispel').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
+    $('#randomize_unlockanddispel').prop('checked', getRandomTrueFalse(dataObject.random, 0.75));
 }
 
 function getRandomSherryItemSetting(dataObject)
 {
-    $('#add_sherry_item').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
+    $('#add_sherry_item').prop('checked', getRandomTrueFalse(dataObject.random, 0.75));
 }
 
 function getRandomEnemyMonstersSetting(dataObject)
@@ -436,6 +497,16 @@ function getRandomBelievableAISetting(dataObject)
 function getRandomOpenAvatarShrineSetting(dataObject)
 {
     $('#open_avatar_shrine').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
+}
+
+function getRandomPlayerStartSetting(dataObject)
+{
+    $('#randomize_player_start').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
+}
+
+function getRandomMoonOrbDestiantionsSetting(dataObject)
+{
+    $('#randomize_moonorb_destinations').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
 }
 
 function getRandomJunkItemsSetting(dataObject)

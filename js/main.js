@@ -4,7 +4,8 @@ var BASEURL = window.location.origin + window.location.pathname;
 var EN_US = false;
 var __U6C = true;
 
-var DEVMODE = window.location.href.indexOf('localhost') != -1;
+//var DEVMODE = window.location.href.indexOf('localhost') != -1;
+var DEVMODE = (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.hostname === "") != -1;
 var DEEPVALIDATION = window.location.href.indexOf('localhost') != -1;
 
 var result;
@@ -68,10 +69,13 @@ $('#download-generated-rom').click(function(e)
 {
 	var avatar_sprite = $('#select-avatar-sprite').val();
 	var fire_flag = ($('#avatar-sprite-fire-flag').is(':checked'));
-	result.buffer = setCharacterSprite(result.buffer, result.seed, avatar_sprite, fire_flag);
+	if(avatar_sprite != 2 || fire_flag > 0){result.buffer = setCharacterSprite(result.buffer, result.seed, avatar_sprite, fire_flag);}
 
 	var poison_flash = $('#poison_flash_options').val();
-	result.buffer = setPoisionFlash(result.buffer, poison_flash);
+	if(poison_flash > 0 ) {result.buffer = setPoisionFlash(result.buffer, poison_flash);}
+
+	var music_flag = $('#music_options').val();
+	if(music_flag > 0){result.buffer = setMusic(result.buffer, result.subSystemSeeds[SUBSYSTEM_SOUND], music_flag);}
 
 	var fileName = "";
 	fileName = prefix + '-' + result.seed + '-' + result.preset + result.type;
@@ -98,7 +102,7 @@ $('#generate-randomized-rom').click(function(e)
 	{
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', 'validation.data', true);
-		console.log("generate-randomized-rom - READING VALIDATION DATA");
+		consoleLog("generate-randomized-rom - READING VALIDATION DATA");
 		xhr.responseType = 'arraybuffer';
 
 		xhr.onload = function(e){ doRandomize(xhr.response, seed); }
@@ -118,7 +122,7 @@ $('#generate-param-rom').click(function(e)
 
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', 'validation.data', true);
-	console.log("generate-param-rom - READING VALIDATION DATA");
+	consoleLog("generate-param-rom - READING VALIDATION DATA");
 	xhr.responseType = 'arraybuffer';
 
 	xhr.onload = function(e){ doRandomize(xhr.response, seed); }
@@ -139,7 +143,7 @@ function getSeedForGenerator()
 		//preset mode set to anything else
 		seed = parseInt($('#custom-seed').val(), 16); //if nothing is input this will return as NaN - this is expected
 	}
-	
+
 	return seed;
 }
 
@@ -170,65 +174,127 @@ $('#view-spoiler-list').click(function(e)
 	$('#modal-spoiler-win').modal('show');
 });
 
-$('#randomize_core_items').click(function(e)
+function mainPageInit()
 {
-	checkInventoryFlagStatus();
-	checkHintFlagStatus();
-});
-$('#randomize_chests_overworld').click(function(e)
-{
-	checkInventoryFlagStatus();
-	checkHintFlagStatus();
-});
-$('#randomize_chests_dungeons').click(function(e)
-{
-	checkInventoryFlagStatus();
-	checkHintFlagStatus();
-});
+	//update labels for each location type on page load
+	$('#label_randomize_locations_overworld #count-overworld-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"overworld") + ")" );
+	$('#label_randomize_locations_townsvirtue #count-townsvirtue-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"towns_virtue") + ")" );
+	$('#label_randomize_locations_townsnonvirtue #count-townsnonvirtue-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"towns_nonvirtue") + ")" );
+	$('#label_randomize_locations_castles #count-castles-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"castles") + ")" );
+	$('#label_randomize_locations_dialog #count-dialog-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"dialog") + ")" );
+	$('#label_randomize_locations_treasuremap #count-treasuremap-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"treasuremap") + ")" );
+	$('#label_randomize_locations_caves #count-caves-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"caves") + ")" );
+	$('#label_randomize_locations_tombs #count-tombs-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"tombs") + ")" );
+	$('#label_randomize_locations_dungeons #count-dungeons-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"dungeons") + ")" );
+	$('#label_randomize_locations_shrines #count-shrines-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"shrines") + ")" );
+	$('#label_randomize_locations_gargoylecity #count-gargoylecity-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"gargoylecity") + ")" );
+	$('#label_randomize_locations_joinablepartymembers #count-joinablepartymembers-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"joinablepartymembers") + ")" );
+	$('#label_randomize_locations_moonorb #count-moonorb-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"playerinventory_slot1") + ")" );
+	$('#label_randomize_locations_spellbook #count-spellbook-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"playerinventory_slot2") + ")" );
 
-function checkInventoryFlagStatus()
-{
-	if ($('#randomize_core_items').is(':checked') || $('#randomize_chests_overworld').is(':checked') || $('#randomize_chests_dungeons').is(':checked'))
-	{
-		$('#randomize_moonorb').prop('disabled', false);
-		$('#randomize_spellbook').prop('disabled', false);
-		$('#randomize_unlockanddispel').prop('disabled', false);
-		//$('#add_sherry_item').prop('disabled', false);
-	}
-	else
-	{
-		$('#randomize_moonorb').prop('disabled', true);
-		$('#randomize_moonorb').prop('checked', false);
+	updateSelectedLocationsCount();
+}
+$( window ).on( "load", mainPageInit );
 
-		$('#randomize_spellbook').prop('disabled', true);
-		$('#randomize_spellbook').prop('checked', false);
-		
-		$('#randomize_unlockanddispel').prop('disabled', true);
-		$('#randomize_unlockanddispel').prop('checked', false);
-	
-		//$('#add_sherry_item').prop('disabled', true);
-		//$('#add_sherry_item').prop('checked', false);
-	}
+function setClassToColor(inClass, inColor)
+{
+    var all = document.getElementsByClassName(inClass);
+    for (var i = 0; i < all.length; i++)
+    {
+        all[i].style.color = inColor;
+    }
 }
 
-$('#randomize_moonorb').click(function(e)
+function setClassDisplayProp(inClass, inProp)
 {
-	checkHintFlagStatus();
+    var all = document.getElementsByClassName(inClass);
+    for (var i = 0; i < all.length; i++)
+    {
+        all[i].style.display = inProp;
+    }
+}
+
+$('#randomize_locations_overworld').click(function(e)
+{
+	updateSelectedLocationsCount();
 });
-$('#randomize_spellbook').click(function(e)
+$('#randomize_locations_townsvirtue').click(function(e)
 {
-	checkHintFlagStatus();
+	updateSelectedLocationsCount();
 });
-function checkHintFlagStatus()
+$('#label_randomize_locations_townsnonvirtue').click(function(e)
 {
-	if ($('#randomize_core_items').is(':checked') || $('#randomize_moonorb').is(':checked') || $('#randomize_spellbook').is(':checked'))
+	updateSelectedLocationsCount();
+});
+$('#label_randomize_locations_castles').click(function(e)
+{
+	updateSelectedLocationsCount();
+});
+$('#label_randomize_locations_dialog').click(function(e)
+{
+	updateSelectedLocationsCount();
+});
+$('#label_randomize_locations_treasuremap').click(function(e)
+{
+	updateSelectedLocationsCount();
+});
+$('#label_randomize_locations_caves').click(function(e)
+{
+	updateSelectedLocationsCount();
+});
+$('#label_randomize_locations_tombs').click(function(e)
+{
+	updateSelectedLocationsCount();
+});
+$('#label_randomize_locations_dungeons').click(function(e)
+{
+	updateSelectedLocationsCount();
+});
+$('#label_randomize_locations_shrines').click(function(e)
+{
+	updateSelectedLocationsCount();
+});
+$('#label_randomize_locations_gargoylecity').click(function(e)
+{
+	updateSelectedLocationsCount();
+});
+$('#label_randomize_locations_joinablepartymembers').click(function(e)
+{
+	updateSelectedLocationsCount();
+});
+$('#label_randomize_moonorb').click(function(e)
+{
+	updateSelectedLocationsCount();
+});
+$('#label_randomize_spellbook').click(function(e)
+{
+	updateSelectedLocationsCount();
+});
+$('#label_randomize_unlockanddispel').click(function(e)
+{
+	updateSelectedLocationsCount();
+});
+$('#label_randomize_sherryitem').click(function(e)
+{
+	updateSelectedLocationsCount();
+});
+
+function updateSelectedLocationsCount()
+{
+	var requiredProgressionItems = getSelectedProgressionItemsList();
+	var selectedLocationTypes = getSelectedLocationTypesList();
+	var selectedLocations = buildSelectedLocationsList(selectedLocationTypes.selectedLocations);
+
+	$('#label_randomize_locations_header #locations_header_selected_total').text( selectedLocations.length );
+	if(selectedLocations.length <= requiredProgressionItems.length)
 	{
-		$('#display_hints').prop('disabled', false);
+		$('#label_randomize_locations_header #locations_header_selected_required').text( "NO" );
+		setClassToColor("locations_header_selected_required_color", "rgb(192, 51, 51)");
 	}
 	else
 	{
-		$('#display_hints').prop('disabled', true);
-		$('#display_hints').prop('checked', false);
+		$('#label_randomize_locations_header #locations_header_selected_required').text("ALL " + requiredProgressionItems.length);
+		setClassToColor("locations_header_selected_required_color", "rgb(51, 51, 51)");
 	}
 }
 
@@ -1326,7 +1392,7 @@ ROMLogger.prototype.print = function()
 	for (var i = 0; i < this.rom.length; ++i)
 	{
 		if (this.rom[i] == this.orig[i]) continue;
-		console.log(i.toHex(6, '0x') + ' - ' + this.orig[i].toHex(2) + '->' + this.rom[i].toHex(2));
+		consoleLog(i.toHex(6, '0x') + ' - ' + this.orig[i].toHex(2) + '->' + this.rom[i].toHex(2));
 	}
 }
 
@@ -1365,6 +1431,30 @@ $(document).ready(function()
 	var language = window.navigator.userLanguage || window.navigator.language || "";
 	EN_US = (language.indexOf('US') != -1);
 });
+
+function consoleLog()
+{
+	if(DEVMODE)
+	{
+		console.log.apply(this, arguments)
+	}
+}
+
+function consoleWarn()
+{
+	if(DEVMODE)
+	{
+		console.warn.apply(this, arguments)
+	}
+}
+
+function consoleError()
+{
+	if(DEVMODE)
+	{
+		console.error.apply(this, arguments)
+	}
+}
 
 var TESTERS =
 {

@@ -12,7 +12,7 @@ function pageInit()
     setItemStatusDouble(    ".tracker_item_guildbelt", ".tracker_requires_guildbelt:checkbox", "tracker_requires_guildbelt",
                             ".tracker_item_map", ".tracker_requires_beltandmap:checkbox", "tracker_requires_beltandmap", TEXT_COLOR_ON, TEXT_COLOR_OFF);
 
-    setItemStatusDouble( ".tracker_item_map", ".tracker_requires_map:checkbox", "tracker_requires_map",
+    setItemStatusDouble(    ".tracker_item_map", ".tracker_requires_map:checkbox", "tracker_requires_map",
                             ".tracker_item_guildbelt", ".tracker_requires_beltandmap:checkbox", "tracker_requires_beltandmap", TEXT_COLOR_ON, TEXT_COLOR_OFF);
 
     setItemStatusSingle(    ".tracker_item_runecompassion", ".tracker_requires_runecompassion:checkbox", "tracker_requires_runecompassion", TEXT_COLOR_ON, TEXT_COLOR_OFF);
@@ -24,6 +24,8 @@ function pageInit()
     setItemStatusSingle(    ".tracker_item_runespirituality", ".tracker_requires_runespirituality:checkbox", "tracker_requires_runespirituality", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     setItemStatusSingle(    ".tracker_item_runevalor", ".tracker_requires_runevalor:checkbox", "tracker_requires_runevalor", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     
+    setItemStatusSingle(    ".tracker_item_spellbook", ".tracker_requires_spellbook:checkbox", "tracker_requires_spellbook", TEXT_COLOR_ON, TEXT_COLOR_OFF);
+
     setItemStatusDouble(    ".tracker_spell_dispelfield", ".tracker_blockedbyfield:checkbox", "tracker_blockedbyfield",
                             ".tracker_spell_unlock", ".tracker_requires_unlockandfield:checkbox", "tracker_requires_unlockandfield", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     
@@ -35,15 +37,30 @@ function pageInit()
 
     setItemStatusDouble(    ".tracker_item_gargishtext", ".tracker_requires_gargishtext:checkbox", "tracker_requires_gargishtext",
                             ".tracker_item_brokenlens", ".tracker_requires_brokenlensandgargishtext:checkbox", "tracker_requires_brokenlensandgargishtext", TEXT_COLOR_ON, TEXT_COLOR_OFF);
+
+    setItemStatusDouble(    ".tracker_item_gargoylelens", ".tracker_requires_brokenlens:checkbox", "tracker_requires_gargoylelens",
+                            ".tracker_item_gargishtext", ".tracker_requires_gargoylelensandgargishtext:checkbox", "tracker_requires_gargoylelensandgargishtext", TEXT_COLOR_ON, TEXT_COLOR_OFF);
+
+    setItemStatusDouble(    ".tracker_item_gargishtext", ".tracker_requires_gargishtext:checkbox", "tracker_requires_gargishtext",
+                            ".tracker_item_gargoylelens", ".tracker_requires_gargoylelensandgargishtext:checkbox", "tracker_requires_gargoylelensandgargishtext", TEXT_COLOR_ON, TEXT_COLOR_OFF);
 }
 
 $( window ).on( "load", pageInit );
 
 $(document).ready(function()
 {
-    toggleClassDisplayPropOnClick(".tracker_locations_main", "main_item", "location_main");
     toggleClassDisplayPropOnClick(".tracker_locations_overworld", "overworld_item", "location_overworld");
-    toggleClassDisplayPropOnClick(".tracker_locations_underworld", "underworld_item", "location_underworld");
+    toggleClassDisplayPropOnClick(".tracker_locations_virtuetown", "virtuetown_item", "location_virtuetown");
+    toggleClassDisplayPropOnClick(".tracker_locations_nonvirtuetown", "nonvirtuetown_item", "location_nonvirtuetown");
+    toggleClassDisplayPropOnClick(".tracker_locations_castles", "castles_item", "location_castles");
+    toggleClassDisplayPropOnClick(".tracker_locations_dialogrewards", "dialogrewards_item", "location_dialogrewards");
+    toggleClassDisplayPropOnClick(".tracker_locations_treasuremap", "treasuremap_item", "location_treasuremap");
+    toggleClassDisplayPropOnClick(".tracker_locations_caves", "caves_item", "location_caves");
+    toggleClassDisplayPropOnClick(".tracker_locations_tombs", "tombs_item", "location_tombs");
+    toggleClassDisplayPropOnClick(".tracker_locations_dungeons", "dungeons_item", "location_dungeons");
+    toggleClassDisplayPropOnClick(".tracker_locations_shrines", "shrines_item", "location_shrines");
+    toggleClassDisplayPropOnClick(".tracker_locations_gargoylecity", "gargoylecity_item", "location_gargoylecity");
+    toggleClassDisplayPropOnClick(".tracker_locations_joinablepartymembers", "joinablepartymembers_item", "location_joinablepartymembers");
     
     setItemStatusSingleOnClick( ".tracker_item_bookofoz", ".tracker_requiresbook:checkbox", "tracker_requiresbook", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     setItemStatusSingleOnClick( ".tracker_item_bookofboardgames", ".tracker_requiresboardgames:checkbox", "tracker_requiresboardgames", TEXT_COLOR_ON, TEXT_COLOR_OFF);
@@ -56,14 +73,16 @@ $(document).ready(function()
                                 ".tracker_item_guildbelt", ".tracker_requires_beltandmap:checkbox", "tracker_requires_beltandmap", TEXT_COLOR_ON, TEXT_COLOR_OFF);
 
     setItemStatusSingleOnClick( ".tracker_item_runecompassion", ".tracker_requires_runecompassion:checkbox", "tracker_requires_runecompassion", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingleOnClick( ".tracker_item_runehonor", ".tracker_requires_runehonesty:checkbox", "tracker_requires_runehonesty", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingleOnClick( ".tracker_item_runehonesty", ".tracker_requires_runehonor:checkbox", "tracker_requires_runehonor", TEXT_COLOR_ON, TEXT_COLOR_OFF);
+    setItemStatusSingleOnClick( ".tracker_item_runehonesty", ".tracker_requires_runehonesty:checkbox", "tracker_requires_runehonesty", TEXT_COLOR_ON, TEXT_COLOR_OFF);
+    setItemStatusSingleOnClick( ".tracker_item_runehonor", ".tracker_requires_runehonor:checkbox", "tracker_requires_runehonor", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     setItemStatusSingleOnClick( ".tracker_item_runehumility", ".tracker_requires_runehumilty:checkbox", "tracker_requires_runehumilty", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     setItemStatusSingleOnClick( ".tracker_item_runejustice", ".tracker_requires_runejustice:checkbox", "tracker_requires_runejustice", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     setItemStatusSingleOnClick( ".tracker_item_runesacrifice", ".tracker_requires_runesacrifice:checkbox", "tracker_requires_runesacrifice", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     setItemStatusSingleOnClick( ".tracker_item_runespirituality", ".tracker_requires_runespirituality:checkbox", "tracker_requires_runespirituality", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     setItemStatusSingleOnClick( ".tracker_item_runevalor", ".tracker_requires_runevalor:checkbox", "tracker_requires_runevalor", TEXT_COLOR_ON, TEXT_COLOR_OFF);   
     
+    setItemStatusSingleOnClick( ".tracker_item_spellbook", ".tracker_requires_spellbook:checkbox", "tracker_requires_spellbook", TEXT_COLOR_ON, TEXT_COLOR_OFF);
+
     setItemStatusDoubleOnClick( ".tracker_spell_dispelfield", ".tracker_blockedbyfield:checkbox", "tracker_blockedbyfield",
                                 ".tracker_spell_unlock", ".tracker_requires_unlockandfield:checkbox", "tracker_requires_unlockandfield", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     
@@ -75,6 +94,12 @@ $(document).ready(function()
     
     setItemStatusDoubleOnClick( ".tracker_item_gargishtext", ".tracker_requires_gargishtext:checkbox", "tracker_requires_gargishtext",
                                 ".tracker_item_brokenlens", ".tracker_requires_brokenlensandgargishtext:checkbox", "tracker_requires_brokenlensandgargishtext", TEXT_COLOR_ON, TEXT_COLOR_OFF);
+
+    setItemStatusDoubleOnClick( ".tracker_item_gargoylelens", ".tracker_requires_brokenlens:checkbox", "tracker_requires_gargoylelens",
+                                ".tracker_item_gargishtext", ".tracker_requires_gargoylelensandgargishtext:checkbox", "tracker_requires_gargoylelensandgargishtext", TEXT_COLOR_ON, TEXT_COLOR_OFF);
+    
+    setItemStatusDoubleOnClick( ".tracker_item_gargishtext", ".tracker_requires_gargishtext:checkbox", "tracker_requires_gargishtext",
+                                ".tracker_item_gargoylelens", ".tracker_requires_gargoylelensandgargishtext:checkbox", "tracker_requires_gargoylelensandgargishtext", TEXT_COLOR_ON, TEXT_COLOR_OFF);
 });
 
 function setItemStatusSingleOnClick(itemName, requireCheckbox, requireLabel, colorOn, colorOff)
@@ -171,49 +196,6 @@ function toggleClassDisplayProp(inClass, inLocationSet)
         }
     }
     checkHiddenElements(inClass, inLocationSet);
-
-    /*
-    var all = document.getElementsByClassName(inLocationSet);
-    for (var i = 0; i < all.length; i++)
-    {
-        if(all[i].style.display == "none")
-        {
-            all[i].style.display = "";
-        }
-        else
-        {
-            all[i].style.display = "none";
-        }
-    }*/
-
-    toggleSharedLocations();
-}
-
-function toggleSharedLocations()
-{
-    if($('.tracker_locations_overworld').is(':checked') && $('.tracker_locations_underworld').is(':checked'))
-    {
-        var all = document.getElementsByClassName('location_daggerisland_underworld');
-        for (var i = 0; i < all.length; i++)
-        {
-            all[i].style.display = "none";
-        }
-    }
-    else
-    {
-        var all = document.getElementsByClassName('location_daggerisland_underworld');
-        for (var i = 0; i < all.length; i++)
-        {
-            if($('.tracker_locations_underworld').is(':checked'))
-            {
-                all[i].style.display = "";
-            }
-            else
-            {
-                all[i].style.display = "none";
-            }
-        }
-    }
 }
 
 function checkHiddenElements(inItemClass, inLocationSet)

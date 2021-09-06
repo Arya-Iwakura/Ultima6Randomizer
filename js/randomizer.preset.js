@@ -1,5 +1,6 @@
 const PRESET_DAILY_CHALLENGE = 10;
 const PRESET_RANDOM_CHALLENGE = 11;
+const PRESET_PATCHED_BASE_GAME = 12;
 
 $('#custom-seed').change(function()
 {
@@ -61,14 +62,25 @@ function updatePreset(val)
 	}
 
 	updateAllSelectionTooltips();
+	updateSelectedLocationsCount();
 }
 
 //--------- OVERWORLD LOCATIONS PRESETS
 function preset_overworld_easy() //easy
 {
-	$('#randomize_core_items').prop('checked', true);
-	$('#randomize_chests_overworld').prop('checked', true);
-	$('#randomize_chests_dungeons').prop('checked', false);
+	$('#randomize_locations_overworld').prop('checked', true);
+	$('#randomize_locations_townsvirtue').prop('checked', true);
+	$('#randomize_locations_townsnonvirtue').prop('checked', true);
+	$('#randomize_locations_castles').prop('checked', false);
+	$('#randomize_locations_dialog').prop('checked', true);
+	$('#randomize_locations_treasuremap').prop('checked', false);
+	$('#randomize_locations_caves').prop('checked', false);
+	$('#randomize_locations_tombs').prop('checked', false);
+	$('#randomize_locations_dungeons').prop('checked', false);
+	$('#randomize_locations_shrines').prop('checked', true);
+	$('#randomize_locations_gargoylecity').prop('checked', false);
+	$('#randomize_locations_joinablepartymembers').prop('checked', false);
+	
 	$('#randomize_moonorb').prop('checked', false);
 	$('#randomize_spellbook').prop('checked', false);
 	$('#randomize_unlockanddispel').prop('checked', false);
@@ -99,15 +111,17 @@ function preset_overworld_easy() //easy
 	$('#select-ai-spell-difficulty').prop('value', 1);
 	$('#select-ai-spells').prop('value', 0);
 	$('#select-ai-equipment').prop('value', 0);
-
 	$('#add_missing_enemies').prop('checked', true);
-	$('#add_missing_ai_spells').prop('checked', true);
+
+	$('#randomize_player_start').prop('checked', false);
+	$('#randomize_moonorb_destinations').prop('checked', false);
 	$('#remove_moonorb').prop('checked', false);
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
 	$('#randomize_moon_phases').prop('checked', true);
 	$('#open_avatar_shrine').prop('checked', true);
+	$('#skip_intro_cinematic').prop('checked', true);
 
 	$('#select-junk-items').prop('value', 1);
 	$('#select-starting-inventory').prop('value', 4);
@@ -125,9 +139,19 @@ function preset_overworld_easy() //easy
 
 function preset_overworld_normal() //normal
 {
-	$('#randomize_core_items').prop('checked', true);
-	$('#randomize_chests_overworld').prop('checked', true);
-	$('#randomize_chests_dungeons').prop('checked', false);
+	$('#randomize_locations_overworld').prop('checked', true);
+	$('#randomize_locations_townsvirtue').prop('checked', true);
+	$('#randomize_locations_townsnonvirtue').prop('checked', true);
+	$('#randomize_locations_castles').prop('checked', false);
+	$('#randomize_locations_dialog').prop('checked', true);
+	$('#randomize_locations_treasuremap').prop('checked', false);
+	$('#randomize_locations_caves').prop('checked', false);
+	$('#randomize_locations_tombs').prop('checked', false);
+	$('#randomize_locations_dungeons').prop('checked', false);
+	$('#randomize_locations_shrines').prop('checked', true);
+	$('#randomize_locations_gargoylecity').prop('checked', true);
+	$('#randomize_locations_joinablepartymembers').prop('checked', true);
+
 	$('#randomize_moonorb').prop('checked', true);
 	$('#randomize_spellbook').prop('checked', false);
 	$('#randomize_unlockanddispel').prop('checked', true);
@@ -159,15 +183,17 @@ function preset_overworld_normal() //normal
 	$('#select-ai-spell-difficulty').prop('value', 0);
 	$('#select-ai-spells').prop('value', 1);
 	$('#select-ai-equipment').prop('value', 1);
-
 	$('#add_missing_enemies').prop('checked', true);
-	$('#add_missing_ai_spells').prop('checked', true);
+
+	$('#randomize_player_start').prop('checked', true);
+	$('#randomize_moonorb_destinations').prop('checked', false);
 	$('#remove_moonorb').prop('checked', false);
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
 	$('#randomize_moon_phases').prop('checked', true);
 	$('#open_avatar_shrine').prop('checked', false);
+	$('#skip_intro_cinematic').prop('checked', true);
 
 	$('#select-junk-items').prop('value', 1);
 	$('#select-starting-inventory').prop('value', 3);
@@ -185,9 +211,19 @@ function preset_overworld_normal() //normal
 
 function preset_overworld_hard() //hard
 {
-	$('#randomize_core_items').prop('checked', true);
-	$('#randomize_chests_overworld').prop('checked', true);
-	$('#randomize_chests_dungeons').prop('checked', false);
+	$('#randomize_locations_overworld').prop('checked', true);
+	$('#randomize_locations_townsvirtue').prop('checked', true);
+	$('#randomize_locations_townsnonvirtue').prop('checked', true);
+	$('#randomize_locations_castles').prop('checked', true);
+	$('#randomize_locations_dialog').prop('checked', true);
+	$('#randomize_locations_treasuremap').prop('checked', false);
+	$('#randomize_locations_caves').prop('checked', false);
+	$('#randomize_locations_tombs').prop('checked', true);
+	$('#randomize_locations_dungeons').prop('checked', false);
+	$('#randomize_locations_shrines').prop('checked', true);
+	$('#randomize_locations_gargoylecity').prop('checked', true);
+	$('#randomize_locations_joinablepartymembers').prop('checked', true);
+
 	$('#randomize_moonorb').prop('checked', true);
 	$('#randomize_spellbook').prop('checked', true);
 	$('#randomize_unlockanddispel').prop('checked', true);
@@ -220,15 +256,17 @@ function preset_overworld_hard() //hard
 	$('#select-ai-spell-difficulty').prop('value', 2);
 	$('#select-ai-spells').prop('value', 2);
 	$('#select-ai-equipment').prop('value', 2);
-
 	$('#add_missing_enemies').prop('checked', true);
-	$('#add_missing_ai_spells').prop('checked', true);
+
+	$('#randomize_player_start').prop('checked', true);
+	$('#randomize_moonorb_destinations').prop('checked', true);
 	$('#remove_moonorb').prop('checked', false);
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
 	$('#randomize_moon_phases').prop('checked', true);
 	$('#open_avatar_shrine').prop('checked', false);
+	$('#skip_intro_cinematic').prop('checked', true);
 
 	$('#select-junk-items').prop('value', 1);
 	$('#select-starting-inventory').prop('value', 1);
@@ -247,9 +285,19 @@ function preset_overworld_hard() //hard
 //--------- ALL LOCATIONS PRESETS
 function preset_all_easy() //easy
 {
-	$('#randomize_core_items').prop('checked', true);
-	$('#randomize_chests_overworld').prop('checked', true);
-	$('#randomize_chests_dungeons').prop('checked', true);
+	$('#randomize_locations_overworld').prop('checked', true);
+	$('#randomize_locations_townsvirtue').prop('checked', true);
+	$('#randomize_locations_townsnonvirtue').prop('checked', true);
+	$('#randomize_locations_castles').prop('checked', true);
+	$('#randomize_locations_dialog').prop('checked', true);
+	$('#randomize_locations_treasuremap').prop('checked', true);
+	$('#randomize_locations_caves').prop('checked', true);
+	$('#randomize_locations_tombs').prop('checked', true);
+	$('#randomize_locations_dungeons').prop('checked', true);
+	$('#randomize_locations_shrines').prop('checked', true);
+	$('#randomize_locations_gargoylecity').prop('checked', true);
+	$('#randomize_locations_joinablepartymembers').prop('checked', true);
+
 	$('#randomize_moonorb').prop('checked', false);
 	$('#randomize_spellbook').prop('checked', false);
 	$('#randomize_unlockanddispel').prop('checked', false);
@@ -280,15 +328,17 @@ function preset_all_easy() //easy
 	$('#select-ai-spell-difficulty').prop('value', 1);
 	$('#select-ai-spells').prop('value', 0);
 	$('#select-ai-equipment').prop('value', 0);
-
 	$('#add_missing_enemies').prop('checked', true);
-	$('#add_missing_ai_spells').prop('checked', true);
+
+	$('#randomize_player_start').prop('checked', false);
+	$('#randomize_moonorb_destinations').prop('checked', false);
 	$('#remove_moonorb').prop('checked', false);
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
 	$('#randomize_moon_phases').prop('checked', true);
 	$('#open_avatar_shrine').prop('checked', true);
+	$('#skip_intro_cinematic').prop('checked', true);
 
 	$('#select-junk-items').prop('value', 1);	
 	$('#select-starting-inventory').prop('value', 4);
@@ -306,9 +356,19 @@ function preset_all_easy() //easy
 
 function preset_all_normal() //normal
 {
-	$('#randomize_core_items').prop('checked', true);
-	$('#randomize_chests_overworld').prop('checked', true);
-	$('#randomize_chests_dungeons').prop('checked', true);
+	$('#randomize_locations_overworld').prop('checked', true);
+	$('#randomize_locations_townsvirtue').prop('checked', true);
+	$('#randomize_locations_townsnonvirtue').prop('checked', true);
+	$('#randomize_locations_castles').prop('checked', true);
+	$('#randomize_locations_dialog').prop('checked', true);
+	$('#randomize_locations_treasuremap').prop('checked', true);
+	$('#randomize_locations_caves').prop('checked', true);
+	$('#randomize_locations_tombs').prop('checked', true);
+	$('#randomize_locations_dungeons').prop('checked', true);
+	$('#randomize_locations_shrines').prop('checked', true);
+	$('#randomize_locations_gargoylecity').prop('checked', true);
+	$('#randomize_locations_joinablepartymembers').prop('checked', true);
+
 	$('#randomize_moonorb').prop('checked', true);
 	$('#randomize_spellbook').prop('checked', false);
 	$('#randomize_unlockanddispel').prop('checked', true);
@@ -339,15 +399,17 @@ function preset_all_normal() //normal
 	$('#select-ai-spell-difficulty').prop('value', 0);
 	$('#select-ai-spells').prop('value', 1);
 	$('#select-ai-equipment').prop('value', 1);
-
 	$('#add_missing_enemies').prop('checked', true);
-	$('#add_missing_ai_spells').prop('checked', true);
+
+	$('#randomize_player_start').prop('checked', true);
+	$('#randomize_moonorb_destinations').prop('checked', false);
 	$('#remove_moonorb').prop('checked', false);
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
 	$('#randomize_moon_phases').prop('checked', true);
 	$('#open_avatar_shrine').prop('checked', false);
+	$('#skip_intro_cinematic').prop('checked', true);
 
 	$('#select-junk-items').prop('value', 1);
 	$('#select-starting-inventory').prop('value', 3);
@@ -365,9 +427,19 @@ function preset_all_normal() //normal
 
 function preset_all_hard() //hard
 {
-	$('#randomize_core_items').prop('checked', true);
-	$('#randomize_chests_overworld').prop('checked', true);
-	$('#randomize_chests_dungeons').prop('checked', true);
+	$('#randomize_locations_overworld').prop('checked', true);
+	$('#randomize_locations_townsvirtue').prop('checked', true);
+	$('#randomize_locations_townsnonvirtue').prop('checked', true);
+	$('#randomize_locations_castles').prop('checked', true);
+	$('#randomize_locations_dialog').prop('checked', true);
+	$('#randomize_locations_treasuremap').prop('checked', true);
+	$('#randomize_locations_caves').prop('checked', true);
+	$('#randomize_locations_tombs').prop('checked', true);
+	$('#randomize_locations_dungeons').prop('checked', true);
+	$('#randomize_locations_shrines').prop('checked', true);
+	$('#randomize_locations_gargoylecity').prop('checked', true);
+	$('#randomize_locations_joinablepartymembers').prop('checked', true);
+
 	$('#randomize_moonorb').prop('checked', true);
 	$('#randomize_spellbook').prop('checked', true);
 	$('#randomize_unlockanddispel').prop('checked', true);
@@ -400,15 +472,17 @@ function preset_all_hard() //hard
 	$('#select-ai-spell-difficulty').prop('value', 2);
 	$('#select-ai-spells').prop('value', 2);
 	$('#select-ai-equipment').prop('value', 2);
-
 	$('#add_missing_enemies').prop('checked', true);
-	$('#add_missing_ai_spells').prop('checked', true);
+
+	$('#randomize_player_start').prop('checked', true);
+	$('#randomize_moonorb_destinations').prop('checked', true);
 	$('#remove_moonorb').prop('checked', false);
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
 	$('#randomize_moon_phases').prop('checked', true);
 	$('#open_avatar_shrine').prop('checked', false);
+	$('#skip_intro_cinematic').prop('checked', true);
 
 	$('#select-junk-items').prop('value', 1);
 	$('#select-starting-inventory').prop('value', 1);
@@ -427,9 +501,19 @@ function preset_all_hard() //hard
 //--------- UNDERWORLD LOCATIONS PRESETS
 function preset_underworld_easy() //easy
 {
-	$('#randomize_core_items').prop('checked', true);
-	$('#randomize_chests_overworld').prop('checked', false);
-	$('#randomize_chests_dungeons').prop('checked', true);
+	$('#randomize_locations_overworld').prop('checked', false);
+	$('#randomize_locations_townsvirtue').prop('checked', false);
+	$('#randomize_locations_townsnonvirtue').prop('checked', false);
+	$('#randomize_locations_castles').prop('checked', true);
+	$('#randomize_locations_dialog').prop('checked', false);
+	$('#randomize_locations_treasuremap').prop('checked', true);
+	$('#randomize_locations_caves').prop('checked', true);
+	$('#randomize_locations_tombs').prop('checked', true);
+	$('#randomize_locations_dungeons').prop('checked', true);
+	$('#randomize_locations_shrines').prop('checked', true);
+	$('#randomize_locations_gargoylecity').prop('checked', false);
+	$('#randomize_locations_joinablepartymembers').prop('checked', false);
+
 	$('#randomize_moonorb').prop('checked', false);
 	$('#randomize_spellbook').prop('checked', false);
 	$('#randomize_unlockanddispel').prop('checked', false);
@@ -460,15 +544,17 @@ function preset_underworld_easy() //easy
 	$('#select-ai-spell-difficulty').prop('value', 1);
 	$('#select-ai-spells').prop('value', 0);
 	$('#select-ai-equipment').prop('value', 0);
-
 	$('#add_missing_enemies').prop('checked', true);
-	$('#add_missing_ai_spells').prop('checked', true);
+
+	$('#randomize_player_start').prop('checked', false);
+	$('#randomize_moonorb_destinations').prop('checked', false);
 	$('#remove_moonorb').prop('checked', false);
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
 	$('#randomize_moon_phases').prop('checked', true);
 	$('#open_avatar_shrine').prop('checked', true);
+	$('#skip_intro_cinematic').prop('checked', true);
 
 	$('#select-junk-items').prop('value', 1);
 	$('#select-starting-inventory').prop('value', 4);
@@ -486,9 +572,19 @@ function preset_underworld_easy() //easy
 
 function preset_underworld_normal() //normal
 {
-	$('#randomize_core_items').prop('checked', true);
-	$('#randomize_chests_overworld').prop('checked', false);
-	$('#randomize_chests_dungeons').prop('checked', true);
+	$('#randomize_locations_overworld').prop('checked', false);
+	$('#randomize_locations_townsvirtue').prop('checked', false);
+	$('#randomize_locations_townsnonvirtue').prop('checked', false);
+	$('#randomize_locations_castles').prop('checked', true);
+	$('#randomize_locations_dialog').prop('checked', false);
+	$('#randomize_locations_treasuremap').prop('checked', true);
+	$('#randomize_locations_caves').prop('checked', true);
+	$('#randomize_locations_tombs').prop('checked', true);
+	$('#randomize_locations_dungeons').prop('checked', true);
+	$('#randomize_locations_shrines').prop('checked', true);
+	$('#randomize_locations_gargoylecity').prop('checked', false);
+	$('#randomize_locations_joinablepartymembers').prop('checked', false);
+
 	$('#randomize_moonorb').prop('checked', true);
 	$('#randomize_spellbook').prop('checked', false);
 	$('#randomize_unlockanddispel').prop('checked', true);
@@ -519,15 +615,17 @@ function preset_underworld_normal() //normal
 	$('#select-ai-spell-difficulty').prop('value', 0);
 	$('#select-ai-spells').prop('value', 1);
 	$('#select-ai-equipment').prop('value', 1);
-
 	$('#add_missing_enemies').prop('checked', true);
-	$('#add_missing_ai_spells').prop('checked', true);
+
+	$('#randomize_player_start').prop('checked', true);
+	$('#randomize_moonorb_destinations').prop('checked', false);
 	$('#remove_moonorb').prop('checked', false);
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
 	$('#randomize_moon_phases').prop('checked', true);
 	$('#open_avatar_shrine').prop('checked', false);
+	$('#skip_intro_cinematic').prop('checked', true);
 
 	$('#select-junk-items').prop('value', 1);
 	$('#select-starting-inventory').prop('value', 3);
@@ -545,9 +643,19 @@ function preset_underworld_normal() //normal
 
 function preset_underworld_hard() //hard
 {
-	$('#randomize_core_items').prop('checked', true);
-	$('#randomize_chests_overworld').prop('checked', false);
-	$('#randomize_chests_dungeons').prop('checked', true);
+	$('#randomize_locations_overworld').prop('checked', false);
+	$('#randomize_locations_townsvirtue').prop('checked', false);
+	$('#randomize_locations_townsnonvirtue').prop('checked', false);
+	$('#randomize_locations_castles').prop('checked', true);
+	$('#randomize_locations_dialog').prop('checked', false);
+	$('#randomize_locations_treasuremap').prop('checked', true);
+	$('#randomize_locations_caves').prop('checked', true);
+	$('#randomize_locations_tombs').prop('checked', true);
+	$('#randomize_locations_dungeons').prop('checked', true);
+	$('#randomize_locations_shrines').prop('checked', true);
+	$('#randomize_locations_gargoylecity').prop('checked', false);
+	$('#randomize_locations_joinablepartymembers').prop('checked', false);
+
 	$('#randomize_moonorb').prop('checked', true);
 	$('#randomize_spellbook').prop('checked', true);
 	$('#randomize_unlockanddispel').prop('checked', true);
@@ -580,15 +688,17 @@ function preset_underworld_hard() //hard
 	$('#select-ai-spell-difficulty').prop('value', 2);
 	$('#select-ai-spells').prop('value', 2);
 	$('#select-ai-equipment').prop('value', 2);
-
 	$('#add_missing_enemies').prop('checked', true);
-	$('#add_missing_ai_spells').prop('checked', true);
+
+	$('#randomize_player_start').prop('checked', true);
+	$('#randomize_moonorb_destinations').prop('checked', true);
 	$('#remove_moonorb').prop('checked', false);
 	$('#expanded_camping').prop('checked', true);
 	$('#enable_fast_button_mapping').prop('checked', true);
 	$('#enable_expanded_armor_items').prop('checked', true);
 	$('#randomize_moon_phases').prop('checked', true);
 	$('#open_avatar_shrine').prop('checked', false);
+	$('#skip_intro_cinematic').prop('checked', true);
 
 	$('#select-junk-items').prop('value', 1);
 	$('#select-starting-inventory').prop('value', 1);
@@ -640,6 +750,7 @@ var PRESET_NAMES =
 	"Underworld-Hard",
 	"Daily Challenge",
 	"Random Challenge",
+	"Patched Base Game",
 ];
 
 function getPresetName(n)

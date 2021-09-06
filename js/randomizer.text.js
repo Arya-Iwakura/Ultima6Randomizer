@@ -496,11 +496,13 @@ function getHintLocations()
 
 function addHint(rom, random, inItemName, inHints, inHintLocations)
 {
+	var hintText = "";
+
 	if(inHintLocations.length > 0 && inHints.length > 0)
 	{
 		//generate the hint text
 		var randomSelection = random.nextIntRange(0, inHints.length);
-		var hintText = inItemName + DATA_HINT_TEXT[inHints[randomSelection]];
+		hintText = inItemName + DATA_HINT_TEXT[inHints[randomSelection]];
 
 		//Hint list is sorted shortest to longest and we attempt to fill shortest first
 		for(var i = 0; i < inHintLocations.length; ++i)
@@ -525,6 +527,8 @@ function addHint(rom, random, inItemName, inHints, inHintLocations)
 			}
 		}
 	}
+
+	return hintText;
 }
 
 function addSmithHint(rom, hintText)

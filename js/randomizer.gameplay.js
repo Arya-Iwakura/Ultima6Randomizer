@@ -6,13 +6,249 @@ function fixAISpellListBug(rom)
 
 function fixSpiders(rom)
 {
-    //gives spiders paralyze instead of magic arrow (it offends me that they gave them magic arrow when they originally had web)
+    //gives spiders paralyze instead of magic arrow to more closely match their original web spell that has been removed from the game
     rom[0x16647] = 0x1B;
 }
 
 function fixMoonPhaseBug(rom)
 {
-    rom.set([0x1D, 0x1E, 0x1D],0x131EE); //the moon phase graphics are off by one in the base game and this fixes that bug
+    rom.set([0x1D, 0x1E, 0x1D],0x131EE); //this fixes the the bug where the moon phase graphics are off by one in the base game and thus draw the wrong graphics
+}
+
+function fixScheduleBugs(rom)
+{
+    rom.set([0xEA, 0xEA], 0x188EB); //this fixes the multi-day AI schedule bug where they are off by one when they attempt to loop and begin to read non-coordinate data as coordinates
+    rom.set([0xFE, 0x9C, 0x02], 0x19507); //this fixes the Zoltan schedule bug where the first defined Zoltan spawn spot was in the void west of empath abbey
+    //bonn
+}
+
+function adjustSchedules(rom)
+{
+    //either fix schedules for these NPCS or allow you to engage in their dialog stuff during any schedule point
+    rom.set([0x0A], 0x18FE5); //big ben - lower time to leave house from noon to 10am
+    rom.set([0x0C], 0x18EA6); //ephemerides - lower time when they awaken from 3pm to noon
+    rom.set([0x57], 0x19587); //bonn - adjust behaviour to not be walking back and forth to the water edge (42 for wander - 57 for beggar)
+}
+
+function setSpeedTextSelectionDefault(rom)
+{
+    rom[0x19C14] = 0x00;
+}
+
+function setIntroData(rom)
+{
+    if ($('#skip_intro_cinematic').is(':checked'))
+	{
+		skipIntroCinematic(rom);
+	}
+    else
+    {
+        modifyIntroCinematic(rom);
+    }
+
+    modifyJourneyOnward(rom);
+}
+
+function modifyIntroCinematic(rom)
+{
+    var dataOffset = [0x03,0xD6,0x90];
+    rom.set([0xA9,0x01,0x85,0xA6,0x20,0xF4,0x9D,0x20,dataOffset[2]+0x1C,dataOffset[1],0x64,0xA6,0x60], 0x19C19); //originally 0xA9,0x01,0x85,0xA6,0x20,0xF4,0x9D,0x20,0x26,0x9C,0x64,0xA6,0x60
+    injectChestSpriteData(rom, 0x1D690, dataOffset);
+}
+
+function skipIntroCinematic(rom)
+{
+    var dataOffset = [0x03,0xD6,0x90];
+    rom.set([0x20,dataOffset[2]+0x26,dataOffset[1],0xEA,0xEA,0xEA,0xEA,0xEA,0xEA,0xEA,0xEA,0xEA,0x60], 0x19C19); //originally 0xA9,0x01,0x85,0xA6,0x20,0xF4,0x9D,0x20,0x26,0x9C,0x64,0xA6,0x60
+    injectChestSpriteData(rom, 0x1D690, dataOffset);
+}
+
+function modifyJourneyOnward(rom)
+{
+    var dataOffset = [0x03,0xD6,0x90];
+    rom.set([0x20,dataOffset[2]+0x21,dataOffset[1]], 0x19BC9); //originally 0x20,0x14,0xA9
+}
+
+function injectChestSpriteData(rom, inCodeOffset, inDataOffset)
+{
+    //used to inject data into RAM for the new chests to appear and function which are normally loaded when you enter Castle Britannia
+    var chestData = [0x70,0x11,0x71,0x11,0x80,0x11,0x81,0x11, 0x72,0x11,0x73,0x11,0x82,0x11,0x83,0x11, 0x74,0x11,0x75,0x11,0x84,0x11,0x85,0x11, 0x41,0x41,0x41,0x40];
+    var dataCode = [
+                    0xA0,0x02,0x00,                                             //LDY 02
+                    0x80,0x08,                                                  //BRA
+                    0xA0,0x01,0x00,                                             //LDY 01
+                    0x80,0x03,                                                  //BRA
+                    0xA0,0x00,0x00,                                             //LDY 00
+                    0xC2,0x20,                                                  //REP 20
+                    0xA2,0x00,0x00,                                             //LDX 0000
+                    0xBF,inDataOffset[2],inDataOffset[1],inDataOffset[0],       //LDA,x
+                    0x9D,0x80,0x4F,                                             //STA,x
+                    0x9D,0x80,0x57,                                             //STA,x
+                    0xE8,0xE8,                                                  //INX INX
+                    0xE0,0x18,0x00,                                             //CPX
+                    0x90,0xEF,                                                  //BCC F1
+                    0xA2,0x00,0x00,                                             //LDX 0000
+                    0xBF,inDataOffset[2]+0x18,inDataOffset[1],inDataOffset[0],  //LDA,x
+                    0x9D,0xF0,0x58,                                             //STA,x
+                    0x9D,0xF0,0x59,                                             //STA,x
+                    0xE8,0xE8,                                                  //INX INX
+                    0xE0,0x04,0x00,                                             //CPX
+                    0x90,0xEF,                                                  //BCC F1
+                    0xE2,0x20,                                                  //SEP 20
+                    0xC0,0x02,0x00,                                             //CPY
+                    0xF0,0x06,                                                  //BEQ
+                    0xC0,0x01,0x00,                                             //CPY
+                    0xF0,0x05,                                                  //BEQ
+                    0x60,                                                       //RTS
+                    0x20,0x26,0x9C,0x60,                                        //proceed with intro cinematic
+                    0x20,0x14,0xA9,0x60,                                        //proceed with journey onward
+                ];
+
+    var injectedData = chestData.concat(dataCode);
+    rom.set(injectedData, inCodeOffset);
+}
+
+function setMusic(buffer, random, music_flag)
+{
+    var rom = new Uint8Array(buffer);
+    
+    if(music_flag == 1)
+    {
+        shuffleMusic(rom, random);
+    }
+    else if(music_flag == 2)
+    {
+        randomizeMusic(rom, random);
+    }
+    else if(music_flag == 3)
+    {
+        removeMusic(rom);
+    }
+    
+    recompressAllDecompressedData(rom);
+    fixChecksum(rom);
+	return rom;
+
+}
+
+function shuffleMusic(rom, random)
+{
+    var choices = [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10, 0x11, 0x12];
+    choices.shuffle(random);
+    shuffleOverworldMusic(rom, [choices[0], choices[1], choices[2], choices[3]]); //oveworld themes
+
+    rom[0x19B9C] = choices[0]; //title music
+    rom[0x1B25C] = choices[4]; //gem music
+    rom[0x19C3F] = choices[5]; //intro cutscene
+    rom[0x123A5] = choices[6]; //inventory
+    rom[0x00FD] = choices[7]; //boat song
+    rom[0x4895] = choices[8]; //battle theme
+    rom[0x4A53] = choices[8]; //battle theme
+    rom[0x0142] = choices[8]; //battle theme
+    rom[0x0110] = choices[1]; //in building music theme
+    rom[0x0120] = choices[9]; //dungeon theme
+    rom[0x010C] = choices[2]; //castle britannia theme
+    rom[0x011C] = choices[10]; //gargoyle theme
+    rom[0x1AB81] = choices[11]; //end credits music
+
+    shuffleSelganorMusic(rom, choices[12]);
+
+    rom[0x147D5] = 0x00; //instruments base offset (0x0D is default)
+    rom[0x18738] = choices[13]; //instruments - xylophone - this is an offset and (0x00) is default
+    rom[0x1453B] = choices[14]; //instruments - lute - this is an offset and (0x01) is default
+    rom[0x14537] = choices[15]; //instruments - panpipes - this is an offset and (0x02) is default
+    rom[0x18735] = choices[16]; //instruments - harpsichord - this is an offset and (0x03) is default
+    rom[0x1873B] = choices[17]; //instruments - harp - this is an offset and (0x04) is default
+}
+
+function shuffleSelganorMusic(rom, selectedMusic)
+{
+    var lzwData = decompressDataFromLZW(rom, 0x53900);
+    lzwData[0x160F] = selectedMusic; //selganor stones song
+    lzwData[0x231E] = selectedMusic; //gweeno stones song
+}
+
+function shuffleOverworldMusic(rom, choices)
+{
+    rom.set(choices, 0x0145); //oveworld themes
+}
+
+function randomizeMusic(rom, random)
+{
+    consoleLog("RANDOMIZE MUSIC");
+    randomizeOverworldMusic(rom, random); //oveworld themes
+    rom[0x19B9C] = random.nextIntRange(1,18); //title music
+    rom[0x1B25C] = random.nextIntRange(1,18); //gem music
+    rom[0x19C3F] = random.nextIntRange(1,18); //intro cutscene
+    rom[0x123A5] = random.nextIntRange(1,18); //inventory
+    rom[0x00FD] = random.nextIntRange(1,18); //boat song
+
+    rom[0x4895] = random.nextIntRange(1,18); //battle theme
+    rom[0x4A53] = random.nextIntRange(1,18); //battle theme
+    rom[0x0142] = random.nextIntRange(1,18); //battle theme
+    rom[0x0110] = random.nextIntRange(1,18); //in building music theme
+    rom[0x0120] = random.nextIntRange(1,18); //dungeon theme
+    rom[0x010C] = random.nextIntRange(1,18); //castle britannia theme
+    rom[0x011C] = random.nextIntRange(1,18); //gargoyle theme
+    rom[0x1AB81] = random.nextIntRange(1,18); //end credits music
+
+    rom[0x147D5] = 0x00; //instruments base offset
+    rom[0x18738] = random.nextIntRange(1,18); //instruments - xylophone - this is an offset and (0x00) is default
+    rom[0x1453B] = random.nextIntRange(1,18); //instruments - lute - this is an offset and (0x01) is default
+    rom[0x14537] = random.nextIntRange(1,18); //instruments - panpipes - this is an offset and (0x02) is default
+    rom[0x18735] = random.nextIntRange(1,18); //instruments - harpsichord - this is an offset and (0x03) is default
+    rom[0x1873B] = random.nextIntRange(1,18); //instruments - harp - this is an offset and (0x04) is default
+    randomizeSelganorMusic(rom, random);
+}
+
+function randomizeOverworldMusic(rom, random)
+{
+    var choices = [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10, 0x11, 0x12];
+    choices.shuffle(random);
+    rom.set([choices.pop(), choices.pop(), choices.pop(), choices.pop()], 0x0145); //oveworld themes
+}
+
+function randomizeSelganorMusic(rom, random)
+{
+    var selection = random.nextIntRange(1,18);
+    var lzwData = decompressDataFromLZW(rom, 0x53900);
+    lzwData[0x160F] = selection; //selganor stones song
+    lzwData[0x231E] = selection; //gweeno stones song
+}
+
+function removeMusic(rom)
+{
+    consoleLog("REMOVE MUSIC");
+    rom.set([0x00, 0x00, 0x00, 0x00], 0x0145); //oveworld themes
+    rom[0x19B9C] = 0x00; //title music
+    rom[0x1B25C] = 0x00; //gem music
+    rom[0x19C3F] = 0x00; //intro cutscene
+    rom[0x123A5] = 0x00; //inventory
+    rom[0x00FD] = 0x00; //boat song
+    rom[0x4895] = 0x00; //battle theme
+    rom[0x4A53] = 0x00; //battle theme
+    rom[0x0142] = 0x00; //battle theme
+    rom[0x0110] = 0x00; //in building music theme
+    rom[0x0120] = 0x00; //dungeon theme
+    rom[0x010C] = 0x00; //castle britannia theme
+    rom[0x011C] = 0x00; //gargoyle theme
+    rom[0x1AB81] = 0x00; //end credits music
+    rom[0x013C] = 0x00; //setting to check if other musics fail (defaults to 01 - set to 00 for no music)
+    rom[0x147D5] = 0x00; //instruments base offset
+    rom[0x18738] = 0x00; //instruments - xylophone - this is an offset and (0x00) is default
+    rom[0x1453B] = 0x00; //instruments - lute - this is an offset and (0x01) is default
+    rom[0x14537] = 0x00; //instruments - panpipes - this is an offset and (0x02) is default
+    rom[0x18735] = 0x00; //instruments - harpsichord - this is an offset and (0x03) is default
+    rom[0x1873B] = 0x00; //instruments - harp - this is an offset and (0x04) is default
+    removeSelganorMusic(rom);
+    writeTextToAddress(rom, 0xD753, 0x0D, "an instrument");
+}
+
+function removeSelganorMusic(rom)
+{
+    var lzwData = decompressDataFromLZW(rom, 0x53900);
+    lzwData[0x160F] = 0x00; //selganor stones song
+    lzwData[0x231E] = 0x00; //gweeno stones song
 }
 
 function randomizeMoonPhases(rom, random)
@@ -28,13 +264,14 @@ function randomizeMoonPhases(rom, random)
     rom.set(moonPhaseTable, 0xBB35);
 }
 
-function addCustomSherryItem(rom)
+function addCustomSherryItem(rom, canPlaceItems)
 {
     //adjust name of Cheese in dialog
     var lzwData = decompressDataFromLZW(rom, 0x48000);
-    lzwData[0x2BF5] = 0x57; //change the item Sherry wants
-    lzwData[0x2C1D] = 0x57; //change the item Sherry wants
-    lzwData[0x2C20] = 0x57; //change the item Sherry wants
+    var oddCheeseHex = 0x57;
+    lzwData[0x2BF5] = oddCheeseHex; //change the item Sherry wants
+    lzwData[0x2C1D] = oddCheeseHex; //change the item Sherry wants
+    lzwData[0x2C20] = oddCheeseHex; //change the item Sherry wants
     lzwData.set([0x2F, 0x44, 0x44, 0x5F, 0x23, 0x48, 0x45, 0x45, 0x53, 0x45],0x2DFD); //change text ANY CHEESE to ODD CHEESE
     lzwData.set([0x2F, 0x44, 0x44, 0x5F, 0x23, 0x48, 0x45, 0x45, 0x53, 0x45],0x2E2F); //change text ANY CHEESE to ODD CHEESE
 
@@ -43,20 +280,16 @@ function addCustomSherryItem(rom)
     rom[0xFC0D] = 0x02; //change weight
     rom.set([0x88, 0x11, 0x89, 0x11, 0x98, 0x11, 0x9B, 0x11],0x13A57); //convert unused Wizard Eye Item sprite into Custom Sherry Item sprite(item 57)
 
-    var lzwData = decompressDataFromLZW(rom, 0x58000);
-    writeTextToAddress(lzwData, 0x42B0, 58, "There was a peculiar Odd Cheese kept in the nearby cellar."); //change Dezana CHAT text to Cheese hint
+    if (canPlaceItems == false)
+    {
+        var lzwData = decompressDataFromLZW(rom, 0x58000);
+        writeTextToAddress(lzwData, 0x42B0, 58, "There was a peculiar Odd Cheese kept in the nearby cellar."); //change Dezana CHAT text to Cheese hint
 
-    if ($('#randomize_core_items').is(':checked') || $('#randomize_chests_overworld').is(':checked') || $('#randomize_chests_dungeons').is(':checked'))
-    {
-        return;
-    }
-    else
-    {
         var lzwData = decompressDataFromLZW(rom, 0x9D000);
 	    lzwData[0x27EB] = 0x42; //add sherry chest (magic lock)
-
-    	rom.set([0x19, 0x8D, 0x80, 0x57], 0x117CA); //convert spring water to cheese for sherry chest
+    	rom.set([0x19, 0x8D, 0x80, oddCheeseHex], 0x117CA); //convert spring water to cheese for sherry chest
     }
+
 }
 
 function setPoisionFlash(buffer, flashSelection)
@@ -711,19 +944,19 @@ function removeRafts(rom)
 {
     //move the rafts somewhere that traps them behind bridges and prevents them from accessing the ocean
     //x,y - 7E7BD4, 7E7C26 - move empath raft to 5D 00, D5 00 (river west of empath) - 0x16726 - 88 B8 82 
-    rom.set([0x5D, 0x54, 0x83], 0x16726);
+    setRaftPosition(rom, 0x16726, 0x5D, 0x00, 0xD5, 0x00);
 
     //x,y - 7E7BD6, 7E7C28 - move long haul raft to 25 01, 94 00 (river east of yew) - 0x16729 - ED 3D 82
-    rom.set([0x25, 0x51, 0x82], 0x16729);
+    setRaftPosition(rom, 0x16729, 0x25, 0x01, 0x94, 0x00);
 
     //x,y - 7E7BDA, 7E7C2C - move cove raft to 13 02, 56 01 (trapped near cove) - 0x1672F - 4A FA 84
-    rom.set([0x13, 0x5A, 0x85], 0x1672F);
+    setRaftPosition(rom, 0x1672F, 0x13, 0x02, 0x56, 0x01);
 
     //x,y - 7E7BD8, 7E7C2A - move swamp raft to 96 03, 13 02 (trapped in moonglow) - 0x1672C - F3 D5 83
-    rom.set([0x96, 0x4F, 0x88], 0x1672C);
+    //setRaftPosition(rom, 0x1672C, 0x96, 0x03, 0x13, 0x02);
 
     //x,y - 7E7BDC, 7E7C2E - move skara raft to E0 00, AC 01 (shame entrance) - 0x16732 - 42 A8 87
-    rom.set([0xE0, 0xB0, 0x86], 0x16732);
+    setRaftPosition(rom, 0x16732, 0xE0, 0x00, 0xAC, 0x01);
 }
 
 function addRafts(rom)
@@ -737,20 +970,20 @@ function addRafts(rom)
 	{
         //x,y - 7E7BA8, 7E7BFA - minoc ship - 0x166E4 - 52 DE 61
         //add - shrine of spirituality 5F 00, 73 00 = 5F CC 81
-        rom.set([0x5F, 0xCC, 0x81], 0x166E4);
+        setRaftPosition(rom, 0x166E4, 0x5F, 0x00, 0x73, 0x00);
     }
 
     //x,y - 7E7BB8, 7E7C0A - britain ship - 0x166FC - 37 F5 66
     //add - shrine of honesty B3 03, 0F 01
-    rom.set([0xB3, 0x3F, 0x84], 0x166FC);
+    setRaftPosition(rom, 0x166FC, 0xB3, 0x03, 0x0F, 0x01);
 
     //x,y - 7E7BC2, 7E7C14 - den ship - 0x1670B - 4E DA 69
     //add - shrine of humility A2 03, AF 03
-    rom.set([0xA2, 0xBF, 0x8E], 0x1670B);
+    setRaftPosition(rom, 0x1670B, 0xA2, 0x03, 0xAF, 0x03);
 
     //x,y - 7E7BCA, 7E7C1C - jhelom ship
     //add - shrine of valor 82 00, AF 03 - 0x16717 - 9D B8 6D
-    rom.set([0x8C, 0xBC, 0x8E], 0x16717);
+    setRaftPosition(rom, 0x16717, 0x82, 0x00, 0xAF, 0x03);
 
     //add - bonn
     //add - skara brae mage
@@ -760,8 +993,15 @@ function addRafts(rom)
     //add - sutek
 
     //---------moongates
-    var lzwData = decompressDataFromLZW(rom, 0x9D000);
-	lzwData.set([0x56,0x57], 0x54D); //lycaeum - blue moongate
+    //var lzwData = decompressDataFromLZW(rom, 0x9D000);
+	//lzwData.set([0x56,0x57], 0x54D); //lycaeum - blue moongate (not necessary as to reach this point requires a spellbook which means you are able to cast help)
+}
+
+function setRaftPosition(rom, inAddress, inX, inSuperChunkX, inY, inSuperChunkY)
+{
+    var raftPos = encode3BytePosition([inX, inSuperChunkX, inY, inSuperChunkY]);
+    raftPos[2] += 0x80;
+    rom.set(raftPos, inAddress);
 }
 
 function increaseSpellbookPrices(rom)
@@ -831,4 +1071,348 @@ function unlockLensKeywordFromStart(rom)
                 0x8D, 0x11, 0xA1, //STA A111 - unlock keyword lens in RAM
                 0x60 //RTS - return
             ], 0xFDA3);
+}
+
+function randomizeMoonOrbDestinations(rom, random, inStartPositionName)
+{
+    var moonOrbSpoilerList = [];
+
+    if ($('#randomize_moonorb_destinations').is(':checked'))
+	{
+        console.log("RANDOMIZING MOON ORB DESTINATIONS");
+        var initialChoices = [];
+        var startPosition = [];
+
+        //grab all the destinations for the types we are wanting to randomize
+        var startPositionFound = false;
+        for(var i = 0; i < DATA_MOONORB_DESTINATIONS.length; i++)
+        {
+            if(startPositionFound == false && DATA_MOONORB_DESTINATIONS[i].name == inStartPositionName) //ensure the start position is always included
+            {
+                startPosition.push(DATA_MOONORB_DESTINATIONS[i]);
+                startPositionFound = true;
+            }
+            else if(DATA_MOONORB_DESTINATIONS[i].types.includes("useful"))
+            {
+                
+                initialChoices.push(DATA_MOONORB_DESTINATIONS[i]);
+            }
+        }
+
+        initialChoices.shuffle(random);
+        var destinations = getMoonOrbRequiredDestinationList(initialChoices); //get required locations
+        initialChoices = destinations[0];
+        var required = destinations[1];
+        var choices = createMoonOrbDestinationList(random, initialChoices, required, startPosition); //create the final choices list
+
+        //set the coordinates
+        for(var i = 0; i < 25; i++)
+        {
+            setMoonOrbDestination(rom, i*2, choices[i].coordinates, choices[i].floor);
+            moonOrbSpoilerList.push(createMoonOrbSpoilerEntry(i, choices[i]));
+        }
+    }
+    else
+    {
+        //change Moon Orb 1U to start point even if moon orb is not selected to be randomized
+        var startPosition = [];
+        for(var i = 0; i < DATA_MOONORB_DESTINATIONS.length; i++)
+        {
+            if(DATA_MOONORB_DESTINATIONS[i].name == inStartPositionName)
+            {
+                startPosition.push(DATA_MOONORB_DESTINATIONS[i]);
+                break;
+            }
+        }
+        setMoonOrbDestination(rom, 7*2, startPosition[0].coordinates, startPosition[0].floor);
+    }
+    return moonOrbSpoilerList;
+}
+
+function getMoonOrbRequiredDestinationList(initialChoices)
+{
+    var required = [];
+
+    //ensure that if the spiritshrine is on the list, it is always included
+    for(var i = 0; i < initialChoices.length; i++)
+    {
+        if(initialChoices[i].types.includes("spiritshrine"))
+        {
+            required.push(initialChoices[i]);
+            initialChoices.splice(i,1); //remove the entry from the choices list to ensure no duplicates
+            break;
+        }
+    }
+
+    //ensure that if gargoyle locations are on the list, at least one is always included
+    for(var i = 0; i < initialChoices.length; i++)
+    {
+        if(initialChoices[i].types.includes("gargoyle"))
+        {
+            required.push(initialChoices[i]);
+            initialChoices.splice(i,1); //remove the entry from the choices list to ensure no duplicates
+            break;
+        }
+    }
+    return [initialChoices, required];
+}
+
+function createMoonOrbDestinationList(random, initialChoices, required, startPosition)
+{
+    //after shuffling adjust the list to ensure different locations based on their super chunk coordinates
+    //the goal of this is to attempt to have no more than two per same super chunk
+    var choices = [];
+    
+    for(var i = 0; i < initialChoices.length; i++)
+    {
+        var count = 0;
+        for(var j = 0; j < choices.length; j++)
+        {
+            if(initialChoices[i].coordinates[1] == choices[j].coordinates[1] && initialChoices[i].coordinates[3] == choices[j].coordinates[3])
+            {
+                count += 1;
+            }
+        }
+        if(count > 2 )
+        {
+            choices.push(initialChoices[i]); //add to the end of the list to de-favor this location
+        }
+        else
+        {
+            choices.unshift(initialChoices[i]); //add to the beginning of the list to favor this location
+        }
+    }
+
+    choices.splice(24-required.length);
+    choices = required.concat(choices);
+    choices.shuffle(random);
+    choices.splice(7,0,startPosition[0]);
+
+    return choices;
+}
+
+function setMoonOrbDestination(rom, offset, coordinates, floor)
+{
+    rom.set([coordinates[0], coordinates[1]], 0x79D+offset);
+    rom.set([coordinates[2], coordinates[3]], 0x7CF+offset);
+    rom.set([floor], 0x801+offset);
+}
+
+function createMoonOrbSpoilerEntry(offset, choice)
+{
+    var positionString = "";
+    if(offset < 5){positionString += "2U";}
+    else if(offset < 10){positionString += "1U";}
+    else if(offset < 15){positionString += "--";}
+    else if(offset < 20){positionString += "1D";}
+    else if(offset < 25){positionString += "2D";}
+
+    if(offset % 5 == 0){positionString += " 2L";}
+    else if(offset % 5 == 1){positionString += " 1L";}
+    else if(offset % 5 == 2){positionString += " --";}
+    else if(offset % 5 == 3){positionString += " 1R";}
+    else if(offset % 5 == 4){positionString += " 2R";}
+    return (positionString + " = " + choice.name);
+}
+
+function randomizePlayerStart(rom, random)
+{
+    if ($('#randomize_player_start').is(':checked'))
+	{
+        console.log("RANDOMIZING PLAYER START DESTINATIONS");
+        var choice = random.from(DATA_PLAYER_SPAWN_LOCATIONS);
+        setStartSpawnPosition(rom, choice.coordinates);
+
+        //move the egg spawn from a selected moongate chunk in the case of spawning at a gate location to a field in Britain
+        if(choice.spawnegg.length > 0)
+        {
+            rom.set(encode3BytePosition([0x4C,0x01,0x67,0x01]), choice.spawnegg[0]); //spawn eggs require Y first then X so this is Y, Super Chunk Y, X, Super Chunk X
+        }
+
+        if(choice.name != "Castle Britannia")
+        {
+            //move the gargoyle castle spawn to wherever you start
+            rom.set([choice.coordinates[0], choice.coordinates[1]], 0x15EFA); //default 0x33, 0x01 - x coordinate for middle gargoyle
+            rom.set([choice.coordinates[2]-2, choice.coordinates[3]], 0x15EFF); //default 0x5E, 0x01 - y coordinate for all gargoyles
+            rom.set([choice.coordinates[0]-2, choice.coordinates[1]], 0x15F14); //default 0x32, 0x01 - x coordinate for left gargoyle
+            rom.set([choice.coordinates[0]+2, choice.coordinates[1]], 0x15F1A); //default 0x34, 0x01 - x coordinate for right gargoyle
+        }
+
+        if(choice.raft.length > 0)
+        {
+            setRaftPosition(rom, 0x1672C, choice.raft[0], choice.raft[1], choice.raft[2], choice.raft[3]); //move swamp raft to this position
+        }
+
+        return choice.name;
+	}
+    else
+    {
+        return "Castle Britannia";
+    }
+}
+
+function setDeathRespawnPosition(rom, inTileX, inSuperChunkX, inTileY, inSuperChunkY)
+{
+    rom.set([inTileX, inSuperChunkX], 0x627); //death respawn X
+    rom.set([inTileY, inSuperChunkY], 0x62C); //death respawn Y
+}
+
+function setSpawnPositionAvatar(rom, inTileX, inSuperChunkX, inTileY, inSuperChunkY)
+{
+    rom.set([inTileX, inSuperChunkX], 0x8238); //avatar X
+    rom.set([inTileY, inSuperChunkY], 0x823E); //avatar Y
+    setDeathRespawnPosition(rom, inTileX, inSuperChunkX, inTileY, inSuperChunkY);
+}
+
+function setStartSpawnPosition(rom, coordinates)
+{
+    setSpawnPositionAvatar(rom,                  coordinates[0],   coordinates[1], coordinates[2],   coordinates[3]); //avatar
+    encode3BytePositionToAddress(rom, 0x18C41,   coordinates[0]+1, coordinates[1], coordinates[2]+1, coordinates[3]); //dupre
+    encode3BytePositionToAddress(rom, 0x18C45,   coordinates[0]-1, coordinates[1], coordinates[2]+1, coordinates[3]); //shamino
+    encode3BytePositionToAddress(rom, 0x18C49,   coordinates[0],   coordinates[1], coordinates[2]+2, coordinates[3]); //iolo
+    rom.set([coordinates[0],coordinates[1]], 0x58E); //set the hardcoded Moon Orb 1U x position check to this x position
+}
+
+function encode3BytePositionToAddress(rom, startAddress, inTileX, inSuperChunkX, inTileY, inSuperChunkY)
+{
+    rom.set(encode3BytePosition([inTileX, inSuperChunkX, inTileY, inSuperChunkY]), startAddress);
+}
+
+function encode3BytePosition(coordinates)
+{
+    //convert world x,y coordinates to an encoded 3 byte position
+    //first byte is the X tile position
+    //bytes 2 and 3 encode the Y super chunk and Y tile shifted twice left then the final right 2 bytes added as the X super chunk
+    var byte0 = coordinates[0];
+    var bytePair = ((coordinates[3] & 0xFF) << 8) | (coordinates[2] & 0xFF);
+    var finalBytePair = (bytePair << 2) + coordinates[1];
+    var byte1 = finalBytePair & 0xFF;
+    var byte2 = finalBytePair >> 8;
+
+    return [byte0, byte1, byte2];
+}
+
+function decode3BytePosition(inBytes)
+{
+    //convert an encoded 3 byte position to world x,y coordinates
+    //3FF the first two bytes to get the first pair of coordinates
+    //LSR twice then AND with 03FF the second pair of bytes to get the second pair of cooridinates
+    var bytePair1 = (inBytes[1] << 8) | (inBytes[0]);
+    bytePair1 = bytePair1 & 0x03FF;
+
+    var bytePair2 = (inBytes[2] << 8) | (inBytes[1]);
+    bytePair2 = (bytePair2 >> 2) & 0x03FF;
+
+    var xTile = bytePair1 & 0xFF;
+    var xSuperChunk = bytePair1 >> 8;
+    var yTile = bytePair2 & 0xFF;
+    var ySuperChunk = bytePair2 >> 8;
+    var finalBytes = [xTile, xSuperChunk, yTile, ySuperChunk];
+
+    return finalBytes;
+}
+
+function encode3ByteSpawnEggPositionToAddress(rom, startAddress, inTileX, inSuperChunkX, inTileY, inSuperChunkY)
+{
+    rom.set(encode3ByteSpawnEggPosition([inTileX, inSuperChunkX, inTileY, inSuperChunkY], startAddress+2), startAddress);
+}
+
+function encode3ByteSpawnEggPosition(coordinates, finalByte)
+{
+    //convert world x,y coordinates to an encoded 3 byte position
+    //first byte is the Y tile position
+    //bytes 2 and 3 encode the X super chunk and X tile shifted twice left then the final right 2 bytes added as the Y super chunk
+    var bytePair = ((coordinates[1] & 0xFF) << 8) | (coordinates[0] & 0xFF);
+    var finalBytePair = (bytePair << 2) + coordinates[3];
+    var byte1 = finalBytePair & 0xFF;
+    var byte2 = finalBytePair >> 8;
+
+    //take the finalByte and perform an AND 0xF0 to get the high byte and an AND 0x0F to get the low byte - low byte is used for coordinates
+    //we add the high byte back to whatever is generated from the coordinate encoding above
+    byte2 = (byte2 & 0x0F) + (finalByte & 0xF0);
+    return [coordinates[2], byte1, byte2];
+}
+
+function decode3ByteSpawnEggPosition(inBytes)
+{
+    //convert an encoded 3 byte position to world x,y coordinates
+    //3FF the first two bytes to get the second pair of coordinates
+    //LSR twice then AND with 03FF the first pair of bytes to get the first pair of cooridinates
+    var bytePair1 = (inBytes[1] << 8) | (inBytes[0]);
+    bytePair1 = bytePair1 & 0x03FF;
+
+    var bytePair2 = (inBytes[2] << 8) | (inBytes[1]);
+    bytePair2 = (bytePair2 >> 2) & 0x03FF;
+
+    var xTile = bytePair2 & 0xFF;
+    var xSuperChunk = bytePair2 >> 8;
+    var yTile = bytePair1 & 0xFF;
+    var ySuperChunk = bytePair1 >> 8;
+    var finalBytes = [xTile, xSuperChunk, yTile, ySuperChunk];
+
+    return finalBytes;
+}
+
+function modifySextant(rom)
+{
+    var sextantMessage = [0xE3, 0xE4, 0x5F, 0xE3, 0xE4, 0xF0, 0x3B, 0xE3, 0xE4, 0x5F, 0xE3, 0xE4, 0x3D, 0xF6, 0x00, 0x00, 0x00];
+    rom.set(sextantMessage, 0xD735);
+
+    for(var i = 0; i < 0x58; ++i)
+    {
+        rom[0x14768+i] = 0xEA;
+    }
+
+    var branchOffset = 0x14768;
+    var branchCode = [
+        0xA9, 0x57, //LDA #$57
+        0x8D, 0x3A, 0xA7, //STA A73A
+        0x8D, 0x42, 0xA7, //STA A742
+        0xA9, 0x54, //LDA #$54
+        0x8D, 0x3E, 0xA7, //STA A73E
+        0x8D, 0x46, 0xA7, //STA A746
+        0xA6, 0x7C, //LDX 7C
+        0x86, 0x14, //STX 14
+        0xA6, 0x7E, //LDX 7E
+        0x86, 0x16, //STX 16
+        0xA5, 0x75, //LDA 75
+        0xC2, 0x20, //REP 20
+        0xF0, 0x08, //BEQ
+        0x06, 0x14, 0x06, 0x14, 0x06, 0x16, 0x06, 0x16, //ASL 14 ASL 14 ASL 16 ASL 16 (we are not on the overworld)
+        0x4C, 0xB0, 0xF1, //JMP F1B0
+
+    ];
+    rom.set(branchCode, branchOffset);
+
+    var codeOffset = 0x171B0; //02F1B0
+    var dataCode = [
+        0xA5, 0x14, //LDA 14 (x coord)
+        0x38, //SEC (set carry bit)
+        0xE9, 0x30, 0x01, //SBC #$0130
+        0x10, 0x0D, //BPL
+        0xA2, 0x55, 0x00, //LDX #$0055
+        0x8E, 0x3E, 0xA7, //STX A73E
+        0x8E, 0x46, 0xA7, //STX A746
+        0x49, 0xFF, 0xFF, //EOR #$FFFF
+        0x1A,  //INC A
+        0x8D, 0x44, 0xA7, //STA A744
+        0x4A, 0x4A, 0x4A, //LSR x3
+        0x8D, 0x3C, 0xA7, //STA A73C
+        0xA5, 0x16, //LDA 16 (y coord)
+        0x38, //SEC (set carry bit)
+        0xE9, 0x68, 0x01, //SBC #$0168
+        0x10, 0x0D, //BPL
+        0xA2, 0x56, 0x00, //LDX #$0056
+        0x8E, 0x3A, 0xA7, //STX A73A
+        0x8E, 0x42, 0xA7, //STX A742
+        0x49, 0xFF, 0xFF, //EOR #$FFFF
+        0x1A, //INC A
+        0x8D, 0x40, 0xA7, //STA A740
+        0x4A, 0x4A, 0x4A, //LSR x3
+        0x8D, 0x38, 0xA7, //STA A738
+        0xE2, 0x20, //SEP 20
+        0xA9, 0x66, //LDA 66 (sextant message)
+        0x5C, 0xEF, 0xBC, 0x01, //JML 01BCEF
+    ];
+    rom.set(dataCode, codeOffset);
 }

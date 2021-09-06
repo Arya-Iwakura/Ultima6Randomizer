@@ -7,11 +7,6 @@ const SHRINE_HONOR        = 0x11E3C;
 const SHRINE_SPIRITUALITY = 0x11686;
 const SHRINE_HUMILTY      = 0x11E46;
 
-//TODO : Add sections to the spoiler log to split up how items are shown
-//TODO : Add new chests
-//TODO : Add option to randomly lock chests
-//TODO : Add dialog items to the pool
-
 function prepareLocations(rom)
 {
 	//swap item order inside locations
@@ -71,15 +66,8 @@ function prepareLocations(rom)
 	rom.set([0xE9, 0xF2, 0x00, 0x4C], 0x11D63); //dungeon - hythloth - captain john
 	rom.set([0xA1, 0xD4, 0x80, 0x08], 0x11C93); //dungeon - pirate cave - empty chest
 
-	if($('#randomize_chests_dungeons').is(':checked'))
-	{
-		rom.set([0xEB, 0x35, 0x80, 0xA0], 0x116E6); //dagger island - house basement - move map piece
-	}
-	else
-	{
-		rom.set([0xEB, 0x35, 0x80, 0x91], 0x116D2); //dagger island - house basement - move orange potion
-	}
-
+	//move map 4 from crate to chest
+	rom.set([0xEB, 0x35, 0x80, 0xA0], 0x116E6); //dagger island - house basement - move map piece
 }
 
 function addSpellChests(rom)
@@ -153,12 +141,17 @@ function updateAndAddChests(rom)
 	//add new chest graphics
 	var lzwData = decompressDataFromLZW(rom, 0x70000);
 	lzwData[0x1FC6] = 0xF1; //iolo chest - no lock
-	lzwData.set([0xF2], 0x1DD6); //empath abbey chest - magic lock
+	lzwData.set([0xF2], 0x1DD6); //empath abbey house chest - magic lock
+	lzwData.set([0xF2], 0x1CDA); //empath abbey castle chest - magic lock
 
 	//convert items
 	rom.set([0x82, 0x32, 0xD8, 0x56], 0x10EF1); //swap item placements in iolo hut
 	rom.set([0x85, 0x31, 0xE3, 0x55], 0x10EF5); //swap item placements in iolo hut
 	rom.set([0x85, 0x31, 0xC8, 0x6A], 0x10EF9); //swap item placements in iolo hut
+
+	//Lycaeum Entrance Floor Chest
+	var lzwData = decompressDataFromLZW(rom, 0x73680);
+	lzwData.set([0xF1], 0x267E); //change far left crate to chest
 
 	//Underground - Floor 1 Chests
 	//add new chest graphics
@@ -171,6 +164,11 @@ function updateAndAddChests(rom)
 	lzwData[0x5B5] = 0x41; //shame - f1 chest - add chest graphic
 	lzwData[0x5AF] = 0x00; //shame - f1 chest - remove item graphic
 	lzwData[0x216F] = 0x41; //britain sewers - f1 chest - change crate to chest graphic
+	lzwData[0x3EF] = 0x00; //sutek - f1 chest - remove red potion graphic
+	lzwData[0x44B] = 0x41; //sutek - f1 chest - add chest graphic
+	lzwData[0xBF6] = 0x41; //despise - f1 chest - replaces milk
+
+	rom.set([0xC9, 0xF1, 0x00, 0x8D], 0x11806); //move red potion to chest
 
 	//rom.set([0xEA],0x1175E); //move book of boardgames over one tile
 	//rom.set([0xEB],0x1174E); //move book of oz over one tile
@@ -183,14 +181,28 @@ function updateAndAddChests(rom)
 	lzwData[0x1192] = 0x07; //spider cave - add f2 chest graphic
 	lzwData[0x11BA] = 0x00; //spider cave - remove spiked collar graphic
 	lzwData[0x3312] = 0x07; //swamp cave - add f2 chest graphic (replaces mace graphic)
+	lzwData[0x39CB] = 0x07; //wrong / covetous - add 07 chest graphic (08 locked) (replaces powder keg)
+	lzwData[0x2D1C] = 0x08; //destard - add chest graphic (08 locked) (replaces glass sword)
+	lzwData[0x34B1] = 0x07; //despise - add chest graphic (08 locked) (replaces ring of protection)
+	lzwData[0x34B9] = 0x66; //despise - moving ring of protection graphic
+	lzwData[0x34DC] = 0x00; //despise - removing ring of protection graphic
+	lzwData[0x3522] = 0x00; //despise - removing ring of protection graphic
+	//lzwData[0x31E7] = 0x07; //heftimus - add 07 chest graphic (08 locked)
+	
+	rom.set([0x0F, 0x2D, 0x00, 0x31], 0x1188D); //despise - move ring of protection to new chest
+	rom.set([0x0F, 0x2E, 0x00, 0x31], 0x11891); //despise - move ring of protection to reachable location
 
-	rom.set([0x18, 0x4A, 0x00, 0x18], 0x118C9); //move spiked collar into chest - spider cave
+	rom.set([0x18, 0x4A, 0x00, 0x18], 0x118C9); //spider cave - move spiked collar into chest
 
 	//Underground - Floor 3 Chests
 	var lzwData = decompressDataFromLZW(rom, 0x9E300);
+	lzwData[0x525] = 0x91; //shame f3 - replace magic bow graphic with chest (0x92 is locked)
 	lzwData[0x10AD] = 0x91; //despise f3 - replace white potion graphic with chest (0x92 is locked)
 	lzwData[0x13D5] = 0x47; //despise f3 - change volcano to bear trap to prevent stuckage
+	lzwData[0x3B59] = 0x00; //cyclops cave f3 - remove powder keg to move to hythloth
+	lzwData[0x2D12] = 0x91; //hythloth f3 - add f3 chest (0x92 is locked)
 
+	rom.set([0xE0, 0xCA, 0x00, 0x7C], 0x11AF0); //move powder keg from cyclops cave to hythloth lava room
 	rom.set([0x4B, 0x35, 0x00, 0x17], 0x11A68); //convert white potion to magic armor - despise f3
 
 	//Underground - Floor 4 Chests
@@ -199,8 +211,13 @@ function updateAndAddChests(rom)
 	lzwData[0x2E4A] = 0x59; //ant mound - add f4 chest graphic
 	lzwData[0x2765] = 0x59; //swamp cave - add f4 chest graphic
 	lzwData[0x120D] = 0x59; //change Vortex Cube location to a chest
-	
-	//deceit f4 chest and force fields
+	lzwData[0x2D2F] = 0x59; //destard - add f4 chest graphic (59 is chest and 5A is locked)
+
+	lzwData[0x346D] = 0x59; //deceit - add f4 chest graphic to body chest (59 is chest and 5A is locked)
+	rom.set([0xE3, 0x05, 0x80, 0x32], 0x11B77); //deceit - move item 1 left off of body into new chest
+	lzwData[0x3461] = 0xB9; //deceit - add energy field to body chest
+
+	//deceit f4 cage chest and energy fields
 	lzwData[0x22F5] = 0x59; //chest
 	lzwData[0x22E1] = 0x00; //remove fence
 	lzwData[0x22E9] = 0xB9; //remove fence and replace with field
@@ -235,7 +252,7 @@ function replaceMoonOrb(rom)
 
 function adjustArmorItems(rom)
 {
-	console.log("ADDING NEW ARMOR ITEMS");
+	consoleLog("ADDING NEW ARMOR ITEMS");
 	
 	//increase armor accumulator item id check from 33 to 3C to allow boots, belts, and necklaces to provide armor
 	rom[0x591D] = 0x3C;
@@ -274,118 +291,339 @@ function adjustArmorItems(rom)
 */
 }
 
-function randomizeItems(rom, random, spoilers)
+function randomizeItems(rom, random, spoilers, hintsSpoiler)
 {
 	var items = [];
-	var locations = [];
 	var hintLocations = [];
 
-	if ($('#randomize_core_items').is(':checked'))
-	{
-		items = addDataToDataPool(items, DATA_ITEMS_CORE, 'id');
-		locations = addDataToDataPool(locations, DATA_ITEMS_CORE, 'offset');
-	}
+	//build a locations list based on the selected location types
+	var selectedLocationTypes = getSelectedLocationTypesList();
+	var locations = buildSelectedLocationsList(selectedLocationTypes.selectedLocations);
+	//locations.shuffle(random);
 
-	if ($('#randomize_chests_overworld').is(':checked'))
-	{
-		items = addDataToDataPool(items, DATA_CHESTS_OVERWORLD, 'id');
-		locations = addDataToDataPool(locations, DATA_CHESTS_OVERWORLD, 'offset');
-		
-		if ($('#randomize_chests_dungeons').is(':checked') == false)
-		{
-			items = addDataToDataPool(items, DATA_CHESTS_OVERWORLD_MAPPIECE, 'id');
-			locations = addDataToDataPool(locations, DATA_CHESTS_OVERWORLD_MAPPIECE, 'offset');
-		}
-	}
+	//build a progression items list based on the selected progression items (shuffle this list)
+	var progressionItems = getSelectedProgressionItemsList();
 
-	if ($('#randomize_chests_dungeons').is(':checked'))
-	{
-		items = addDataToDataPool(items, DATA_CHESTS_DUNGEON, 'id');
-		locations = addDataToDataPool(locations, DATA_CHESTS_DUNGEON, 'offset');
-
-		items = addDataToDataPool(items, DATA_CHESTS_DUNGEONS_MAPPIECE, 'id');
-		locations = addDataToDataPool(locations, DATA_CHESTS_DUNGEONS_MAPPIECE, 'offset');
-	}
-
-	if ($('#remove_moonorb').is(':checked'))
-	{
-		items = addDataToDataPool(items, DATA_ITEM_MOONORB_REPLACEMENTS, 'id');
-		locations = addDataToDataPool(locations, DATA_ITEM_MOONORB_REPLACEMENTS, 'offset');
-	}
-	else if ($('#randomize_moonorb').is(':checked'))
-	{
-		items = addDataToDataPool(items, DATA_ITEM_MOONORB, 'id');
-		locations = addDataToDataPool(locations, DATA_ITEM_MOONORB, 'offset');
-	}
-
-	if ($('#randomize_spellbook').is(':checked'))
-	{
-		items = addDataToDataPool(items, DATA_ITEM_SPELLBOOK, 'id');
-		locations = addDataToDataPool(locations, DATA_ITEM_SPELLBOOK, 'offset');
-	}
-
-	if ($('#randomize_unlockanddispel').is(':checked')) //randomize spells is selected
-	{
-		items = addDataToDataPool(items, DATA_CHESTS_SPELLS, 'id');
-		locations = addDataToDataPool(locations, DATA_CHESTS_SPELLS, 'offset');
-	}
-	else
-	{
-		if ($('#randomize_chests_overworld').is(':checked')) //randomize spells is not selected
-		{
-			items = addDataToDataPool(items, DATA_CHESTS_NO_SPELLS, 'id');
-			locations = addDataToDataPool(locations, DATA_CHESTS_NO_SPELLS, 'offset');
-		}
-	}
+	//from the list of selected locations generate a list of locations that contain those items and a seperate of those locations that do not
+	var locationsItemsSeperated = getLocationsWithSpecificItems(locations, progressionItems); //returns an object that contains three lists, withItems, withoutItems, foundItems, missingItems
+	locationsItemsSeperated.withItems.shuffle(random); //we shuffle the items lists seperately as we want to place progression items first
+	locationsItemsSeperated.withoutItems.shuffle(random); //we shuffle the items lists seperately as we want to place progression items first
 	
-	if ($('#add_sherry_item').is(':checked')) //randomize sherry item is selected
+	if(locations.length > progressionItems.length)
 	{
-		items = addDataToDataPool(items, DATA_CHESTS_SHERRY_ITEM, 'id');
-		locations = addDataToDataPool(locations, DATA_CHESTS_SHERRY_ITEM, 'offset');
+		//enough locations were selected to cover all default progression item placements
+		if(locationsItemsSeperated.withItems.length == progressionItems.length)
+		{
+			//all progression items are accounted for already so simply copy the lists
+			//for(var i = 0; i < locations.length; ++i)
+			//{
+			//	items.push(locations[i]);
+			//}
+			for(var i = 0; i < locationsItemsSeperated.withItems.length; ++i)
+			{
+				items.push(locationsItemsSeperated.withItems[i]);
+			}
+			for(var i = 0; i < locationsItemsSeperated.withoutItems.length; ++i)
+			{
+				items.push(locationsItemsSeperated.withoutItems[i]);
+			}
+		}
+		else
+		{
+			//some progression items were missing so we need to get a list of those missing locations to avoid progression item duplication issues
+			//identify any progression items that are missing and create a list of those missing locations (if they had original locations)
+			var nonSelectedLocations = buildSelectedLocationsList(selectedLocationTypes.nonSelectedLocations);
+			var locationsOfMissingProgressionItems = getLocationsWithSpecificItems(nonSelectedLocations, locationsItemsSeperated.missingItems);
+			locationsItemsSeperated.withItems.shuffle(random);
+			locationsOfMissingProgressionItems.withItems.shuffle(random);
+			locationsItemsSeperated.withoutItems.shuffle(random);
+
+			for(var i = 0; i < locationsItemsSeperated.withItems.length; ++i)
+			{
+				items.push(locationsItemsSeperated.withItems[i]); //add items from locations from the initial list that had progression items
+			}
+			for(var i = 0; i < locationsOfMissingProgressionItems.withItems.length; ++i)
+			{
+				items.push(locationsOfMissingProgressionItems.withItems[i]); //add items from locations from the missing progression item locations list
+			}
+
+			//add the remaining withoutItems locations if there is room to add them - we remove an amount based on how many missing progression items we had to add
+			var replacementItems = [];
+			var totalItemsLeftToReplace = locationsOfMissingProgressionItems.withItems.length;
+			for(var i = 0; i < locationsItemsSeperated.withoutItems.length; ++i)
+			{
+				if(totalItemsLeftToReplace > 0)
+				{
+					//replacementItems.push(locationsItemsSeperated.withoutItems[i]); //mark this location as one to use as a replacement item
+					totalItemsLeftToReplace -=1;
+				}
+				else
+				{
+					items.push(locationsItemsSeperated.withoutItems[i]); //we are done marking replacement items so add the rest of the list
+				}
+			}
+			
+			replacementItems = randomizeReplacedLocations(rom, random, locationsOfMissingProgressionItems.withItems);
+			var otherItems = locationsOfMissingProgressionItems.withoutItems.concat(replacementItems);
+			var otherLocations = locationsOfMissingProgressionItems.withoutItems.concat(locationsOfMissingProgressionItems.withItems);
+			otherLocations = sortAndShuffleLocations(random, otherLocations);
+			placeItemsInLocations(rom, random, otherItems, otherLocations, spoilers, [], []); //place non-estential items
+		}
 	}
 	else
 	{
-		if ($('#randomize_chests_overworld').is(':checked')) //randomize sherry item is not selected
+		//not enough locations were selected
+		for(var i = 0; i < locations.length; ++i)
 		{
-			items = addDataToDataPool(items, DATA_CHESTS_NO_SHERRY_ITEM, 'id');
-			locations = addDataToDataPool(locations, DATA_CHESTS_NO_SHERRY_ITEM, 'offset');
+			items.push(locations[i]);
 		}
 	}
-
-	console.log("RANDOMIZING " + locations.length + " ITEMS");
 
 	if(items.length != locations.length)
 	{
-		console.log('ERROR - Items length and Locations length are not the same' + items.length + " != " + locations.length);
+		consoleError('ERROR - Items length and Locations length are not the same' + items.length + " != " + locations.length);
+		consoleError(items);
+		consoleError(locations);
 		return;
 	}
 
-	locations = shuffleLocations(random, locations);
-	items.shuffle(random);
+	locations = sortAndShuffleLocations(random, locations);
+	items = sortAndShuffleItems(random, items);
 	hintLocations = getHintLocations();
-	var isDonePlacingItems = placeItemsInLocations(rom, random, items, locations, spoilers, hintLocations);
+	var isDonePlacingItems = placeItemsInLocations(rom, random, items, locations, spoilers, hintLocations, hintsSpoiler);
 
 	return isDonePlacingItems;
 }
 
-function shuffleLocations(random, locations)
+function getSelectedLocationTypesList()
+{
+	var selectedLocationTypes = [];
+	var nonSelectedLocationTypes = [];
+
+	if ($('#randomize_locations_joinablepartymembers').is(':checked')){selectedLocationTypes.push("joinablepartymembers");}else{nonSelectedLocationTypes.push("joinablepartymembers");}
+	if ($('#randomize_locations_castles').is(':checked')){selectedLocationTypes.push("castles");}else{nonSelectedLocationTypes.push("castles");}
+	if ($('#randomize_locations_townsvirtue').is(':checked'))
+	{
+		selectedLocationTypes.push("towns_virtue");
+		if ($('#add_sherry_item').is(':checked')) //sherry odd cheese chest
+		{
+			selectedLocationTypes.push("towns_virtue_oddcheese");
+		}
+		else
+		{
+			selectedLocationTypes.push("towns_virtue_no_oddcheese");
+		}
+		if ($('#randomize_unlockanddispel').is(':checked')) //unlock and dispel field chests
+		{
+			selectedLocationTypes.push("towns_virtue_unlockdispel");
+		}
+		else
+		{
+			selectedLocationTypes.push("towns_virtue_no_unlockdispel");
+		}
+	}
+	else
+	{
+		nonSelectedLocationTypes.push("towns_virtue");
+		if ($('#add_sherry_item').is(':checked')) //sherry odd cheese chest
+		{
+			nonSelectedLocationTypes.push("towns_virtue_oddcheese");
+		}
+		else
+		{
+			nonSelectedLocationTypes.push("towns_virtue_no_oddcheese");
+		}
+		if ($('#randomize_unlockanddispel').is(':checked')) //unlock and dispel field chests
+		{
+			nonSelectedLocationTypes.push("towns_virtue_unlockdispel");
+		}
+		else
+		{
+			nonSelectedLocationTypes.push("towns_virtue_no_unlockdispel");
+		}
+	}
+	if ($('#randomize_locations_townsnonvirtue').is(':checked')){selectedLocationTypes.push("towns_nonvirtue");}else{nonSelectedLocationTypes.push("towns_nonvirtue");}
+	if ($('#randomize_locations_overworld').is(':checked')){selectedLocationTypes.push("overworld");}else{nonSelectedLocationTypes.push("overworld");}
+	if ($('#randomize_locations_dialog').is(':checked')){selectedLocationTypes.push("dialog");}else{nonSelectedLocationTypes.push("dialog");}
+	if ($('#randomize_locations_treasuremap').is(':checked')){selectedLocationTypes.push("treasuremap");}else{nonSelectedLocationTypes.push("treasuremap");}
+	if ($('#randomize_locations_caves').is(':checked')){selectedLocationTypes.push("caves");}else{nonSelectedLocationTypes.push("caves");}
+	if ($('#randomize_locations_tombs').is(':checked')){selectedLocationTypes.push("tombs");}else{nonSelectedLocationTypes.push("tombs");}
+	if ($('#randomize_locations_dungeons').is(':checked')){selectedLocationTypes.push("dungeons");}else{nonSelectedLocationTypes.push("dungeons");}
+	if ($('#randomize_locations_shrines').is(':checked')){selectedLocationTypes.push("shrines");}else{nonSelectedLocationTypes.push("shrines");}
+	if ($('#randomize_locations_gargoylecity').is(':checked')){selectedLocationTypes.push("gargoylecity");}else{nonSelectedLocationTypes.push("gargoylecity");}
+	if ($('#randomize_moonorb').is(':checked'))
+	{
+		if ($('#remove_moonorb').is(':checked'))
+		{
+			selectedLocationTypes.push("playerinventory_slot1_no_moonorb");
+		}
+		else
+		{
+			selectedLocationTypes.push("playerinventory_slot1");
+		}
+	}
+	if ($('#randomize_spellbook').is(':checked')){selectedLocationTypes.push("playerinventory_slot2");}
+
+	return {
+				selectedLocations:selectedLocationTypes,
+				nonSelectedLocations:nonSelectedLocationTypes,
+			};
+}
+
+function buildSelectedLocationsList(selectedLocationTypes)
+{
+	var locations = [];
+
+	for(var iLocation = 0; iLocation < DATA_WORLD_LOCATIONS.length; ++iLocation)
+	{
+		typeSearch:
+		for(var iSelectedType = 0; iSelectedType < selectedLocationTypes.length; ++iSelectedType)
+		{
+			for(var iDataTypes = 0; iDataTypes < DATA_WORLD_LOCATIONS[iLocation].location_types.length; ++iDataTypes)
+			{
+				if(selectedLocationTypes[iSelectedType] == DATA_WORLD_LOCATIONS[iLocation].location_types[iDataTypes])
+				{
+					if(locations.includes(DATA_WORLD_LOCATIONS[iLocation]) == false)
+					{
+						locations.push(DATA_WORLD_LOCATIONS[iLocation]);
+						break typeSearch;
+					}
+				}
+			}
+		}
+	}
+
+	return locations;
+}
+
+function getSelectedProgressionItemsList()
+{
+	var progressionItems = [];
+	progressionItems = progressionItems.concat(PROGRESSION_CORE); //always add the core items
+	if ($('#randomize_locations_treasuremap').is(':checked')){progressionItems = progressionItems.concat(PROGRESSION_TREASUREMAP);}
+	if ($('#randomize_locations_dialog').is(':checked')){progressionItems = progressionItems.concat(PROGRESSION_DIALOG);}
+	if ($('#randomize_locations_shrines').is(':checked')){progressionItems = progressionItems.concat(PROGRESSION_SHRINES);}
+	if ($('#randomize_moonorb').is(':checked'))
+	{
+		if ($('#remove_moonorb').is(':checked') == false)
+		{
+			progressionItems = progressionItems.concat(PROGRESSION_MOONORB);
+		}
+	}
+	if ($('#randomize_spellbook').is(':checked')){progressionItems = progressionItems.concat(PROGRESSION_SPELLBOOK);}
+	if ($('#randomize_unlockanddispel').is(':checked')){progressionItems = progressionItems.concat(PROGRESSION_SPELLS);}
+	if ($('#add_sherry_item').is(':checked')){progressionItems = progressionItems.concat(PROGRESSION_ODD_CHEESE);}
+	return progressionItems;
+}
+
+function getLocationsWithSpecificItems(locations, items)
+{
+	var withItemsList = [];
+	var withoutItemsList = [];
+	var foundItemsList = [];
+	var missingItemsList = [];
+
+	for(var iLocation = 0; iLocation < locations.length; ++iLocation)
+	{
+		for(var iItem = 0; iItem < items.length; ++iItem)
+		{
+			if(locations[iLocation].id == items[iItem])
+			{
+				foundItemsList.push(items[iItem]);
+				withItemsList.push(locations[iLocation]); //we found a match - item
+				break;
+			}
+			else if(locations[iLocation].id[0] == ITEM_SPELL || locations[iLocation].id[0] == ITEM_KEY)
+			{
+				if(locations[iLocation].flags[0] == items[iItem])
+				{
+					foundItemsList.push(items[iItem]);
+					withItemsList.push(locations[iLocation]); //we found a match - spell
+					break;
+				}
+			}
+			if(iItem == items.length-1)
+			{
+				withoutItemsList.push(locations[iLocation]); //we did not find a match
+			}
+		}
+	}
+
+	for(var iItem = 0; iItem < items.length; ++iItem)
+	{
+		if(foundItemsList.contains(items[iItem]) == false)
+		{
+			missingItemsList.push(items[iItem]);
+		}
+	}
+
+	return {
+				withItems:withItemsList,
+				withoutItems:withoutItemsList,
+				foundItems:foundItemsList,
+				missingItems:missingItemsList,
+			};
+}
+
+function sortAndShuffleLocations(random, locations)
 {
 	//to help prevent failed placements when near the end of the item placement step we shuffle the restricted and unrestricted locations seperately
 	//then attempt to place in restricted locations first
 	var restrictedLocations = [];
+	var requiresLocations = [];
 	var unrestrictedLocations = [];
 
 	restrictedLocations = $.grep(locations, function(x){ return x.restrictions.length != 0; });
 	unrestrictedLocations = $.grep(locations, function(x){ return x.restrictions.length == 0; });
 
+	//sort items that have requirements out from the list with restrictions
+	for(var i = 0; i < restrictedLocations.length; ++i)
+	{
+		if(restrictedLocations[i].requires.length > 0)
+		{
+			var removedSingleItem = restrictedLocations.splice(i,1);
+			requiresLocations.push(removedSingleItem[0]);
+		}
+	}
+
+	requiresLocations.shuffle(random);
 	restrictedLocations.shuffle(random);
 	unrestrictedLocations.shuffle(random);
+
+	restrictedLocations = requiresLocations.concat(restrictedLocations);
 	locations = restrictedLocations.concat(unrestrictedLocations);
+
 	return locations;
+}
+
+function sortAndShuffleItems(random, items)
+{
+	//we want to place a select set of non-key flagged progression items first to help ensure some of them end up in locked locations
+	var numItemsToSortOut = 4;
+	var removedItems = [];
+	for(var i = 0; i < items.length; i++)
+	{
+		var isKeyItem = (items[i].progression_flags & 0x01);
+		if(items[i].progression_flags > 0x00 && isKeyItem == 0)
+		{
+			var removedSingleItem = items.splice(i,1);
+			removedItems.push(removedSingleItem[0]);
+			if(removedItems.length == numItemsToSortOut)
+			{
+				break;
+			}
+		}
+	}
+	items.shuffle(random);
+	items = removedItems.concat(items);
+
+	return items;
 }
 
 function checkRestrictions(location, item, itemHex, itemFlags, isItemAllowed)
 {
+	var locationHasRestrictions = false;
+
 	if(location.restrictions.length > 0)
 	{
 		locationHasRestrictions = true;
@@ -400,7 +638,7 @@ function checkRestrictions(location, item, itemHex, itemFlags, isItemAllowed)
 		}
 		else
 		{
-			if(location.offset == 0x04 || location.offset == 0x05) //Lord British and Phoenix Special Code
+			if(location.offset == 0x04 || location.offset == 0x05 || location.offset == 0x0F || location.offset == 0x10) //Lord British, Phoenix, Papa, Manrel can not give items above 0x7F
 			{
 				if(itemHex > 0x7F)
 				{
@@ -416,7 +654,7 @@ function checkRestrictions(location, item, itemHex, itemFlags, isItemAllowed)
 				rArray = rArray.concat(location.addedRequires);
 				for(var iRA = 0; iRA < rArray.length; ++iRA)
 				{
-					if(itemHex == ITEM_SPELL && itemFlags > 0xC0)
+					if((itemHex == ITEM_SPELL && itemFlags > 0xC0) || (itemHex == ITEM_KEY && itemFlags > 0xC0))
 					{
 						if(rArray[iRA] == itemFlags)
 						{
@@ -466,7 +704,7 @@ function updateLocationRequirements(locations, inLocation, inItem)
 				//add the placed location requirements to this location
 				locations[iLocation] = addLocationRequirements(locations[iLocation], inLocation);
 			}
-			else if( inItem.id == ITEM_SPELL && locations[iLocation].requires[iRequires] == inItem.flags[0])
+			else if( (inItem.id == ITEM_SPELL || inItem.id == ITEM_KEY) && locations[iLocation].requires[iRequires] == inItem.flags[0])
 			{
 				//add the placed location requirements to this location
 				locations[iLocation] = addLocationRequirements(locations[iLocation], inLocation);
@@ -479,7 +717,7 @@ function updateLocationRequirements(locations, inLocation, inItem)
 				//add the placed location requirements to this location
 				locations[iLocation] = addLocationRequirements(locations[iLocation], inLocation);
 			}
-			else if( inItem.id == ITEM_SPELL && locations[iLocation].addedRequires[iRequires] == inItem.flags[0])
+			else if( (inItem.id == ITEM_SPELL || inItem.id == ITEM_KEY) && locations[iLocation].addedRequires[iRequires] == inItem.flags[0])
 			{
 				//add the placed location requirements to this location
 				locations[iLocation] = addLocationRequirements(locations[iLocation], inLocation);
@@ -512,7 +750,7 @@ function addLocationRequirements(location1, location2)
 	return location1;
 }
 
-function placeItemsInLocations(rom, random, items, locations, spoilers, hintLocations)
+function placeItemsInLocations(rom, random, items, locations, spoilers, hintLocations, hintsSpoiler)
 {
 	var iItem = 0;
 	var safetyCounter = 0;
@@ -528,7 +766,6 @@ function placeItemsInLocations(rom, random, items, locations, spoilers, hintLoca
 
 		for(iLocation = 0; iLocation < locations.length; ++iLocation)
 		{
-			var locHex = locations[iLocation].offset + 3;
 			var itemHex = items[iItem].id;
 			var isItemAllowed = 1;
 			var locationHasRestrictions = false;
@@ -546,138 +783,29 @@ function placeItemsInLocations(rom, random, items, locations, spoilers, hintLoca
 
 			if(isItemAllowed == 1)
 			{
-				if(locations[iLocation].offset == 0x0F91D || locations[iLocation].offset == 0x0F923) //moonorb and spellbook
+				if(locations[iLocation].location_set == "Starting Inventory" || locations[iLocation].location_set == "Joinable Party Members")
 				{
-					var locHex = locations[iLocation].offset;
-					rom[locHex] = itemHex;
+					placeInventoryItem(rom, locations[iLocation], items[iItem]);
 
-					if( locations[iLocation].offset == 0x0F923 )
-					{
-						rom[locations[iLocation].offset+1] = items[iItem].flags[2]; //set an item quantity for the spellbook replacement
-					}
-
-					if(items[iItem].item[0] != '' && items[iItem].location != '')
-					{
-						if ($('#display_hints').is(':checked'))
-						{
-							if(items[iItem].type == "main" || items[iItem].type == "shrine" || items[iItem].type == "spell" || $('#randomize_core_items').is(':checked') == false)
-							{
-								addHintToHintsToAddList(items[iItem].item, locations[iLocation].hints, hintsToAddList)
-							}
-						}
-						spoilersToAddList.push({item:items[iItem], location:locations[iLocation]});
-					}
+					checkAddSpoilersAndHints(items[iItem], locations[iLocation], hintsToAddList, spoilersToAddList);
 					items.splice(iItem, 1);
 					locations.splice(iLocation, 1);
 					break;
 				}
-				else if(locations[iLocation].offset < 0x0F) //dialog items
+				else if(locations[iLocation].offset < 0xFF) //dialog items
 				{
-					var locHex = locations[iLocation].offset;
-					var itemHex = items[iItem].id;
-					var flagHex = items[iItem].flags[2];
-					if(locations[iLocation].offset == 0x01) //pocket of ariana
-					{
-						dialogItemAriana(rom, items[iItem].item[0], itemHex, flagHex);
-					}
-					else if(locations[iLocation].offset == 0x02) //pocket of antonio
-					{
-						dialogItemAntonio(rom, items[iItem].item[0], itemHex, flagHex);
-					}
-					else if(locations[iLocation].offset == 0x03) //pocket of selganor
-					{
-						dialogItemSelganor(rom, items[iItem].item[0], items[iItem].item[1], itemHex, flagHex);
-					}
-					else if(locations[iLocation].offset == 0x04) //pocket of lord british
-					{
-						dialogItemLordBritish(rom, items[iItem].item[0], itemHex, flagHex);
-					}
-					else if(locations[iLocation].offset == 0x05) //pocket of phoenix
-					{
-						dialogItemPhoenix(rom, items[iItem].item[1], itemHex, flagHex);
-					}
-					else if(locations[iLocation].offset == 0x06) //pocket of ybarra
-					{
-						dialogItemYbarra(rom, items[iItem].item[0], items[iItem].item[1], itemHex, flagHex);
-					}
-					else if(locations[iLocation].offset == 0x07) //pocket of whitsaber
-					{
-						dialogItemWhitsaber(rom, items[iItem].item[0], items[iItem].item[1], itemHex, flagHex);
-					}
-					else if(locations[iLocation].offset == 0x08) //pocket of arturos
-					{
-						dialogItemArturos(rom, items[iItem].item[1], itemHex, flagHex);
-					}
-					else if(locations[iLocation].offset == 0x09) //pocket of morchella
-					{
-						dialogItemMorchella(rom, items[iItem].item[0], items[iItem].item[1], itemHex, flagHex);
-					}
-					else if(locations[iLocation].offset == 0x0A) //pocket of homer
-					{
-						dialogItemHomer(rom, items[iItem].item[0], items[iItem].item[1], itemHex, flagHex);
-					}
-					else if(locations[iLocation].offset == 0x0B) //pocket of captain john
-					{
-						dialogItemCaptainJohn(rom, items[iItem].item[0], items[iItem].item[1], itemHex, flagHex);
-					}
-					else if(locations[iLocation].offset == 0x0C) //pocket of the lensmaker
-					{
-						dialogItemLensmaker(rom, items[iItem].item[0], items[iItem].item[1], itemHex, flagHex);
-					}
-					else if(locations[iLocation].offset == 0x0D) //pocket of ephemerides
-					{
-						dialogItemEphemerides(rom, items[iItem].item[0], items[iItem].item[1], itemHex, flagHex);
-					}
-					if(items[iItem].item[0] != '' && items[iItem].location != '')
-					{
-						if ($('#display_hints').is(':checked'))
-						{
-							if(items[iItem].type == "main" || items[iItem].type == "shrine" || items[iItem].type == "spell" || $('#randomize_core_items').is(':checked') == false)
-							{
-								addHintToHintsToAddList(items[iItem].item, locations[iLocation].hints, hintsToAddList)
-							}
-						}
-						spoilersToAddList.push({item:items[iItem], location:locations[iLocation]});
-					}
+					placeDialogItem(rom, random, locations[iLocation], items[iItem]);
+
+					checkAddSpoilersAndHints(items[iItem], locations[iLocation], hintsToAddList, spoilersToAddList);
 					items.splice(iItem, 1);
 					locations.splice(iLocation, 1);
 					break;
 				}
 				else
 				{
-					var flagLocHex = locations[iLocation].offset + 2;
-					var flagHex = 0xC0;
+					placeChestItem(rom, locations[iLocation], items[iItem]);
 
-					if(locations[iLocation].type == "shrine") //if we are attempting to place at a shrine, always use the location flags
-					{
-						flagHex = locations[iLocation].flags[0];
-					}
-					else if(items[iItem].type == "main" || items[iItem].type == "shrine") //if we are placing a main/shrine item, always use the item flags to ensure that it will not count as stolen
-					{
-						flagHex = items[iItem].flags[1];
-					}
-					else if(locations[iLocation].stolen == "yes") //next check if the location is flagged as stolen
-					{
-						flagHex = items[iItem].flags[0];
-					}
-					else //we are not a shrine, not a main item, and not being placed in a location that is set as stolen
-					{
-						flagHex = items[iItem].flags[1];
-					}
-
-					rom[locHex] = itemHex;
-					rom[flagLocHex] = flagHex;
-					if(items[iItem].item[0] != '' && items[iItem].location != '')
-					{
-						if ($('#display_hints').is(':checked'))
-						{
-							if(items[iItem].type == "main" || items[iItem].type == "shrine" || items[iItem].type == "spell" || $('#randomize_core_items').is(':checked') == false)
-							{
-								addHintToHintsToAddList(items[iItem].item, locations[iLocation].hints, hintsToAddList)
-							}
-						}
-						spoilersToAddList.push({item:items[iItem], location:locations[iLocation]});
-					}
+					checkAddSpoilersAndHints(items[iItem], locations[iLocation], hintsToAddList, spoilersToAddList);
 					items.splice(iItem, 1);
 					locations.splice(iLocation, 1);
 					break;
@@ -687,7 +815,7 @@ function placeItemsInLocations(rom, random, items, locations, spoilers, hintLoca
 			{
 				if(items.length == 1 || locations.length == 1)
 				{
-					console.log('ERROR - LAST ITEM WAS NOT ALLOWED IN LAST LOCATION - RANDOMIZING AGAIN');
+					consoleWarn('WARNING - LAST ITEM WAS NOT ALLOWED IN LAST LOCATION - RANDOMIZING AGAIN');
 					wasSuccessful = false;
 					return wasSuccessful;
 				}
@@ -704,7 +832,7 @@ function placeItemsInLocations(rom, random, items, locations, spoilers, hintLoca
 			}
 			else
 			{
-				processHintsToAddList(rom, random, hintsToAddList, hintLocations);
+				processHintsToAddList(rom, random, hintsToAddList, hintLocations, hintsSpoiler);
 				spoilers = processSpoilersToAddList(spoilersToAddList, spoilers);
 				wasSuccessful = true;
 				return wasSuccessful;
@@ -714,13 +842,184 @@ function placeItemsInLocations(rom, random, items, locations, spoilers, hintLoca
 
 	if(wasSuccessful == false)
 	{
-		console.log('=== ERROR - ITEM RANDOMIZATION FAILED - RANDOMIZING AGAIN ===');
+		consoleError('=== ERROR - ITEM RANDOMIZATION FAILED - RANDOMIZING AGAIN ===');
 	}
 
-	processHintsToAddList(rom, random, hintsToAddList, hintLocations);
-	processSpoilersToAddList(spoilersToAddList, spoilers);
+	if(wasSuccessful)
+	{
+		processHintsToAddList(rom, random, hintsToAddList, hintLocations, hintsSpoiler);
+		processSpoilersToAddList(spoilersToAddList, spoilers);
+	}
 
 	return wasSuccessful;
+}
+
+function placeInventoryItem(rom, inLocation, inItem)
+{
+	var locHex = inLocation.offset;
+	var itemHex = inItem.id;
+	rom[locHex] = itemHex; //place item
+
+	if( inLocation.offset == 0x0F923 )
+	{
+		rom[inLocation.offset+1] = inItem.flags[2]; //set an item quantity for the spellbook replacement
+	}
+	else if(inLocation.location_set == "Joinable Party Members" && inLocation.type != "partyring")
+	{
+		rom[inLocation.offset+1] = inItem.flags[2]; //set an item quantity for inventory replacement
+	}
+}
+
+function placeDialogItem(rom, random, inLocation, inItem)
+{
+	var itemHex = inItem.id;
+	var flagHex = inItem.flags[2];
+	if(inLocation.offset == 0x01)
+	{
+		dialogItemAriana(rom, inItem.item_name[0], itemHex, flagHex);
+	}
+	else if(inLocation.offset == 0x02) //pocket of antonio
+	{
+		dialogItemAntonio(rom, inItem.item_name[0], itemHex, flagHex);
+	}
+	else if(inLocation.offset == 0x03) //pocket of selganor
+	{
+		dialogItemSelganor(rom, inItem.item_name[0], inItem.item_name[1], itemHex, flagHex);
+	}
+	else if(inLocation.offset == 0x04) //pocket of lord british
+	{
+		dialogItemLordBritish(rom, inItem.item_name[0], itemHex, flagHex);
+	}
+	else if(inLocation.offset == 0x05) //pocket of phoenix
+	{
+		dialogItemPhoenix(rom, inItem.item_name[1], itemHex, flagHex);
+	}
+	else if(inLocation.offset == 0x06) //pocket of ybarra
+	{
+		dialogItemYbarra(rom, inItem.item_name[0], inItem.item_name[1], itemHex, flagHex);
+	}
+	else if(inLocation.offset == 0x07) //pocket of whitsaber
+	{
+		dialogItemWhitsaber(rom, inItem.item_name[0], inItem.item_name[1], itemHex, flagHex);
+	}
+	else if(inLocation.offset == 0x08) //pocket of arturos
+	{
+		dialogItemArturos(rom, inItem.item_name[1], itemHex, flagHex);
+	}
+	else if(inLocation.offset == 0x09) //pocket of morchella
+	{
+		dialogItemMorchella(rom, inItem.item_name[0], inItem.item_name[1], itemHex, flagHex);
+	}
+	else if(inLocation.offset == 0x0A) //pocket of homer
+	{
+		dialogItemHomer(rom, inItem.item_name[0], inItem.item_name[1], itemHex, flagHex);
+	}
+	else if(inLocation.offset == 0x0B) //pocket of captain john
+	{
+		dialogItemCaptainJohn(rom, inItem.item_name[0], inItem.item_name[1], itemHex, flagHex);
+	}
+	else if(inLocation.offset == 0x0C) //pocket of the lensmaker
+	{
+		dialogItemLensmaker(rom, inItem.item_name[0], inItem.item_name[1], itemHex, flagHex);
+	}
+	else if(inLocation.offset == 0x0D) //pocket of ephemerides
+	{
+		dialogItemEphemerides(rom, inItem.item_name[0], inItem.item_name[1], itemHex, flagHex);
+	}
+	else if(inLocation.offset == 0x0E) //pocket of dr. cat
+	{
+		dialogItemDrCat(rom, inItem.item_name[0], inItem.item_name[1], itemHex, flagHex);
+	}
+	else if(inLocation.offset == 0x0F) //pocket of cyclops
+	{
+		dialogItemCyclops(rom, inItem.item_name[0], inItem.item_name[1], itemHex, flagHex);
+	}
+	else if(inLocation.offset == 0x10) //pocket of manrel
+	{
+		dialogItemManrel(rom, inItem.item_name[0], inItem.item_name[1], itemHex, flagHex);
+	}
+	else if(inLocation.offset == 0x11) //shovel dig spot
+	{
+		setDigItem(rom,random,itemHex,flagHex);
+	}
+	else if(inLocation.offset == 0x12) //fishing spot
+	{
+		setFishingItem(rom,random,itemHex,flagHex);
+	}
+}
+
+function placeChestItem(rom, inLocation, inItem)
+{
+	var itemHex = inItem.id;
+	var locHex = inLocation.offset + 3;
+	var flagLocHex = inLocation.offset + 2;
+	var flagHex = 0xC0;
+
+	if(inLocation.type == "shrine") //if we are attempting to place at a shrine, always use the location flags
+	{
+		flagHex = inLocation.flags[0];
+	}
+	else if(inItem.type == "main" || inItem.type == "shrine") //if we are placing a main/shrine item, always use the item flags to ensure that it will not count as stolen
+	{
+		flagHex = inItem.flags[1];
+	}
+	else if(inLocation.stolen == "yes") //next check if the location is flagged as stolen
+	{
+		flagHex = inItem.flags[0];
+	}
+	else //we are not a shrine, not a main item, and not being placed in a location that is set as stolen
+	{
+		flagHex = inItem.flags[1];
+	}
+
+	rom[locHex] = itemHex;
+	rom[flagLocHex] = flagHex;
+}
+
+function randomizeReplacedLocations(rom, random, replacedLocations)
+{
+	var placedItems = [];
+	for(var i = 0; i < replacedLocations.length; ++i)
+	{
+		var location = replacedLocations[i];
+
+		if(location.location_set == "Starting Inventory" || location.location_set == "Joinable Party Members")
+		{
+			var item = selectReplacedLocationItem(random, "inventory");
+			placeInventoryItem(rom, location, item);
+			placedItems.push(item);
+		}
+		else if(location.offset < 0xFF) //dialog items
+		{
+			var item = selectReplacedLocationItem(random, "dialog");
+			placeDialogItem(rom, random, location, item);
+			placedItems.push(item);
+		}
+		else
+		{
+			var item = selectReplacedLocationItem(random, "chest");
+			placeChestItem(rom, location, item);
+			placedItems.push(item);
+		}
+	}
+
+	return placedItems;
+}
+
+function selectReplacedLocationItem(random, inLocationType)
+{
+	if(inLocationType == "inventory")
+	{
+		return random.from(DATA_REPLACEMENT_ITEMS);
+	}
+	else if(inLocationType == "dialog")
+	{
+		return random.from(DATA_REPLACEMENT_ITEMS);
+	}
+	else
+	{
+		return random.from(DATA_REPLACEMENT_ITEMS);
+	}
 }
 
 function processSpoilersToAddList(spoilersToAddList, spoilers)
@@ -740,13 +1039,13 @@ function addHintToHintsToAddList(itemNames, locationHints, hintsToAddList)
 	hintsToAddList.push(hintToAdd);
 }
 
-function processHintsToAddList(rom, random, hintsToAddList, hintLocations)
+function processHintsToAddList(rom, random, hintsToAddList, hintLocations, hintsSpoiler)
 {
 	for(var i = 0; i < hintsToAddList.length; i++)
 	{
 		if(hintLocations.length > 0)
 		{
-			addHint(rom, random, hintsToAddList[i].itemNames[0], hintsToAddList[i].locationHints, hintLocations);
+			hintsSpoiler.push(addHint(rom, random, hintsToAddList[i].itemNames[0], hintsToAddList[i].locationHints, hintLocations));
 		}
 		else
 		{
@@ -760,7 +1059,7 @@ function processHintsToAddList(rom, random, hintsToAddList, hintLocations)
 		{
 			if(hintLocations.length > 0)
 			{
-				addHint(rom, random, hintsToAddList[i].itemNames[1], hintsToAddList[i].locationHints, hintLocations);
+				hintsSpoiler.push(addHint(rom, random, hintsToAddList[i].itemNames[1], hintsToAddList[i].locationHints, hintLocations));
 			}
 			else
 			{
@@ -770,8 +1069,24 @@ function processHintsToAddList(rom, random, hintsToAddList, hintLocations)
 	}
 }
 
+function checkAddSpoilersAndHints(inItem, inLocation, hintsToAddList, spoilersToAddList)
+{
+	if(inItem.item_name[0] != '' && inItem.location != '')
+	{
+		if ($('#display_hints').is(':checked'))
+		{
+			if(inItem.type == "main" || inItem.type == "shrine" || inItem.type == "spell" || inItem.progression_flags > 1)
+			{
+				addHintToHintsToAddList(inItem.item_name, inLocation.hints, hintsToAddList)
+			}
+		}
+		spoilersToAddList.push({item:inItem, location:inLocation});
+	}
+}
+
 function dialogItemAntonio(rom, itemText, itemHex, itemQuantity)
 {
+	//0E 01 49 02 11 10 21 02 11 3E 0E 80 87 0E 01 15 3F 0E
 	var lzwData = decompressDataFromLZW(rom, 0x60000);
 	lzwData[0x950] = itemHex;
 	lzwData[0x952] = itemQuantity;
@@ -783,6 +1098,7 @@ function dialogItemAntonio(rom, itemText, itemHex, itemQuantity)
 
 function dialogItemAriana(rom, itemText, itemHex, itemQuantity)
 {
+	//0E 01 49 02 2B 3E 0E 80 81 0E 01 15 12 1A 0E
 	var lzwData = decompressDataFromLZW(rom, 0x49D00);
 	lzwData[0x8B1] = itemHex;
 	lzwData[0x8B3] = itemQuantity;
@@ -982,7 +1298,41 @@ function dialogItemEphemerides(rom, itemTextLong, itemTextShort, itemHex, itemQu
 	lzwData.set([0x02], 0x2423 + ephemeridesPostText.length);
 }
 
-function setDrCatReward(rom, random)
+function dialogItemDrCat(rom, itemTextLong, itemTextShort, itemHex, itemQuantity)
+{
+	//we convert Dr Cat from only giving a gold reward to giving any item as a reward
+	var lzwData = decompressDataFromLZW(rom, 0x5D480);
+	lzwData.set([0x0E,0x11,0x3E,0x0E,0x80,0x81,0x0E,0x01,0x15,0x12,0x1A], 0x326); //default - 0E 02 24 12 1E 0E 80 C8 4A 0D 1E
+	lzwData[0x32B] = itemHex;
+	lzwData[0x32D] = itemQuantity;
+	writeTextToAddress(lzwData, 0xF58, 0x10, itemTextShort + ".");
+}
+
+function dialogItemCyclops(rom, itemTextLong, itemTextShort, itemHex, itemQuantity)
+{
+	//we convert Papa (Cyclops) key reward to an item reward
+	var lzwData = decompressDataFromLZW(rom, 0x68000);
+	lzwData[0x708] = itemHex;
+	lzwData[0x70A] = itemQuantity;
+	writeTextToAddress(lzwData, 0x99F, 0x0D, "He hands you ");
+	writeTextToAddress(lzwData, 0x9AC, 0x16, itemTextShort + ".");
+	writeTextToAddress(lzwData, 0x990, 0x06, "maybe");
+}
+
+function dialogItemManrel(rom, itemTextLong, itemTextShort, itemHex, itemQuantity)
+{
+	//we convert Manrel key reward to an item reward
+	var lzwData = decompressDataFromLZW(rom, 0x50000);
+	lzwData[0x69] = itemHex;
+	lzwData[0x6B] = itemQuantity;
+	writeTextToAddress(lzwData, 0x24A, 0x15, "Take " + itemTextShort + ".");
+
+	var postText = "I gave you " + itemTextShort + ".";
+	writeTextToAddress(lzwData, 0x178, 0x1D, postText);
+	lzwData.set([0x02], 0x178 + postText.length);
+}
+
+function setDrCatGoldReward(rom, random)
 {
 	var lzwData = decompressDataFromLZW(rom, 0x5D480);
 
@@ -1000,6 +1350,142 @@ function setDrCatReward(rom, random)
 	var goldAmount = random.fromWeighted(goldChoices)
 	lzwData.set(goldAmount.gold, 0x32C);
 	lzwData.set(goldAmount.text, 0xF58);
+	lzwData.set([0x0E,0x11,0x3E,0x0E,0x67,0x0E,0x14,0x15,0x12,0x1A,0x00], 0x326); //default - 0E 02 24 12 1E 0E 80 C8 4A 0D 1E
+}
+
+function setDigItem(rom, random, inItemHex, inItemQuantity)
+{
+	var randomCoords = random.from(DATA_DIG_LOCATIONS);
+	var digPos = getRandomCoordinates(random, randomCoords.min, randomCoords.max);
+
+	rom.set([0xE1,0x01,0xF6,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00],0xD572); //change "you find a gold nugget" to "you find X" where X is an item loaded in E5
+
+	var branchOffset = 0x13FCF;
+	rom.set([0x20,0x00,0xF1,0xD0,0x2C,0x60,
+		0xEA,0xEA,0xEA,0xEA,0xEA,0xEA,0xEA,0xEA,0xEA,0xEA,0xEA,0xEA,0xEA,0xEA,0xEA,
+	], branchOffset); //set code branch and remove old code
+
+	var codeOffset = 0x17100;
+	var itemHex = inItemHex;
+	var itemQuantity = inItemQuantity;
+	var dataCode = [
+						0xA6,0x28,0xE0,0xC3,0x02,0xD0,0x10, //load and compare x coordinate and branch if not equal
+						0xA6,0x2A,0xE0,0x43,0x03,0xD0,0x09, //load and compare y coordinate and branch if not equal
+						0xA9,0xC7,0x22,0x0F,0x9A,0x00, //LDA #$C7 JSL
+						0xA9,0x00,0x60, //RTS
+						0xA6,0x28,0xE0,digPos[0],digPos[1],0xD0,0x35, //load and compare x coordinate and branch if not equal
+						0xA6,0x2A,0xE0,digPos[2],digPos[3],0xD0,0x2E, //load and compare y coordinate and branch if not equal
+						0xA9,itemHex, //LDA itemHex
+						0x85,0xE5, //STA E5
+						0x22,0xE9,0xBF,0x01, //JSL - Check the party member inventories for the item id
+						0x7A, //PLY
+						0xB0,0x06, //BCS - branch if the item was NOT found
+						0xA9,0x01,0x20,0xD2,0xBF,0x60, //RTS if the item already exists in the inventory of any party member
+						0xA9,itemQuantity,0xEB,0xA9,itemHex, //LDA itemQuantity XBA LDA itemHex
+						0x22,0xBA,0xE9,0x02,0xB0,0x0C, //post code to give item to the player
+						0xA9,0x5D,0x2C, //inventory was full message
+						0xA9,0x53,0x2C,0xA9,0x4A,0x22,0xEF,0xBC,0x01, //success message
+						0xA9,0x00,0x20,0xD2,0xBF,0x60, //RTS
+						0xA9,0x01,0x60, //RTS
+					];
+	rom.set(dataCode, codeOffset);
+
+	var convertedCoords = convertCoordinatesToSextantString(digPos);
+
+	var textToWrite = "Dig at " + convertedCoords.textY + ", " + convertedCoords.textX + ".";
+	writeTextToBook(rom, 0x2098C, 0xB4, textToWrite);
+}
+
+function setFishingItem(rom, random, inItemHex, inItemQuantity)
+{
+	var randomCoords = random.from(DATA_FISHING_LOCATIONS);
+	var fishPos = getRandomCoordinates(random, randomCoords.min, randomCoords.max);
+
+	var branchOffset = 0x140BD;
+	rom.set([0x20,0x60,0xF1,0xD0,0x01,0x60], branchOffset); //set code branch and remove old code
+
+	var codeOffset = 0x17160;
+	var itemHex = inItemHex;
+	var itemQuantity = inItemQuantity;
+	var dataCode = [
+						0xA9,0x5A,0x22,0xEC,0xBC,0x01, //restore overritten code - this code display the "NAME fishes" message
+						0xA6,0x28,0xE0,fishPos[0],fishPos[1],0xD0,0x35, //load and compare x coordinate and branch if not equal
+						0xA6,0x2A,0xE0,fishPos[2],fishPos[3],0xD0,0x2E, //load and compare y coordinate and branch if not equal
+						0xA9,itemHex, //LDA itemHex
+						0x85,0xE5, //STA E5
+						0x22,0xE9,0xBF,0x01, //JSL - Check the party member inventories for the item id
+						0x7A, //PLY
+						0xB0,0x06, //BCS - branch if the item was NOT found
+						0xA9,0x01,0x20,0xD2,0xBF,0x60, //RTS if the item already exists in the inventory of any party member
+						0xA9,itemQuantity,0xEB,0xA9,itemHex, //LDA itemQuantity XBA LDA itemHex
+						0x22,0xBA,0xE9,0x02,0xB0,0x0C, //post code to give item to the player
+						0xA9,0x5D,0x2C, //inventory was full message
+						0xA9,0x53,0x2C,0xA9,0x4A,0x22,0xEF,0xBC,0x01, //success message
+						0xA9,0x00,0x20,0xD2,0xBF,0x60, //RTS
+						0xA9,0x01,0x60, //RTS
+					];
+	rom.set(dataCode, codeOffset);
+
+	var lzwData = decompressDataFromLZW(rom, 0x60000);
+	var convertedCoords = convertCoordinatesToSextantString(fishPos);
+	var textToWrite = "Recently I lost something while fishing near " + convertedCoords.textY + ", " + convertedCoords.textX + ".";
+	writeTextToAddress(lzwData, 0x119C, 0x6D, textToWrite);
+	lzwData.set([0x02], 0x119C + textToWrite.length);
+}
+
+function getRandomCoordinates(random, inMinPos, inMaxPos)
+{
+	var bytePairMinX = (inMinPos[1] << 8) | (inMinPos[0]);
+    var bytePairMinY = (inMinPos[3] << 8) | (inMinPos[2]);
+	var bytePairMaxX = (inMaxPos[1] << 8) | (inMaxPos[0]);
+    var bytePairMaxY = (inMaxPos[3] << 8) | (inMaxPos[2]);
+	var randomValueX = random.nextIntRange(bytePairMinX, bytePairMaxX);
+	var randomValueY = random.nextIntRange(bytePairMinY, bytePairMaxY);
+	
+	var xTile = randomValueX & 0xFF;
+    var xSuperChunk = randomValueX >> 8;
+    var yTile = randomValueY & 0xFF;
+    var ySuperChunk = randomValueY >> 8;
+    var coords = [xTile, xSuperChunk, yTile, ySuperChunk];
+	return coords;
+}
+
+function convertCoordinatesToSextantString(pos)
+{
+	var bytePair1 = (pos[1] << 8) | (pos[0]);
+    bytePair1 = bytePair1 - 0x0130;
+
+	var bytePair2 = (pos[3] << 8) | (pos[2]);
+    bytePair2 = bytePair2 - 0x0168;
+
+	var textX = "";
+	var textY = "";
+
+	if(bytePair1 & 0x8000)
+	{
+		bytePair1 = bytePair1*-1;
+		textX += bytePair1 + " West";
+	}
+	else
+	{
+		textX += bytePair1 + " East";
+	}
+	
+	if(bytePair2 & 0x8000)
+	{
+		bytePair2 = bytePair2*-1;
+		textY += bytePair2 + " North";
+	}
+	else
+	{
+		textY += bytePair2 + " South";
+	}
+	return{
+		bytePair1:bytePair1,
+		bytePair2:bytePair2,
+		textX:textX,
+		textY:textY,
+	};
 }
 
 function getItemsFromPool(itemPool)
@@ -1053,7 +1539,7 @@ function randomizeJunkContentsPool(rom, random, inItemPool, inLootLocations)
 
 function randomizeJunkContents(rom, random)
 {
-	console.log("RANDOMIZING JUNK ITEMS");
+	consoleLog("RANDOMIZING JUNK ITEMS");
 	randomizeJunkContentsPool(rom, random, DATA_CASTLE_BRITANNIA_ITEMS, DATA_CASTLE_BRITANNIA_LOCATIONS);
 	randomizeJunkContentsPool(rom, random, DATA_OVERWORLD_LOOT_ITEMS, DATA_OVERWORLD_LOOT_LOCATIONS);
 	randomizeJunkContentsPool(rom, random, DATA_OVERWORLD_LOOT_ITEMS, DATA_OVERWORLD_LOOT_LOCATIONS_MAGIC);
@@ -1185,10 +1671,26 @@ function checkJunkShufflePlacement(locationRestrictions, itemRestrictions, locat
 
 function shuffleJunkContents(rom, random)
 {
-	console.log("SHUFFLING JUNK ITEMS");
+	consoleLog("SHUFFLING JUNK ITEMS");
 	shuffleJunkContentsPool(rom, random, [DATA_CASTLE_BRITANNIA_LOCATIONS, DATA_OVERWORLD_LOOT_LOCATIONS, DATA_OVERWORLD_LOOT_LOCATIONS_MAGIC, DATA_UNDERWORLD_LOOT_LOCATIONS, DATA_UNDERWORLD_LOOT_LOCATIONS_MAGIC]);
 	//shuffleJunkContentsPool(rom, random, [DATA_CASTLE_BRITANNIA_LOCATIONS, DATA_OVERWORLD_LOOT_LOCATIONS, DATA_OVERWORLD_LOOT_LOCATIONS_MAGIC]);
 	//shuffleJunkContentsPool(rom, random, [DATA_UNDERWORLD_LOOT_LOCATIONS, DATA_UNDERWORLD_LOOT_LOCATIONS_MAGIC]);
+}
+
+function getLocationTypeCount(inData, inType)
+{
+	var count = 0;
+	for(var i = 0; i < inData.length; ++i)
+	{
+		for(var j = 0; j < inData[i].location_types.length; ++j)
+		{
+			if(inData[i].location_types[j] == inType)
+			{
+				count += 1;
+			}
+		}
+	}
+	return count;
 }
 
 function fixShrines(rom)

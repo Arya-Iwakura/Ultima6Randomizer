@@ -1,4 +1,5 @@
-var VERSION_STRING = 'v0.6h';
+var VERSION_STRING = 'v0.7';
+var BASE_CHECKSUM = 0x9277C9F7;
 
 const SUBSYSTEM_ITEMS = 0;
 const SUBSYSTEM_SPAWNERS = 1;
@@ -15,6 +16,7 @@ const SUBSYSTEM_MONSTER_DATA_DROPS = 11;
 const SUBSYSTEM_MONSTER_DATA_EQUIPMENT = 12;
 const SUBSYSTEM_PLAYER_INVENTORY = 13;
 const SUBSYSTEM_PLAYER_GAMEPLAY = 14;
+const SUBSYSTEM_SOUND = 15;
 
 function randomizeROM(buffer, seed)
 {
@@ -22,7 +24,7 @@ function randomizeROM(buffer, seed)
 	var ext = '.sfc';
 	if (rom.length == 0x80200)
 	{
-		console.log('headered rom?');
+		consoleLog('headered rom?');
 		rom = rom.subarray(0x200);
 		ext = '.smc';
 	}
@@ -48,10 +50,27 @@ function randomizeROM(buffer, seed)
 	var randomizedOptionsSelected = false;
 	var itemsRandomized = false;
 	var spoilers = [];
-
+	var hintsSpoiler = [];
+	fixAISpellListBug(rom);
+	fixSpiders(rom);
 	fixMoonPhaseBug(rom); //fixes base game graphics bug with moon phases
+	fixScheduleBugs(rom);
+	adjustSchedules(rom);
+	setSpeedTextSelectionDefault(rom); //sets the text speed selection default to 0
+	modifySextant(rom);
 
 	//---------gameplay and other
+	setIntroData(rom);
+
+	if ($('#music_options').val() == 1)
+	{
+		randomizeMusic(rom, subSystemSeeds[SUBSYSTEM_SOUND]);
+	}
+	else if ($('#music_options').val() == 2)
+	{
+		removeMusic(rom, subSystemSeeds[SUBSYSTEM_SOUND]);
+	}
+
 	if ($('#expanded_camping').is(':checked'))
 	{
 		adjustCamping(rom);
@@ -135,12 +154,6 @@ function randomizeROM(buffer, seed)
 		addNewEnemySpawns(rom, subSystemSeeds[SUBSYSTEM_NEW_ENEMIES]);
 		addEnemiesFlag = true;
 	}
-	
-	if ($('#add_missing_ai_spells').is(':checked'))
-	{
-		fixAISpellListBug(rom);
-		fixSpiders(rom);
-	}
 
 	if ($('#enable_fast_button_mapping').is(':checked'))
 	{
@@ -157,10 +170,19 @@ function randomizeROM(buffer, seed)
 		randomizeMoonPhases(rom, subSystemSeeds[SUBSYSTEM_PLAYER_GAMEPLAY]);
 	}
 
+	var startPositionName = randomizePlayerStart(rom, subSystemSeeds[SUBSYSTEM_PLAYER_GAMEPLAY]);
+	var moonOrbSpoilerList = randomizeMoonOrbDestinations(rom, subSystemSeeds[SUBSYSTEM_PLAYER_GAMEPLAY], startPositionName);
+
 	//---------items
+	var requiredProgressionItems = getSelectedProgressionItemsList();
+	var selectedLocationTypes = getSelectedLocationTypesList();
+	var selectedLocations = buildSelectedLocationsList(selectedLocationTypes.selectedLocations);
+	var canPlaceItems = false;
+	if(selectedLocations.length > requiredProgressionItems.length){canPlaceItems = true;}
+
 	if ($('#add_sherry_item').is(':checked'))
 	{
-		addCustomSherryItem(rom);
+		addCustomSherryItem(rom, canPlaceItems);
 	}
 	if ($('#randomize_unlockanddispel').is(':checked'))
 	{
@@ -174,11 +196,11 @@ function randomizeROM(buffer, seed)
 	{
 		replaceMoonOrb(rom);
 	}
-	if ($('#remove_moonorb').is(':checked') || $('#randomize_moonorb').is(':checked') || $('#randomize_spellbook').is(':checked') || $('#randomize_core_items').is(':checked'))
+	if ($('#remove_moonorb').is(':checked') || $('#randomize_moonorb').is(':checked') || $('#randomize_spellbook').is(':checked') || canPlaceItems == true)
 	{
 		overrideMoongateShrineCheck(rom);
 	}
-	if ($('#randomize_core_items').is(':checked') || $('#randomize_chests_overworld').is(':checked') || $('#randomize_chests_dungeons').is(':checked')) 
+	if (canPlaceItems == true) 
 	{
 		randomizedOptionsSelected = true;
 		itemsRandomized = true;
@@ -187,28 +209,25 @@ function randomizeROM(buffer, seed)
 		updateAndAddChests(rom);
 		prepareLocations(rom);
 		increaseSherryPickupWeight(rom);
-		setDrCatReward(rom, subSystemSeeds[SUBSYSTEM_ITEMS]);
 
 		if ($('#display_hints').is(':checked'))
 		{
 			prepareHintText(rom, subSystemSeeds[SUBSYSTEM_HINTS]);
 		}
 
+		consoleLog("RANDOMIZING ITEMS")
 		var randomizeItemsDone = false;
 		do
 		{
-			randomizeItemsDone = randomizeItems(rom, subSystemSeeds[SUBSYSTEM_ITEMS], spoilers);	
+			randomizeItemsDone = randomizeItems(rom, subSystemSeeds[SUBSYSTEM_ITEMS], spoilers, hintsSpoiler);	
 		}
 		while (randomizeItemsDone == false);
 		
 		fixShrines(rom); //after item randomization the shrines must be fixed for the new items
 		updateShrineText(rom);
-	}
-
-	if ($('#randomize_core_items').is(':checked'))
-	{
 		alwaysAllowLensPlacement(rom);
 	}
+
 	if ($('#open_avatar_shrine').is(':checked') )
 	{
 		openAvatarShrine(rom);
@@ -500,7 +519,7 @@ function randomizeROM(buffer, seed)
 	// fix the checksum (not necessary, but good to do!)
 	fixChecksum(rom);
 
-	console.log("FINISHED RANDOMIZING");
+	consoleLog("FINISHED RANDOMIZING");
 
 	return {
 		// return the modified buffer
@@ -517,22 +536,13 @@ function randomizeROM(buffer, seed)
 
 		// spoilers
 		spoilers: spoilers,
+		moonOrbSpoilers: moonOrbSpoilerList,
+		startPositionName: startPositionName,
+		hintsSpoiler: hintsSpoiler,
+
+		//subsystem seeds
+		subSystemSeeds: subSystemSeeds,
 	};
-}
-
-function testLZW(rom, random)
-{
-	//console.log("TEST");
-	//test map data change
-	//var lzwData = decompressDataFromLZW(rom, 0x9E300);
-	//lzwData[0x10AD] = 0x59;
-	//dialogItemArturos(rom, "M. Spirituality", 0x65, 0x01);
-	//dialogItemCaptainJohn(rom, "Moonstone of Spirituality", "M. Spirituality", 0x65, 0x01);
-
-    //var lzwData = decompressDataFromLZW(rom, 0xD9500);
-	//lzwData.set([0xF1], 0x115B);
-
-	//rom.set([0xFF], 0x9DC56); //TEST ROM CHANGE TO FIND DATA CHANGE IN DECOMPRESSED LZW FILES
 }
 
 function getSubystemSeeds(seed)

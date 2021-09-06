@@ -126,55 +126,107 @@
 				<div class="col-md-6">
 					<!-- SHUFFLE ITEMS OPTIONS -->
 					<h3>Shuffle Items</h3>
-					<h5><i>Recommend Main Items combined with Overworld and/or Underground Chests.</i></h5>
+					<h5><div id="label_randomize_locations_header"><i><b id="locations_header_selected_total">YY</b> unique locations selected. <span class="locations_header_selected_required_color"><b id="locations_header_selected_required">XX</b></span> required progression items will be shuffled.</i></div></h5>
 					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="randomize_core_items" class="presetoption" checked>
-							Include Main Items <i><small>(Moonstones, Runes, Vortex Cube, Etc)</small></i>
+						<label id="label_randomize_locations_overworld">
+							<input type="checkbox" id="randomize_locations_overworld" class="presetoption" checked>
+							Overworld <i><small id="count-overworld-text">(0)</small></i>
 						</label>
 					</div>
 					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="randomize_chests_overworld" class="presetoption" checked>
-							Include Overworld Chests <i><small>(Castles, Houses, Shops, and Basements)</small></i>
+						<label id="label_randomize_locations_townsvirtue">
+							<input type="checkbox" id="randomize_locations_townsvirtue" class="presetoption" checked>
+							Virtue Towns <i><small id="count-townsvirtue-text">(0)</small></i>
 						</label>
 					</div>
 					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="randomize_chests_dungeons" class="presetoption">
-							Include Underground Chests <i><small>(Caves, Dungeons, and Catacombs)</small></i>
+						<label id="label_randomize_locations_townsnonvirtue">
+							<input type="checkbox" id="randomize_locations_townsnonvirtue" class="presetoption" checked>
+							Non-Virtue Towns <i><small id="count-townsnonvirtue-text">(0)</small></i>
 						</label>
 					</div>
-
 					<div class="checkbox">
-						<label>
+						<label id="label_randomize_locations_castles">
+							<input type="checkbox" id="randomize_locations_castles" class="presetoption" checked>
+							Castles <i><small id="count-castles-text">(0)</small></i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label id="label_randomize_locations_dialog">
+							<input type="checkbox" id="randomize_locations_dialog" class="presetoption" checked>
+							Dialog Rewards <i><small id="count-dialog-text">(0)</small></i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label id="label_randomize_locations_treasuremap">
+							<input type="checkbox" id="randomize_locations_treasuremap" class="presetoption" checked>
+							Treasure Map Quest <i><small id="count-treasuremap-text">(0)</small></i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label id="label_randomize_locations_caves">
+							<input type="checkbox" id="randomize_locations_caves" class="presetoption" checked>
+							Caves <i><small id="count-caves-text">(0)</small></i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label id="label_randomize_locations_tombs">
+							<input type="checkbox" id="randomize_locations_tombs" class="presetoption" checked>
+							Tombs <i><small id="count-tombs-text">(0)</small></i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label id="label_randomize_locations_dungeons">
+							<input type="checkbox" id="randomize_locations_dungeons" class="presetoption" checked>
+							Dungeons <i><small id="count-dungeons-text">(0)</small></i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label id="label_randomize_locations_shrines">
+							<input type="checkbox" id="randomize_locations_shrines" class="presetoption" checked>
+							Shrines <i><small id="count-shrines-text">(0)</small></i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label id="label_randomize_locations_gargoylecity">
+							<input type="checkbox" id="randomize_locations_gargoylecity" class="presetoption" checked>
+							Gargoyle City <i><small id="count-gargoylecity-text">(0)</small></i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label id="label_randomize_locations_joinablepartymembers">
+							<input type="checkbox" id="randomize_locations_joinablepartymembers" class="presetoption" checked>
+							Joinable Party Members <i><small id="count-joinablepartymembers-text">(0)</small></i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label id="label_randomize_moonorb">
 							<input type="checkbox" id="randomize_moonorb" class="presetoption">
-							Include Moon Orb <i><small>(Adds more physical travel to the game)</small></i>
+							Include Moon Orb in Item Pool<i><small>(Adds more physical travel to the game)</small></i>
 						</label>
 					</div>
-
 					<div class="checkbox">
 						<label>
+							<input type="checkbox" id="remove_moonorb" class="presetoption">
+							Remove Moon Orb Item<i><small>(Remove the Moon Orb. Recommend adding Spirituality Shrine Warp)</small></i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label id="label_randomize_spellbook">
 							<input type="checkbox" id="randomize_spellbook" class="presetoption">
-							Include Spellbook <i><small>(Adds more difficulty as you will start with no spells)</small></i>
+							Include Spellbook in Item Pool<i><small>(Adds more difficulty as you will start with no spells)</small></i>
 						</label>
 					</div>
 					<div class="checkbox">
-						<label>
+						<label id="label_randomize_unlockanddispel">
 							<input type="checkbox" id="randomize_unlockanddispel" class="presetoption">
-							Include Unlock & Dispel Field Spells & Chests<i><small>(Required spells now must be found)</small></i>
+							Include Unlock & Dispel Field Spells in Item Pool<i><small>(Required spells now must be found)</small></i>
 						</label>
 					</div>
 					<div class="checkbox">
-						<label>
+						<label id="label_randomize_sherryitem">
 							<input type="checkbox" id="add_sherry_item" class="presetoption" checked>
-							Add Unique Sherry Item & Chest <i><small>(Sherry will now require a unique item to join)</small></i>
-						</label>
-					</div>
-					<div class="checkbox hidden">
-						<label>
-							<input type="checkbox" id="randomize_chest_locks" class="presetoption">
-							Randomize Chest Magical Locks
+							Add Unique Sherry Item in Item Pool<i><small>(Sherry will now require a unique item to join)</small></i>
 						</label>
 					</div>
 					<!-- RANDOMIZER SPAWNS OPTIONS -->
@@ -294,13 +346,6 @@
 							Add Missing Enemies from PC Version <i><small>(Adds Silver Serpents and Zu Flowers / Tangle Vines)</small></i>
 						</label>
 					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="add_missing_ai_spells" class="presetoption" checked>
-							Add Missing Spells to AI <i><small>(Fixes a bug that prevents AI from using all of their assigned spells)</small></i>
-						</label>
-					</div>
-
 					<div class="input-group top-spaced">
 						<div class="input-group-addon">
 							<b>AI Stat Difficulty</b>
@@ -469,12 +514,6 @@
 					<h3>Item Adjustments</h3>
 					<div class="checkbox">
 						<label>
-							<input type="checkbox" id="remove_moonorb" class="presetoption">
-							Remove Moon Orb <i><small>(Remove the Moon Orb. Recommend adding Spirituality Shrine Warp)</small></i>
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
 							<input type="checkbox" id="enable_expanded_armor_items" class="presetoption" checked>
 							Enable Expanded Armor Items <i><small>(Adds armor values to boots, belts, and necklaces)</small></i>
 						</label>
@@ -515,6 +554,36 @@
 					<h3>Gameplay Adjustments</h3>
 					<div class="checkbox">
 						<label>
+							<input type="checkbox" id="randomize_player_start" class="presetoption" checked>
+							Randomize Player Start <i><small>(Randomly start the game at another point in the world)</small></i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="randomize_moonorb_destinations" class="presetoption">
+							Randomize Moon Orb Destinations <i><small>(Randomly choose new Moon Orb destinations)</small></i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="randomize_moon_phases" class="presetoption" checked>
+							Randomize Moon Cycles <i><small>(Start the moon phase cycles at a different point in the cycles)</small></i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="open_avatar_shrine" class="presetoption">
+							Open Shrine of the Avatar <i><small>(Shrine of the Avatar can always be entered)</small></i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="skip_intro_cinematic" class="presetoption" checked>
+							Skip Intro Cinematic <i><small>(Skips the intro cinematic when starting a new game)</small></i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
 							<input type="checkbox" id="expanded_camping" class="presetoption" checked>
 							Enable Expanded Camping <i><small>(Allows camping in town)</small></i>
 						</label>
@@ -523,18 +592,6 @@
 						<label>
 							<input type="checkbox" id="enable_fast_button_mapping" class="presetoption" checked>
 							Enable Expanded Button Mapping <i><small>(Adds common game commands to gamepad buttons X,Y,L,R,Start)</small></i>
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="randomize_moon_phases" class="presetoption">
-							Randomize Moon Cycles <i><small>(Start the moon phase cycles at a different point in the cycles)</small></i>
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="open_avatar_shrine" class="presetoption">
-							Open Shrine of the Avatar <i><small>(Shrine of the Avatar can always be entered)</small></i>
 						</label>
 					</div>
 
@@ -605,6 +662,7 @@
 						<small><i><span id="placedrafts-tooltip-2" hidden>(Adds rafts & gates to possible stuck spots if you have no Moon Orb or Spellbook.)</span></small></i>
 						<small><i><span id="placedrafts-tooltip-3" hidden>(All placed rafts will be moved to prevent them from accessing the ocean.)</span></small></i>
 					</div>
+					
 					<!-- OTHER OPTIONS -->
 					<h3>Other</h3>
 					<div class="checkbox">
@@ -790,6 +848,14 @@
 							<option value="2">Remove Flash <small><i>(Remove the poison/lava/fire flash effect)</small></i></option>
 						</select>
 
+						<h4>Music</h4>
+						<select class="form-control" id="music_options">
+							<option value="0" selected="selected">Default Music <small><i>(Unchanged from base game)</small></i></option>
+							<option value="1">Shuffle Music <small><i>(Shuffle the game music tracks between each other)</small></i></option>
+							<option value="2">Randomized Music <small><i>(Randomize which music tracks are used where)</small></i></option>
+							<option value="3">Remove Music <small><i>(Remove the game music)</small></i></option>
+						</select>
+
 						<button type="button" id="download-generated-rom" class="btn btn-primary btn-full-width top-spaced">
 							<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
 							Download Generated U6R <span class="version-number"></span> Game
@@ -865,6 +931,7 @@
 		<script>window.jQuery || document.write('<script src="js/vendor/jquery-3.6.0.min.js"><\/script>')</script>
 
 		<script src="js/randomizer.js"></script>
+		<script src="js/randomizer.itemslist.js"></script>
 		<script src="js/randomizer.base.js"></script>
 		<script src="js/randomizer.character.js"></script>
 		<script src="js/randomizer.item.js"></script>

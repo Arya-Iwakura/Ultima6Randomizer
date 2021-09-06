@@ -27,13 +27,13 @@ function downloadSpoilerLog(e)
 		fileName = prefix + '-' + Date.now() + "-spoiler" + ".txt";
 	}
 
-	var outputText = formatSpoilerLog(result.spoilers, result.seed, result.preset);
+	var outputText = formatSpoilerLog(result.spoilers, result.seed, result.preset, result.moonOrbSpoilers, result.startPositionName, result.hintsSpoiler);
 	saveAs(new Blob([outputText], {type: "otext/plain;charset=utf-8"}), fileName);
 }
 
 function getSpoilerLogLineString(inSpoiler)
 {
-    var lineString = inSpoiler.item.item[0] + ' located in ' + inSpoiler.location.location_set + " - " + inSpoiler.location.location;
+    var lineString = inSpoiler.item.item_name[0] + ' located in ' + inSpoiler.location.location_set + " - " + inSpoiler.location.location;
     return lineString;
 }
 
@@ -41,12 +41,12 @@ function addMissingItems(inSpoiler)
 {
     if ($('#randomize_unlockanddispel').is(':checked') == false)
     {
-        inSpoiler.push({item:DATA_ITEM_SPELLS_NOT_RANDOMIZED[0], location:DATA_ITEM_SPELLS_NOT_RANDOMIZED[0]});
-        inSpoiler.push({item:DATA_ITEM_SPELLS_NOT_RANDOMIZED[1], location:DATA_ITEM_SPELLS_NOT_RANDOMIZED[1]});
+        inSpoiler.push({item:DATA_ITEM_SPELLS_IN_SHOPS[0], location:DATA_ITEM_SPELLS_IN_SHOPS[0]});
+        inSpoiler.push({item:DATA_ITEM_SPELLS_IN_SHOPS[1], location:DATA_ITEM_SPELLS_IN_SHOPS[1]});
     }
     if ($('#randomize_spellbook').is(':checked') == false)
     {
-        inSpoiler.push({item:DATA_ITEM_SPELLBOOK[0], location:DATA_ITEM_SPELLBOOK[0]});
+        inSpoiler.push({item:DATA_ITEM_SPELLBOOK_DEFAULT[0], location:DATA_ITEM_SPELLBOOK_DEFAULT[0]});
     }
 }
 
@@ -67,9 +67,11 @@ function formatOptionPoison()
     return "Default";
 }
 
-function formatSpoilerLog(inSpoilers, inSeed, inPreset)
+function formatSpoilerLog(inSpoilers, inSeed, inPreset, inMoonOrbSpoilers, inStartPositionName, inHintSpoiler)
 {
     var outputText = [];
+    var spoilerList = [];
+    spoilerList = spoilerList.concat(inSpoilers);
 
     outputText += "Ultima 6 Randomizer (SNES) " + VERSION_STRING + '\r\n';
     outputText += "Seed: " + inSeed + '\r\n';
@@ -84,14 +86,52 @@ function formatSpoilerLog(inSpoilers, inSeed, inPreset)
     }
     outputText += "Player Sprite: " + formatOptionAvatarSprite() + '\r\n';
     outputText += "Poison Flash: " + formatOptionPoison() + '\r\n';
+    outputText += "Start Position: " + inStartPositionName + '\r\n';
+    
+    if(inMoonOrbSpoilers.length > 0)
+    {
+        outputText += '\r\n';
+        outputText += "######### Moon Orb Destinations" + '\r\n';
+        outputText += formatMoonOrbDestinationList(inMoonOrbSpoilers);
+    }
+
+    outputText += '\r\n';
+    outputText += "######### Hint Spoiler List" + '\r\n';
+    outputText += formatHintLogList(inHintSpoiler);
 
     outputText += '\r\n';
     outputText += "######### Progression List" + '\r\n';
-    outputText += formatSpoilerLogProgressionList(inSpoilers);
+    outputText += formatSpoilerLogProgressionList(spoilerList);
 
     outputText += '\r\n';
-    outputText += "######### Spoiler List" + '\r\n';
-    outputText += formatSpoilerLogItemList(inSpoilers);
+    outputText += "######### Full Spoiler List" + '\r\n';
+    outputText += formatSpoilerLogItemList(spoilerList);
+
+    return outputText;
+}
+
+function formatMoonOrbDestinationList(inMoonOrbSpoilers)
+{
+    var outputText = "";
+    outputText += '\r\n';
+
+    for(var i = 0; i < inMoonOrbSpoilers.length; ++i)
+    {
+        outputText += inMoonOrbSpoilers[i] + '\r\n';
+    }
+
+    return outputText;
+}
+
+function formatHintLogList(inHintSpoiler)
+{
+    var outputText = "";
+    outputText += '\r\n';
+
+    for(var i = 0; i < inHintSpoiler.length; ++i)
+    {
+        outputText += inHintSpoiler[i] + '\r\n';
+    }
 
     return outputText;
 }
@@ -103,7 +143,6 @@ function formatSpoilerLogProgressionList(inSpoilers)
     addMissingItems(inSpoilers);
 
     var progressionList = buildProgressionList(inSpoilers);
-
     progressionList.sort(spoilerSortCompareItems);
     var tierList = buildProgressionTiers(progressionList);
 
@@ -115,7 +154,7 @@ function formatSpoilerLogProgressionList(inSpoilers)
         for(var iNode = 0; iNode < tierList[iTier].length; ++iNode)
 	    {
             var node = tierList[iTier][iNode];
-            var itemLine = "    " + node.item.item[0] + ' located in ' + node.location.location_set + " - " + node.location.location;
+            var itemLine = "    " + node.item.item_name[0] + ' located in ' + node.location.location_set + " - " + node.location.location;
             outputText += itemLine + '\r\n';
         }
     }
@@ -131,7 +170,7 @@ function buildProgressionList(inSpoilers)
     //get the initial list based on game mode required progression items
     for(var i = 0; i < inSpoilers.length; ++i)
     {
-        if(inSpoilers[i].item.progression_set > 0)
+        if(inSpoilers[i].item.progression_flags > 1)
         {
             if(potentialList.includes(i) == false)
             {
@@ -167,7 +206,7 @@ function addSubRequirements(inSpoilers, potentialList, requiresList)
                 {
                     shouldAdd = true;
                 }
-                else if(inSpoilers[iSpoiler].item.id[0] == ITEM_SPELL)
+                else if(inSpoilers[iSpoiler].item.id[0] == ITEM_SPELL || inSpoilers[iSpoiler].item.id[0] == ITEM_KEY)
                 {
                     if(inSpoilers[iSpoiler].item.flags[0] == requiresList[iRequires])
                     {
@@ -224,7 +263,7 @@ function buildProgressionTiers(progressionList)
                             for(var iNode = 0; iNode < tiers[iTier].length; ++iNode)
                             {
                                 var tierNode = tiers[iTier][iNode];
-                                if(tierNode.item.id[0] == requiresList[iRequire] || (tierNode.item.id[0] == ITEM_SPELL && tierNode.item.flags[0] == requiresList[iRequire]))
+                                if(tierNode.item.id[0] == requiresList[iRequire] || ((tierNode.item.id[0] == ITEM_SPELL || tierNode.item.id[0] == ITEM_KEY) && tierNode.item.flags[0] == requiresList[iRequire]))
                                 {
                                     requirementsMet +=1;
                                 }
@@ -255,7 +294,8 @@ function buildProgressionTiers(progressionList)
         if(startLength == progressionList.length)
         {
             //we may reach this point if some items are not randomized, such as the spells
-            console.log("ERROR: ITEMS COULD NOT BE PLACED IN A TIER - ADDING TO FINAL TIER")
+            consoleError("ERROR: ITEMS COULD NOT BE PLACED IN A TIER - ADDING TO FINAL TIER ")
+            consoleError(progressionList)
             tiers[currentTier] = progressionList;
             break;
         }
@@ -285,7 +325,7 @@ function formatSpoilerLogItemList(inSpoilers)
             lastLocationSet = inSpoilers[i].location.location_set;
             outputText += inSpoilers[i].location.location_set + '\r\n';
         }
-        var itemLine = "    " + inSpoilers[i].location.location + ' contains ' + inSpoilers[i].item.item[0];
+        var itemLine = "    " + inSpoilers[i].location.location + ' contains ' + inSpoilers[i].item.item_name[0];
         outputText += itemLine + '\r\n';
 	}
 
@@ -294,8 +334,8 @@ function formatSpoilerLogItemList(inSpoilers)
 
 function spoilerSortCompareItems(a,b)
 {
-    if( a.item.item[0] < b.item.item[0] ){return -1;}
-    if( a.item.item[0] > b.item.item[0] ){return 1;}
+    if( a.item.item_name[0] < b.item.item_name[0] ){return -1;}
+    if( a.item.item_name[0] > b.item.item_name[0] ){return 1;}
     return 0;
 }
 
