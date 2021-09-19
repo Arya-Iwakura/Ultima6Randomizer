@@ -15,21 +15,6 @@ function fixMoonPhaseBug(rom)
     rom.set([0x1D, 0x1E, 0x1D],0x131EE); //this fixes the the bug where the moon phase graphics are off by one in the base game and thus draw the wrong graphics
 }
 
-function fixScheduleBugs(rom)
-{
-    rom.set([0xEA, 0xEA], 0x188EB); //this fixes the multi-day AI schedule bug where they are off by one when they attempt to loop and begin to read non-coordinate data as coordinates
-    rom.set([0xFE, 0x9C, 0x02], 0x19507); //this fixes the Zoltan schedule bug where the first defined Zoltan spawn spot was in the void west of empath abbey
-    //bonn
-}
-
-function adjustSchedules(rom)
-{
-    //either fix schedules for these NPCS or allow you to engage in their dialog stuff during any schedule point
-    rom.set([0x0A], 0x18FE5); //big ben - lower time to leave house from noon to 10am
-    rom.set([0x0C], 0x18EA6); //ephemerides - lower time when they awaken from 3pm to noon
-    rom.set([0x57], 0x19587); //bonn - adjust behaviour to not be walking back and forth to the water edge (42 for wander - 57 for beggar)
-}
-
 function setSpeedTextSelectionDefault(rom)
 {
     rom[0x19C14] = 0x00;
@@ -548,6 +533,18 @@ function setStartingInventory(rom, random, inInventorySetting)
         setRandomInventoryForEmptySetting(rom, random, 0xF925, 2, 0); //dupre inventory
         setRandomInventoryForEmptySetting(rom, random, 0xF934, 3, 0); //shamino inventory
         setRandomInventoryForEmptySetting(rom, random, 0xF945, 3, 4); //iolo inventory
+
+        setRandomInventoryForEmptySetting(rom, random, 0xF95A, 1, 0); //jaana inventory
+        setRandomInventoryForEmptySetting(rom, random, 0xF967, 0, 0); //gwenno inventory
+        setRandomInventoryForEmptySetting(rom, random, 0xF972, 0, 0); //julia inventory
+        setRandomInventoryForEmptySetting(rom, random, 0xF97D, 0, 0); //katrina inventory
+        setRandomInventoryForEmptySetting(rom, random, 0xF988, 4, 0); //leodon inventory
+        setRandomInventoryForEmptySetting(rom, random, 0xF99B, 0, 0); //leonna inventory
+        setRandomInventoryForEmptySetting(rom, random, 0xF9A6, 0, 0); //blaine inventory
+        setRandomInventoryForEmptySetting(rom, random, 0xF9B1, 2, 0); //seggal inventory
+        setRandomInventoryForEmptySetting(rom, random, 0xF9C0, 0, 0); //sentri inventory
+        setRandomInventoryForEmptySetting(rom, random, 0xF9CB, 2, 0); //gorn inventory
+        setRandomInventoryForEmptySetting(rom, random, 0xF9DA, 0, 0); //beh lem inventory
     }
     if(inInventorySetting > 1) //random
     {
@@ -580,17 +577,53 @@ function setStartingInventory(rom, random, inInventorySetting)
         setRandomWeaponSet(rom, random, 0xF934, 0, rarityMin, rarityMax); //shamino inventory
         setRandomWeaponSet(rom, random, 0xF945, 4, rarityMin, rarityMax); //iolo inventory
 
+        setRandomWeaponSet(rom, random, 0xF95A, 0, rarityMin, rarityMax); //jaana inventory
+        setRandomWeaponSet(rom, random, 0xF967, 0, rarityMin, rarityMax); //gwenno inventory
+        setRandomWeaponSet(rom, random, 0xF972, 0, rarityMin, rarityMax); //julia inventory
+        setRandomWeaponSet(rom, random, 0xF97D, 0, rarityMin, rarityMax); //katrina inventory
+        setRandomWeaponSet(rom, random, 0xF988, 0, rarityMin, rarityMax); //leodon inventory
+        setRandomWeaponSet(rom, random, 0xF99B, 0, rarityMin, rarityMax); //leonna inventory
+        setRandomWeaponSet(rom, random, 0xF9A6, 0, rarityMin, rarityMax); //blaine inventory
+        setRandomWeaponSet(rom, random, 0xF9B1, 0, rarityMin, rarityMax); //seggal inventory
+        setRandomWeaponSet(rom, random, 0xF9C0, 0, rarityMin, rarityMax); //sentri inventory
+        setRandomWeaponSet(rom, random, 0xF9CB, 0, rarityMin, rarityMax); //gorn inventory
+        setRandomWeaponSet(rom, random, 0xF9DA, 0, rarityMin, rarityMax); //beh lem inventory
+
         //randomly select an armor set
         setRandomArmorSet(rom, random, 0xF914, rarityMin, rarityMax); //avatar inventory
         setRandomArmorSet(rom, random, 0xF925, rarityMin, rarityMax); //dupre inventory
         setRandomArmorSet(rom, random, 0xF934, rarityMin, rarityMax); //shamino inventory
         setRandomArmorSet(rom, random, 0xF945, rarityMin, rarityMax); //iolo inventory
 
+        setRandomArmorSet(rom, random, 0xF95A, rarityMin, rarityMax); //jaana inventory
+        setRandomArmorSet(rom, random, 0xF967, rarityMin, rarityMax); //gwenno inventory
+        setRandomArmorSet(rom, random, 0xF972, rarityMin, rarityMax); //julia inventory
+        setRandomArmorSet(rom, random, 0xF97D, rarityMin, rarityMax); //katrina inventory
+        setRandomArmorSet(rom, random, 0xF988, rarityMin, rarityMax); //leodon inventory
+        setRandomArmorSet(rom, random, 0xF99B, rarityMin, rarityMax); //leonna inventory
+        setRandomArmorSet(rom, random, 0xF9A6, rarityMin, rarityMax); //blaine inventory
+        setRandomArmorSet(rom, random, 0xF9B1, rarityMin, rarityMax); //seggal inventory
+        setRandomArmorSet(rom, random, 0xF9C0, rarityMin, rarityMax); //sentri inventory
+        setRandomArmorSet(rom, random, 0xF9CB, rarityMin, rarityMax); //gorn inventory
+        setRandomArmorSet(rom, random, 0xF9DA, rarityMin, rarityMax); //beh lem inventory
+
         //randomly select inventory items
         setRandomInventorySet(rom, random, 0xF914, 1, 0, 1, rarityMax); //avatar inventory
         setRandomInventorySet(rom, random, 0xF925, 2, 0, 1, rarityMax); //dupre inventory
         setRandomInventorySet(rom, random, 0xF934, 3, 0, 1, rarityMax); //shamino inventory
         setRandomInventorySet(rom, random, 0xF945, 3, 4, 1, rarityMax); //iolo inventory
+
+        setRandomInventorySet(rom, random, 0xF95A, 1, 0, 1, rarityMax); //jaana inventory
+        setRandomInventorySet(rom, random, 0xF967, 0, 0, 1, rarityMax); //gwenno inventory
+        setRandomInventorySet(rom, random, 0xF972, 0, 0, 1, rarityMax); //julia inventory
+        setRandomInventorySet(rom, random, 0xF97D, 0, 0, 1, rarityMax); //katrina inventory
+        setRandomInventorySet(rom, random, 0xF988, 4, 0, 1, rarityMax); //leodon inventory
+        setRandomInventorySet(rom, random, 0xF99B, 0, 0, 1, rarityMax); //leonna inventory
+        setRandomInventorySet(rom, random, 0xF9A6, 0, 0, 1, rarityMax); //blaine inventory
+        setRandomInventorySet(rom, random, 0xF9B1, 2, 0, 1, rarityMax); //seggal inventory
+        setRandomInventorySet(rom, random, 0xF9C0, 0, 0, 1, rarityMax); //sentri inventory
+        setRandomInventorySet(rom, random, 0xF9CB, 2, 0, 1, rarityMax); //gorn inventory
+        setRandomInventorySet(rom, random, 0xF9DA, 0, 0, 1, rarityMax); //beh lem inventory
     }
 
     moveAnkhNecklace(rom);
@@ -613,6 +646,19 @@ function clearInventories(rom)
     rom.set([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x7A, 0x01, 0x00, 0x00, 0x00, 0x00], 0xF925); //dupre inventory
     rom.set([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 0x7A, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00], 0xF934); //shamino inventory
     rom.set([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x7A, 0x01, 0x59, 0x01, 0x76, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00], 0xF945); //iolo inventory
+
+    //TODO - Bags for members being first causes issues when trying to place progression items and inventories are not-randomized
+    rom.set([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x7A, 0x01, 0x00, 0x00], 0xF95A); //jaana inventory
+    rom.set([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x7A, 0x01], 0xF967); //gwenno inventory
+    rom.set([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x7A, 0x01], 0xF972); //julia inventory
+    rom.set([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x7A, 0x01], 0xF97D); //katrina inventory
+    rom.set([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x05, 0x7A, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00], 0xF988); //leodon inventory
+    rom.set([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x7A, 0x01], 0xF99B); //leonna inventory
+    rom.set([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x7A, 0x01], 0xF9A6); //blaine inventory
+    rom.set([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x7A, 0x01, 0x00, 0x00, 0x00, 0x00], 0xF9B1); //seggal inventory
+    rom.set([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x7A, 0x01], 0xF9C0); //sentri inventory
+    rom.set([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x7A, 0x01, 0x00, 0x00, 0x00, 0x00], 0xF9CB); //gorn inventory
+    rom.set([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x7A, 0x01], 0xF9DA); //beh lem inventory
 }
 
 function getItemsOfRarity(itemPool, rarityMin, rarityMax)
@@ -764,6 +810,18 @@ function setStartingInventoryChaotic(rom, random)
     setStartingInventoryChaoticPerCharacter(rom, random, 0xF925, 2, 0); //dupre inventory
     setStartingInventoryChaoticPerCharacter(rom, random, 0xF934, 3, 0); //shamino inventory
     setStartingInventoryChaoticPerCharacter(rom, random, 0xF945, 3, 4); //iolo inventory
+
+    setStartingInventoryChaoticPerCharacter(rom, random, 0xF95A, 1, 0); //jaana inventory
+    setStartingInventoryChaoticPerCharacter(rom, random, 0xF967, 0, 0); //gwenno inventory
+    setStartingInventoryChaoticPerCharacter(rom, random, 0xF972, 0, 0); //julia inventory
+    setStartingInventoryChaoticPerCharacter(rom, random, 0xF97D, 0, 0); //katrina inventory
+    setStartingInventoryChaoticPerCharacter(rom, random, 0xF988, 4, 0); //leodon inventory
+    setStartingInventoryChaoticPerCharacter(rom, random, 0xF99B, 0, 0); //leonna inventory
+    setStartingInventoryChaoticPerCharacter(rom, random, 0xF9A6, 0, 0); //blaine inventory
+    setStartingInventoryChaoticPerCharacter(rom, random, 0xF9B1, 0, 0); //seggal inventory
+    setStartingInventoryChaoticPerCharacter(rom, random, 0xF9C0, 0, 0); //sentri inventory
+    setStartingInventoryChaoticPerCharacter(rom, random, 0xF9CB, 2, 0); //gorn inventory
+    setStartingInventoryChaoticPerCharacter(rom, random, 0xF9DA, 0, 0); //beh lem inventory
 
     moveAnkhNecklace(rom);
 }
@@ -1215,64 +1273,6 @@ function createMoonOrbSpoilerEntry(offset, choice)
     return (positionString + " = " + choice.name);
 }
 
-function randomizePlayerStart(rom, random)
-{
-    if ($('#randomize_player_start').is(':checked'))
-	{
-        console.log("RANDOMIZING PLAYER START DESTINATIONS");
-        var choice = random.from(DATA_PLAYER_SPAWN_LOCATIONS);
-        setStartSpawnPosition(rom, choice.coordinates);
-
-        //move the egg spawn from a selected moongate chunk in the case of spawning at a gate location to a field in Britain
-        if(choice.spawnegg.length > 0)
-        {
-            rom.set(encode3BytePosition([0x4C,0x01,0x67,0x01]), choice.spawnegg[0]); //spawn eggs require Y first then X so this is Y, Super Chunk Y, X, Super Chunk X
-        }
-
-        if(choice.name != "Castle Britannia")
-        {
-            //move the gargoyle castle spawn to wherever you start
-            rom.set([choice.coordinates[0], choice.coordinates[1]], 0x15EFA); //default 0x33, 0x01 - x coordinate for middle gargoyle
-            rom.set([choice.coordinates[2]-2, choice.coordinates[3]], 0x15EFF); //default 0x5E, 0x01 - y coordinate for all gargoyles
-            rom.set([choice.coordinates[0]-2, choice.coordinates[1]], 0x15F14); //default 0x32, 0x01 - x coordinate for left gargoyle
-            rom.set([choice.coordinates[0]+2, choice.coordinates[1]], 0x15F1A); //default 0x34, 0x01 - x coordinate for right gargoyle
-        }
-
-        if(choice.raft.length > 0)
-        {
-            setRaftPosition(rom, 0x1672C, choice.raft[0], choice.raft[1], choice.raft[2], choice.raft[3]); //move swamp raft to this position
-        }
-
-        return choice.name;
-	}
-    else
-    {
-        return "Castle Britannia";
-    }
-}
-
-function setDeathRespawnPosition(rom, inTileX, inSuperChunkX, inTileY, inSuperChunkY)
-{
-    rom.set([inTileX, inSuperChunkX], 0x627); //death respawn X
-    rom.set([inTileY, inSuperChunkY], 0x62C); //death respawn Y
-}
-
-function setSpawnPositionAvatar(rom, inTileX, inSuperChunkX, inTileY, inSuperChunkY)
-{
-    rom.set([inTileX, inSuperChunkX], 0x8238); //avatar X
-    rom.set([inTileY, inSuperChunkY], 0x823E); //avatar Y
-    setDeathRespawnPosition(rom, inTileX, inSuperChunkX, inTileY, inSuperChunkY);
-}
-
-function setStartSpawnPosition(rom, coordinates)
-{
-    setSpawnPositionAvatar(rom,                  coordinates[0],   coordinates[1], coordinates[2],   coordinates[3]); //avatar
-    encode3BytePositionToAddress(rom, 0x18C41,   coordinates[0]+1, coordinates[1], coordinates[2]+1, coordinates[3]); //dupre
-    encode3BytePositionToAddress(rom, 0x18C45,   coordinates[0]-1, coordinates[1], coordinates[2]+1, coordinates[3]); //shamino
-    encode3BytePositionToAddress(rom, 0x18C49,   coordinates[0],   coordinates[1], coordinates[2]+2, coordinates[3]); //iolo
-    rom.set([coordinates[0],coordinates[1]], 0x58E); //set the hardcoded Moon Orb 1U x position check to this x position
-}
-
 function encode3BytePositionToAddress(rom, startAddress, inTileX, inSuperChunkX, inTileY, inSuperChunkY)
 {
     rom.set(encode3BytePosition([inTileX, inSuperChunkX, inTileY, inSuperChunkY]), startAddress);
@@ -1416,3 +1416,74 @@ function modifySextant(rom)
     ];
     rom.set(dataCode, codeOffset);
 }
+
+function randomizeAllCharacterSprites(rom, random)
+{
+    //16736 = 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 0D 15 00 14 13 15 28 16 17 18 19 1A 19 1B 14 1D 18 1E 15 1B 1E 14 A0 21 17 28 22 23 1D 24 25 26 33 67 28 29 6A 6B AC 2D 39 29 16 2F
+    var dataCode = [];
+
+    rom.set(dataCode, 0x16736);
+}
+
+var DATA_CHARACTERS_SPRITES = 
+[
+    {name:"figher",         sprite:0x02, sets:["humanoid"],             palettes:[0x05,0x00]},
+    {name:"ranger",         sprite:0x03, sets:["humanoid"],             palettes:[0x05,0x02]},
+    {name:"mage",           sprite:0x04, sets:["humanoid"],             palettes:[0x06,0x00,0x02]},
+    {name:"noble",          sprite:0x05, sets:["humanoid"],             palettes:[0x01]},
+    {name:"merchant",       sprite:0x06, sets:["humanoid"],             palettes:[0x03]},
+    {name:"child",          sprite:0x07, sets:["humanoid"],             palettes:[0x03,0x01]},
+    {name:"guard",          sprite:0x08, sets:["humanoid"],             palettes:[0x05]},
+    {name:"jester",         sprite:0x09, sets:["humanoid"],             palettes:[0x06]},
+    {name:"peasant",        sprite:0x0A, sets:["humanoid"],             palettes:[0x03,0x00,0x06]},
+    {name:"farmer",         sprite:0x0B, sets:["humanoid"],             palettes:[0x03]},
+    {name:"bard",           sprite:0x0C, sets:["humanoid"],             palettes:[0x01,0x06]},
+    {name:"woman",          sprite:0x0D, sets:["humanoid"],             palettes:[0x06,0x02]},
+    {name:"luteplayer",     sprite:0x0E, sets:["humanoid"],             palettes:[0x01]},
+    {name:"lordbritish",    sprite:0x0F, sets:["humanoid", "special"],  palettes:[0x01]},
+    {name:"avatar",         sprite:0x10, sets:["humanoid"],             palettes:[0x05,0x02]},
+    {name:"mouse",          sprite:0x15, sets:["monster", "small"],     palettes:[0x03]},
+    {name:"giantrat",       sprite:0x14, sets:["monster", "small"],     palettes:[0x02]},
+    {name:"insect",         sprite:0x13, sets:["monster", "small"],     palettes:[0x02]},
+    {name:"giantbat",       sprite:0x16, sets:["monster", "small"],     palettes:[0x04]},
+    {name:"giantsquid",     sprite:0x28, sets:["monster", "small"],     palettes:[0x04]},
+    {name:"seaserpent",     sprite:0x16, sets:["monster", "small"],     palettes:[0x04]},
+    {name:"reaper",         sprite:0x17, sets:["monster", "small"],     palettes:[0x02]},
+    {name:"sheep",          sprite:0x18, sets:["animal", "small"],      palettes:[0x02]},
+    {name:"dog",            sprite:0x19, sets:["animal", "small"],      palettes:[0x00]},
+    {name:"deer",           sprite:0x1A, sets:["animal", "small"],      palettes:[0x03]},
+    {name:"wolf",           sprite:0x19, sets:["animal", "small"],      palettes:[0x02]},
+    {name:"ghost",          sprite:0x1B, sets:["monster", "small"],     palettes:[0x02]},
+    {name:"gazer",          sprite:0x1D, sets:["monster", "small"],     palettes:[0x04]},
+    {name:"bird",           sprite:0x18, sets:["animal", "small"],      palettes:[0x02]},
+    {name:"corpser",        sprite:0x1E, sets:["animal", "small"],      palettes:[0x04]},
+    {name:"snake",          sprite:0x15, sets:["animal", "small"],      palettes:[0x04]},
+    {name:"rabbit",         sprite:0x1B, sets:["animal", "small"],      palettes:[0x02]},
+    {name:"rotworm",        sprite:0x1E, sets:["animal", "small"],      palettes:[0x06]},
+    {name:"giantspider",    sprite:0x14, sets:["animal", "small"],      palettes:[0x03]},
+    {name:"gargoyleleader", sprite:0xA0, sets:["monster", "large"],     palettes:[0x02]},
+    {name:"gargfolk",       sprite:0x21, sets:["monster"],              palettes:[0x02,0x00,0x04]},
+];
+
+/*
+27	acid slug	01	17	
+28	zu flower	81F181 - 01	82E75D - 1C	unfinished tangle vine
+29	daemon	02	22	p00-brown, p04-green, p06-gold
+2A	skeleton	81F183 - 02	23	
+2B	drake	04	1D	
+2C	headless	00	24	
+2D	troll	03	25	p00 - brown, p01 - pink, p-03 default, 
+2E	mongbat	03	26	
+2F	wisp	06	33	
+30	hydra	04	67	
+31	slime	04	28	
+32	cat	03	29	
+33	dragon	04	6A	
+34	silver serpent	02	82E769 - 6B	unfinished silver serpent
+35	cyclops	00	AC	
+36	giant scorpion	03	2D	
+37	giant ant	03	2E	
+38	cow	00	29	
+39	alligator	04	16	
+3A	horse	82F193 - 03	2F	
+*/

@@ -291,7 +291,7 @@ function adjustArmorItems(rom)
 */
 }
 
-function randomizeItems(rom, random, spoilers, hintsSpoiler)
+function randomizeItems(rom, random, spoilers, hintsSpoiler, partyMembers)
 {
 	var items = [];
 	var hintLocations = [];
@@ -299,6 +299,7 @@ function randomizeItems(rom, random, spoilers, hintsSpoiler)
 	//build a locations list based on the selected location types
 	var selectedLocationTypes = getSelectedLocationTypesList();
 	var locations = buildSelectedLocationsList(selectedLocationTypes.selectedLocations);
+	locations = removePartyMemberLocations(locations, partyMembers);
 	//locations.shuffle(random);
 
 	//build a progression items list based on the selected progression items (shuffle this list)
@@ -333,6 +334,7 @@ function randomizeItems(rom, random, spoilers, hintsSpoiler)
 			//some progression items were missing so we need to get a list of those missing locations to avoid progression item duplication issues
 			//identify any progression items that are missing and create a list of those missing locations (if they had original locations)
 			var nonSelectedLocations = buildSelectedLocationsList(selectedLocationTypes.nonSelectedLocations);
+			nonSelectedLocations = removePartyMemberLocations(nonSelectedLocations, partyMembers);
 			var locationsOfMissingProgressionItems = getLocationsWithSpecificItems(nonSelectedLocations, locationsItemsSeperated.missingItems);
 			locationsItemsSeperated.withItems.shuffle(random);
 			locationsOfMissingProgressionItems.withItems.shuffle(random);
@@ -496,10 +498,33 @@ function buildSelectedLocationsList(selectedLocationTypes)
 	return locations;
 }
 
+function removePartyMemberLocations(locations, partyMembers)
+{
+	var prunedLocations = [];
+	for(var i = 0; i < locations.length; ++i)
+	{
+		var shouldAdd = true;
+		for(var j = 0; j < partyMembers.length; ++j)
+		{
+			if(locations[i].name == partyMembers[j].inventoryName)
+			{
+				shouldAdd = false;
+				break;
+			}
+		}
+		if(shouldAdd == true)
+		{
+			prunedLocations.push(locations[i]);
+		}
+	}
+	return prunedLocations;
+}
+
 function getSelectedProgressionItemsList()
 {
 	var progressionItems = [];
 	progressionItems = progressionItems.concat(PROGRESSION_CORE); //always add the core items
+	if ($('#randomize_locations_overworld').is(':checked')){progressionItems = progressionItems.concat(PROGRESSION_OVERWORLD);}
 	if ($('#randomize_locations_treasuremap').is(':checked')){progressionItems = progressionItems.concat(PROGRESSION_TREASUREMAP);}
 	if ($('#randomize_locations_dialog').is(':checked')){progressionItems = progressionItems.concat(PROGRESSION_DIALOG);}
 	if ($('#randomize_locations_shrines').is(':checked')){progressionItems = progressionItems.concat(PROGRESSION_SHRINES);}

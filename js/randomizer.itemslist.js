@@ -106,6 +106,11 @@ var PROGRESSION_CORE =
     ITEM_BALLOON_PLANS, ITEM_BROKEN_LENS, ITEM_VORTEX_CUBE, ITEM_HUMAN_LENS, ITEM_GARGOYLE_LENS, ITEM_GARGISH_TEXT,
 ];
 
+var PROGRESSION_OVERWORLD =
+[
+    ITEM_SHOVEL, ITEM_FISHING_ROD,
+];
+
 var PROGRESSION_TREASUREMAP =
 [
     ITEM_GUILD_BELT, ITEM_MAP_1, ITEM_MAP_2, ITEM_MAP_3, ITEM_MAP_4, ITEM_MAP_5, ITEM_MAP_6, ITEM_MAP_7, ITEM_MAP_8, ITEM_DRAGON_EGG
@@ -298,7 +303,7 @@ var DATA_WORLD_LOCATIONS =
         offset: 0x116C6, flags: [0xC0, 0xC0, 0x01],
         restrictions: [ITEM_SPELLBOOK, SPELL_UNLOCK],
         requires:[ITEM_SPELLBOOK, SPELL_UNLOCK],
-        type:"solo", stolen : "yes", hints:[2,16,22,29,36,42], progression_flags:0x00,
+        type:"solo", stolen : "yes", hints:[2,16,22,29,36,42], progression_flags:0x01,
         location_types:["overworld"]
     },
 
@@ -788,7 +793,7 @@ var DATA_WORLD_LOCATIONS =
         offset: 0x110C9, flags: [0xC0, 0xC0, 0x01],
         restrictions: [],
         requires:[], 
-        type:"solo", stolen : "no", hints:[5,29,41,42], progression_flags:0,
+        type:"solo", stolen : "no", hints:[5,29,41,42], progression_flags:0x01,
         location_types:["castles"]
     },
 	{
@@ -1456,84 +1461,62 @@ var DATA_WORLD_LOCATIONS =
     //party member inventories
     {
         location_set:"Joinable Party Members",
-        location:"Inventory of Jaana",
-        name: "inventory-jaana", item_name: ["Torches","Torches"], id: [ITEM_TORCH],
-        offset: 0x0F963, flags: [0x83, 0xC3, 0x03],
-        restrictions: [ITEM_GOLD, ITEM_SPELL, SPELL_DISPEL_FIELD, SPELL_UNLOCK],
+        location:"Inventory of Dupre",
+        name: "inventory-dupre", item_name: ["Ring","Ring"], id: [ITEM_RING_NORMAL],
+        offset: 0x0F925+7, flags: [0x80, 0xC0, 0x01],
+        restrictions: [ITEM_GOLD, ITEM_SPELL, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
 		requires:[], addedRequires:[],
-        type:"stack", stolen:"no", hints:[10,19], progression_flags:0,
+        type:"partyring", stolen:"no", hints:[8,20,44], progression_flags:0,
+        location_types:["joinablepartymembers"]
+    },
+    {
+        location_set:"Joinable Party Members",
+        location:"Inventory of Shamino",
+        name: "inventory-shamino", item_name: ["Ring","Ring"], id: [ITEM_RING_NORMAL],
+        offset: 0x0F934+7, flags: [0x80, 0xC0, 0x01],
+        restrictions: [ITEM_GOLD, ITEM_SPELL, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
+		requires:[], addedRequires:[],
+        type:"partyring", stolen:"no", hints:[4,12,44], progression_flags:0,
+        location_types:["joinablepartymembers"]
+    },
+    {
+        location_set:"Joinable Party Members",
+        location:"Inventory of Iolo",
+        name: "inventory-iolo", item_name: ["Ring","Ring"], id: [ITEM_RING_NORMAL],
+        offset: 0x0F945+7, flags: [0x80, 0xC0, 0x01],
+        restrictions: [ITEM_GOLD, ITEM_SPELL, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
+		requires:[], addedRequires:[],
+        type:"partyring", stolen:"no", hints:[4,44], progression_flags:0,
+        location_types:["joinablepartymembers"]
+    },
+    {
+        location_set:"Joinable Party Members",
+        location:"Inventory of Jaana",
+        name: "inventory-jaana", item_name: ["Ring","Ring"], id: [ITEM_RING_NORMAL],
+        offset: 0x0F95A+7, flags: [0x80, 0xC0, 0x01],
+        restrictions: [ITEM_GOLD, ITEM_SPELL, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
+		requires:[], addedRequires:[],
+        type:"partyring", stolen:"no", hints:[10,44], progression_flags:0,
         location_types:["joinablepartymembers"]
     },
     {
         location_set:"Joinable Party Members",
         location:"Inventory of Leodon",
-        name: "inventory-leodon", item_name: ["Ring of Invisibility","Invis Ring"], id: [ITEM_RING_INVIS],
-        offset: 0x0F991, flags: [0x80, 0xC0, 0x01],
-        restrictions: [ITEM_GOLD, ITEM_SPELL, SPELL_DISPEL_FIELD, SPELL_UNLOCK],
+        name: "inventory-leodon", item_name: ["Ring of Regeneration","Regen Ring"], id: [ITEM_RING_REGEN],
+        offset: 0x0F988+7, flags: [0x80, 0xC0, 0x01],
+        restrictions: [ITEM_GOLD, ITEM_SPELL, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
 		requires:[], addedRequires:[],
-        type:"solo", stolen:"no", hints:[19,25,29], progression_flags:0,
+        type:"partyring", stolen:"no", hints:[25,29,44], progression_flags:0,
         location_types:["joinablepartymembers"]
     },
     {
         location_set:"Joinable Party Members",
         location:"Inventory of Gorn",
-        name: "inventory-gorn", item_name: ["Oil","Oil"], id: [ITEM_OIL],
-        offset: 0x0F9D6, flags: [0x84, 0xC4, 0x04],
-        restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK],
+        name: "inventory-gorn", item_name: ["Ring of Protection","Prot Ring"], id: [ITEM_RING_PROT],
+        offset: 0x0F9CB+7, flags: [0x80, 0xC0, 0x01],
+        restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
 		requires:[ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK], addedRequires:[],
-        type:"stack", stolen:"no", hints:[5,15,19,21,23,24,26,28,29,39,41,42], progression_flags:0,
-        location_types:["joinablepartymembers"]
-    },
-
-    //party member hands
-    {
-        location_set:"Joinable Party Members",
-        location:"Inventory of Gweeno",
-        name: "inventory-gweeno", item_name: ["Ring","Ring"], id: [ITEM_RING_NORMAL],
-        offset: 0x0F967+7, flags: [0x80, 0xC0, 0x01],
-        restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK],
-		requires:[], addedRequires:[],
-        type:"partyring", stolen:"no", hints:[11,19], progression_flags:0,
-        location_types:["joinablepartymembers"]
-    },
-    {
-        location_set:"Joinable Party Members",
-        location:"Inventory of Julia",
-        name: "inventory-julia", item_name: ["Ring","Ring"], id: [ITEM_RING_NORMAL],
-        offset: 0x0F972+7, flags: [0x80, 0xC0, 0x01],
-        restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK],
-		requires:[], addedRequires:[],
-        type:"partyring", stolen:"no", hints:[11,19], progression_flags:0,
-        location_types:["joinablepartymembers"]
-    },
-    {
-        location_set:"Joinable Party Members",
-        location:"Inventory of Katrina",
-        name: "inventory-katrina", item_name: ["Ring","Ring"], id: [ITEM_RING_NORMAL],
-        offset: 0x0F97D+7, flags: [0x80, 0xC0, 0x01],
-        restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK],
-		requires:[], addedRequires:[],
-        type:"partyring", stolen:"no", hints:[9,19,25], progression_flags:0,
-        location_types:["joinablepartymembers"]
-    },
-    {
-        location_set:"Joinable Party Members",
-        location:"Inventory of Leonna",
-        name: "inventory-leonna", item_name: ["Ring","Ring"], id: [ITEM_RING_NORMAL],
-        offset: 0x0F99B+7, flags: [0x80, 0xC0, 0x01],
-        restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK],
-		requires:[], addedRequires:[],
-        type:"partyring", stolen:"no", hints:[19,25,29], progression_flags:0,
-        location_types:["joinablepartymembers"]
-    },
-    {
-        location_set:"Joinable Party Members",
-        location:"Inventory of Blaine",
-        name: "inventory-blaine", item_name: ["Ring","Ring"], id: [ITEM_RING_NORMAL],
-        offset: 0x0F9A6+7, flags: [0x80, 0xC0, 0x01],
-        restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK],
-		requires:[], addedRequires:[],
-        type:"partyring", stolen:"no", hints:[4,19], progression_flags:0,
+        type:"partyring", stolen:"no", hints:[5,15,21,23,24,26,28,29,39,41,42,44], progression_flags:0,
         location_types:["joinablepartymembers"]
     },
     {
@@ -1541,19 +1524,69 @@ var DATA_WORLD_LOCATIONS =
         location:"Inventory of Seggal",
         name: "inventory-seggal", item_name: ["Ring","Ring"], id: [ITEM_RING_NORMAL],
         offset: 0x0F9B1+7, flags: [0x80, 0xC0, 0x01],
-        restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK],
+        restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
 		requires:[], addedRequires:[],
-        type:"partyring", stolen:"no", hints:[5,19,25,29], progression_flags:0,
+        type:"partyring", stolen:"no", hints:[5,25,29,44], progression_flags:0,
+        location_types:["joinablepartymembers"]
+    },
+    {
+        location_set:"Joinable Party Members",
+        location:"Inventory of Gweeno",
+        name: "inventory-gweeno", item_name: ["Ring","Ring"], id: [ITEM_RING_NORMAL],
+        offset: 0x0F967+7, flags: [0x80, 0xC0, 0x01],
+        restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
+		requires:[], addedRequires:[],
+        type:"partyring", stolen:"no", hints:[11,44], progression_flags:0,
+        location_types:["joinablepartymembers"]
+    },
+    {
+        location_set:"Joinable Party Members",
+        location:"Inventory of Julia",
+        name: "inventory-julia", item_name: ["Ring","Ring"], id: [ITEM_RING_NORMAL],
+        offset: 0x0F972+7, flags: [0x80, 0xC0, 0x01],
+        restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
+		requires:[], addedRequires:[],
+        type:"partyring", stolen:"no", hints:[11,44], progression_flags:0,
+        location_types:["joinablepartymembers"]
+    },
+    {
+        location_set:"Joinable Party Members",
+        location:"Inventory of Katrina",
+        name: "inventory-katrina", item_name: ["Ring","Ring"], id: [ITEM_RING_NORMAL],
+        offset: 0x0F97D+7, flags: [0x80, 0xC0, 0x01],
+        restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
+		requires:[], addedRequires:[],
+        type:"partyring", stolen:"no", hints:[9,25,44], progression_flags:0,
+        location_types:["joinablepartymembers"]
+    },
+    {
+        location_set:"Joinable Party Members",
+        location:"Inventory of Leonna",
+        name: "inventory-leonna", item_name: ["Ring","Ring"], id: [ITEM_RING_NORMAL],
+        offset: 0x0F99B+7, flags: [0x80, 0xC0, 0x01],
+        restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
+		requires:[], addedRequires:[],
+        type:"partyring", stolen:"no", hints:[25,29,44], progression_flags:0,
+        location_types:["joinablepartymembers"]
+    },
+    {
+        location_set:"Joinable Party Members",
+        location:"Inventory of Blaine",
+        name: "inventory-blaine", item_name: ["Ring","Ring"], id: [ITEM_RING_NORMAL],
+        offset: 0x0F9A6+7, flags: [0x80, 0xC0, 0x01],
+        restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
+		requires:[], addedRequires:[],
+        type:"partyring", stolen:"no", hints:[4,44], progression_flags:0,
         location_types:["joinablepartymembers"]
     },
     {
         location_set:"Joinable Party Members",
         location:"Inventory of Sentri",
-        name: "inventory-serntri", item_name: ["Ring","Ring"], id: [ITEM_RING_NORMAL],
+        name: "inventory-sentri", item_name: ["Ring","Ring"], id: [ITEM_RING_NORMAL],
         offset: 0x0F9C0+7, flags: [0x80, 0xC0, 0x01],
-        restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK],
+        restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
 		requires:[], addedRequires:[],
-        type:"partyring", stolen:"no", hints:[5,19,25,29], progression_flags:0,
+        type:"partyring", stolen:"no", hints:[5,25,29,44], progression_flags:0,
         location_types:["joinablepartymembers"]
     },
     {
@@ -1561,9 +1594,9 @@ var DATA_WORLD_LOCATIONS =
         location:"Inventory of Beh Lem",
         name: "inventory-behlem", item_name: ["Ring","Ring"], id: [ITEM_RING_NORMAL],
         offset: 0x0F9DA+7, flags: [0x80, 0xC0, 0x01],
-        restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_GARGISH_TEXT],
+        restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_GARGISH_TEXT, ITEM_KEY],
 		requires:[ITEM_GARGISH_TEXT], addedRequires:[],
-        type:"partyring", stolen:"no", hints:[15,19,33], progression_flags:0,
+        type:"partyring", stolen:"no", hints:[15,33,44], progression_flags:0,
         location_types:["joinablepartymembers"]
     },
 ];

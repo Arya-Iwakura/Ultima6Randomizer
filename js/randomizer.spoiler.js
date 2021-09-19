@@ -27,7 +27,7 @@ function downloadSpoilerLog(e)
 		fileName = prefix + '-' + Date.now() + "-spoiler" + ".txt";
 	}
 
-	var outputText = formatSpoilerLog(result.spoilers, result.seed, result.preset, result.moonOrbSpoilers, result.startPositionName, result.hintsSpoiler);
+	var outputText = formatSpoilerLog(result.spoilers, result.seed, result.preset, result.moonOrbSpoilers, result.startPositionName, result.hintsSpoiler, result.partyMembers);
 	saveAs(new Blob([outputText], {type: "otext/plain;charset=utf-8"}), fileName);
 }
 
@@ -67,7 +67,7 @@ function formatOptionPoison()
     return "Default";
 }
 
-function formatSpoilerLog(inSpoilers, inSeed, inPreset, inMoonOrbSpoilers, inStartPositionName, inHintSpoiler)
+function formatSpoilerLog(inSpoilers, inSeed, inPreset, inMoonOrbSpoilers, inStartPositionName, inHintSpoiler, inPartyMembers)
 {
     var outputText = [];
     var spoilerList = [];
@@ -87,6 +87,7 @@ function formatSpoilerLog(inSpoilers, inSeed, inPreset, inMoonOrbSpoilers, inSta
     outputText += "Player Sprite: " + formatOptionAvatarSprite() + '\r\n';
     outputText += "Poison Flash: " + formatOptionPoison() + '\r\n';
     outputText += "Start Position: " + inStartPositionName + '\r\n';
+    outputText += "Party Members: " + formatPartyMembersList(inPartyMembers) + '\r\n';
     
     if(inMoonOrbSpoilers.length > 0)
     {
@@ -106,6 +107,18 @@ function formatSpoilerLog(inSpoilers, inSeed, inPreset, inMoonOrbSpoilers, inSta
     outputText += '\r\n';
     outputText += "######### Full Spoiler List" + '\r\n';
     outputText += formatSpoilerLogItemList(spoilerList);
+
+    return outputText;
+}
+
+function formatPartyMembersList(inPartyMembers)
+{
+    var outputText = "Avatar";
+
+    for(var i = 0; i < inPartyMembers.length; ++i)
+    {
+        outputText += ", " + inPartyMembers[i].name ;
+    }
 
     return outputText;
 }

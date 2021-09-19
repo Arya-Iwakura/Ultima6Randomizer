@@ -43,7 +43,8 @@ var DATA_HINT_TEXT =
 	" may be haunted.", //40
 	" is in or under a castle.", //41
 	" is in a secluded location.", //42
-	" may require a tool." //43
+	" may require a tool.", //43
+	" can be invited to the party." //44
 ];
 
 var DATA_HINT_LOCATIONS =
@@ -599,9 +600,9 @@ var DATA_MOONORB_DESTINATIONS =
 
 var DATA_PLAYER_SPAWN_LOCATIONS =
 [
+	{name:"Castle Britannia",			coordinates:[0x33, 0x01, 0x60, 0x01],	floor:0x00,	spawnegg:[],		raft:[]},
 	{name:"Britain",					coordinates:[0xB3, 0x01, 0x8A, 0x01],	floor:0x00,	spawnegg:[0x6B02],	raft:[]},
 	{name:"Jhelom",						coordinates:[0x93, 0x00, 0x72, 0x03],	floor:0x00,	spawnegg:[0x6D4A],	raft:[]},
-	{name:"Castle Britannia",			coordinates:[0x33, 0x01, 0x60, 0x01],	floor:0x00,	spawnegg:[],		raft:[]},
 	{name:"Yew",						coordinates:[0xE3, 0x00, 0x82, 0x00],	floor:0x00,	spawnegg:[0x6896],	raft:[]},
 	{name:"Skara Brae",					coordinates:[0x4B, 0x00, 0xFA, 0x01],	floor:0x00,	spawnegg:[0x6A9C],	raft:[]},
 	{name:"Trinsic",					coordinates:[0x83, 0x01, 0x12, 0x03],	floor:0x00,	spawnegg:[0x6D60],	raft:[]},
@@ -652,3 +653,23 @@ var DATA_FISHING_LOCATIONS =
 	{min:[0x80,0x00,0xA8,0x03],max:[0x89,0x00,0xAF,0x03]}, //rune of valor pier
 	//{min:[0xF8,0x01,0x30,0x01],max:[0x0F,0x02,0x3F,0x01]}, //cove lake
 ];
+
+var DATA_PARTY_MEMBERS = 
+[
+	{name:"None",		idoffset:[0x00,0x00],		inventory:0x00,		inventoryName:"inventory-none"},
+	{name:"Dupre",		idoffset:[0x04,0x00],		inventory:0x02,		inventoryName:"inventory-dupre"},
+	{name:"Shamino",	idoffset:[0x06,0x00],		inventory:0x03,		inventoryName:"inventory-shamino"},
+	{name:"Iolo",		idoffset:[0x08,0x00],		inventory:0x04,		inventoryName:"inventory-iolo"},
+	//{name:"Sherry",		idoffset:[0x12,0x00],		inventory:0x00,		inventoryName:"inventory-sherry"},
+	{name:"Jaana",		idoffset:[0x7C,0x00],		inventory:0x05,		inventoryName:"inventory-jaana"},
+	{name:"Gwenno",		idoffset:[0x84,0x00],		inventory:0x06,		inventoryName:"inventory-gwenno"},
+	{name:"Julia",		idoffset:[0x86,0x00],		inventory:0x07,		inventoryName:"inventory-julia"},
+	{name:"Katrina",	idoffset:[0xC2,0x00],		inventory:0x08,		inventoryName:"inventory-katrina"},
+	{name:"Leodon",		idoffset:[0xE2,0x00],		inventory:0x09,		inventoryName:"inventory-leodon"},
+	{name:"Leonna",		idoffset:[0xE4,0x00],		inventory:0x0A,		inventoryName:"inventory-leonna"},
+	{name:"Blaine",		idoffset:[0x0E,0x01],		inventory:0x0B,		inventoryName:"inventory-blaine"},
+	{name:"Seggal",		idoffset:[0x40,0x01],		inventory:0x0C,		inventoryName:"inventory-seggal"},
+	{name:"Sentri",		idoffset:[0x4C,0x01],		inventory:0x0D,		inventoryName:"inventory-sentri"},
+	{name:"Gorn",		idoffset:[0x56,0x01],		inventory:0x0E,		inventoryName:"inventory-gorn"},
+	{name:"Beh Lem",	idoffset:[0x5C,0x01],		inventory:0x0F,		inventoryName:"inventory-behlem"},
+]

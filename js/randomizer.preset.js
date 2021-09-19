@@ -124,6 +124,7 @@ function preset_overworld_easy() //easy
 	$('#skip_intro_cinematic').prop('checked', true);
 
 	$('#select-junk-items').prop('value', 1);
+	$('#select-starting-party').prop('value', 3);
 	$('#select-starting-inventory').prop('value', 4);
 	$('#select-starting-gold').prop('value', 4);
 	$('#select-day-night-cycle').prop('value', 1);
@@ -196,6 +197,7 @@ function preset_overworld_normal() //normal
 	$('#skip_intro_cinematic').prop('checked', true);
 
 	$('#select-junk-items').prop('value', 1);
+	$('#select-starting-party').prop('value', 3);
 	$('#select-starting-inventory').prop('value', 3);
 	$('#select-starting-gold').prop('value', 4);
 	$('#select-day-night-cycle').prop('value', 1);
@@ -269,6 +271,7 @@ function preset_overworld_hard() //hard
 	$('#skip_intro_cinematic').prop('checked', true);
 
 	$('#select-junk-items').prop('value', 1);
+	$('#select-starting-party').prop('value', 3);
 	$('#select-starting-inventory').prop('value', 1);
 	$('#select-starting-gold').prop('value', 1);
 	$('#select-day-night-cycle').prop('value', 1);
@@ -341,6 +344,7 @@ function preset_all_easy() //easy
 	$('#skip_intro_cinematic').prop('checked', true);
 
 	$('#select-junk-items').prop('value', 1);	
+	$('#select-starting-party').prop('value', 3);
 	$('#select-starting-inventory').prop('value', 4);
 	$('#select-starting-gold').prop('value', 4);
 	$('#select-day-night-cycle').prop('value', 1);
@@ -412,6 +416,7 @@ function preset_all_normal() //normal
 	$('#skip_intro_cinematic').prop('checked', true);
 
 	$('#select-junk-items').prop('value', 1);
+	$('#select-starting-party').prop('value', 3);
 	$('#select-starting-inventory').prop('value', 3);
 	$('#select-starting-gold').prop('value', 4);
 	$('#select-day-night-cycle').prop('value', 1);
@@ -485,6 +490,7 @@ function preset_all_hard() //hard
 	$('#skip_intro_cinematic').prop('checked', true);
 
 	$('#select-junk-items').prop('value', 1);
+	$('#select-starting-party').prop('value', 3);
 	$('#select-starting-inventory').prop('value', 1);
 	$('#select-starting-gold').prop('value', 1);
 	$('#select-day-night-cycle').prop('value', 1);
@@ -557,6 +563,7 @@ function preset_underworld_easy() //easy
 	$('#skip_intro_cinematic').prop('checked', true);
 
 	$('#select-junk-items').prop('value', 1);
+	$('#select-starting-party').prop('value', 3);
 	$('#select-starting-inventory').prop('value', 4);
 	$('#select-starting-gold').prop('value', 4);
 	$('#select-day-night-cycle').prop('value', 1);
@@ -628,6 +635,7 @@ function preset_underworld_normal() //normal
 	$('#skip_intro_cinematic').prop('checked', true);
 
 	$('#select-junk-items').prop('value', 1);
+	$('#select-starting-party').prop('value', 3);
 	$('#select-starting-inventory').prop('value', 3);
 	$('#select-starting-gold').prop('value', 4);
 	$('#select-day-night-cycle').prop('value', 1);
@@ -701,6 +709,7 @@ function preset_underworld_hard() //hard
 	$('#skip_intro_cinematic').prop('checked', true);
 
 	$('#select-junk-items').prop('value', 1);
+	$('#select-starting-party').prop('value', 3);
 	$('#select-starting-inventory').prop('value', 1);
 	$('#select-starting-gold').prop('value', 1);
 	$('#select-day-night-cycle').prop('value', 1);

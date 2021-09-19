@@ -1,4 +1,4 @@
-var VERSION_STRING = 'v0.7';
+var VERSION_STRING = 'v0.7a';
 var BASE_CHECKSUM = 0x9277C9F7;
 
 const SUBSYSTEM_ITEMS = 0;
@@ -17,6 +17,7 @@ const SUBSYSTEM_MONSTER_DATA_EQUIPMENT = 12;
 const SUBSYSTEM_PLAYER_INVENTORY = 13;
 const SUBSYSTEM_PLAYER_GAMEPLAY = 14;
 const SUBSYSTEM_SOUND = 15;
+const SUBSYSTEM_PARTY = 16;
 
 function randomizeROM(buffer, seed)
 {
@@ -170,13 +171,15 @@ function randomizeROM(buffer, seed)
 		randomizeMoonPhases(rom, subSystemSeeds[SUBSYSTEM_PLAYER_GAMEPLAY]);
 	}
 
-	var startPositionName = randomizePlayerStart(rom, subSystemSeeds[SUBSYSTEM_PLAYER_GAMEPLAY]);
+	var partyMembers = randomizePartyMembers(rom, subSystemSeeds[SUBSYSTEM_PARTY]);
+	var startPositionName = randomizePlayerStart(rom, subSystemSeeds[SUBSYSTEM_PLAYER_GAMEPLAY], partyMembers);
 	var moonOrbSpoilerList = randomizeMoonOrbDestinations(rom, subSystemSeeds[SUBSYSTEM_PLAYER_GAMEPLAY], startPositionName);
 
 	//---------items
 	var requiredProgressionItems = getSelectedProgressionItemsList();
 	var selectedLocationTypes = getSelectedLocationTypesList();
 	var selectedLocations = buildSelectedLocationsList(selectedLocationTypes.selectedLocations);
+	selectedLocations = removePartyMemberLocations(selectedLocations, partyMembers);
 	var canPlaceItems = false;
 	if(selectedLocations.length > requiredProgressionItems.length){canPlaceItems = true;}
 
@@ -219,7 +222,7 @@ function randomizeROM(buffer, seed)
 		var randomizeItemsDone = false;
 		do
 		{
-			randomizeItemsDone = randomizeItems(rom, subSystemSeeds[SUBSYSTEM_ITEMS], spoilers, hintsSpoiler);	
+			randomizeItemsDone = randomizeItems(rom, subSystemSeeds[SUBSYSTEM_ITEMS], spoilers, hintsSpoiler, partyMembers);	
 		}
 		while (randomizeItemsDone == false);
 		
@@ -539,6 +542,7 @@ function randomizeROM(buffer, seed)
 		moonOrbSpoilers: moonOrbSpoilerList,
 		startPositionName: startPositionName,
 		hintsSpoiler: hintsSpoiler,
+		partyMembers: partyMembers,
 
 		//subsystem seeds
 		subSystemSeeds: subSystemSeeds,

@@ -469,6 +469,24 @@
 					<h3>Character Adjustments</h3>
 					<div class="input-group top-spaced">
 						<div class="input-group-addon">
+							<b>Starting Party</b>
+						</div>
+						<select class="form-control , presetselect" id="select-starting-party">
+							<option value="1">None</option>
+							<option value="0" selected="selected">Default</option>
+							<option value="2" >Default with New Remove Options</option>
+							<option value="3">Random</option>
+						</select>
+					</div>
+					<div class="input-group-addon">
+						<small><i><span id="starting-party-tooltip-1">(Unchanged from base game)</span></small></i>
+						<small><i><span id="starting-party-tooltip-2" hidden>(Starting party includes only the Avatar)</span></small></i>
+						<small><i><span id="starting-party-tooltip-3" hidden>(Party is same as base game with the ability to remove all party members)</span></small></i>
+						<small><i><span id="starting-party-tooltip-4" hidden>(Starting party includes the Avatar and three random members)</span></small></i>
+					</div>
+
+					<div class="input-group top-spaced">
+						<div class="input-group-addon">
 							<b>Starting Inventory</b>
 						</div>
 						<select class="form-control , presetselect" id="select-starting-inventory">

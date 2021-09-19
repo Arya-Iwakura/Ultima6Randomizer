@@ -177,8 +177,22 @@ $('#view-spoiler-list').click(function(e)
 function mainPageInit()
 {
 	//update labels for each location type on page load
+	getUpdatedLocationLabelsCounts();
+	updateSelectedLocationsCount();
+}
+
+$(document).ready( function ()
+{
+	mainPageInit();
+});
+
+function getUpdatedLocationLabelsCounts()
+{
 	$('#label_randomize_locations_overworld #count-overworld-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"overworld") + ")" );
-	$('#label_randomize_locations_townsvirtue #count-townsvirtue-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"towns_virtue") + ")" );
+
+	var numVirtueTownLocations = getLocationTypeCount(DATA_WORLD_LOCATIONS,"towns_virtue") + 4;
+	$('#label_randomize_locations_townsvirtue #count-townsvirtue-text').text( "(" + numVirtueTownLocations + ")" );
+
 	$('#label_randomize_locations_townsnonvirtue #count-townsnonvirtue-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"towns_nonvirtue") + ")" );
 	$('#label_randomize_locations_castles #count-castles-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"castles") + ")" );
 	$('#label_randomize_locations_dialog #count-dialog-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"dialog") + ")" );
@@ -188,13 +202,21 @@ function mainPageInit()
 	$('#label_randomize_locations_dungeons #count-dungeons-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"dungeons") + ")" );
 	$('#label_randomize_locations_shrines #count-shrines-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"shrines") + ")" );
 	$('#label_randomize_locations_gargoylecity #count-gargoylecity-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"gargoylecity") + ")" );
-	$('#label_randomize_locations_joinablepartymembers #count-joinablepartymembers-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"joinablepartymembers") + ")" );
+	
+	var numPartyMembers = 0;
+	if ($('#select-starting-party').val() != 1)
+	{
+		numPartyMembers = getLocationTypeCount(DATA_WORLD_LOCATIONS,"joinablepartymembers") - 3;
+	}
+	else
+	{
+		numPartyMembers = getLocationTypeCount(DATA_WORLD_LOCATIONS,"joinablepartymembers");
+	}
+	
+	$('#label_randomize_locations_joinablepartymembers #count-joinablepartymembers-text').text( "(" + numPartyMembers + ")" );
 	$('#label_randomize_locations_moonorb #count-moonorb-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"playerinventory_slot1") + ")" );
 	$('#label_randomize_locations_spellbook #count-spellbook-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"playerinventory_slot2") + ")" );
-
-	updateSelectedLocationsCount();
 }
-$( window ).on( "load", mainPageInit );
 
 function setClassToColor(inClass, inColor)
 {
@@ -284,6 +306,10 @@ function updateSelectedLocationsCount()
 	var requiredProgressionItems = getSelectedProgressionItemsList();
 	var selectedLocationTypes = getSelectedLocationTypesList();
 	var selectedLocations = buildSelectedLocationsList(selectedLocationTypes.selectedLocations);
+	if ($('#select-starting-party').val() != 1)
+	{
+		selectedLocations = removePartyMemberLocations(selectedLocations, [DATA_PARTY_MEMBERS[1], DATA_PARTY_MEMBERS[2], DATA_PARTY_MEMBERS[3]]);
+	}
 
 	$('#label_randomize_locations_header #locations_header_selected_total').text( selectedLocations.length );
 	if(selectedLocations.length <= requiredProgressionItems.length)
@@ -350,6 +376,7 @@ function updateAllSelectionTooltips()
 	checkAISpellDifficultyStatus();
 	checkAISpellsStatus();
 	checkAIEquipmentStatus();
+	checkStartingPartyStatus();
 	checkStartingInventoryStatus();
 	checkStartingGoldStatus();
 	checkKarmaDifficultyStatus();
@@ -733,6 +760,52 @@ function checkJunkItemStatus()
 		$('#junk-item-tooltip-2').prop('hidden', true);
 		$('#junk-item-tooltip-3').prop('hidden', false);
 	}
+}
+
+$('#select-starting-party').click(function(e)
+{
+	checkStartingPartyStatus();
+});
+
+$('#select-starting-party').keyup(function(e)
+{
+	checkStartingPartyStatus();
+});
+
+function checkStartingPartyStatus()
+{
+	var selection = +$('#select-starting-party').val();
+	if (selection == 0)
+	{
+		$('#starting-party-tooltip-1').prop('hidden', false);
+		$('#starting-party-tooltip-2').prop('hidden', true);
+		$('#starting-party-tooltip-3').prop('hidden', true);
+		$('#starting-party-tooltip-4').prop('hidden', true);
+	}
+	else if (selection == 1)
+	{
+		$('#starting-party-tooltip-1').prop('hidden', true);
+		$('#starting-party-tooltip-2').prop('hidden', false);
+		$('#starting-party-tooltip-3').prop('hidden', true);
+		$('#starting-party-tooltip-4').prop('hidden', true);
+	}
+	else if (selection == 2)
+	{
+		$('#starting-party-tooltip-1').prop('hidden', true);
+		$('#starting-party-tooltip-2').prop('hidden', true);
+		$('#starting-party-tooltip-3').prop('hidden', false);
+		$('#starting-party-tooltip-4').prop('hidden', true);
+	}
+	else if (selection == 3)
+	{
+		$('#starting-party-tooltip-1').prop('hidden', true);
+		$('#starting-party-tooltip-2').prop('hidden', true);
+		$('#starting-party-tooltip-3').prop('hidden', true);
+		$('#starting-party-tooltip-4').prop('hidden', false);
+	}
+
+	getUpdatedLocationLabelsCounts();
+	updateSelectedLocationsCount();
 }
 
 $('#select-starting-inventory').click(function(e)

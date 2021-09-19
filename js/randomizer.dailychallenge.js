@@ -190,6 +190,8 @@ function setRandomChallengeSettings(dailySeed)
     var dataObject = {random:random};
     //var day = 0; - TODO: get day of the week to determine weights
 
+    getRandomPartyMembersSetting(dataObject);
+
     getRandomMoonOrbShuffleSetting(dataObject);
     getRandomSpellbookShuffleSetting(dataObject);
     getRandomSherryItemSetting(dataObject);
@@ -262,6 +264,10 @@ function getRandomItemShuffleSettings(dataObject)
     {
         var selectedLocationTypes = getSelectedLocationTypesList();
 	    var selectedLocations = buildSelectedLocationsList(selectedLocationTypes.selectedLocations);
+        if ($('#select-starting-party').val() != 1)
+    	{
+		    selectedLocations = removePartyMemberLocations(selectedLocations, [DATA_PARTY_MEMBERS[1], DATA_PARTY_MEMBERS[2], DATA_PARTY_MEMBERS[3]]);
+	    }
         var requiredProgressionItems = getSelectedProgressionItemsList();
         neededCount = requiredProgressionItems.length;
         currentCount = selectedLocations.length;
@@ -507,6 +513,17 @@ function getRandomPlayerStartSetting(dataObject)
 function getRandomMoonOrbDestiantionsSetting(dataObject)
 {
     $('#randomize_moonorb_destinations').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
+}
+
+function getRandomPartyMembersSetting(dataObject)
+{
+    var choices = [
+		{choice:1, weight:10},
+		{choice:2, weight:10},
+		{choice:3, weight:40},
+	];
+    var weightedChoice = dataObject.random.fromWeighted(choices);
+    $('#select-starting-party').prop('value', weightedChoice.choice);
 }
 
 function getRandomJunkItemsSetting(dataObject)
