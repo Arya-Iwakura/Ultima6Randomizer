@@ -24,13 +24,21 @@ function pageInit()
     setItemStatusSingle(    ".tracker_item_runespirituality", ".tracker_requires_runespirituality:checkbox", "tracker_requires_runespirituality", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     setItemStatusSingle(    ".tracker_item_runevalor", ".tracker_requires_runevalor:checkbox", "tracker_requires_runevalor", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     
-    setItemStatusSingle(    ".tracker_item_spellbook", ".tracker_requires_spellbook:checkbox", "tracker_requires_spellbook", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-
-    setItemStatusDouble(    ".tracker_spell_dispelfield", ".tracker_blockedbyfield:checkbox", "tracker_blockedbyfield",
+    setItemStatusTriple(    ".tracker_item_spellbook", ".tracker_null:checkbox", "tracker_null", 
+	                    ".tracker_spell_dispelfield", ".tracker_blockedbyfield:checkbox", "tracker_blockedbyfield",
                             ".tracker_spell_unlock", ".tracker_requires_unlockandfield:checkbox", "tracker_requires_unlockandfield", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    
-    setItemStatusDouble(    ".tracker_spell_unlock", ".tracker_locked:checkbox", "tracker_locked",
+
+    setItemStatusTriple(    ".tracker_item_spellbook", ".tracker_null:checkbox", "tracker_null", 
+	                    ".tracker_spell_unlock", ".tracker_locked:checkbox", "tracker_locked",
                             ".tracker_spell_dispelfield", ".tracker_requires_unlockandfield:checkbox", "tracker_requires_unlockandfield", TEXT_COLOR_ON, TEXT_COLOR_OFF);
+
+    setItemStatusTriple(    ".tracker_spell_dispelfield", ".tracker_null:checkbox", "tracker_null",
+                            ".tracker_item_spellbook", ".tracker_blockedbyfield:checkbox", "tracker_blockedbyfield",
+	                    ".tracker_spell_spellbook", ".tracker_requires_unlockandfield:checkbox", "tracker_requires_unlockandfield", TEXT_COLOR_ON, TEXT_COLOR_OFF);
+    
+    setItemStatusTriple(    ".tracker_spell_unlock", ".tracker_null:checkbox", "tracker_null",
+                            ".tracker_item_spellbook:checkbox", "tracker_locked", 
+	                    ".tracker_spell_dispelfield", ".tracker_requires_unlockandfield:checkbox", "tracker_requires_unlockandfield", TEXT_COLOR_ON, TEXT_COLOR_OFF);
 
     setItemStatusDouble(    ".tracker_item_brokenlens", ".tracker_requires_brokenlens:checkbox", "tracker_requires_brokenlens",
                             ".tracker_item_gargishtext", ".tracker_requires_brokenlensandgargishtext:checkbox", "tracker_requires_brokenlensandgargishtext", TEXT_COLOR_ON, TEXT_COLOR_OFF);
@@ -81,13 +89,23 @@ $(document).ready(function()
     setItemStatusSingleOnClick( ".tracker_item_runespirituality", ".tracker_requires_runespirituality:checkbox", "tracker_requires_runespirituality", TEXT_COLOR_ON, TEXT_COLOR_OFF);
     setItemStatusSingleOnClick( ".tracker_item_runevalor", ".tracker_requires_runevalor:checkbox", "tracker_requires_runevalor", TEXT_COLOR_ON, TEXT_COLOR_OFF);   
     
-    setItemStatusSingleOnClick( ".tracker_item_spellbook", ".tracker_requires_spellbook:checkbox", "tracker_requires_spellbook", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-
-    setItemStatusDoubleOnClick( ".tracker_spell_dispelfield", ".tracker_blockedbyfield:checkbox", "tracker_blockedbyfield",
+    setItemStatusTripleOnClick( ".tracker_item_spellbook", ".tracker_null:checkbox", "tracker_null",
+	                        ".tracker_spell_dispelfield", ".tracker_blockedbyfield:checkbox", "tracker_blockedbyfield",
                                 ".tracker_spell_unlock", ".tracker_requires_unlockandfield:checkbox", "tracker_requires_unlockandfield", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    
-    setItemStatusDoubleOnClick( ".tracker_spell_unlock", ".tracker_locked:checkbox", "tracker_locked",
+
+    setItemStatusTripleOnClick( ".tracker_item_spellbook", ".tracker_null:checkbox", "tracker_null",
+	                        ".tracker_spell_unlock", ".tracker_locked:checkbox", "tracker_locked",
                                 ".tracker_spell_dispelfield", ".tracker_requires_unlockandfield:checkbox", "tracker_requires_unlockandfield", TEXT_COLOR_ON, TEXT_COLOR_OFF);
+
+    setItemStatusTripleOnClick( ".tracker_spell_dispelfield", ".tracker_null:checkbox", "tracker_null",
+                                ".tracker_item_spellbook", ".tracker_blockedbyfield:checkbox", "tracker_blockedbyfield", 
+	                        ".tracker_spell_unlock", ".tracker_requires_unlockandfield:checkbox", "tracker_requires_unlockandfield",
+TEXT_COLOR_ON, TEXT_COLOR_OFF);
+    
+    setItemStatusTripleOnClick( ".tracker_spell_unlock", ".tracker_null:checkbox", "tracker_null",
+                                ".tracker_item_spellbook", ".tracker_locked:checkbox", "tracker_locked", 
+	                        ".tracker_spell_dispelfield", ".tracker_requires_unlockandfield:checkbox", "tracker_requires_unlockandfield",
+TEXT_COLOR_ON, TEXT_COLOR_OFF);
 
     setItemStatusDoubleOnClick( ".tracker_item_brokenlens", ".tracker_requires_brokenlens:checkbox", "tracker_requires_brokenlens",
                                 ".tracker_item_gargishtext", ".tracker_requires_brokenlensandgargishtext:checkbox", "tracker_requires_brokenlensandgargishtext", TEXT_COLOR_ON, TEXT_COLOR_OFF);
@@ -152,6 +170,46 @@ function setItemStatusDouble(itemName1, requireCheckbox1, requireLabel1, itemNam
 
         $(requireCheckbox2).prop('disabled', true);
         setClassToColor(requireLabel2, colorOff);
+    }
+}
+
+function setItemStatusTripleOnClick(itemName1, requireCheckbox1, requireLabel1, itemName2, requireCheckbox2, requireLabel2, itemName3, requireCheckbox3, requireLabel3, colorOn, colorOff)
+{
+    $(itemName1).click(function()
+    {
+        setItemStatusTriple(itemName1, requireCheckbox1, requireLabel1, itemName2, requireCheckbox2, requireLabel2, itemName3, requireCheckbox3, requireLabel3, colorOn, colorOff);
+    });    
+}
+
+function setItemStatusTriple(itemName1, requireCheckbox1, requireLabel1, itemName2, requireCheckbox2, requireLabel2, itemName3, requireCheckbox3, requireLabel3, colorOn, colorOff)
+{
+    if($(itemName1).is(':checked'))
+    {
+        $(requireCheckbox1).prop('disabled', false);
+        setClassToColor(requireLabel1, colorOn);
+
+        if($(itemName2).is(':checked'))
+        {
+            $(requireCheckbox2).prop('disabled', false);
+            setClassToColor(requireLabel2, colorOn);
+
+            if($(itemName3).is(':checked'))
+            {
+                $(requireCheckbox3).prop('disabled', false);
+                setClassToColor(requireLabel3, colorOn);
+            }
+        }
+    }
+    else
+    {
+        $(requireCheckbox1).prop('disabled', true);
+        setClassToColor(requireLabel1, colorOff);
+
+        $(requireCheckbox2).prop('disabled', true);
+        setClassToColor(requireLabel2, colorOff);
+
+        $(requireCheckbox3).prop('disabled', true);
+        setClassToColor(requireLabel3, colorOff);
     }
 }
 
