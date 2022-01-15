@@ -130,6 +130,7 @@ function preset_overworld_easy() //easy
 	$('#select-day-night-cycle').prop('value', 1);
 	$('#select-karma-difficulty').prop('value', 1);
 	$('#select-item-difficulty').prop('value', 0);
+	$('#select-spell-level').prop('value', 0);
 	$('#select-spiritshrine').prop('value', 1);
 	$('#select-placedrafts').prop('value', 1);
 
@@ -203,6 +204,7 @@ function preset_overworld_normal() //normal
 	$('#select-day-night-cycle').prop('value', 1);
 	$('#select-karma-difficulty').prop('value', 0);
 	$('#select-item-difficulty').prop('value', 0);
+	$('#select-spell-level').prop('value', 0);
 	$('#select-spiritshrine').prop('value', 1);
 	$('#select-placedrafts').prop('value', 0);
 
@@ -277,6 +279,7 @@ function preset_overworld_hard() //hard
 	$('#select-day-night-cycle').prop('value', 1);
 	$('#select-karma-difficulty').prop('value', 2);
 	$('#select-item-difficulty').prop('value', 2);
+	$('#select-spell-level').prop('value', 0);
 	$('#select-spiritshrine').prop('value', 1);
 	$('#select-placedrafts').prop('value', 2);
 
@@ -350,6 +353,7 @@ function preset_all_easy() //easy
 	$('#select-day-night-cycle').prop('value', 1);
 	$('#select-karma-difficulty').prop('value', 1);
 	$('#select-item-difficulty').prop('value', 0);
+	$('#select-spell-level').prop('value', 0);
 	$('#select-spiritshrine').prop('value', 1);
 	$('#select-placedrafts').prop('value', 1);
 
@@ -422,6 +426,7 @@ function preset_all_normal() //normal
 	$('#select-day-night-cycle').prop('value', 1);
 	$('#select-karma-difficulty').prop('value', 0);
 	$('#select-item-difficulty').prop('value', 0);
+	$('#select-spell-level').prop('value', 0);
 	$('#select-spiritshrine').prop('value', 1);
 	$('#select-placedrafts').prop('value', 0);
 
@@ -496,6 +501,7 @@ function preset_all_hard() //hard
 	$('#select-day-night-cycle').prop('value', 1);
 	$('#select-karma-difficulty').prop('value', 2);
 	$('#select-item-difficulty').prop('value', 2);
+	$('#select-spell-level').prop('value', 0);
 	$('#select-spiritshrine').prop('value', 1);
 	$('#select-placedrafts').prop('value', 2);
 
@@ -569,6 +575,7 @@ function preset_underworld_easy() //easy
 	$('#select-day-night-cycle').prop('value', 1);
 	$('#select-karma-difficulty').prop('value', 1);
 	$('#select-item-difficulty').prop('value', 0);
+	$('#select-spell-level').prop('value', 0);
 	$('#select-spiritshrine').prop('value', 1);
 	$('#select-placedrafts').prop('value', 1);
 
@@ -641,6 +648,7 @@ function preset_underworld_normal() //normal
 	$('#select-day-night-cycle').prop('value', 1);
 	$('#select-karma-difficulty').prop('value', 0);
 	$('#select-item-difficulty').prop('value', 0);
+	$('#select-spell-level').prop('value', 0);
 	$('#select-spiritshrine').prop('value', 1);
 	$('#select-placedrafts').prop('value', 0);
 
@@ -715,6 +723,7 @@ function preset_underworld_hard() //hard
 	$('#select-day-night-cycle').prop('value', 1);
 	$('#select-karma-difficulty').prop('value', 2);
 	$('#select-item-difficulty').prop('value', 2);
+	$('#select-spell-level').prop('value', 0);
 	$('#select-spiritshrine').prop('value', 1);
 	$('#select-placedrafts').prop('value', 2);
 

@@ -236,6 +236,7 @@ function setRandomChallengeSettings(dailySeed)
     getRandomDayNightCycleSetting(dataObject);
     getRandomKarmaDifficultySetting(dataObject);
     getRandomItemDifficultySetting(dataObject);
+    getRandomSpellLevelSetting(dataObject);
     getRandomSpiritShrineSetting(dataObject);
     getRandomPlacedRaftsSetting(dataObject);
 
@@ -597,6 +598,17 @@ function getRandomItemDifficultySetting(dataObject)
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
     $('#select-item-difficulty').prop('value', weightedChoice.choice);
+}
+
+function getRandomSpellLevelSetting(dataObject)
+{
+    var choices = [
+		{choice:0, weight:40},
+		{choice:1, weight:40},
+		//{choice:2, weight:20},
+	];
+    var weightedChoice = dataObject.random.fromWeighted(choices);
+    $('#select-spell-level').prop('value', weightedChoice.choice);
 }
 
 function getRandomSpiritShrineSetting(dataObject)

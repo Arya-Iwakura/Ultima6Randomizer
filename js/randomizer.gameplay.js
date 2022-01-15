@@ -1273,6 +1273,31 @@ function createMoonOrbSpoilerEntry(offset, choice)
     return (positionString + " = " + choice.name);
 }
 
+function removeSpellLevelRequirements(rom)
+{
+    rom.set([0xC9,0x01],0xB072); //remove all level requirements for spells
+}
+
+function randomizeSpellLevelRequirements(rom, random)
+{
+    var randomSpellLevels = [];
+    for(var address = 0xE8F4; address < 0xE927; ++address)
+    {
+        if(address != 0xE8F8 && address != 0xE8FD && address != 0xE902)
+        {
+            randomSpellLevels.push(rom[address] & 0x07);
+            randomSpellLevels.shuffle(random);
+        }
+    }
+    for(var address = 0xE8F4; address < 0xE927; ++address)
+    {
+        if(address != 0xE8F8 && address != 0xE8FD && address != 0xE902)
+        {
+            rom[address] = (rom[address] & 0xF0) + randomSpellLevels.pop();
+        }
+    }
+}
+
 function encode3BytePositionToAddress(rom, startAddress, inTileX, inSuperChunkX, inTileY, inSuperChunkY)
 {
     rom.set(encode3BytePosition([inTileX, inSuperChunkX, inTileY, inSuperChunkY]), startAddress);

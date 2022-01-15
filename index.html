@@ -528,8 +528,8 @@
 						<small><i><span id="starting-gold-tooltip-4" hidden>(The player will start with 800 gold)</span></small></i>
 						<small><i><span id="starting-gold-tooltip-5" hidden>(The player will start with a random amount of gold between 0 and 800)</span></small></i>
 					</div>
-					<!-- ITEM ADJUSTMENTS OPTIONS -->
-					<h3>Item Adjustments</h3>
+					<!-- ITEM AND SPELL ADJUSTMENTS OPTIONS -->
+					<h3>Item and Spell Adjustments</h3>
 					<div class="checkbox">
 						<label>
 							<input type="checkbox" id="enable_expanded_armor_items" class="presetoption" checked>
@@ -567,6 +567,22 @@
 						<small><i><span id="item-difficulty-tooltip-1">(Unchanged from base game)</span></small></i>
 						<small><i><span id="item-difficulty-tooltip-2" hidden>(Invisibility and Regeneration are longer.)</span></small></i>
 						<small><i><span id="item-difficulty-tooltip-3" hidden>(Invisibility and Regeneration are shorter.)</span></small></i>
+					</div>
+
+					<div class="input-group top-spaced">
+						<div class="input-group-addon">
+							<b>Spell Level Requirements</b>
+						</div>
+						<select class="form-control , presetselect" id="select-spell-level">
+							<option value="0" selected="selected">Default</option>
+							<option value="1">Remove</option>
+							<!--<option value="2">Random</option>-->
+						</select>
+					</div>
+					<div class="input-group-addon">
+						<small><i><span id="spell-level-tooltip-1">(Unchanged from base game)</span></small></i>
+						<small><i><span id="spell-level-tooltip-2" hidden>(Allows all spells to be cast regardless of what level you are.)</span></small></i>
+						<!--<small><i><span id="spell-level-tooltip-3" hidden>(Spell level requirements are randomized. Help, Unlock, and Dispel Field are unchanged.)</span></small></i>-->
 					</div>
 					<!-- GAMEPLAY ADJUSTMENTS OPTIONS -->
 					<h3>Gameplay Adjustments</h3>
@@ -885,6 +901,26 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="modal-generating-win" tabindex="-1" role="dialog" aria-labelledby="modal-generating-label" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="modal-generating-label">
+							GENERATING SEED...
+						</h4>
+					</div>
+					<div class="modal-body">
+						<p id="modal-generating-text">
+							Generating seed data. This may take several seconds based on settings chosen, which browser you are using, and what phases the moons are in.
+						</p>
+					</div>
+					<div class="modal-footer">
 					</div>
 				</div>
 			</div>

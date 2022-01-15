@@ -4,7 +4,6 @@ var BASEURL = window.location.origin + window.location.pathname;
 var EN_US = false;
 var __U6C = true;
 
-//var DEVMODE = window.location.href.indexOf('localhost') != -1;
 var DEVMODE = (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.hostname === "") != -1;
 var DEEPVALIDATION = window.location.href.indexOf('localhost') != -1;
 
@@ -18,6 +17,8 @@ function doRandomize(buffer, seed)
 
 	prefix = 'ultima6-' + VERSION_STRING;
 	result = randomizeROM(buffer, seed);
+
+	$('#modal-generating-win').modal('hide');
 
 	//saveAs = function(){};
 	if (result.errors.length == 0)
@@ -92,10 +93,19 @@ $('#download-last-generated-rom').click(function(e)
 	$('#modal-generated-win').modal('show');
 });
 
-$('#generate-randomized-rom').click(function(e)
+async function generateRandomizedOnClick()
 {
-	if (!ORIGINAL_ROM) return;
+	await generateRandomizedShowModal();
+	setTimeout(await generateRandomizedDoRandomize, 500);
+}
 
+async function generateRandomizedShowModal()
+{
+	$('#modal-generating-win').modal('show');
+}
+
+async function generateRandomizedDoRandomize()
+{
 	var seed = getSeedForGenerator();
 
 	if (ORIGINAL_ROM === true)
@@ -114,9 +124,21 @@ $('#generate-randomized-rom').click(function(e)
 		reader.onloadend = function(e){ doRandomize(reader.result, seed); };
 		reader.readAsArrayBuffer(ORIGINAL_ROM);
 	}
+}
+
+$('#generate-randomized-rom').click(function(e)
+{
+	if (!ORIGINAL_ROM) return;
+
+	generateRandomizedOnClick();
 });
 
-$('#generate-param-rom').click(function(e)
+async function generateRandomizedParamRom()
+{
+	await generateRandomizedShowModal();
+	setTimeout(await generateRandomizedDoRandomizeParamRom, 500);
+}
+async function generateRandomizedDoRandomizeParamRom()
 {
 	var seed = getSeedForGenerator();
 
@@ -127,6 +149,11 @@ $('#generate-param-rom').click(function(e)
 
 	xhr.onload = function(e){ doRandomize(xhr.response, seed); }
 	xhr.send();
+}
+
+$('#generate-param-rom').click(function(e)
+{
+	generateRandomizedParamRom();
 });
 
 function getSeedForGenerator()
@@ -1058,6 +1085,39 @@ function checkItemDifficultyStatus()
 	}
 }
 
+$('#select-spell-level').click(function(e)
+{
+	checkSpellLevelStatus();
+});
+
+$('#select-spell-level').keyup(function(e)
+{
+	checkSpellLevelStatus();
+});
+
+function checkSpellLevelStatus()
+{
+	var selection = +$('#select-spell-level').val();
+	if (selection == 0)
+	{
+		$('#spell-level-tooltip-1').prop('hidden', false);
+		$('#spell-level-tooltip-2').prop('hidden', true);
+		$('#spell-level-tooltip-3').prop('hidden', true);
+	}
+	else if (selection == 1)
+	{
+		$('#spell-level-tooltip-1').prop('hidden', true);
+		$('#spell-level-tooltip-2').prop('hidden', false);
+		$('#spell-level-tooltip-3').prop('hidden', true);
+	}
+	else if (selection == 2)
+	{
+		$('#spell-level-tooltip-1').prop('hidden', true);
+		$('#spell-level-tooltip-2').prop('hidden', true);
+		$('#spell-level-tooltip-3').prop('hidden', false);
+	}
+}
+
 $('#select-spiritshrine').click(function(e)
 {
 	checkSpirtShrineStatus();
@@ -1537,6 +1597,7 @@ var TESTERS =
 	'cloudyshoe': 'cloudyshoe',
 	'fenyx4' : 'fenyx4',
 	'sathdresh' : 'sathdresh',
+	'zoggins' : 'zoggins',
 }
 
 $('#tester-list').html(

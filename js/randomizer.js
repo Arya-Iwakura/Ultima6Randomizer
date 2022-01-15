@@ -1,4 +1,4 @@
-var VERSION_STRING = 'v0.7a';
+var VERSION_STRING = 'v0.7b';
 var BASE_CHECKSUM = 0x9277C9F7;
 
 const SUBSYSTEM_ITEMS = 0;
@@ -459,6 +459,15 @@ function randomizeROM(buffer, seed)
 	if ($('#select-spiritshrine').val() > 0 )
 	{
 		addSpiritShrineWarpMountainIsland(rom, subSystemSeeds[SUBSYSTEM_WORLD], $('#select-spiritshrine').val());
+	}
+
+	if ($('#select-spell-level').val() == 1 )
+	{
+		removeSpellLevelRequirements(rom);
+	}
+	else if ($('#select-spell-level').val() == 2 )
+	{
+		//randomizeSpellLevelRequirements(rom, random);
 	}
 
 	//---------world
