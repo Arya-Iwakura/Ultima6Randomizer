@@ -128,6 +128,12 @@
 					<h3>Shuffle Items</h3>
 					<h5><div id="label_randomize_locations_header"><i><b id="locations_header_selected_total">YY</b> unique locations selected. <span class="locations_header_selected_required_color"><b id="locations_header_selected_required">XX</b></span> required progression items will be shuffled.</i></div></h5>
 					<div class="checkbox">
+						<label id="label_randomize_locations_advanced">
+							<input type="checkbox" id="randomize_locations_advanced" class="presetoption">
+							Enable Advanced Selection<i><small> (Expand additional advanced selection options)</small></i>
+						</label>
+					</div>
+					<div class="checkbox">
 						<label id="label_randomize_locations_overworld">
 							<input type="checkbox" id="randomize_locations_overworld" class="presetoption" checked>
 							Overworld <i><small id="count-overworld-text">(0)</small></i>
@@ -150,6 +156,44 @@
 							<input type="checkbox" id="randomize_locations_castles" class="presetoption" checked>
 							Castles <i><small id="count-castles-text">(0)</small></i>
 						</label>
+						<div id="castles_sublist" hidden>
+							<div class="checkbox" id="castles_sublist_britannia">
+								<label id="label_randomize_locations_castles_britannia">
+									&emsp;&emsp;<input type="checkbox" id="randomize_locations_castles_britannia" class="presetoption" checked>
+									Castle Britannia <i><small id="count-castles-britannia-text">(0)</small></i>
+								</label>
+							</div>
+							<div class="checkbox" id="castles_sublist_empathabbey">
+								<label id="label_randomize_locations_castles_empathabbey">
+									&emsp;&emsp;<input type="checkbox" id="randomize_locations_castles_empathabbey" class="presetoption" checked>
+									Empath Abbey <i><small id="count-castles-empathabbey-text">(0)</small></i>
+								</label>
+							</div>
+							<div class="checkbox" id="castles_sublist_lycaeum">
+								<label id="label_randomize_locations_castles_lycaeum">
+									&emsp;&emsp;<input type="checkbox" id="randomize_locations_castles_lycaeum" class="presetoption" checked>
+									Lycaeum <i><small id="count-castles-lycaeum-text">(0)</small></i>
+								</label>
+							</div>
+							<div class="checkbox" id="castles_sublist_serpentshold">
+								<label id="label_randomize_locations_castles_serpentshold">
+									&emsp;&emsp;<input type="checkbox" id="randomize_locations_castles_serpentshold" class="presetoption" checked>
+									Serpent's Hold <i><small id="count-castles-serpentshold-text">(0)</small></i>
+								</label>
+							</div>
+							<div class="checkbox" id="castles_sublist_stonegate">
+								<label id="label_randomize_locations_castles_stonegate">
+									&emsp;&emsp;<input type="checkbox" id="randomize_locations_castles_stonegate" class="presetoption" checked>
+									Stonegate <i><small id="count-castles-stonegate-text">(0)</small></i>
+								</label>
+							</div>
+							<div class="checkbox" id="castles_sublist_sutekscastle">
+								<label id="label_randomize_locations_castles_sutekscastle">
+									&emsp;&emsp;<input type="checkbox" id="randomize_locations_castles_sutekscastle" class="presetoption" checked>
+									Sutek's Castle <i><small id="count-castles-sutekscastle-text">(0)</small></i>
+								</label>
+							</div>
+						</div>
 					</div>
 					<div class="checkbox">
 						<label id="label_randomize_locations_dialog">
@@ -168,6 +212,44 @@
 							<input type="checkbox" id="randomize_locations_caves" class="presetoption" checked>
 							Caves <i><small id="count-caves-text">(0)</small></i>
 						</label>
+						<div id="caves_sublist" hidden>
+							<div class="checkbox" id="caves_sublist_antmound">
+								<label id="label_randomize_locations_caves_antmound">
+									&emsp;&emsp;<input type="checkbox" id="randomize_locations_caves_antmound" class="presetoption" checked>
+									Ant Mound <i><small id="count-caves-antmound-text">(0)</small></i>
+								</label>
+							</div>
+							<div class="checkbox" id="caves_sublist_sewers">
+								<label id="label_randomize_locations_caves_sewers">
+									&emsp;&emsp;<input type="checkbox" id="randomize_locations_caves_sewers" class="presetoption" checked>
+									Britain Sewers / Buccaneer's Cave <i><small id="count-caves-sewers-text">(0)</small></i>
+								</label>
+							</div>
+							<div class="checkbox" id="caves_sublist_cyclopscave">
+								<label id="label_randomize_locations_caves_cyclopscave">
+									&emsp;&emsp;<input type="checkbox" id="randomize_locations_caves_cyclopscave" class="presetoption" checked>
+									Cyclops Cave <i><small id="count-caves-cyclopscave-text">(0)</small></i>
+								</label>
+							</div>
+							<div class="checkbox" id="caves_sublist_piratecave">
+								<label id="label_randomize_locations_caves_piratecave">
+									&emsp;&emsp;<input type="checkbox" id="randomize_locations_caves_piratecave" class="presetoption" checked>
+									Pirate Cave <i><small id="count-caves-piratecave-text">(0)</small></i>
+								</label>
+							</div>
+							<div class="checkbox" id="caves_sublist_spidercave">
+								<label id="label_randomize_locations_caves_spidercave">
+									&emsp;&emsp;<input type="checkbox" id="randomize_locations_caves_spidercave" class="presetoption" checked>
+									Spider Cave <i><small id="count-caves-spidercave-text">(0)</small></i>
+								</label>
+							</div>
+							<div class="checkbox" id="caves_sublist_swampcave">
+								<label id="label_randomize_locations_caves_swampcave">
+									&emsp;&emsp;<input type="checkbox" id="randomize_locations_caves_swampcave" class="presetoption" checked>
+									Swamp Cave <i><small id="count-caves-swampcave-text">(0)</small></i>
+								</label>
+							</div>
+						</div>
 					</div>
 					<div class="checkbox">
 						<label id="label_randomize_locations_tombs">
@@ -180,6 +262,44 @@
 							<input type="checkbox" id="randomize_locations_dungeons" class="presetoption" checked>
 							Dungeons <i><small id="count-dungeons-text">(0)</small></i>
 						</label>
+						<div id="dungeons_sublist" hidden>
+							<div class="checkbox" id="dungeons_sublist_deceit">
+								<label id="label_randomize_locations_dungeons_deceit">
+									&emsp;&emsp;<input type="checkbox" id="randomize_locations_dungeons_deceit" class="presetoption" checked>
+									Deceit <i><small id="count-dungeons-deceit-text">(0)</small></i>
+								</label>
+							</div>
+							<div class="checkbox" id="dungeons_sublist_despise">
+								<label id="label_randomize_locations_dungeons_despise">
+									&emsp;&emsp;<input type="checkbox" id="randomize_locations_dungeons_despise" class="presetoption" checked>
+									Despise <i><small id="count-dungeons-despise-text">(0)</small></i>
+								</label>
+							</div>
+							<div class="checkbox" id="dungeons_sublist_destard">
+								<label id="label_randomize_locations_dungeons_destard">
+									&emsp;&emsp;<input type="checkbox" id="randomize_locations_dungeons_destard" class="presetoption" checked>
+									Destard <i><small id="count-dungeons-destard-text">(0)</small></i>
+								</label>
+							</div>
+							<div class="checkbox" id="dungeons_sublist_hythloth">
+								<label id="label_randomize_locations_dungeons_hythloth">
+									&emsp;&emsp;<input type="checkbox" id="randomize_locations_dungeons_hythloth" class="presetoption" checked>
+									Hythloth <i><small id="count-dungeons-hythloth-text">(0)</small></i>
+								</label>
+							</div>
+							<div class="checkbox" id="dungeons_sublist_shame">
+								<label id="label_randomize_locations_dungeons_shame">
+									&emsp;&emsp;<input type="checkbox" id="randomize_locations_dungeons_shame" class="presetoption" checked>
+									Shame <i><small id="count-dungeons-shame-text">(0)</small></i>
+								</label>
+							</div>
+							<div class="checkbox" id="dungeons_sublist_wrongcovetous">
+								<label id="label_randomize_locations_dungeons_wrongcovetous">
+									&emsp;&emsp;<input type="checkbox" id="randomize_locations_dungeons_wrongcovetous" class="presetoption" checked>
+									Wrong/Covetous <i><small id="count-dungeons-wrongcovetous-text">(0)</small></i>
+								</label>
+							</div>
+						</div>
 					</div>
 					<div class="checkbox">
 						<label id="label_randomize_locations_shrines">
@@ -202,31 +322,31 @@
 					<div class="checkbox">
 						<label id="label_randomize_moonorb">
 							<input type="checkbox" id="randomize_moonorb" class="presetoption">
-							Include Moon Orb in Item Pool<i><small>(Adds more physical travel to the game)</small></i>
+							Include Moon Orb in Item Pool<i><small> (Adds more physical travel to the game)</small></i>
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
 							<input type="checkbox" id="remove_moonorb" class="presetoption">
-							Remove Moon Orb Item<i><small>(Remove the Moon Orb. Recommend adding Spirituality Shrine Warp)</small></i>
+							Remove Moon Orb Item<i><small> (Remove the Moon Orb. Recommend adding Spirituality Shrine Warp)</small></i>
 						</label>
 					</div>
 					<div class="checkbox">
 						<label id="label_randomize_spellbook">
 							<input type="checkbox" id="randomize_spellbook" class="presetoption">
-							Include Spellbook in Item Pool<i><small>(Adds more difficulty as you will start with no spells)</small></i>
+							Include Spellbook in Item Pool<i><small> (Adds more difficulty as you will start with no spells)</small></i>
 						</label>
 					</div>
 					<div class="checkbox">
 						<label id="label_randomize_unlockanddispel">
 							<input type="checkbox" id="randomize_unlockanddispel" class="presetoption">
-							Include Unlock & Dispel Field Spells in Item Pool<i><small>(Required spells now must be found)</small></i>
+							Include Unlock & Dispel Field Spells in Item Pool<i><small> (Required spells now must be found)</small></i>
 						</label>
 					</div>
 					<div class="checkbox">
 						<label id="label_randomize_sherryitem">
 							<input type="checkbox" id="add_sherry_item" class="presetoption" checked>
-							Add Unique Sherry Item in Item Pool<i><small>(Sherry will now require a unique item to join)</small></i>
+							Add Unique Sherry Item in Item Pool<i><small> (Sherry will now require a unique item to join)</small></i>
 						</label>
 					</div>
 					<!-- RANDOMIZER SPAWNS OPTIONS -->

@@ -68,6 +68,7 @@ function updatePreset(val)
 //--------- OVERWORLD LOCATIONS PRESETS
 function preset_overworld_easy() //easy
 {
+	$('#randomize_locations_advanced').prop('checked', false);
 	$('#randomize_locations_overworld').prop('checked', true);
 	$('#randomize_locations_townsvirtue').prop('checked', true);
 	$('#randomize_locations_townsnonvirtue').prop('checked', true);
@@ -141,6 +142,7 @@ function preset_overworld_easy() //easy
 
 function preset_overworld_normal() //normal
 {
+	$('#randomize_locations_advanced').prop('checked', false);
 	$('#randomize_locations_overworld').prop('checked', true);
 	$('#randomize_locations_townsvirtue').prop('checked', true);
 	$('#randomize_locations_townsnonvirtue').prop('checked', true);
@@ -215,6 +217,7 @@ function preset_overworld_normal() //normal
 
 function preset_overworld_hard() //hard
 {
+	$('#randomize_locations_advanced').prop('checked', false);
 	$('#randomize_locations_overworld').prop('checked', true);
 	$('#randomize_locations_townsvirtue').prop('checked', true);
 	$('#randomize_locations_townsnonvirtue').prop('checked', true);
@@ -291,6 +294,7 @@ function preset_overworld_hard() //hard
 //--------- ALL LOCATIONS PRESETS
 function preset_all_easy() //easy
 {
+	$('#randomize_locations_advanced').prop('checked', false);
 	$('#randomize_locations_overworld').prop('checked', true);
 	$('#randomize_locations_townsvirtue').prop('checked', true);
 	$('#randomize_locations_townsnonvirtue').prop('checked', true);
@@ -364,6 +368,7 @@ function preset_all_easy() //easy
 
 function preset_all_normal() //normal
 {
+	$('#randomize_locations_advanced').prop('checked', false);
 	$('#randomize_locations_overworld').prop('checked', true);
 	$('#randomize_locations_townsvirtue').prop('checked', true);
 	$('#randomize_locations_townsnonvirtue').prop('checked', true);
@@ -437,6 +442,7 @@ function preset_all_normal() //normal
 
 function preset_all_hard() //hard
 {
+	$('#randomize_locations_advanced').prop('checked', false);
 	$('#randomize_locations_overworld').prop('checked', true);
 	$('#randomize_locations_townsvirtue').prop('checked', true);
 	$('#randomize_locations_townsnonvirtue').prop('checked', true);
@@ -513,6 +519,7 @@ function preset_all_hard() //hard
 //--------- UNDERWORLD LOCATIONS PRESETS
 function preset_underworld_easy() //easy
 {
+	$('#randomize_locations_advanced').prop('checked', false);
 	$('#randomize_locations_overworld').prop('checked', false);
 	$('#randomize_locations_townsvirtue').prop('checked', false);
 	$('#randomize_locations_townsnonvirtue').prop('checked', false);
@@ -586,6 +593,7 @@ function preset_underworld_easy() //easy
 
 function preset_underworld_normal() //normal
 {
+	$('#randomize_locations_advanced').prop('checked', false);
 	$('#randomize_locations_overworld').prop('checked', false);
 	$('#randomize_locations_townsvirtue').prop('checked', false);
 	$('#randomize_locations_townsnonvirtue').prop('checked', false);
@@ -659,6 +667,7 @@ function preset_underworld_normal() //normal
 
 function preset_underworld_hard() //hard
 {
+	$('#randomize_locations_advanced').prop('checked', false);
 	$('#randomize_locations_overworld').prop('checked', false);
 	$('#randomize_locations_townsvirtue').prop('checked', false);
 	$('#randomize_locations_townsnonvirtue').prop('checked', false);

@@ -734,7 +734,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD],
 		requires:[ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD],
         type:"main", stolen:"no", hints:[5,21,23,24,26,28,29,35,39,41,42], progression_flags:0x04,
-        location_types:["castles"]
+        location_types:["castles","castles_sutek"]
     }, //we changed this to the first item
 	{   
         location_set:"Stonegate",
@@ -744,7 +744,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_SPELLBOOK, SPELL_DISPEL_FIELD],
         requires:[ITEM_SPELLBOOK, SPELL_DISPEL_FIELD],
         type:"main", stolen:"no", hints:[2,5,18,23,24,26,28,29,39,41,42], progression_flags:0x06,
-        location_types:["castles"]
+        location_types:["castles","castles_stonegate"]
     },
 	{
         location_set:"Castle Britannia",
@@ -754,7 +754,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [],
         requires:[],
         type:"stack", stolen : "no", hints:[5,41], progression_flags:0,
-        location_types:["castles"]
+        location_types:["castles","castles_britannia"]
     }, //we changed this to the first item
 	{
         location_set:"Castle Britannia",
@@ -764,7 +764,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [],
         requires:[],
         type:"solo", stolen : "no", hints:[5,41], progression_flags:0,
-        location_types:["castles"]
+        location_types:["castles","castles_britannia"]
     },
 	{
         location_set:"Castle Britannia",
@@ -774,7 +774,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [],
         requires:[],
         type:"stack", stolen : "no", hints:[5,41], progression_flags:0,
-        location_types:["castles"]
+        location_types:["castles","castles_britannia"]
     }, //we changed this to the first item
 	{
         location_set:"Serpent's Hold",
@@ -784,7 +784,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [],
         requires:[],
         type:"stack", stolen : "yes", hints:[5,25,29,41], progression_flags:0,
-        location_types:["castles"]
+        location_types:["castles","castles_shold"]
     }, //we changed this to the first item
 	{
         location_set:"Stonegate",
@@ -794,7 +794,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [],
         requires:[], 
         type:"solo", stolen : "no", hints:[5,29,41,42], progression_flags:0x01,
-        location_types:["castles"]
+        location_types:["castles","castles_stonegate"]
     },
 	{
         location_set:"Moonglow / Lycaeum",
@@ -804,7 +804,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_SPELLBOOK, SPELL_DISPEL_FIELD],
         requires:[ITEM_SPELLBOOK, SPELL_DISPEL_FIELD],
         type:"main", stolen : "no", hints:[2,5,18,24,35,36,41], progression_flags:0x01,
-        location_types:["castles"]
+        location_types:["castles","castles_lycaeum"]
     },
 	{
         location_set:"Moonglow / Lycaeum",
@@ -814,7 +814,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_SPELLBOOK, SPELL_DISPEL_FIELD],
         requires:[ITEM_SPELLBOOK, SPELL_DISPEL_FIELD],
         type:"main", stolen : "no", hints:[2,5,18,24,35,36,41], progression_flags:0x01,
-        location_types:["castles"]
+        location_types:["castles","castles_lycaeum"]
     },
 	{
         location_set:"Britain Sewers / Buccaneer's Cave",
@@ -824,7 +824,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [],
         requires:[],
         type:"solo", stolen : "no", hints:[2,5,31,38,41], progression_flags:0,
-        location_types:["castles"]
+        location_types:["castles","castles_britannia"]
     },
 
     {   
@@ -835,7 +835,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [],
 		requires:[],
         type:"solo", stolen:"no", hints:[5,7,25,28,35,41], progression_flags:0,
-        location_types:["castles"]
+        location_types:["castles","castles_lycaeum"]
     },
 
     {   
@@ -846,7 +846,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD],
 		requires:[ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD],
         type:"solo", stolen:"no", hints:[5,21,23,24,26,28,29,35,36,41,42], progression_flags:0,
-        location_types:["castles"]
+        location_types:["castles","castles_sutek"]
     },
 
     //magic chests
@@ -858,7 +858,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_SPELLBOOK, SPELL_UNLOCK],
         requires:[ITEM_SPELLBOOK, SPELL_UNLOCK],
         type:"stack", stolen:"yes", hints:[5,21,40,41], progression_flags:0,
-        location_types:["castles"]
+        location_types:["castles","castles_empath"]
     },
 
     //--------- DIALOG
@@ -1037,7 +1037,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [],
         requires:[],
         type:"solo", stolen : "no", hints:[3,36], progression_flags:0,
-        location_types:["caves"]
+        location_types:["caves","caves_cyclops"]
     },
 	{
         location_set:"Pirate Cave",
@@ -1047,7 +1047,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_SHOVEL,ITEM_SPELLBOOK,SPELL_DISPEL_FIELD],
         requires:[ITEM_SPELLBOOK,SPELL_DISPEL_FIELD],
         type:"stack", stolen : "no", hints:[3,17,22,26,29,32,39], progression_flags:0,
-        location_types:["caves"]
+        location_types:["caves","caves_pirate"]
     },
 	{
         location_set:"Pirate Cave",
@@ -1057,7 +1057,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_SHOVEL,ITEM_SPELLBOOK,SPELL_DISPEL_FIELD],
         requires:[ITEM_SPELLBOOK,SPELL_DISPEL_FIELD],
         type:"stack", stolen : "no", hints:[3,17,22,26,29,32,39], progression_flags:0,
-        location_types:["caves"]
+        location_types:["caves","caves_pirate"]
     },
 	{
         location_set:"Pirate Cave",
@@ -1067,7 +1067,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_SHOVEL,ITEM_SPELLBOOK,SPELL_DISPEL_FIELD],
         requires:[ITEM_SPELLBOOK,SPELL_DISPEL_FIELD],
         type:"stack", stolen : "no", hints:[3,17,22,26,29,32,39], progression_flags:0,
-        location_types:["caves"]
+        location_types:["caves","caves_pirate"]
     },
 	{
         location_set:"Pirate Cave",
@@ -1077,7 +1077,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_SHOVEL,ITEM_SPELLBOOK,SPELL_DISPEL_FIELD],
         requires:[ITEM_SPELLBOOK,SPELL_DISPEL_FIELD],
         type:"solo", stolen : "no", hints:[3,17,22,26,29,32,39], progression_flags:0,
-        location_types:["caves"]
+        location_types:["caves","caves_pirate"]
     }, //added an item as it was empty
 	{
         location_set:"Pirate Cave",
@@ -1087,7 +1087,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_SHOVEL,ITEM_SPELLBOOK,SPELL_DISPEL_FIELD], 
         requires:[ITEM_SPELLBOOK,SPELL_DISPEL_FIELD],
         type:"solo", stolen : "no", hints:[3,17,22,26,29,32,39], progression_flags:0,
-        location_types:["caves"]
+        location_types:["caves","caves_pirate"]
     },
 	{
         location_set:"Ant Mound",
@@ -1097,7 +1097,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [],
         requires:[],
         type:"solo", stolen : "no", hints:[3,39], progression_flags:0x01,
-        location_types:["caves"]
+        location_types:["caves","caves_ant"]
     },
 	{
         location_set:"Spider Cave",
@@ -1107,7 +1107,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [],
         requires:[], 
         type:"solo", stolen : "no", hints:[3,37], progression_flags:0,
-        location_types:["caves"]
+        location_types:["caves","caves_spider"]
     },
 	{
         location_set:"Swamp Cave",
@@ -1117,7 +1117,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [],
         requires:[],
         type:"solo", stolen : "no", hints:[3,17,37], progression_flags:0,
-        location_types:["caves"]
+        location_types:["caves","caves_swamp"]
     },
 	{
         location_set:"Swamp Cave",
@@ -1127,7 +1127,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [],
         requires:[],
         type:"solo", stolen : "no", hints:[3,17,39], progression_flags:0,
-        location_types:["caves"]
+        location_types:["caves","caves_swamp"]
     },
 
 	//magic chests
@@ -1139,7 +1139,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_SPELLBOOK,SPELL_UNLOCK],
         requires:[ITEM_SPELLBOOK,SPELL_UNLOCK],
         type:"solo", stolen : "no", hints:[3,22,29,31,37], progression_flags:0,
-        location_types:["caves"]
+        location_types:["caves","caves_sewers"]
     },
 	{
         location_set:"Britain Sewers / Buccaneer's Cave",
@@ -1149,7 +1149,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD],
         requires:[ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD],
         type:"solo", stolen : "no", hints:[3,22,31,32,38,41], progression_flags:0,
-        location_types:["caves"]
+        location_types:["caves","caves_sewers"]
     },
 	{
         location_set:"Britain Sewers / Buccaneer's Cave",
@@ -1159,7 +1159,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD],
         requires:[ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD],
         type:"solo", stolen : "no", hints:[3,22,31,32,38,41], progression_flags:0,
-        location_types:["caves"]
+        location_types:["caves","caves_sewers"]
     },
 	{
         location_set:"Britain Sewers / Buccaneer's Cave",
@@ -1169,7 +1169,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD],
         requires:[ITEM_SPELLBOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD],
         type:"stack", stolen : "no", hints:[3,22,31,32,38,41], progression_flags:0,
-        location_types:["caves"]
+        location_types:["caves","caves_sewers"]
     },
 
     //--------- TOMBS
@@ -1217,7 +1217,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [],
         requires:[],
         type:"solo", stolen : "no", hints:[16,22,30,33,39,42], progression_flags:0,
-        location_types:["dungeons"]
+        location_types:["dungeons","dungeons_hythloth"]
     }, //added an item as it was empty
     {
         location_set:"Hythloth",
@@ -1227,7 +1227,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [],
         requires:[],
         type:"solo", stolen : "no", hints:[30,33,38], progression_flags:0,
-        location_types:["dungeons"]
+        location_types:["dungeons","dungeons_hythloth"]
     },
 	{
         location_set:"Wrong / Covetous",
@@ -1237,7 +1237,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_SPELLBOOK,SPELL_UNLOCK],
         requires:[ITEM_SPELLBOOK,SPELL_UNLOCK],
         type:"solo", stolen : "no", hints:[23,28,30,38], progression_flags:0x01,
-        location_types:["dungeons"]
+        location_types:["dungeons","dungeons_wrong"]
     },
 	{
         location_set:"Shame",
@@ -1247,7 +1247,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_SPELLBOOK,SPELL_UNLOCK],
         requires:[ITEM_SPELLBOOK,SPELL_UNLOCK],
         type:"solo", stolen : "no", hints:[21,29,30,36], progression_flags:0,
-        location_types:["dungeons"]
+        location_types:["dungeons","dungeons_shame"]
     },
     {
         location_set:"Shame",
@@ -1257,7 +1257,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [],
         requires:[],
         type:"solo", stolen : "no", hints:[17,29,30,38], progression_flags:0,
-        location_types:["dungeons"]
+        location_types:["dungeons","dungeons_shame"]
     },
 	{
         location_set:"Deceit",
@@ -1267,7 +1267,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_SPELLBOOK,SPELL_DISPEL_FIELD],
         requires:[ITEM_SPELLBOOK,SPELL_DISPEL_FIELD],
         type:"solo", stolen : "no", hints:[24,29,30,32,39], progression_flags:0,
-        location_types:["dungeons"]
+        location_types:["dungeons","dungeons_deceit"]
     },
     {
         location_set:"Deceit",
@@ -1277,7 +1277,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_SPELLBOOK,SPELL_DISPEL_FIELD],
         requires:[ITEM_SPELLBOOK,SPELL_DISPEL_FIELD],
         type:"solo", stolen : "no", hints:[24,29,30,32,39], progression_flags:0,
-        location_types:["dungeons"]
+        location_types:["dungeons","dungeons_deceit"]
     },
     {
         location_set:"Despise",
@@ -1287,7 +1287,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [],
         requires:[],
         type:"solo", stolen : "no", hints:[30,36], progression_flags:0,
-        location_types:["dungeons"]
+        location_types:["dungeons","dungeons_despise"]
     },
     {
         location_set:"Despise",
@@ -1297,7 +1297,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [],
         requires:[],
         type:"solo", stolen : "no", hints:[29,30,37], progression_flags:0,
-        location_types:["dungeons"]
+        location_types:["dungeons","dungeons_despise"]
     },
 	{
         location_set:"Despise",
@@ -1307,7 +1307,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [],
         requires:[],
         type:"solo", stolen : "no", hints:[17,29,30,32,33,38], progression_flags:0,
-        location_types:["dungeons"]
+        location_types:["dungeons","dungeons_despise"]
     },
     {
         location_set:"Wrong / Covetous",
@@ -1317,7 +1317,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_SPELLBOOK,SPELL_UNLOCK],
         requires:[ITEM_SPELLBOOK,SPELL_UNLOCK],
         type:"solo", stolen : "no", hints:[23,28,30,37], progression_flags:0,
-        location_types:["dungeons"]
+        location_types:["dungeons","dungeons_wrong"]
     },
     {
         location_set:"Destard",
@@ -1327,7 +1327,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [],
         requires:[],
         type:"solo", stolen : "no", hints:[30,33,39], progression_flags:0,
-        location_types:["dungeons"]
+        location_types:["dungeons","dungeons_destard"]
     },
 
 	//magic chests
@@ -1339,7 +1339,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_SPELLBOOK,SPELL_UNLOCK],
         requires:[ITEM_SPELLBOOK,SPELL_UNLOCK],
         type:"stack", stolen : "no", hints:[21,30,33,37], progression_flags:0,
-        location_types:["dungeons"]
+        location_types:["dungeons","dungeons_destard"]
     },
     {
         location_set:"Destard",
@@ -1349,7 +1349,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_SPELLBOOK,SPELL_UNLOCK],
         requires:[ITEM_SPELLBOOK,SPELL_UNLOCK],
         type:"solo", stolen : "no", hints:[21,30,33,37], progression_flags:0,
-        location_types:["dungeons"]
+        location_types:["dungeons","dungeons_destard"]
     },
 
     //--------- SHRINES

@@ -403,7 +403,11 @@ function getSelectedLocationTypesList()
 	var nonSelectedLocationTypes = [];
 
 	if ($('#randomize_locations_joinablepartymembers').is(':checked')){selectedLocationTypes.push("joinablepartymembers");}else{nonSelectedLocationTypes.push("joinablepartymembers");}
-	if ($('#randomize_locations_castles').is(':checked')){selectedLocationTypes.push("castles");}else{nonSelectedLocationTypes.push("castles");}
+	
+	var castleSubLists = getCastleLocationsSublists();
+	selectedLocationTypes = selectedLocationTypes.concat(castleSubLists.selectedLocationTypes);
+	nonSelectedLocationTypes = nonSelectedLocationTypes.concat(castleSubLists.nonSelectedLocationTypes);
+	
 	if ($('#randomize_locations_townsvirtue').is(':checked'))
 	{
 		selectedLocationTypes.push("towns_virtue");
@@ -448,9 +452,17 @@ function getSelectedLocationTypesList()
 	if ($('#randomize_locations_overworld').is(':checked')){selectedLocationTypes.push("overworld");}else{nonSelectedLocationTypes.push("overworld");}
 	if ($('#randomize_locations_dialog').is(':checked')){selectedLocationTypes.push("dialog");}else{nonSelectedLocationTypes.push("dialog");}
 	if ($('#randomize_locations_treasuremap').is(':checked')){selectedLocationTypes.push("treasuremap");}else{nonSelectedLocationTypes.push("treasuremap");}
-	if ($('#randomize_locations_caves').is(':checked')){selectedLocationTypes.push("caves");}else{nonSelectedLocationTypes.push("caves");}
+
+	var caveSubLists = getCaveLocationsSublists();
+	selectedLocationTypes = selectedLocationTypes.concat(caveSubLists.selectedLocationTypes);
+	nonSelectedLocationTypes = nonSelectedLocationTypes.concat(caveSubLists.nonSelectedLocationTypes);
+
 	if ($('#randomize_locations_tombs').is(':checked')){selectedLocationTypes.push("tombs");}else{nonSelectedLocationTypes.push("tombs");}
-	if ($('#randomize_locations_dungeons').is(':checked')){selectedLocationTypes.push("dungeons");}else{nonSelectedLocationTypes.push("dungeons");}
+
+	var dungeonsSubLists = getDungeonLocationsSublists();
+	selectedLocationTypes = selectedLocationTypes.concat(dungeonsSubLists.selectedLocationTypes);
+	nonSelectedLocationTypes = nonSelectedLocationTypes.concat(dungeonsSubLists.nonSelectedLocationTypes);
+
 	if ($('#randomize_locations_shrines').is(':checked')){selectedLocationTypes.push("shrines");}else{nonSelectedLocationTypes.push("shrines");}
 	if ($('#randomize_locations_gargoylecity').is(':checked')){selectedLocationTypes.push("gargoylecity");}else{nonSelectedLocationTypes.push("gargoylecity");}
 	if ($('#randomize_moonorb').is(':checked'))
@@ -471,6 +483,100 @@ function getSelectedLocationTypesList()
 				nonSelectedLocations:nonSelectedLocationTypes,
 			};
 }
+
+function getCastleLocationsSublists()
+{
+	var selectedLocationTypes = [];
+	var nonSelectedLocationTypes = [];
+	if ($('#randomize_locations_castles').is(':checked'))
+	{
+		if ($('#randomize_locations_advanced').is(':checked'))
+		{
+			var locationCount = 0;
+			if($('#randomize_locations_castles_britannia').is(':checked')){	selectedLocationTypes.push("castles_britannia");}else{nonSelectedLocationTypes.push("castles_britannia");}
+			if($('#randomize_locations_castles_empathabbey').is(':checked')){	selectedLocationTypes.push("castles_empath");}else{nonSelectedLocationTypes.push("castles_empath");}
+			if($('#randomize_locations_castles_lycaeum').is(':checked')){	selectedLocationTypes.push("castles_lycaeum");}else{nonSelectedLocationTypes.push("castles_lycaeum");}
+			if($('#randomize_locations_castles_serpentshold').is(':checked')){	selectedLocationTypes.push("castles_shold");}else{nonSelectedLocationTypes.push("castles_shold");}
+			if($('#randomize_locations_castles_stonegate').is(':checked')){	selectedLocationTypes.push("castles_stonegate");}else{nonSelectedLocationTypes.push("castles_stonegate");}
+			if($('#randomize_locations_castles_sutekscastle').is(':checked')){	selectedLocationTypes.push("castles_sutek");}else{nonSelectedLocationTypes.push("castles_sutek");}
+		}
+		else
+		{
+			selectedLocationTypes.push("castles");
+		}
+	}
+	else
+	{
+		nonSelectedLocationTypes.push("castles");
+	}
+	return {
+		selectedLocationTypes:selectedLocationTypes,
+		nonSelectedLocationTypes:nonSelectedLocationTypes,
+	};
+}
+
+function getCaveLocationsSublists()
+{
+	var selectedLocationTypes = [];
+	var nonSelectedLocationTypes = [];
+	if ($('#randomize_locations_caves').is(':checked'))
+	{
+		if ($('#randomize_locations_advanced').is(':checked'))
+		{
+			var locationCount = 0;
+			if($('#randomize_locations_caves_antmound').is(':checked')){	selectedLocationTypes.push("caves_ant");}else{nonSelectedLocationTypes.push("caves_ant");}
+			if($('#randomize_locations_caves_sewers').is(':checked')){	selectedLocationTypes.push("caves_sewers");}else{nonSelectedLocationTypes.push("caves_sewers");}
+			if($('#randomize_locations_caves_cyclopscave').is(':checked')){	selectedLocationTypes.push("caves_cyclops");}else{nonSelectedLocationTypes.push("caves_cyclops");}
+			if($('#randomize_locations_caves_piratecave').is(':checked')){	selectedLocationTypes.push("caves_pirate");}else{nonSelectedLocationTypes.push("caves_pirate");}
+			if($('#randomize_locations_caves_spidercave').is(':checked')){	selectedLocationTypes.push("caves_spider");}else{nonSelectedLocationTypes.push("caves_spider");}
+			if($('#randomize_locations_caves_swampcave').is(':checked')){	selectedLocationTypes.push("caves_swamp");}else{nonSelectedLocationTypes.push("caves_swamp");}
+		}
+		else
+		{
+			selectedLocationTypes.push("caves");
+		}
+	}
+	else
+	{
+		nonSelectedLocationTypes.push("caves");
+	}
+	return {
+		selectedLocationTypes:selectedLocationTypes,
+		nonSelectedLocationTypes:nonSelectedLocationTypes,
+	};
+}
+
+function getDungeonLocationsSublists()
+{
+	var selectedLocationTypes = [];
+	var nonSelectedLocationTypes = [];
+	if ($('#randomize_locations_dungeons').is(':checked'))
+	{
+		if ($('#randomize_locations_advanced').is(':checked'))
+		{
+			var locationCount = 0;
+			if($('#randomize_locations_dungeons_deceit').is(':checked')){	selectedLocationTypes.push("dungeons_deceit");}else{nonSelectedLocationTypes.push("dungeons_deceit");}
+			if($('#randomize_locations_dungeons_despise').is(':checked')){	selectedLocationTypes.push("dungeons_despise");}else{nonSelectedLocationTypes.push("dungeons_despise");}
+			if($('#randomize_locations_dungeons_destard').is(':checked')){	selectedLocationTypes.push("dungeons_destard");}else{nonSelectedLocationTypes.push("dungeons_destard");}
+			if($('#randomize_locations_dungeons_hythloth').is(':checked')){	selectedLocationTypes.push("dungeons_hythloth");}else{nonSelectedLocationTypes.push("dungeons_hythloth");}
+			if($('#randomize_locations_dungeons_shame').is(':checked')){	selectedLocationTypes.push("dungeons_shame");}else{nonSelectedLocationTypes.push("dungeons_shame");}
+			if($('#randomize_locations_dungeons_wrongcovetous').is(':checked')){	selectedLocationTypes.push("dungeons_wrong");}else{nonSelectedLocationTypes.push("dungeons_wrong");}
+		}
+		else
+		{
+			selectedLocationTypes.push("dungeons");
+		}
+	}
+	else
+	{
+		nonSelectedLocationTypes.push("dungeons");
+	}
+	return {
+		selectedLocationTypes:selectedLocationTypes,
+		nonSelectedLocationTypes:nonSelectedLocationTypes,
+	};
+}
+
 
 function buildSelectedLocationsList(selectedLocationTypes)
 {

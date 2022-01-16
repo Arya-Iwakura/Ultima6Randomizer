@@ -1,4 +1,4 @@
-var VERSION_STRING = 'v0.7b';
+var VERSION_STRING = 'v0.7c';
 var BASE_CHECKSUM = 0x9277C9F7;
 
 const SUBSYSTEM_ITEMS = 0;

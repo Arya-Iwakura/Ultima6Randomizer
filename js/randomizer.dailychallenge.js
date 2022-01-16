@@ -190,6 +190,8 @@ function setRandomChallengeSettings(dailySeed)
     var dataObject = {random:random};
     //var day = 0; - TODO: get day of the week to determine weights
 
+    $('#randomize_locations_advanced').prop('checked', false);
+
     getRandomPartyMembersSetting(dataObject);
 
     getRandomMoonOrbShuffleSetting(dataObject);

@@ -221,12 +221,12 @@ function getUpdatedLocationLabelsCounts()
 	$('#label_randomize_locations_townsvirtue #count-townsvirtue-text').text( "(" + numVirtueTownLocations + ")" );
 
 	$('#label_randomize_locations_townsnonvirtue #count-townsnonvirtue-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"towns_nonvirtue") + ")" );
-	$('#label_randomize_locations_castles #count-castles-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"castles") + ")" );
+	getUpdatedCastleLocationCounts();
 	$('#label_randomize_locations_dialog #count-dialog-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"dialog") + ")" );
 	$('#label_randomize_locations_treasuremap #count-treasuremap-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"treasuremap") + ")" );
-	$('#label_randomize_locations_caves #count-caves-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"caves") + ")" );
+	getUpdatedCaveLocationCounts();
 	$('#label_randomize_locations_tombs #count-tombs-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"tombs") + ")" );
-	$('#label_randomize_locations_dungeons #count-dungeons-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"dungeons") + ")" );
+	getUpdatedDungeonLocationCounts();
 	$('#label_randomize_locations_shrines #count-shrines-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"shrines") + ")" );
 	$('#label_randomize_locations_gargoylecity #count-gargoylecity-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"gargoylecity") + ")" );
 	
@@ -243,6 +243,166 @@ function getUpdatedLocationLabelsCounts()
 	$('#label_randomize_locations_joinablepartymembers #count-joinablepartymembers-text').text( "(" + numPartyMembers + ")" );
 	$('#label_randomize_locations_moonorb #count-moonorb-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"playerinventory_slot1") + ")" );
 	$('#label_randomize_locations_spellbook #count-spellbook-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"playerinventory_slot2") + ")" );
+}
+
+function getUpdatedCastleLocationCounts()
+{
+	if ($('#randomize_locations_advanced').is(':checked'))
+	{
+		var locationCount = 0;
+		if($('#randomize_locations_castles_britannia').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"castles_britannia");
+			$('#label_randomize_locations_castles_britannia #count-castles-britannia-text').text( "(" + count + ")" );
+			locationCount += count;
+			//if($('#randomize_locations_castles').is(':checked') == false) { $('#randomize_locations_castles').prop('checked', true); }
+		}
+		if($('#randomize_locations_castles_empathabbey').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"castles_empath");
+			$('#label_randomize_locations_castles_empathabbey #count-castles-empathabbey-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_castles_lycaeum').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"castles_lycaeum");
+			$('#label_randomize_locations_castles_lycaeum #count-castles-lycaeum-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_castles_serpentshold').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"castles_shold");
+			$('#label_randomize_locations_castles_serpentshold #count-castles-serpentshold-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_castles_stonegate').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"castles_stonegate");
+			$('#label_randomize_locations_castles_stonegate #count-castles-stonegate-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_castles_sutekscastle').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"castles_sutek");
+			$('#label_randomize_locations_castles_sutekscastle #count-castles-sutekscastle-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		$('#label_randomize_locations_castles #count-castles-text').text( "(" + locationCount + ")" );
+		if(locationCount == 0)
+		{
+			$('#randomize_locations_castles').prop('checked', false);
+		}
+	}
+	else
+	{
+		$('#label_randomize_locations_castles #count-castles-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"castles") + ")" );
+	}
+}
+
+function getUpdatedCaveLocationCounts()
+{
+	if ($('#randomize_locations_advanced').is(':checked'))
+	{
+		var locationCount = 0;
+		if($('#randomize_locations_caves_antmound').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"caves_ant");
+			$('#label_randomize_locations_caves_antmound #count-caves-antmound-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_caves_sewers').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"caves_sewers");
+			$('#label_randomize_locations_caves_sewers #count-caves-sewers-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_caves_cyclopscave').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"caves_cyclops");
+			$('#label_randomize_locations_caves_cyclopscave #count-caves-cyclopscave-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_caves_piratecave').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"caves_pirate");
+			$('#label_randomize_locations_caves_piratecave #count-caves-piratecave-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_caves_spidercave').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"caves_spider");
+			$('#label_randomize_locations_caves_spidercave #count-caves-spidercave-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_caves_swampcave').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"caves_swamp");
+			$('#label_randomize_locations_caves_swampcave #count-caves-swampcave-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		$('#label_randomize_locations_caves #count-caves-text').text( "(" + locationCount + ")" );
+		if(locationCount == 0)
+		{
+			$('#randomize_locations_caves').prop('checked', false);
+		}
+	}
+	else
+	{
+		$('#label_randomize_locations_caves #count-caves-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"caves") + ")" );
+	}
+}
+
+function getUpdatedDungeonLocationCounts()
+{
+	if ($('#randomize_locations_advanced').is(':checked'))
+	{
+		var locationCount = 0;
+		if($('#randomize_locations_dungeons_deceit').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"dungeons_deceit");
+			$('#label_randomize_locations_dungeons_deceit #count-dungeons-deceit-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_dungeons_despise').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"dungeons_despise");
+			$('#label_randomize_locations_dungeons_despise #count-dungeons-despise-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_dungeons_destard').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"dungeons_destard");
+			$('#label_randomize_locations_dungeons_destard #count-dungeons-destard-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_dungeons_hythloth').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"dungeons_hythloth");
+			$('#label_randomize_locations_dungeons_hythloth #count-dungeons-hythloth-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_dungeons_shame').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"dungeons_shame");
+			$('#label_randomize_locations_dungeons_shame #count-dungeons-shame-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_dungeons_wrongcovetous').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"dungeons_wrong");
+			$('#label_randomize_locations_dungeons_wrongcovetous #count-dungeons-wrongcovetous-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		$('#label_randomize_locations_dungeons #count-dungeons-text').text( "(" + locationCount + ")" );
+		if(locationCount == 0)
+		{
+			$('#randomize_locations_dungeons').prop('checked', false);
+		}
+	}
+	else
+	{
+		$('#label_randomize_locations_dungeons #count-dungeons-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"dungeons") + ")" );
+	}
 }
 
 function setClassToColor(inClass, inColor)
@@ -262,71 +422,69 @@ function setClassDisplayProp(inClass, inProp)
         all[i].style.display = inProp;
     }
 }
+$('#randomize_locations_advanced').click(function(e)
+{
+	checkSubListStatus();
+	updateSelectedLocationsCount();
+	getUpdatedLocationLabelsCounts();
+});
 
-$('#randomize_locations_overworld').click(function(e)
+function checkSubListStatus()
 {
-	updateSelectedLocationsCount();
-});
-$('#randomize_locations_townsvirtue').click(function(e)
-{
-	updateSelectedLocationsCount();
-});
-$('#label_randomize_locations_townsnonvirtue').click(function(e)
-{
-	updateSelectedLocationsCount();
-});
-$('#label_randomize_locations_castles').click(function(e)
-{
-	updateSelectedLocationsCount();
-});
-$('#label_randomize_locations_dialog').click(function(e)
-{
-	updateSelectedLocationsCount();
-});
-$('#label_randomize_locations_treasuremap').click(function(e)
-{
-	updateSelectedLocationsCount();
-});
-$('#label_randomize_locations_caves').click(function(e)
-{
-	updateSelectedLocationsCount();
-});
-$('#label_randomize_locations_tombs').click(function(e)
-{
-	updateSelectedLocationsCount();
-});
-$('#label_randomize_locations_dungeons').click(function(e)
-{
-	updateSelectedLocationsCount();
-});
-$('#label_randomize_locations_shrines').click(function(e)
-{
-	updateSelectedLocationsCount();
-});
-$('#label_randomize_locations_gargoylecity').click(function(e)
-{
-	updateSelectedLocationsCount();
-});
-$('#label_randomize_locations_joinablepartymembers').click(function(e)
-{
-	updateSelectedLocationsCount();
-});
-$('#label_randomize_moonorb').click(function(e)
-{
-	updateSelectedLocationsCount();
-});
-$('#label_randomize_spellbook').click(function(e)
-{
-	updateSelectedLocationsCount();
-});
-$('#label_randomize_unlockanddispel').click(function(e)
-{
-	updateSelectedLocationsCount();
-});
-$('#label_randomize_sherryitem').click(function(e)
-{
-	updateSelectedLocationsCount();
-});
+	if ($('#randomize_locations_advanced').is(':checked'))
+	{
+		$('#castles_sublist').prop('hidden', false);
+		$('#caves_sublist').prop('hidden', false);
+		$('#dungeons_sublist').prop('hidden', false);
+	}
+	else
+	{
+		$('#castles_sublist').prop('hidden', true);
+		$('#caves_sublist').prop('hidden', true);
+		$('#dungeons_sublist').prop('hidden', true);
+	}
+}
+
+$('#randomize_locations_overworld').click(function(e){	updateSelectedLocationsCount();	getUpdatedLocationLabelsCounts();});
+$('#randomize_locations_townsvirtue').click(function(e){	updateSelectedLocationsCount();	getUpdatedLocationLabelsCounts();});
+$('#label_randomize_locations_townsnonvirtue').click(function(e){	updateSelectedLocationsCount();	getUpdatedLocationLabelsCounts();});
+$('#label_randomize_locations_castles').click(function(e){	updateSelectedLocationsCount();	getUpdatedLocationLabelsCounts();});
+$('#label_randomize_locations_dialog').click(function(e){	updateSelectedLocationsCount();	getUpdatedLocationLabelsCounts();});
+$('#label_randomize_locations_treasuremap').click(function(e){	updateSelectedLocationsCount();	getUpdatedLocationLabelsCounts();});
+$('#label_randomize_locations_caves').click(function(e){	updateSelectedLocationsCount();	getUpdatedLocationLabelsCounts();});
+$('#label_randomize_locations_tombs').click(function(e){	updateSelectedLocationsCount();	getUpdatedLocationLabelsCounts();});
+$('#label_randomize_locations_dungeons').click(function(e){	updateSelectedLocationsCount();	getUpdatedLocationLabelsCounts();});
+$('#label_randomize_locations_shrines').click(function(e){	updateSelectedLocationsCount();	getUpdatedLocationLabelsCounts();});
+$('#label_randomize_locations_gargoylecity').click(function(e){	updateSelectedLocationsCount();	getUpdatedLocationLabelsCounts();});
+$('#label_randomize_locations_joinablepartymembers').click(function(e){	updateSelectedLocationsCount();	getUpdatedLocationLabelsCounts();});
+$('#label_randomize_moonorb').click(function(e){	updateSelectedLocationsCount();	getUpdatedLocationLabelsCounts();});
+$('#label_randomize_spellbook').click(function(e){	updateSelectedLocationsCount();	getUpdatedLocationLabelsCounts();});
+$('#label_randomize_unlockanddispel').click(function(e){	updateSelectedLocationsCount();	getUpdatedLocationLabelsCounts();});
+$('#label_randomize_sherryitem').click(function(e){	updateSelectedLocationsCount();	getUpdatedLocationLabelsCounts();});
+
+//castles
+$('#label_randomize_locations_castles_britannia').click(function(e){	updateSelectedLocationsCount();	getUpdatedLocationLabelsCounts();});
+$('#label_randomize_locations_castles_empathabbey').click(function(e){	updateSelectedLocationsCount();	getUpdatedLocationLabelsCounts();});
+$('#label_randomize_locations_castles_lycaeum').click(function(e){	updateSelectedLocationsCount();	getUpdatedLocationLabelsCounts();});
+$('#label_randomize_locations_castles_serpentshold').click(function(e){	updateSelectedLocationsCount();	getUpdatedLocationLabelsCounts();});
+$('#label_randomize_locations_castles_stonegate').click(function(e){	updateSelectedLocationsCount();	getUpdatedLocationLabelsCounts();});
+$('#label_randomize_locations_castles_sutekscastle').click(function(e){	updateSelectedLocationsCount();	getUpdatedLocationLabelsCounts();});
+
+//caves
+$('#label_randomize_locations_caves_antmound').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+$('#label_randomize_locations_caves_sewers').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+$('#label_randomize_locations_caves_cyclopscave').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+$('#label_randomize_locations_caves_piratecave').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+$('#label_randomize_locations_caves_spidercave').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+$('#label_randomize_locations_caves_swampcave').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+
+//dungeons
+$('#label_randomize_locations_dungeons_deceit').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+$('#label_randomize_locations_dungeons_despise').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+$('#label_randomize_locations_dungeons_destard').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+$('#label_randomize_locations_dungeons_hythloth').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+$('#label_randomize_locations_dungeons_shame').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+$('#label_randomize_locations_dungeons_wrongcovetous').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
 
 function updateSelectedLocationsCount()
 {
