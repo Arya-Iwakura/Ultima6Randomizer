@@ -219,7 +219,6 @@ function getUpdatedLocationLabelsCounts()
 
 	var numVirtueTownLocations = getLocationTypeCount(DATA_WORLD_LOCATIONS,"towns_virtue") + 4;
 	$('#label_randomize_locations_townsvirtue #count-townsvirtue-text').text( "(" + numVirtueTownLocations + ")" );
-
 	$('#label_randomize_locations_townsnonvirtue #count-townsnonvirtue-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"towns_nonvirtue") + ")" );
 	getUpdatedCastleLocationCounts();
 	$('#label_randomize_locations_dialog #count-dialog-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"dialog") + ")" );
@@ -229,18 +228,7 @@ function getUpdatedLocationLabelsCounts()
 	getUpdatedDungeonLocationCounts();
 	$('#label_randomize_locations_shrines #count-shrines-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"shrines") + ")" );
 	$('#label_randomize_locations_gargoylecity #count-gargoylecity-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"gargoylecity") + ")" );
-	
-	var numPartyMembers = 0;
-	if ($('#select-starting-party').val() != 1)
-	{
-		numPartyMembers = getLocationTypeCount(DATA_WORLD_LOCATIONS,"joinablepartymembers") - 3;
-	}
-	else
-	{
-		numPartyMembers = getLocationTypeCount(DATA_WORLD_LOCATIONS,"joinablepartymembers");
-	}
-	
-	$('#label_randomize_locations_joinablepartymembers #count-joinablepartymembers-text').text( "(" + numPartyMembers + ")" );
+	getUpdatedJoinableLocationCounts();
 	$('#label_randomize_locations_moonorb #count-moonorb-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"playerinventory_slot1") + ")" );
 	$('#label_randomize_locations_spellbook #count-spellbook-text').text( "(" + getLocationTypeCount(DATA_WORLD_LOCATIONS,"playerinventory_slot2") + ")" );
 }
@@ -405,6 +393,145 @@ function getUpdatedDungeonLocationCounts()
 	}
 }
 
+function getUpdatedJoinableLocationCounts()
+{
+	var locationCount = 0;
+	if ($('#randomize_locations_advanced').is(':checked'))
+	{
+		if($('#randomize_locations_joinable_behlem').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"joinable_behlem");
+			$('#label_randomize_locations_joinable_behlem #count-joinable-behlem-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_joinable_blaine').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"joinable_blaine");
+			$('#label_randomize_locations_joinable_blaine #count-joinable-blaine-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_joinable_dupre').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"joinable_dupre");
+			$('#label_randomize_locations_joinable_dupre #count-joinable-dupre-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_joinable_gorn').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"joinable_gorn");
+			$('#label_randomize_locations_joinable_gorn #count-joinable-gorn-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_joinable_gwenno').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"joinable_gwenno");
+			$('#label_randomize_locations_joinable_gwenno #count-joinable-gwenno-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_joinable_iolo').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"joinable_iolo");
+			$('#label_randomize_locations_joinable_iolo #count-joinable-iolo-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_joinable_jaana').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"joinable_jaana");
+			$('#label_randomize_locations_joinable_jaana #count-joinable-jaana-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_joinable_julia').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"joinable_julia");
+			$('#label_randomize_locations_joinable_julia #count-joinable-julia-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_joinable_katrina').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"joinable_katrina");
+			$('#label_randomize_locations_joinable_katrina #count-joinable-katrina-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_joinable_leodon').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"joinable_leodon");
+			$('#label_randomize_locations_joinable_leodon #count-joinable-leodon-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_joinable_leonna').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"joinable_leonna");
+			$('#label_randomize_locations_joinable_leonna #count-joinable-leonna-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_joinable_seggal').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"joinable_seggal");
+			$('#label_randomize_locations_joinable_seggal #count-joinable-seggal-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_joinable_sentri').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"joinable_sentri");
+			$('#label_randomize_locations_joinable_sentri #count-joinable-sentri-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		if($('#randomize_locations_joinable_shamino').is(':checked'))
+		{
+			var count = getLocationTypeCount(DATA_WORLD_LOCATIONS,"joinable_shamino");
+			$('#label_randomize_locations_joinable_shamino #count-joinable-shamino-text').text( "(" + count + ")" );
+			locationCount += count;
+		}
+		
+		if ($('#select-starting-party').val() != 1)
+		{
+			if( locationCount-3 < 0 )
+			{
+				$('#label_randomize_locations_joinablepartymembers #count-joinablepartymembers-text').text( "(" + "0 to " + locationCount + ")" );
+			}
+			else
+			{
+				var totalPossibleLocations = getLocationTypeCount(DATA_WORLD_LOCATIONS,"joinablepartymembers");
+				if( totalPossibleLocations - locationCount == 0 )
+				{
+					$('#label_randomize_locations_joinablepartymembers #count-joinablepartymembers-text').text( "(" + (locationCount-3) + ")" );
+				}
+				else if( totalPossibleLocations - locationCount < 3 )
+				{
+					$('#label_randomize_locations_joinablepartymembers #count-joinablepartymembers-text').text( "(" + (locationCount-3) + " to " + (totalPossibleLocations-3) + ")" );
+				}
+				else
+				{
+					$('#label_randomize_locations_joinablepartymembers #count-joinablepartymembers-text').text( "(" + (locationCount-3) + " to " + locationCount + ")" );
+				}
+			}
+		}
+		else
+		{
+			$('#label_randomize_locations_joinablepartymembers #count-joinablepartymembers-text').text( "(" + locationCount + ")" );
+		}
+
+		if(locationCount == 0)
+		{
+			$('#randomize_locations_joinablepartymembers').prop('checked', false);
+		}
+	}
+	else
+	{
+		var numPartyMembers = 0;
+		if ($('#select-starting-party').val() != 1)
+		{
+			numPartyMembers = getLocationTypeCount(DATA_WORLD_LOCATIONS,"joinablepartymembers") - 3;
+		}
+		else
+		{
+			numPartyMembers = getLocationTypeCount(DATA_WORLD_LOCATIONS,"joinablepartymembers");
+		}
+		
+		$('#label_randomize_locations_joinablepartymembers #count-joinablepartymembers-text').text( "(" + numPartyMembers + ")" );
+	}
+}
+
 function setClassToColor(inClass, inColor)
 {
     var all = document.getElementsByClassName(inClass);
@@ -436,12 +563,14 @@ function checkSubListStatus()
 		$('#castles_sublist').prop('hidden', false);
 		$('#caves_sublist').prop('hidden', false);
 		$('#dungeons_sublist').prop('hidden', false);
+		$('#joinable_sublist').prop('hidden', false);
 	}
 	else
 	{
 		$('#castles_sublist').prop('hidden', true);
 		$('#caves_sublist').prop('hidden', true);
 		$('#dungeons_sublist').prop('hidden', true);
+		$('#joinable_sublist').prop('hidden', true);
 	}
 }
 
@@ -485,6 +614,22 @@ $('#label_randomize_locations_dungeons_destard').click(function(e){updateSelecte
 $('#label_randomize_locations_dungeons_hythloth').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
 $('#label_randomize_locations_dungeons_shame').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
 $('#label_randomize_locations_dungeons_wrongcovetous').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+
+//joinablepartymembers
+$('#label_randomize_locations_joinable_behlem').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+$('#label_randomize_locations_joinable_blaine').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+$('#label_randomize_locations_joinable_dupre').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+$('#label_randomize_locations_joinable_gorn').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+$('#label_randomize_locations_joinable_gwenno').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+$('#label_randomize_locations_joinable_iolo').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+$('#label_randomize_locations_joinable_jaana').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+$('#label_randomize_locations_joinable_julia').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+$('#label_randomize_locations_joinable_katrina').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+$('#label_randomize_locations_joinable_leodon').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+$('#label_randomize_locations_joinable_leonna').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+$('#label_randomize_locations_joinable_seggal').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+$('#label_randomize_locations_joinable_sentri').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
+$('#label_randomize_locations_joinable_shamino').click(function(e){updateSelectedLocationsCount(); getUpdatedLocationLabelsCounts(); });
 
 function updateSelectedLocationsCount()
 {

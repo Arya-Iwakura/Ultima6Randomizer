@@ -150,7 +150,7 @@ function shuffleSelganorMusic(rom, selectedMusic)
 {
     var lzwData = decompressDataFromLZW(rom, 0x53900);
     lzwData[0x160F] = selectedMusic; //selganor stones song
-    lzwData[0x231E] = selectedMusic; //gweeno stones song
+    lzwData[0x231E] = selectedMusic; //gwenno stones song
 }
 
 function shuffleOverworldMusic(rom, choices)
@@ -198,7 +198,7 @@ function randomizeSelganorMusic(rom, random)
     var selection = random.nextIntRange(1,18);
     var lzwData = decompressDataFromLZW(rom, 0x53900);
     lzwData[0x160F] = selection; //selganor stones song
-    lzwData[0x231E] = selection; //gweeno stones song
+    lzwData[0x231E] = selection; //gwenno stones song
 }
 
 function removeMusic(rom)
@@ -233,7 +233,7 @@ function removeSelganorMusic(rom)
 {
     var lzwData = decompressDataFromLZW(rom, 0x53900);
     lzwData[0x160F] = 0x00; //selganor stones song
-    lzwData[0x231E] = 0x00; //gweeno stones song
+    lzwData[0x231E] = 0x00; //gwenno stones song
 }
 
 function randomizeMoonPhases(rom, random)

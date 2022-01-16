@@ -1467,7 +1467,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_GOLD, ITEM_SPELL, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
 		requires:[], addedRequires:[],
         type:"partyring", stolen:"no", hints:[8,20,44], progression_flags:0,
-        location_types:["joinablepartymembers"]
+        location_types:["joinablepartymembers","joinable_dupre"]
     },
     {
         location_set:"Joinable Party Members",
@@ -1477,7 +1477,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_GOLD, ITEM_SPELL, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
 		requires:[], addedRequires:[],
         type:"partyring", stolen:"no", hints:[4,12,44], progression_flags:0,
-        location_types:["joinablepartymembers"]
+        location_types:["joinablepartymembers","joinable_shamino"]
     },
     {
         location_set:"Joinable Party Members",
@@ -1487,7 +1487,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_GOLD, ITEM_SPELL, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
 		requires:[], addedRequires:[],
         type:"partyring", stolen:"no", hints:[4,44], progression_flags:0,
-        location_types:["joinablepartymembers"]
+        location_types:["joinablepartymembers","joinable_iolo"]
     },
     {
         location_set:"Joinable Party Members",
@@ -1497,7 +1497,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_GOLD, ITEM_SPELL, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
 		requires:[], addedRequires:[],
         type:"partyring", stolen:"no", hints:[10,44], progression_flags:0,
-        location_types:["joinablepartymembers"]
+        location_types:["joinablepartymembers","joinable_jaana"]
     },
     {
         location_set:"Joinable Party Members",
@@ -1507,7 +1507,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_GOLD, ITEM_SPELL, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
 		requires:[], addedRequires:[],
         type:"partyring", stolen:"no", hints:[25,29,44], progression_flags:0,
-        location_types:["joinablepartymembers"]
+        location_types:["joinablepartymembers","joinable_leodon"]
     },
     {
         location_set:"Joinable Party Members",
@@ -1517,7 +1517,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
 		requires:[ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK], addedRequires:[],
         type:"partyring", stolen:"no", hints:[5,15,21,23,24,26,28,29,39,41,42,44], progression_flags:0,
-        location_types:["joinablepartymembers"]
+        location_types:["joinablepartymembers","joinable_gorn"]
     },
     {
         location_set:"Joinable Party Members",
@@ -1527,17 +1527,17 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
 		requires:[], addedRequires:[],
         type:"partyring", stolen:"no", hints:[5,25,29,44], progression_flags:0,
-        location_types:["joinablepartymembers"]
+        location_types:["joinablepartymembers","joinable_seggal"]
     },
     {
         location_set:"Joinable Party Members",
-        location:"Inventory of Gweeno",
-        name: "inventory-gweeno", item_name: ["Ring","Ring"], id: [ITEM_RING_NORMAL],
+        location:"Inventory of Gwenno",
+        name: "inventory-gwenno", item_name: ["Ring","Ring"], id: [ITEM_RING_NORMAL],
         offset: 0x0F967+7, flags: [0x80, 0xC0, 0x01],
         restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
 		requires:[], addedRequires:[],
         type:"partyring", stolen:"no", hints:[11,44], progression_flags:0,
-        location_types:["joinablepartymembers"]
+        location_types:["joinablepartymembers","joinable_gwenno"]
     },
     {
         location_set:"Joinable Party Members",
@@ -1547,7 +1547,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
 		requires:[], addedRequires:[],
         type:"partyring", stolen:"no", hints:[11,44], progression_flags:0,
-        location_types:["joinablepartymembers"]
+        location_types:["joinablepartymembers","joinable_julia"]
     },
     {
         location_set:"Joinable Party Members",
@@ -1557,7 +1557,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
 		requires:[], addedRequires:[],
         type:"partyring", stolen:"no", hints:[9,25,44], progression_flags:0,
-        location_types:["joinablepartymembers"]
+        location_types:["joinablepartymembers","joinable_katrina"]
     },
     {
         location_set:"Joinable Party Members",
@@ -1567,7 +1567,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
 		requires:[], addedRequires:[],
         type:"partyring", stolen:"no", hints:[25,29,44], progression_flags:0,
-        location_types:["joinablepartymembers"]
+        location_types:["joinablepartymembers","joinable_leonna"]
     },
     {
         location_set:"Joinable Party Members",
@@ -1577,7 +1577,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
 		requires:[], addedRequires:[],
         type:"partyring", stolen:"no", hints:[4,44], progression_flags:0,
-        location_types:["joinablepartymembers"]
+        location_types:["joinablepartymembers","joinable_blaine"]
     },
     {
         location_set:"Joinable Party Members",
@@ -1587,7 +1587,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_KEY],
 		requires:[], addedRequires:[],
         type:"partyring", stolen:"no", hints:[5,25,29,44], progression_flags:0,
-        location_types:["joinablepartymembers"]
+        location_types:["joinablepartymembers","joinable_sentri"]
     },
     {
         location_set:"Joinable Party Members",
@@ -1597,7 +1597,7 @@ var DATA_WORLD_LOCATIONS =
         restrictions: [ITEM_GOLD, ITEM_SPELL, ITEM_SPELLBOOK, SPELL_DISPEL_FIELD, SPELL_UNLOCK, ITEM_GARGISH_TEXT, ITEM_KEY],
 		requires:[ITEM_GARGISH_TEXT], addedRequires:[],
         type:"partyring", stolen:"no", hints:[15,33,44], progression_flags:0,
-        location_types:["joinablepartymembers"]
+        location_types:["joinablepartymembers","joinable_behlem"]
     },
 ];
 

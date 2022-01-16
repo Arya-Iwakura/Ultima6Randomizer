@@ -402,8 +402,10 @@ function getSelectedLocationTypesList()
 	var selectedLocationTypes = [];
 	var nonSelectedLocationTypes = [];
 
-	if ($('#randomize_locations_joinablepartymembers').is(':checked')){selectedLocationTypes.push("joinablepartymembers");}else{nonSelectedLocationTypes.push("joinablepartymembers");}
-	
+	var joinableSubLists = getJoinableLocationsSublists();
+	selectedLocationTypes = selectedLocationTypes.concat(joinableSubLists.selectedLocationTypes);
+	nonSelectedLocationTypes = nonSelectedLocationTypes.concat(joinableSubLists.nonSelectedLocationTypes);
+
 	var castleSubLists = getCastleLocationsSublists();
 	selectedLocationTypes = selectedLocationTypes.concat(castleSubLists.selectedLocationTypes);
 	nonSelectedLocationTypes = nonSelectedLocationTypes.concat(castleSubLists.nonSelectedLocationTypes);
@@ -577,6 +579,44 @@ function getDungeonLocationsSublists()
 	};
 }
 
+function getJoinableLocationsSublists()
+{
+	var selectedLocationTypes = [];
+	var nonSelectedLocationTypes = [];
+	if ($('#randomize_locations_joinablepartymembers').is(':checked'))
+	{
+		if ($('#randomize_locations_advanced').is(':checked'))
+		{
+			var locationCount = 0;
+			if($('#randomize_locations_joinable_behlem').is(':checked')){	selectedLocationTypes.push("joinable_behlem");}else{nonSelectedLocationTypes.push("joinable_behlem");}
+			if($('#randomize_locations_joinable_blaine').is(':checked')){	selectedLocationTypes.push("joinable_blaine");}else{nonSelectedLocationTypes.push("joinable_blaine");}
+			if($('#randomize_locations_joinable_dupre').is(':checked')){	selectedLocationTypes.push("joinable_dupre");}else{nonSelectedLocationTypes.push("joinable_dupre");}
+			if($('#randomize_locations_joinable_gorn').is(':checked')){	selectedLocationTypes.push("joinable_gorn");}else{nonSelectedLocationTypes.push("joinable_gorn");}
+			if($('#randomize_locations_joinable_gwenno').is(':checked')){	selectedLocationTypes.push("joinable_gwenno");}else{nonSelectedLocationTypes.push("joinable_gwenno");}
+			if($('#randomize_locations_joinable_iolo').is(':checked')){	selectedLocationTypes.push("joinable_iolo");}else{nonSelectedLocationTypes.push("joinable_iolo");}
+			if($('#randomize_locations_joinable_jaana').is(':checked')){	selectedLocationTypes.push("joinable_jaana");}else{nonSelectedLocationTypes.push("joinable_jaana");}
+			if($('#randomize_locations_joinable_julia').is(':checked')){	selectedLocationTypes.push("joinable_julia");}else{nonSelectedLocationTypes.push("joinable_julia");}
+			if($('#randomize_locations_joinable_katrina').is(':checked')){	selectedLocationTypes.push("joinable_katrina");}else{nonSelectedLocationTypes.push("joinable_katrina");}
+			if($('#randomize_locations_joinable_leodon').is(':checked')){	selectedLocationTypes.push("joinable_leodon");}else{nonSelectedLocationTypes.push("joinable_leodon");}
+			if($('#randomize_locations_joinable_leonna').is(':checked')){	selectedLocationTypes.push("joinable_leonna");}else{nonSelectedLocationTypes.push("joinable_leonna");}
+			if($('#randomize_locations_joinable_seggal').is(':checked')){	selectedLocationTypes.push("joinable_seggal");}else{nonSelectedLocationTypes.push("joinable_seggal");}
+			if($('#randomize_locations_joinable_sentri').is(':checked')){	selectedLocationTypes.push("joinable_sentri");}else{nonSelectedLocationTypes.push("joinable_sentri");}
+			if($('#randomize_locations_joinable_shamino').is(':checked')){	selectedLocationTypes.push("joinable_shamino");}else{nonSelectedLocationTypes.push("joinable_shamino");}
+		}
+		else
+		{
+			selectedLocationTypes.push("joinablepartymembers");
+		}
+	}
+	else
+	{
+		nonSelectedLocationTypes.push("joinablepartymembers");
+	}
+	return {
+		selectedLocationTypes:selectedLocationTypes,
+		nonSelectedLocationTypes:nonSelectedLocationTypes,
+	};
+}
 
 function buildSelectedLocationsList(selectedLocationTypes)
 {
