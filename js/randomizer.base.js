@@ -53,6 +53,7 @@ var DATA_HINT_LOCATIONS =
 	{"offset":0x2053D, "size":43,  "type":"scroll",  "name":"Scroll - Chuckles #2"}, //0x2053D - scroll - Chuckles scroll #2 - 0x2B (43)
 	{"offset":0x203A6, "size":44,  "type":"scroll",  "name":"Sign - Tomb of Kings"}, //0x203A6 - tomb of kings - within this chamber rest the bones of kings - 0x2C (44)
 	{"offset":0x205BE, "size":53,  "type":"scroll",  "name":"Scroll - Chuckles #4"}, //0x205BE - scroll - Chuckles scroll #4 - 0x35 (53)
+	{"offset":0x02,    "size":57,  "type":"dialog",  "name":"Dialog - Senob"},
 	{"offset":0x01,    "size":60,  "type":"dialog",  "name":"Dialog - Smith the Horse"},
 	{"offset":0x20670, "size":69,  "type":"scroll",  "name":"Scroll - Chuckles #6"}, //0x20670 - scroll - Chuckles scroll #6 - 0x45 (69)
 	{"offset":0x2351A, "size":72,  "type":"scroll",  "name":"Grave - Husband Killer"}, //0x2351A - grave - though she outlanded husbands five - 0x48 (72)

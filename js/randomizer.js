@@ -189,6 +189,11 @@ function randomizeROM(buffer, seed)
 		characterSpoilerList = shuffleNPCSchedules(rom, subSystemSeeds[SUBSYSTEM_NPCS]);
 	}
 
+	if ($('#enable_add_potion_shop').is(':checked'))
+	{
+		addPotionShop(rom, subSystemSeeds[SUBSYSTEM_WORLD]);
+	}
+
 	//---------items
 	var requiredProgressionItems = getSelectedProgressionItemsList();
 	var selectedLocationTypes = getSelectedLocationTypesList();
@@ -487,11 +492,6 @@ function randomizeROM(buffer, seed)
 	else if ($('#select-spell-level').val() == 2 )
 	{
 		//randomizeSpellLevelRequirements(rom, random);
-	}
-
-	if ($('#enable_add_potion_shop').is(':checked'))
-	{
-		addPotionShop(rom, subSystemSeeds[SUBSYSTEM_WORLD]);
 	}
 
 	//---------world

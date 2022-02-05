@@ -526,6 +526,12 @@ function addHint(rom, random, inItemName, inHints, inHintLocations)
 						inHintLocations.splice(i, 1);
 						break;
 					}
+					else if(inHintLocations[i].offset == 0x02 && ($('#enable_add_potion_shop').is(':checked')))
+					{
+						addSenobHint(rom, hintText);
+						inHintLocations.splice(i, 1);
+						break;
+					}
 				}
 			}
 		}
@@ -540,7 +546,7 @@ function addSmithHint(rom, hintText)
 	var lzwData = decompressDataFromLZW(rom, 0x62E00);
 	lzwData.set([0x04, 0x43, 0x4C, 0x55, 0x45, 0x00, 0x02], 0x2A4); //set the CLUE selection text
 	
-	//var hintText = "Moonstone of Spirituality is in a place of Spirituality.";
+	//"Moonstone of Spirituality is in a place of Spirituality.";
 	//"I don't know what it means but. I just know its important.";
 	writeTextToAddress(lzwData, 0x2AB, 60, hintText);
 	lzwData.set([0x02], 0x2AB+hintText.length); //add quotation mark after text
@@ -557,4 +563,11 @@ function addSmithHint(rom, hintText)
 	0x4C, 0x44, 0x0C, 0x5F, 0x42, 0x45, 0x5F, 0x53, 0x55, 0x52, 0x45, 0x5F, 0x54, 0x4F, 0x5F, 0x42,
 	0x52, 0x49, 0x4E, 0x47, 0x5F, 0x48, 0x49, 0x53, 0x5F, 0x53, 0x41, 0x4E, 0x44, 0x4C, 0x45, 0x57,
 	0x4F, 0x4F, 0x44, 0x5F, 0x42, 0x4F, 0x58, 0x5F, 0x57, 0x49, 0x54, 0x48, 0x5F, 0x59, 0x4F, 0x55, 0x01, 0x02, 0x5F], 0x12C);
+}
+
+function addSenobHint(rom, hintText)
+{
+	var lzwData = decompressDataFromLZW(rom, 0x50000);
+	writeTextToAddress(lzwData, 0x27C4, 57, hintText);
+	lzwData.set([0x02], 0x27C4+hintText.length); //add quotation mark after text
 }
