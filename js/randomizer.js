@@ -1,4 +1,4 @@
-var VERSION_STRING = 'v0.7c';
+var VERSION_STRING = 'v0.8';
 var BASE_CHECKSUM = 0x9277C9F7;
 
 const SUBSYSTEM_ITEMS = 0;
@@ -18,6 +18,7 @@ const SUBSYSTEM_PLAYER_INVENTORY = 13;
 const SUBSYSTEM_PLAYER_GAMEPLAY = 14;
 const SUBSYSTEM_SOUND = 15;
 const SUBSYSTEM_PARTY = 16;
+const SUBSYSTEM_NPCS = 17;
 
 function randomizeROM(buffer, seed)
 {
@@ -56,6 +57,7 @@ function randomizeROM(buffer, seed)
 	fixSpiders(rom);
 	fixMoonPhaseBug(rom); //fixes base game graphics bug with moon phases
 	fixScheduleBugs(rom);
+	fixDialogBugs(rom);
 	adjustSchedules(rom);
 	setSpeedTextSelectionDefault(rom); //sets the text speed selection default to 0
 	modifySextant(rom);
@@ -175,6 +177,18 @@ function randomizeROM(buffer, seed)
 	var startPositionName = randomizePlayerStart(rom, subSystemSeeds[SUBSYSTEM_PLAYER_GAMEPLAY], partyMembers);
 	var moonOrbSpoilerList = randomizeMoonOrbDestinations(rom, subSystemSeeds[SUBSYSTEM_PLAYER_GAMEPLAY], startPositionName);
 
+	var characterSpoilerList = [];
+	if ($('#select-npc-randomization').val() == 1)
+	{
+		unrestrictNPCShuffleBehaviorChecks(rom);
+		characterSpoilerList = shuffleNPCSchedulesSimilar(rom, subSystemSeeds[SUBSYSTEM_NPCS]);
+	}
+	else if ($('#select-npc-randomization').val() == 2)
+	{
+		unrestrictNPCShuffleBehaviorChecks(rom);
+		characterSpoilerList = shuffleNPCSchedules(rom, subSystemSeeds[SUBSYSTEM_NPCS]);
+	}
+
 	//---------items
 	var requiredProgressionItems = getSelectedProgressionItemsList();
 	var selectedLocationTypes = getSelectedLocationTypesList();
@@ -244,6 +258,11 @@ function randomizeROM(buffer, seed)
 	{
 		randomizeJunkContents(rom, subSystemSeeds[SUBSYSTEM_ITEMS]);
 	}
+	if ($('#select-npc-randomization').val() > 0) //if we randomize NPCs, force one item in the starting castle to be a Powder Keg
+	{
+		forceCastleBritanniaPowderKeg(rom, random);
+	}
+	
 
 	//---------monsters
 	var monsterFlag = false;
@@ -470,6 +489,11 @@ function randomizeROM(buffer, seed)
 		//randomizeSpellLevelRequirements(rom, random);
 	}
 
+	if ($('#enable_add_potion_shop').is(':checked'))
+	{
+		addPotionShop(rom, subSystemSeeds[SUBSYSTEM_WORLD]);
+	}
+
 	//---------world
 	if ($('#randomize_world_map').is(':checked'))
 	{
@@ -549,6 +573,7 @@ function randomizeROM(buffer, seed)
 		// spoilers
 		spoilers: spoilers,
 		moonOrbSpoilers: moonOrbSpoilerList,
+		characterSpoilers: characterSpoilerList,
 		startPositionName: startPositionName,
 		hintsSpoiler: hintsSpoiler,
 		partyMembers: partyMembers,

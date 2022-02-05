@@ -1844,8 +1844,18 @@ function shuffleJunkContents(rom, random)
 {
 	consoleLog("SHUFFLING JUNK ITEMS");
 	shuffleJunkContentsPool(rom, random, [DATA_CASTLE_BRITANNIA_LOCATIONS, DATA_OVERWORLD_LOOT_LOCATIONS, DATA_OVERWORLD_LOOT_LOCATIONS_MAGIC, DATA_UNDERWORLD_LOOT_LOCATIONS, DATA_UNDERWORLD_LOOT_LOCATIONS_MAGIC]);
-	//shuffleJunkContentsPool(rom, random, [DATA_CASTLE_BRITANNIA_LOCATIONS, DATA_OVERWORLD_LOOT_LOCATIONS, DATA_OVERWORLD_LOOT_LOCATIONS_MAGIC]);
-	//shuffleJunkContentsPool(rom, random, [DATA_UNDERWORLD_LOOT_LOCATIONS, DATA_UNDERWORLD_LOOT_LOCATIONS_MAGIC]);
+}
+
+function forceCastleBritanniaPowderKeg(rom, random)
+{
+	var locationsPool = [];
+
+	locationsPool = getJunkShuffleLocationPool(locationsPool, DATA_CASTLE_BRITANNIA_LOCATIONS);	
+	locationsPool.shuffle(random);
+
+	var locationQuantity = rom[locationsPool[0]];
+	rom[locationsPool[0]+1] = ITEM_POWDER_KEG;
+	rom[locationsPool[0]] = assignJunkShuffleItemQuantity(locationQuantity, 0x02);
 }
 
 function getLocationTypeCount(inData, inType)

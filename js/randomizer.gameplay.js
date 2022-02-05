@@ -15,6 +15,12 @@ function fixMoonPhaseBug(rom)
     rom.set([0x1D, 0x1E, 0x1D],0x131EE); //this fixes the the bug where the moon phase graphics are off by one in the base game and thus draw the wrong graphics
 }
 
+function fixDialogBugs(rom)
+{
+    var lzwData = decompressDataFromLZW(rom, 0x53900);
+    lzwData.set([0x5F], 0x3A58); //was 0x00 - fixes Aaron NAME text
+}
+
 function setSpeedTextSelectionDefault(rom)
 {
     rom[0x19C14] = 0x00;
@@ -121,6 +127,7 @@ function shuffleMusic(rom, random)
     var choices = [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10, 0x11, 0x12];
     choices.shuffle(random);
     shuffleOverworldMusic(rom, [choices[0], choices[1], choices[2], choices[3]]); //oveworld themes
+    rom[0x013C] = 0x01; //setting to check if other musics fail (defaults to 01 - set to 00 for no music)
 
     rom[0x19B9C] = choices[0]; //title music
     rom[0x1B25C] = choices[4]; //gem music
@@ -162,6 +169,7 @@ function randomizeMusic(rom, random)
 {
     consoleLog("RANDOMIZE MUSIC");
     randomizeOverworldMusic(rom, random); //oveworld themes
+    rom[0x013C] = 0x01; //setting to check if other musics fail (defaults to 01 - set to 00 for no music)
     rom[0x19B9C] = random.nextIntRange(1,18); //title music
     rom[0x1B25C] = random.nextIntRange(1,18); //gem music
     rom[0x19C3F] = random.nextIntRange(1,18); //intro cutscene
@@ -204,8 +212,10 @@ function randomizeSelganorMusic(rom, random)
 function removeMusic(rom)
 {
     consoleLog("REMOVE MUSIC");
+    rom.set([0xEA,0xEA,0xEA,0xEA,0xEA,0xEA,0x6B], 0x30003); //disable all calls to the music functions
     rom.set([0x00, 0x00, 0x00, 0x00], 0x0145); //oveworld themes
     rom[0x19B9C] = 0x00; //title music
+    //rom[0x19BA5] = 0x00; //title music
     rom[0x1B25C] = 0x00; //gem music
     rom[0x19C3F] = 0x00; //intro cutscene
     rom[0x123A5] = 0x00; //inventory
@@ -1041,7 +1051,7 @@ function addRafts(rom)
 
     //x,y - 7E7BCA, 7E7C1C - jhelom ship
     //add - shrine of valor 82 00, AF 03 - 0x16717 - 9D B8 6D
-    setRaftPosition(rom, 0x16717, 0x82, 0x00, 0xAF, 0x03);
+    setRaftPosition(rom, 0x16717, 0x8B, 0x00, 0xAE, 0x03);
 
     //add - bonn
     //add - skara brae mage

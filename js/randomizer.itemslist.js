@@ -261,7 +261,7 @@ var DATA_WORLD_LOCATIONS =
         name: "overworld-fishingspot-01", item_name: ["Swamp Boots","Swamp Boots"], id: [ITEM_SWAMP_BOOTS],
         offset: 0x12, flags: [0x80, 0xC0, 0x01], 
         restrictions: [ITEM_FISHING_ROD,ITEM_FISH,ITEM_GOLD], requires:[ITEM_FISHING_ROD],
-        type:"solo", stolen : "no", hints:[4,43], progression_flags:0x00,
+        type:"solo", stolen : "no", hints:[4,29,43], progression_flags:0x00,
         location_types:["overworld"]
     },
 
@@ -899,7 +899,7 @@ var DATA_WORLD_LOCATIONS =
         offset: 0x0B, flags: [0xC0, 0xC0, 0x01],
         restrictions: [ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPIDERSILK, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_SLEEPING_POWDER],
 		requires:[],
-        type:"main", stolen:"no", hints:[19,29,30,33,39], progression_flags:0x01,
+        type:"main", stolen:"no", hints:[19,30,33,39], progression_flags:0x01,
         location_types:["dialog"]
     },
 	{   
@@ -1246,7 +1246,7 @@ var DATA_WORLD_LOCATIONS =
         offset: 0x11736, flags: [0x80, 0xC0, 0x01],
         restrictions: [ITEM_SPELLBOOK,SPELL_UNLOCK],
         requires:[ITEM_SPELLBOOK,SPELL_UNLOCK],
-        type:"solo", stolen : "no", hints:[21,29,30,36], progression_flags:0,
+        type:"solo", stolen : "no", hints:[16,21,29,30,36], progression_flags:0,
         location_types:["dungeons","dungeons_shame"]
     },
     {

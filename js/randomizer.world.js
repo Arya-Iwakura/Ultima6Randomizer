@@ -800,6 +800,12 @@ function fillBottomBorder(rom)
     }
 }
 
+function getWorldChunkAtCoords(rom, x, y)
+{
+	var chunkID = (y*256) + (x*2);
+	return { tile:rom[WORLD_OFFSET + chunkID], modifier:rom[WORLD_OFFSET + chunkID+1], address:(WORLD_OFFSET + chunkID) };
+}
+
 function setWorldChunkAtCoords(rom, x, y, inTile, inModifier)
 {
 	var chunkID = (y*256) + (x*2);

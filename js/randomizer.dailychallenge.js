@@ -229,6 +229,7 @@ function setRandomChallengeSettings(dailySeed)
 	$('#randomize_moon_phases').prop('checked', true);
     $('#skip_intro_cinematic').prop('checked', true);
 	
+    getRandomNPCRandomizationSetting(dataObject);
     getRandomPlayerStartSetting(dataObject);
     getRandomMoonOrbDestiantionsSetting(dataObject);
     getRandomOpenAvatarShrineSetting(dataObject);
@@ -516,6 +517,17 @@ function getRandomPlayerStartSetting(dataObject)
 function getRandomMoonOrbDestiantionsSetting(dataObject)
 {
     $('#randomize_moonorb_destinations').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
+}
+
+function getRandomNPCRandomizationSetting(dataObject)
+{
+    var choices = [
+		{choice:0, weight:80},
+		{choice:1, weight:10},
+        {choice:1, weight:10},
+	];
+    var weightedChoice = dataObject.random.fromWeighted(choices);
+    $('#select-npc-randomization').prop('value', weightedChoice.choice);
 }
 
 function getRandomPartyMembersSetting(dataObject)

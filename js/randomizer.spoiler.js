@@ -27,7 +27,7 @@ function downloadSpoilerLog(e)
 		fileName = prefix + '-' + Date.now() + "-spoiler" + ".txt";
 	}
 
-	var outputText = formatSpoilerLog(result.spoilers, result.seed, result.preset, result.moonOrbSpoilers, result.startPositionName, result.hintsSpoiler, result.partyMembers);
+	var outputText = formatSpoilerLog(result.spoilers, result.seed, result.preset, result.moonOrbSpoilers, result.startPositionName, result.hintsSpoiler, result.partyMembers, result.characterSpoilers);
 	saveAs(new Blob([outputText], {type: "otext/plain;charset=utf-8"}), fileName);
 }
 
@@ -67,7 +67,7 @@ function formatOptionPoison()
     return "Default";
 }
 
-function formatSpoilerLog(inSpoilers, inSeed, inPreset, inMoonOrbSpoilers, inStartPositionName, inHintSpoiler, inPartyMembers)
+function formatSpoilerLog(inSpoilers, inSeed, inPreset, inMoonOrbSpoilers, inStartPositionName, inHintSpoiler, inPartyMembers, inCharacterSpoilers)
 {
     var outputText = [];
     var spoilerList = [];
@@ -108,6 +108,13 @@ function formatSpoilerLog(inSpoilers, inSeed, inPreset, inMoonOrbSpoilers, inSta
     outputText += "######### Full Spoiler List" + '\r\n';
     outputText += formatSpoilerLogItemList(spoilerList);
 
+    if(inCharacterSpoilers.length > 0)
+    {
+        outputText += '\r\n';
+        outputText += "######### Full NPC Spoiler List" + '\r\n';
+        outputText += formatSpoilerLogNPCList(inCharacterSpoilers);
+    }
+
     return outputText;
 }
 
@@ -131,6 +138,21 @@ function formatMoonOrbDestinationList(inMoonOrbSpoilers)
     for(var i = 0; i < inMoonOrbSpoilers.length; ++i)
     {
         outputText += inMoonOrbSpoilers[i] + '\r\n';
+    }
+
+    return outputText;
+}
+
+function formatSpoilerLogNPCList(inCharacterSpoilers)
+{
+    var outputText = "";
+    outputText += '\r\n';
+
+    inCharacterSpoilers.sort(spoilerSortCompareCharacterNames);
+    for(var i = 0; i < inCharacterSpoilers.length; ++i)
+    {
+        var spoilerText = inCharacterSpoilers[i].c2.name + " -> " + inCharacterSpoilers[i].c1.name;
+        outputText += spoilerText + '\r\n';
     }
 
     return outputText;
@@ -363,5 +385,12 @@ function spoilerSortCompareLocations(a,b)
 {
     if( a.location.location < b.location.location ){return -1;}
     if( a.location.location > b.location.location ){return 1;}
+    return 0;
+}
+
+function spoilerSortCompareCharacterNames(a,b)
+{
+    if( a.c2.name < b.c2.name ){return -1;}
+    if( a.c2.name > b.c2.name ){return 1;}
     return 0;
 }

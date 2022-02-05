@@ -70,7 +70,8 @@ $('#download-generated-rom').click(function(e)
 {
 	var avatar_sprite = $('#select-avatar-sprite').val();
 	var fire_flag = ($('#avatar-sprite-fire-flag').is(':checked'));
-	if(avatar_sprite != 2 || fire_flag > 0){result.buffer = setCharacterSprite(result.buffer, result.seed, avatar_sprite, fire_flag);}
+	var ghost_flag = ($('#dead-partymember-sprite-flag').is(':checked'));
+	if(avatar_sprite != 2 || fire_flag > 0){result.buffer = setCharacterSprite(result.buffer, result.seed, avatar_sprite, fire_flag, ghost_flag);}
 
 	var poison_flash = $('#poison_flash_options').val();
 	if(poison_flash > 0 ) {result.buffer = setPoisionFlash(result.buffer, poison_flash);}
@@ -706,6 +707,7 @@ function updateAllSelectionTooltips()
 	checkAISpellDifficultyStatus();
 	checkAISpellsStatus();
 	checkAIEquipmentStatus();
+	checkNPCRandomizationStatus();
 	checkStartingPartyStatus();
 	checkStartingInventoryStatus();
 	checkStartingGoldStatus();
@@ -1089,6 +1091,39 @@ function checkJunkItemStatus()
 		$('#junk-item-tooltip-1').prop('hidden', true);
 		$('#junk-item-tooltip-2').prop('hidden', true);
 		$('#junk-item-tooltip-3').prop('hidden', false);
+	}
+}
+
+$('#select-npc-randomization').click(function(e)
+{
+	checkNPCRandomizationStatus();
+});
+
+$('#select-npc-randomization').keyup(function(e)
+{
+	checkNPCRandomizationStatus();
+});
+
+function checkNPCRandomizationStatus()
+{
+	var selection = +$('#select-npc-randomization').val();
+	if (selection == 0)
+	{
+		$('#npc-randomization-tooltip-1').prop('hidden', false);
+		$('#npc-randomization-tooltip-2').prop('hidden', true);
+		$('#npc-randomization-tooltip-3').prop('hidden', true);
+	}
+	else if (selection == 1)
+	{
+		$('#npc-randomization-tooltip-1').prop('hidden', true);
+		$('#npc-randomization-tooltip-2').prop('hidden', false);
+		$('#npc-randomization-tooltip-3').prop('hidden', true);
+	}
+	else if (selection == 2)
+	{
+		$('#npc-randomization-tooltip-1').prop('hidden', true);
+		$('#npc-randomization-tooltip-2').prop('hidden', true);
+		$('#npc-randomization-tooltip-3').prop('hidden', false);
 	}
 }
 

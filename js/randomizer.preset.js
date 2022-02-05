@@ -114,6 +114,7 @@ function preset_overworld_easy() //easy
 	$('#select-ai-equipment').prop('value', 0);
 	$('#add_missing_enemies').prop('checked', true);
 
+	$('#select-npc-randomization').prop('value', 0);
 	$('#randomize_player_start').prop('checked', false);
 	$('#randomize_moonorb_destinations').prop('checked', false);
 	$('#remove_moonorb').prop('checked', false);
@@ -189,6 +190,7 @@ function preset_overworld_normal() //normal
 	$('#select-ai-equipment').prop('value', 1);
 	$('#add_missing_enemies').prop('checked', true);
 
+	$('#select-npc-randomization').prop('value', 0);
 	$('#randomize_player_start').prop('checked', true);
 	$('#randomize_moonorb_destinations').prop('checked', false);
 	$('#remove_moonorb').prop('checked', false);
@@ -265,6 +267,7 @@ function preset_overworld_hard() //hard
 	$('#select-ai-equipment').prop('value', 2);
 	$('#add_missing_enemies').prop('checked', true);
 
+	$('#select-npc-randomization').prop('value', 0);
 	$('#randomize_player_start').prop('checked', true);
 	$('#randomize_moonorb_destinations').prop('checked', true);
 	$('#remove_moonorb').prop('checked', false);
@@ -340,6 +343,7 @@ function preset_all_easy() //easy
 	$('#select-ai-equipment').prop('value', 0);
 	$('#add_missing_enemies').prop('checked', true);
 
+	$('#select-npc-randomization').prop('value', 0);
 	$('#randomize_player_start').prop('checked', false);
 	$('#randomize_moonorb_destinations').prop('checked', false);
 	$('#remove_moonorb').prop('checked', false);
@@ -414,6 +418,7 @@ function preset_all_normal() //normal
 	$('#select-ai-equipment').prop('value', 1);
 	$('#add_missing_enemies').prop('checked', true);
 
+	$('#select-npc-randomization').prop('value', 0);
 	$('#randomize_player_start').prop('checked', true);
 	$('#randomize_moonorb_destinations').prop('checked', false);
 	$('#remove_moonorb').prop('checked', false);
@@ -490,6 +495,7 @@ function preset_all_hard() //hard
 	$('#select-ai-equipment').prop('value', 2);
 	$('#add_missing_enemies').prop('checked', true);
 
+	$('#select-npc-randomization').prop('value', 0);
 	$('#randomize_player_start').prop('checked', true);
 	$('#randomize_moonorb_destinations').prop('checked', true);
 	$('#remove_moonorb').prop('checked', false);
@@ -565,6 +571,7 @@ function preset_underworld_easy() //easy
 	$('#select-ai-equipment').prop('value', 0);
 	$('#add_missing_enemies').prop('checked', true);
 
+	$('#select-npc-randomization').prop('value', 0);
 	$('#randomize_player_start').prop('checked', false);
 	$('#randomize_moonorb_destinations').prop('checked', false);
 	$('#remove_moonorb').prop('checked', false);
@@ -639,6 +646,7 @@ function preset_underworld_normal() //normal
 	$('#select-ai-equipment').prop('value', 1);
 	$('#add_missing_enemies').prop('checked', true);
 
+	$('#select-npc-randomization').prop('value', 0);
 	$('#randomize_player_start').prop('checked', true);
 	$('#randomize_moonorb_destinations').prop('checked', false);
 	$('#remove_moonorb').prop('checked', false);
@@ -715,6 +723,7 @@ function preset_underworld_hard() //hard
 	$('#select-ai-equipment').prop('value', 2);
 	$('#add_missing_enemies').prop('checked', true);
 
+	$('#select-npc-randomization').prop('value', 0);
 	$('#randomize_player_start').prop('checked', true);
 	$('#randomize_moonorb_destinations').prop('checked', true);
 	$('#remove_moonorb').prop('checked', false);

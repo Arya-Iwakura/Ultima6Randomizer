@@ -676,6 +676,21 @@
 					<h3>Character Adjustments</h3>
 					<div class="input-group top-spaced">
 						<div class="input-group-addon">
+							<b>Shuffle NPCs</b>
+						</div>
+						<select class="form-control , presetselect" id="select-npc-randomization">
+							<option value="0" selected="selected">Default</option>
+							<option value="1">Shuffle Similar</option>
+							<option value="2">Shuffle All</option>
+						</select>
+					</div>
+					<div class="input-group-addon">
+						<small><i><span id="npc-randomization-tooltip-1">(Unchanged from base game)</span></small></i>
+						<small><i><span id="npc-randomization-tooltip-2" hidden>(NPCs have their schedules shuffled with similar NPCs)</span></small></i>
+						<small><i><span id="npc-randomization-tooltip-3" hidden>(All NPCs have their schedules shuffled)</span></small></i>
+					</div>
+					<div class="input-group top-spaced">
+						<div class="input-group-addon">
 							<b>Starting Party</b>
 						</div>
 						<select class="form-control , presetselect" id="select-starting-party">
@@ -825,6 +840,12 @@
 					</div>
 					<div class="checkbox">
 						<label>
+							<input type="checkbox" id="enable_add_potion_shop" class="presetoption" checked>
+							Add Potion Shop <i><small>(Adds a potion shop)</small></i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
 							<input type="checkbox" id="expanded_camping" class="presetoption" checked>
 							Enable Expanded Camping <i><small>(Allows camping in town)</small></i>
 						</label>
@@ -962,6 +983,12 @@
 							View Location Tracker
 						</a>
 
+						</br></br>
+						<a class="btn btn-info btn-full-width" id="view-character-tracker" href="./charactertracker.html">
+							<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+							View Character Tracker
+						</a>
+
 						<a class="btn btn-default btn-full-width  top-spaced" id="view-changelog" href="./changelog.html">
 							<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
 							View Changelog
@@ -1073,12 +1100,27 @@
 							<option value="33">Skeleton</option>
 							<option value="34">Troll</option>
 							<option value="35">Troll (Pink)</option>
+							<option value="36">U3 Skeleton</option>
+							<option value="37">Spider</option>
+							<option value="38">Skiff</option>
+							<option value="39">U4 Mariah</option>
+							<option value="40">Chest</option>
+							<option value="41">Z1 Link</option>
+							<option value="42">Z2 Fairy</option>
+							<option value="43">SMW Boo</option>
 						</select>
 
 						<div class="checkbox">
 							<label>
 								<input type="checkbox" id="avatar-sprite-fire-flag">
 								Enable fire variant of sprite <small><i>(Selected character will be made of fire!)</i></small>
+							</label>
+						</div>
+
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" id="dead-partymember-sprite-flag">
+								Change dead party member ghost sprites <small><i>(Dead party members have new ghost sprites!)</i></small>
 							</label>
 						</div>
 
@@ -1194,6 +1236,7 @@
 		<script src="js/randomizer.js"></script>
 		<script src="js/randomizer.itemslist.js"></script>
 		<script src="js/randomizer.base.js"></script>
+		<script src="js/randomizer.character.custom.js"></script>
 		<script src="js/randomizer.character.js"></script>
 		<script src="js/randomizer.item.js"></script>
 		<script src="js/randomizer.enemy.js"></script>
