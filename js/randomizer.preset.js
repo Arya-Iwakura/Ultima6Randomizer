@@ -837,6 +837,11 @@ function preset_random_challenge()
 	randomChallengeInit();
 }
 
+//--------- PATCHED BASE GAME
+function preset_patched_base_game()
+{
+}
+
 //--------- OTHER
 
 $('#preset').change(updatePreset);
@@ -895,6 +900,10 @@ var PRESET_NAMES =
 	11: {
 	"name": "Random Challenge",
 	"function": preset_random_challenge
+	},
+	12: {
+	"name": "Patched Base Game",
+	"function": preset_patched_base_game
 	},
 	13: {
 	"name": "Some Caves",
