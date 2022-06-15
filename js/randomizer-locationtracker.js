@@ -1,285 +1,151 @@
 const TEXT_COLOR_OFF = "rgb(224, 192, 192)";
 const TEXT_COLOR_ON = "rgb(51, 51, 51)";
+const ITEMS_LIST = [
+	"bookboardgames",
+	"bookoz",
+	"brokenlens",
+	"gargishtext",
+	"gargoylelens",
+	"guildbelt",
+	"map",
+	"sherry",
+	"spellbook",
+	"dispelfield",
+	"unlock",
+	"runecompassion",
+	"runehonor",
+	"runehonesty",
+	"runehumility",
+	"runejustice",
+	"runesacrifice",
+	"runespirituality",
+	"runevalor"
+];
+const LOCATIONS_LIST = [
+	"overworld",
+	"virtuetown",
+	"nonvirtuetown",
+	"castles",
+	"dialogrewards",
+	"treasuremap",
+	"caves",
+	"tombs",
+	"dungeons",
+	"shrines",
+	"gargoylecity",
+	"joinablepartymembers"
+];
+const TRACKERS_LIST = [
+	"locationtype",
+	"progressionitem",
+	"check",
+	"hint"
+];
 
-function pageInit()
-{
-    setItemStatusSingle(    ".tracker_item_bookofoz", ".tracker_requiresbook:checkbox", "tracker_requiresbook", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingle(    ".tracker_item_bookofboardgames", ".tracker_requiresboardgames:checkbox", "tracker_requiresboardgames", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingle(    ".tracker_item_sherry", ".tracker_requires_sherry:checkbox", "tracker_requires_sherry", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingle(    ".tracker_item_gargoylelens", ".tracker_requires_gargoylelens:checkbox", "tracker_requires_gargoylelens", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingle(    ".tracker_item_guildbelt", ".tracker_requires_guildbelt:checkbox", "tracker_requires_guildbelt", TEXT_COLOR_ON, TEXT_COLOR_OFF);
+function pageInit() {
+	for (item in ITEMS_LIST) {
+		setItemStatus(ITEMS_LIST[item]);
+		setItemStatusOnClick(ITEMS_LIST[item]);
+	}
 
-    setItemStatusDouble(    ".tracker_item_guildbelt", ".tracker_requires_guildbelt:checkbox", "tracker_requires_guildbelt",
-                            ".tracker_item_map", ".tracker_requires_beltandmap:checkbox", "tracker_requires_beltandmap", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-
-    setItemStatusDouble(    ".tracker_item_map", ".tracker_requires_map:checkbox", "tracker_requires_map",
-                            ".tracker_item_guildbelt", ".tracker_requires_beltandmap:checkbox", "tracker_requires_beltandmap", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-
-    setItemStatusSingle(    ".tracker_item_runecompassion", ".tracker_requires_runecompassion:checkbox", "tracker_requires_runecompassion", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingle(    ".tracker_item_runehonor", ".tracker_requires_runehonesty:checkbox", "tracker_requires_runehonesty", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingle(    ".tracker_item_runehonesty", ".tracker_requires_runehonor:checkbox", "tracker_requires_runehonor", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingle(    ".tracker_item_runehumility", ".tracker_requires_runehumilty:checkbox", "tracker_requires_runehumilty", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingle(    ".tracker_item_runejustice", ".tracker_requires_runejustice:checkbox", "tracker_requires_runejustice", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingle(    ".tracker_item_runesacrifice", ".tracker_requires_runesacrifice:checkbox", "tracker_requires_runesacrifice", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingle(    ".tracker_item_runespirituality", ".tracker_requires_runespirituality:checkbox", "tracker_requires_runespirituality", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingle(    ".tracker_item_runevalor", ".tracker_requires_runevalor:checkbox", "tracker_requires_runevalor", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    
-    setItemStatusTriple(    ".tracker_item_spellbook", ".tracker_null:checkbox", "tracker_null", 
-	                    ".tracker_spell_dispelfield", ".tracker_blockedbyfield:checkbox", "tracker_blockedbyfield",
-                            ".tracker_spell_unlock", ".tracker_requires_unlockandfield:checkbox", "tracker_requires_unlockandfield", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-
-    setItemStatusTriple(    ".tracker_item_spellbook", ".tracker_null:checkbox", "tracker_null", 
-	                    ".tracker_spell_unlock", ".tracker_locked:checkbox", "tracker_locked",
-                            ".tracker_spell_dispelfield", ".tracker_requires_unlockandfield:checkbox", "tracker_requires_unlockandfield", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-
-    setItemStatusTriple(    ".tracker_spell_dispelfield", ".tracker_null:checkbox", "tracker_null",
-                            ".tracker_item_spellbook", ".tracker_blockedbyfield:checkbox", "tracker_blockedbyfield",
-	                    ".tracker_spell_spellbook", ".tracker_requires_unlockandfield:checkbox", "tracker_requires_unlockandfield", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    
-    setItemStatusTriple(    ".tracker_spell_unlock", ".tracker_null:checkbox", "tracker_null",
-                            ".tracker_item_spellbook:checkbox", "tracker_locked", 
-	                    ".tracker_spell_dispelfield", ".tracker_requires_unlockandfield:checkbox", "tracker_requires_unlockandfield", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-
-    setItemStatusDouble(    ".tracker_item_brokenlens", ".tracker_requires_brokenlens:checkbox", "tracker_requires_brokenlens",
-                            ".tracker_item_gargishtext", ".tracker_requires_brokenlensandgargishtext:checkbox", "tracker_requires_brokenlensandgargishtext", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-
-    setItemStatusDouble(    ".tracker_item_gargishtext", ".tracker_requires_gargishtext:checkbox", "tracker_requires_gargishtext",
-                            ".tracker_item_brokenlens", ".tracker_requires_brokenlensandgargishtext:checkbox", "tracker_requires_brokenlensandgargishtext", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-
-    setItemStatusDouble(    ".tracker_item_gargoylelens", ".tracker_requires_brokenlens:checkbox", "tracker_requires_gargoylelens",
-                            ".tracker_item_gargishtext", ".tracker_requires_gargoylelensandgargishtext:checkbox", "tracker_requires_gargoylelensandgargishtext", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-
-    setItemStatusDouble(    ".tracker_item_gargishtext", ".tracker_requires_gargishtext:checkbox", "tracker_requires_gargishtext",
-                            ".tracker_item_gargoylelens", ".tracker_requires_gargoylelensandgargishtext:checkbox", "tracker_requires_gargoylelensandgargishtext", TEXT_COLOR_ON, TEXT_COLOR_OFF);
+	for (loc in LOCATIONS_LIST) {
+		setLocationStatus(LOCATIONS_LIST[loc]);
+		setLocationStatusOnClick(LOCATIONS_LIST[loc]);
+	}
+	
+	for (tracker in TRACKERS_LIST) {
+		toggleTracker(TRACKERS_LIST[tracker]);
+		toggleSetup(TRACKERS_LIST[tracker]);
+	}
 }
 
-$( window ).on( "load", pageInit );
+window.addEventListener('load', pageInit);
 
-$(document).ready(function()
-{
-    toggleClassDisplayPropOnClick(".tracker_locations_overworld", "overworld_item", "location_overworld");
-    toggleClassDisplayPropOnClick(".tracker_locations_virtuetown", "virtuetown_item", "location_virtuetown");
-    toggleClassDisplayPropOnClick(".tracker_locations_nonvirtuetown", "nonvirtuetown_item", "location_nonvirtuetown");
-    toggleClassDisplayPropOnClick(".tracker_locations_castles", "castles_item", "location_castles");
-    toggleClassDisplayPropOnClick(".tracker_locations_dialogrewards", "dialogrewards_item", "location_dialogrewards");
-    toggleClassDisplayPropOnClick(".tracker_locations_treasuremap", "treasuremap_item", "location_treasuremap");
-    toggleClassDisplayPropOnClick(".tracker_locations_caves", "caves_item", "location_caves");
-    toggleClassDisplayPropOnClick(".tracker_locations_tombs", "tombs_item", "location_tombs");
-    toggleClassDisplayPropOnClick(".tracker_locations_dungeons", "dungeons_item", "location_dungeons");
-    toggleClassDisplayPropOnClick(".tracker_locations_shrines", "shrines_item", "location_shrines");
-    toggleClassDisplayPropOnClick(".tracker_locations_gargoylecity", "gargoylecity_item", "location_gargoylecity");
-    toggleClassDisplayPropOnClick(".tracker_locations_joinablepartymembers", "joinablepartymembers_item", "location_joinablepartymembers");
-    
-    setItemStatusSingleOnClick( ".tracker_item_bookofoz", ".tracker_requiresbook:checkbox", "tracker_requiresbook", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingleOnClick( ".tracker_item_bookofboardgames", ".tracker_requiresboardgames:checkbox", "tracker_requiresboardgames", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingleOnClick( ".tracker_item_sherry", ".tracker_requires_sherry:checkbox", "tracker_requires_sherry", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingleOnClick( ".tracker_item_gargoylelens", ".tracker_requires_gargoylelens:checkbox", "tracker_requires_gargoylelens", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusDoubleOnClick( ".tracker_item_guildbelt", ".tracker_requires_guildbelt:checkbox", "tracker_requires_guildbelt",
-                                ".tracker_item_map", ".tracker_requires_beltandmap:checkbox", "tracker_requires_beltandmap", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-
-    setItemStatusDoubleOnClick( ".tracker_item_map", ".tracker_requires_map:checkbox", "tracker_requires_map",
-                                ".tracker_item_guildbelt", ".tracker_requires_beltandmap:checkbox", "tracker_requires_beltandmap", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-
-    setItemStatusSingleOnClick( ".tracker_item_runecompassion", ".tracker_requires_runecompassion:checkbox", "tracker_requires_runecompassion", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingleOnClick( ".tracker_item_runehonesty", ".tracker_requires_runehonesty:checkbox", "tracker_requires_runehonesty", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingleOnClick( ".tracker_item_runehonor", ".tracker_requires_runehonor:checkbox", "tracker_requires_runehonor", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingleOnClick( ".tracker_item_runehumility", ".tracker_requires_runehumilty:checkbox", "tracker_requires_runehumilty", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingleOnClick( ".tracker_item_runejustice", ".tracker_requires_runejustice:checkbox", "tracker_requires_runejustice", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingleOnClick( ".tracker_item_runesacrifice", ".tracker_requires_runesacrifice:checkbox", "tracker_requires_runesacrifice", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingleOnClick( ".tracker_item_runespirituality", ".tracker_requires_runespirituality:checkbox", "tracker_requires_runespirituality", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    setItemStatusSingleOnClick( ".tracker_item_runevalor", ".tracker_requires_runevalor:checkbox", "tracker_requires_runevalor", TEXT_COLOR_ON, TEXT_COLOR_OFF);   
-    
-    setItemStatusTripleOnClick( ".tracker_item_spellbook", ".tracker_null:checkbox", "tracker_null",
-	                        ".tracker_spell_dispelfield", ".tracker_blockedbyfield:checkbox", "tracker_blockedbyfield",
-                                ".tracker_spell_unlock", ".tracker_requires_unlockandfield:checkbox", "tracker_requires_unlockandfield", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-
-    setItemStatusTripleOnClick( ".tracker_item_spellbook", ".tracker_null:checkbox", "tracker_null",
-	                        ".tracker_spell_unlock", ".tracker_locked:checkbox", "tracker_locked",
-                                ".tracker_spell_dispelfield", ".tracker_requires_unlockandfield:checkbox", "tracker_requires_unlockandfield", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-
-    setItemStatusTripleOnClick( ".tracker_spell_dispelfield", ".tracker_null:checkbox", "tracker_null",
-                                ".tracker_item_spellbook", ".tracker_blockedbyfield:checkbox", "tracker_blockedbyfield", 
-	                        ".tracker_spell_unlock", ".tracker_requires_unlockandfield:checkbox", "tracker_requires_unlockandfield",
-TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    
-    setItemStatusTripleOnClick( ".tracker_spell_unlock", ".tracker_null:checkbox", "tracker_null",
-                                ".tracker_item_spellbook", ".tracker_locked:checkbox", "tracker_locked", 
-	                        ".tracker_spell_dispelfield", ".tracker_requires_unlockandfield:checkbox", "tracker_requires_unlockandfield",
-TEXT_COLOR_ON, TEXT_COLOR_OFF);
-
-    setItemStatusDoubleOnClick( ".tracker_item_brokenlens", ".tracker_requires_brokenlens:checkbox", "tracker_requires_brokenlens",
-                                ".tracker_item_gargishtext", ".tracker_requires_brokenlensandgargishtext:checkbox", "tracker_requires_brokenlensandgargishtext", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    
-    setItemStatusDoubleOnClick( ".tracker_item_gargishtext", ".tracker_requires_gargishtext:checkbox", "tracker_requires_gargishtext",
-                                ".tracker_item_brokenlens", ".tracker_requires_brokenlensandgargishtext:checkbox", "tracker_requires_brokenlensandgargishtext", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-
-    setItemStatusDoubleOnClick( ".tracker_item_gargoylelens", ".tracker_requires_brokenlens:checkbox", "tracker_requires_gargoylelens",
-                                ".tracker_item_gargishtext", ".tracker_requires_gargoylelensandgargishtext:checkbox", "tracker_requires_gargoylelensandgargishtext", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-    
-    setItemStatusDoubleOnClick( ".tracker_item_gargishtext", ".tracker_requires_gargishtext:checkbox", "tracker_requires_gargishtext",
-                                ".tracker_item_gargoylelens", ".tracker_requires_gargoylelensandgargishtext:checkbox", "tracker_requires_gargoylelensandgargishtext", TEXT_COLOR_ON, TEXT_COLOR_OFF);
-});
-
-function setItemStatusSingleOnClick(itemName, requireCheckbox, requireLabel, colorOn, colorOff)
-{
-    $(itemName).click(function()
-    {
-        setItemStatusSingle(itemName, requireCheckbox, requireLabel, colorOn, colorOff);
-    });    
+function setItemStatusOnClick(item) {
+	itemId = 'tracker_item_' + item;
+	document.getElementById(itemId).addEventListener('click', setItemStatus.bind(null, item), false);
 }
 
-function setItemStatusSingle(itemName, requireCheckbox, requireLabel, colorOn, colorOff)
-{
-    if($(itemName).is(':checked'))
-    {
-        $(requireCheckbox).prop('disabled', false);
-        setClassToColor(requireLabel, colorOn);
-    }
-    else
-    {
-        $(requireCheckbox).prop('disabled', true);
-        setClassToColor(requireLabel, colorOff);
-    }
+function setItemStatus(item) {
+	itemClass = 'tracker_requires_' + item;
+	itemElements = document.querySelectorAll('label.' + itemClass);
+
+	for (var label = 0; label < itemElements.length; label++) {
+		var requirements= itemElements[label].classList
+		var requirementsMet = 0;
+		for (var requiresItem = 0; requiresItem < requirements.length; requiresItem++) {
+			var requiresId = 'tracker_item_' + requirements[requiresItem].split('_')[2]
+			if (document.getElementById(requiresId).checked == true) {
+				requirementsMet += 1;
+			}
+		}
+		if (requirementsMet == itemElements[label].classList.length) {
+			itemElements[label].style.color = TEXT_COLOR_ON;
+		} else {
+			itemElements[label].style.color = TEXT_COLOR_OFF;
+		}
+	}
 }
 
-function setItemStatusDoubleOnClick(itemName1, requireCheckbox1, requireLabel1, itemName2, requireCheckbox2, requireLabel2, colorOn, colorOff)
-{
-    $(itemName1).click(function()
-    {
-        setItemStatusDouble(itemName1, requireCheckbox1, requireLabel1, itemName2, requireCheckbox2, requireLabel2, colorOn, colorOff);
-    });    
+function setLocationStatusOnClick(loc) {
+	locId = 'tracker_locations_' + loc;
+	document.getElementById(locId).addEventListener('click', setLocationStatus.bind(null, loc), false);
 }
 
-function setItemStatusDouble(itemName1, requireCheckbox1, requireLabel1, itemName2, requireCheckbox2, requireLabel2, colorOn, colorOff)
-{
-    if($(itemName1).is(':checked'))
-    {
-        $(requireCheckbox1).prop('disabled', false);
-        setClassToColor(requireLabel1, colorOn);
+function setLocationStatus(loc) {
+	locationCheckbox = 'tracker_locations_' + loc
+	locationClass = 'location_' + loc;
+	itemClass = loc + '_item';
+	locationElements = document.querySelectorAll('div.' + locationClass);
+	itemElements = document.querySelectorAll('div.' + itemClass);
 
-        if($(itemName2).is(':checked'))
-        {
-            $(requireCheckbox2).prop('disabled', false);
-            setClassToColor(requireLabel2, colorOn);
-        }
-    }
-    else
-    {
-        $(requireCheckbox1).prop('disabled', true);
-        setClassToColor(requireLabel1, colorOff);
+	for (var item = 0; item < itemElements.length; item++) {
+		if (document.getElementById(locationCheckbox).checked == true) {
+			itemElements[item].style.display = "";
+		} else {
+			itemElements[item].style.display = "none";
+		}
+	}
 
-        $(requireCheckbox2).prop('disabled', true);
-        setClassToColor(requireLabel2, colorOff);
-    }
+	for (var div = 0; div < locationElements.length; div++) {
+		var memberships= locationElements[div].classList
+		var membershipsMet = 0;
+		for (var includesLocation = 0; includesLocation < memberships.length; includesLocation++) {
+			var includesId = 'tracker_locations_' + memberships[includesLocation].split('_')[1]
+			if (document.getElementById(includesId).checked == false) {
+				membershipsMet += 1;
+			}
+		}
+		if (membershipsMet == memberships.length) {
+			locationElements[div].style.display = "none";
+		} else {
+			locationElements[div].style.display = "";
+		}
+	}
 }
 
-function setItemStatusTripleOnClick(itemName1, requireCheckbox1, requireLabel1, itemName2, requireCheckbox2, requireLabel2, itemName3, requireCheckbox3, requireLabel3, colorOn, colorOff)
-{
-    $(itemName1).click(function()
-    {
-        setItemStatusTriple(itemName1, requireCheckbox1, requireLabel1, itemName2, requireCheckbox2, requireLabel2, itemName3, requireCheckbox3, requireLabel3, colorOn, colorOff);
-    });    
+function toggleSetup(tracker) {
+	toggleId = tracker + '_tracker_toggle';
+	toggleElement = document.getElementById(toggleId);
+	toggleLabel = document.querySelector('[for=\"' + tracker + '_tracker_toggle\"] small');
+	toggleElement.addEventListener('click', toggleTracker.bind(null, tracker), false);
+	toggleLabel.style.cursor = 'pointer';
 }
 
-function setItemStatusTriple(itemName1, requireCheckbox1, requireLabel1, itemName2, requireCheckbox2, requireLabel2, itemName3, requireCheckbox3, requireLabel3, colorOn, colorOff)
-{
-    if($(itemName1).is(':checked'))
-    {
-        $(requireCheckbox1).prop('disabled', false);
-        setClassToColor(requireLabel1, colorOn);
+function toggleTracker(tracker) {
+	content = document.getElementsByClassName(tracker + '_tracker');
+	showHide = document.getElementById(tracker + '_tracker_toggle');
+	showHideLabel = document.querySelector('[for=\"' + tracker + '_tracker_toggle\"] small');
 
-        if($(itemName2).is(':checked'))
-        {
-            $(requireCheckbox2).prop('disabled', false);
-            setClassToColor(requireLabel2, colorOn);
-
-            if($(itemName3).is(':checked'))
-            {
-                $(requireCheckbox3).prop('disabled', false);
-                setClassToColor(requireLabel3, colorOn);
-            }
-        }
-    }
-    else
-    {
-        $(requireCheckbox1).prop('disabled', true);
-        setClassToColor(requireLabel1, colorOff);
-
-        $(requireCheckbox2).prop('disabled', true);
-        setClassToColor(requireLabel2, colorOff);
-
-        $(requireCheckbox3).prop('disabled', true);
-        setClassToColor(requireLabel3, colorOff);
-    }
-}
-
-function setClassToColor(inClass, inColor)
-{
-    var all = document.getElementsByClassName(inClass);
-    for (var i = 0; i < all.length; i++)
-    {
-        all[i].style.color = inColor;
-    }
-}
-
-function setClassDisplayProp(inClass, inProp)
-{
-    var all = document.getElementsByClassName(inClass);
-    for (var i = 0; i < all.length; i++)
-    {
-        all[i].style.display = inProp;
-    }
-}
-
-function toggleClassDisplayPropOnClick(inClickTarget, inClass, inLocationSet)
-{
-    $(inClickTarget).click(function()
-    {
-        toggleClassDisplayProp(inClass, inLocationSet);
-    });    
-}
-
-function toggleClassDisplayProp(inClass, inLocationSet)
-{
-    var all = document.getElementsByClassName(inClass);
-    for (var i = 0; i < all.length; i++)
-    {
-        if(all[i].style.display == "none")
-        {
-            all[i].style.display = "";
-        }
-        else
-        {
-            all[i].style.display = "none";
-        }
-    }
-    checkHiddenElements(inClass, inLocationSet);
-}
-
-function checkHiddenElements(inItemClass, inLocationSet)
-{
-    var all = document.getElementsByClassName(inLocationSet);
-    for (var i = 0; i < all.length; i++)
-    {
-        var inputElements = all[i].getElementsByTagName('div');
-        var totalInputElements = inputElements.length;
-        var totalHiddenElements = 0;
-        
-        for (var j = 0; j < inputElements.length; j++)
-        {
-            if(inputElements[j].style.display == "none")
-            {
-                totalHiddenElements += 1;
-            }
-        }
-
-        if(totalInputElements == totalHiddenElements)
-        {
-            all[i].style.display = "none";
-        }
-        else
-        {
-            all[i].style.display = "";
-        }
-    }
+	if (showHide.checked == true) {
+		for (var i = 0; i < content.length; i++) {
+			content[i].style.display = '';
+			showHideLabel.innerHTML = '[hide]';
+		}
+	} else {
+		for (var i = 0; i < content.length; i++) {
+			content[i].style.display = 'none';
+			showHideLabel.innerHTML = '[show]';
+		}
+	}
 }

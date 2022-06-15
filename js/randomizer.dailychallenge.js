@@ -39,20 +39,20 @@ function getDailyChallengeSeed()
 
 function updateDailyChallengeSettings(dailySeed)
 {
-    if ($('#preset').val() == PRESET_DAILY_CHALLENGE)
-    {
+//  if ($('#preset').val() == PRESET_DAILY_CHALLENGE)
+//  {
         setRandomChallengeSettings(dailySeed);
         getReadableDateAsString();
-    }
+//  }
 }
 
 function randomChallengeInit()
 {
-    if ($('#preset').val() == PRESET_RANDOM_CHALLENGE)
-    {
+//  if ($('#preset').val() == PRESET_RANDOM_CHALLENGE)
+//  {
         var randomSeed = getSeedForGenerator();
         setRandomChallengeSettings(randomSeed);
-    }
+//  }
 }
 
 function getCurrentDateAsString()
@@ -190,7 +190,7 @@ function setRandomChallengeSettings(dailySeed)
     var dataObject = {random:random};
     //var day = 0; - TODO: get day of the week to determine weights
 
-    $('#randomize_locations_advanced').prop('checked', false);
+    $('#randomize_locations_advanced').prop('checked', false).triggerHandler("click");
 
     getRandomPartyMembersSetting(dataObject);
 
@@ -220,14 +220,14 @@ function setRandomChallengeSettings(dailySeed)
     getRandomAIEquipmentSetting(dataObject);
     getRandomBelievableAISetting(dataObject);
 
-    $('#add_missing_enemies').prop('checked', true);
-	$('#add_missing_ai_spells').prop('checked', true);
-    $('#remove_moonorb').prop('checked', false);
-	$('#expanded_camping').prop('checked', true);
-	$('#enable_fast_button_mapping').prop('checked', true);
-	$('#enable_expanded_armor_items').prop('checked', true);
-	$('#randomize_moon_phases').prop('checked', true);
-    $('#skip_intro_cinematic').prop('checked', true);
+    $('#add_missing_enemies').prop('checked', true).triggerHandler("click");
+	$('#add_missing_ai_spells').prop('checked', true).triggerHandler("click");
+    $('#remove_moonorb').prop('checked', false).triggerHandler("click");
+	$('#expanded_camping').prop('checked', true).triggerHandler("click");
+	$('#enable_fast_button_mapping').prop('checked', true).triggerHandler("click");
+	$('#enable_expanded_armor_items').prop('checked', true).triggerHandler("click");
+	$('#randomize_moon_phases').prop('checked', true).triggerHandler("click");
+    $('#skip_intro_cinematic').prop('checked', true).triggerHandler("click");
 	
     getRandomNPCRandomizationSetting(dataObject);
     getRandomPlayerStartSetting(dataObject);
@@ -243,9 +243,9 @@ function setRandomChallengeSettings(dailySeed)
     getRandomSpiritShrineSetting(dataObject);
     getRandomPlacedRaftsSetting(dataObject);
 
-	$('#display_spoiler_log').prop('checked', true);
-	$('#display_hints').prop('disabled', false);
-	$('#display_hints').prop('checked', true);
+	$('#display_spoiler_log').prop('checked', true).triggerHandler("click");
+	$('#display_hints').prop('disabled', false).triggerHandler("click");
+	$('#display_hints').prop('checked', true).triggerHandler("click");
 }
 
 function getRandomItemShuffleSettings(dataObject)
@@ -296,70 +296,70 @@ function setRandomLocationTypeSelection(selection, value)
     switch(selection)
     {
         case 0:
-            $('#randomize_locations_overworld').prop('checked', value);
+            $('#randomize_locations_overworld').prop('checked', value).triggerHandler("click");
         case 1:
-	        $('#randomize_locations_townsvirtue').prop('checked', value);
+	        $('#randomize_locations_townsvirtue').prop('checked', value).triggerHandler("click");
         case 2:
-	        $('#randomize_locations_townsnonvirtue').prop('checked', value);
+	        $('#randomize_locations_townsnonvirtue').prop('checked', value).triggerHandler("click");
         case 3:
-	        $('#randomize_locations_castles').prop('checked', value);
+	        $('#randomize_locations_castles').prop('checked', value).triggerHandler("click");
         case 4:
-            $('#randomize_locations_dialog').prop('checked', value);
+            $('#randomize_locations_dialog').prop('checked', value).triggerHandler("click");
         case 5:
-	        $('#randomize_locations_treasuremap').prop('checked', value);
+	        $('#randomize_locations_treasuremap').prop('checked', value).triggerHandler("click");
         case 6:
-	        $('#randomize_locations_caves').prop('checked', value);
+	        $('#randomize_locations_caves').prop('checked', value).triggerHandler("click");
         case 7:
-	        $('#randomize_locations_tombs').prop('checked', value);
+	        $('#randomize_locations_tombs').prop('checked', value).triggerHandler("click");
         case 8:
-	        $('#randomize_locations_dungeons').prop('checked', value);
+	        $('#randomize_locations_dungeons').prop('checked', value).triggerHandler("click");
         case 9:
-	        $('#randomize_locations_shrines').prop('checked', value);
+	        $('#randomize_locations_shrines').prop('checked', value).triggerHandler("click");
         case 10:
-	        $('#randomize_locations_gargoylecity').prop('checked', value);
+	        $('#randomize_locations_gargoylecity').prop('checked', value).triggerHandler("click");
         case 11:
-	        $('#randomize_locations_joinablepartymembers').prop('checked', value);
+	        $('#randomize_locations_joinablepartymembers').prop('checked', value).triggerHandler("click");
     }
 }
 
 function getRandomMoonOrbShuffleSetting(dataObject)
 {
-    $('#randomize_moonorb').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
+    $('#randomize_moonorb').prop('checked', getRandomTrueFalse(dataObject.random, 0.5)).triggerHandler("click");
 }
 
 function getRandomSpellbookShuffleSetting(dataObject)
 {
-    $('#randomize_spellbook').prop('checked', getRandomTrueFalse(dataObject.random, 0.75));
+    $('#randomize_spellbook').prop('checked', getRandomTrueFalse(dataObject.random, 0.75)).triggerHandler("click");
 }
 
 function getRandomProgressionSpellsShuffleSetting(dataObject)
 {
-    $('#randomize_unlockanddispel').prop('checked', getRandomTrueFalse(dataObject.random, 0.75));
+    $('#randomize_unlockanddispel').prop('checked', getRandomTrueFalse(dataObject.random, 0.75)).triggerHandler("click");
 }
 
 function getRandomSherryItemSetting(dataObject)
 {
-    $('#add_sherry_item').prop('checked', getRandomTrueFalse(dataObject.random, 0.75));
+    $('#add_sherry_item').prop('checked', getRandomTrueFalse(dataObject.random, 0.75)).triggerHandler("click");
 }
 
 function getRandomEnemyMonstersSetting(dataObject)
 {
-    $('#randomize_enemy_monsters').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
+    $('#randomize_enemy_monsters').prop('checked', getRandomTrueFalse(dataObject.random, 0.5)).triggerHandler("click");
 }
 
 function getRandomEnemyWildSetting(dataObject)
 {
-    $('#randomize_enemy_wild').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
+    $('#randomize_enemy_wild').prop('checked', getRandomTrueFalse(dataObject.random, 0.5)).triggerHandler("click");
 }
 
 function getRandomEnemyAnimalsSetting(dataObject)
 {
-    $('#randomize_enemy_animals').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
+    $('#randomize_enemy_animals').prop('checked', getRandomTrueFalse(dataObject.random, 0.5)).triggerHandler("click");
 }
 
 function getRandomEnemyPeopleSetting(dataObject)
 {
-    $('#randomize_enemy_people').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
+    $('#randomize_enemy_people').prop('checked', getRandomTrueFalse(dataObject.random, 0.5)).triggerHandler("click");
 }
 
 function getRandomEnemyMixSetting(dataObject)
@@ -372,11 +372,11 @@ function getRandomEnemyMixSetting(dataObject)
 
     if(count > 1)
     {
-        $('#randomize_enemy_mix').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
+        $('#randomize_enemy_mix').prop('checked', getRandomTrueFalse(dataObject.random, 0.5)).triggerHandler("click");
     }
     else
     {
-        $('#randomize_enemy_mix').prop('checked', false);
+        $('#randomize_enemy_mix').prop('checked', false).triggerHandler("click");
     }
 }
 
@@ -388,7 +388,7 @@ function getRandomSpawnNumberSetting(dataObject)
 		{choice:2, weight:10},
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
-    $('#select-ai-spawn-numbers').prop('value', weightedChoice.choice);
+    $('#select-ai-spawn-numbers').prop('value', weightedChoice.choice).triggerHandler("click");
 }
 
 function getRandomAggressionSetting(dataObject)
@@ -399,32 +399,32 @@ function getRandomAggressionSetting(dataObject)
 		{choice:2, weight:20},
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
-    $('#select-ai-aggression').prop('value', weightedChoice.choice);
+    $('#select-ai-aggression').prop('value', weightedChoice.choice).triggerHandler("click");
 }
 
 function getEnemyStatShuffleSetting(dataObject)
 {
-    $('#enemy_stats_shuffle').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
+    $('#enemy_stats_shuffle').prop('checked', getRandomTrueFalse(dataObject.random, 0.5)).triggerHandler("click");
 }
 
 function getEnemySpellcastersShuffleSetting(dataObject)
 {
-    $('#enemy_spellcasters_shuffle').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
+    $('#enemy_spellcasters_shuffle').prop('checked', getRandomTrueFalse(dataObject.random, 0.5)).triggerHandler("click");
 }
 
 function getEnemyEquipmentUsersShuffleSetting(dataObject)
 {
-    $('#enemy_equipmentusers_shuffle').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
+    $('#enemy_equipmentusers_shuffle').prop('checked', getRandomTrueFalse(dataObject.random, 0.5)).triggerHandler("click");
 }
 
 function getEnemyDropPossessorsShuffleSetting(dataObject)
 {
-    $('#enemy_droppossessors_shuffle').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
+    $('#enemy_droppossessors_shuffle').prop('checked', getRandomTrueFalse(dataObject.random, 0.5)).triggerHandler("click");
 }
 
 function getRandomEnemyDropsSetting(dataObject)
 {
-    $('#randomize_enemy_drops').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
+    $('#randomize_enemy_drops').prop('checked', getRandomTrueFalse(dataObject.random, 0.5)).triggerHandler("click");
 }
 
 function getRandomAIStatDifficultySetting(dataObject)
@@ -437,7 +437,7 @@ function getRandomAIStatDifficultySetting(dataObject)
         {choice:4, weight:10},
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
-    $('#select-ai-stat-difficulty').prop('value', weightedChoice.choice);
+    $('#select-ai-stat-difficulty').prop('value', weightedChoice.choice).triggerHandler("click");
 }
 
 function getRandomAIHealthDifficultySetting(dataObject)
@@ -450,7 +450,7 @@ function getRandomAIHealthDifficultySetting(dataObject)
         {choice:4, weight:10},
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
-    $('#select-ai-health-difficulty').prop('value', weightedChoice.choice);
+    $('#select-ai-health-difficulty').prop('value', weightedChoice.choice).triggerHandler("click");
 }
 
 function getRandomAIDamageDifficultySetting(dataObject)
@@ -463,7 +463,7 @@ function getRandomAIDamageDifficultySetting(dataObject)
         {choice:4, weight:10},
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
-    $('#select-ai-damage-difficulty').prop('value', weightedChoice.choice);
+    $('#select-ai-damage-difficulty').prop('value', weightedChoice.choice).triggerHandler("click");
 }
 
 function getRandomAISpellDifficultySetting(dataObject)
@@ -474,7 +474,7 @@ function getRandomAISpellDifficultySetting(dataObject)
 		{choice:2, weight:20},
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
-    $('#select-ai-spell-difficulty').prop('value', weightedChoice.choice);
+    $('#select-ai-spell-difficulty').prop('value', weightedChoice.choice).triggerHandler("click");
 }
 
 function getRandomAISpellsSetting(dataObject)
@@ -485,7 +485,7 @@ function getRandomAISpellsSetting(dataObject)
 		{choice:2, weight:10},
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
-    $('#select-ai-spells').prop('value', weightedChoice.choice);
+    $('#select-ai-spells').prop('value', weightedChoice.choice).triggerHandler("click");
 }
 
 function getRandomAIEquipmentSetting(dataObject)
@@ -496,27 +496,27 @@ function getRandomAIEquipmentSetting(dataObject)
 		{choice:2, weight:10},
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
-    $('#select-ai-equipment').prop('value', weightedChoice.choice);
+    $('#select-ai-equipment').prop('value', weightedChoice.choice).triggerHandler("click");
 }
 
 function getRandomBelievableAISetting(dataObject)
 {
-    $('#maintain_believable_ai').prop('value', getRandomTrueFalse(dataObject.random, 0.5));
+    $('#maintain_believable_ai').prop('value', getRandomTrueFalse(dataObject.random, 0.5)).triggerHandler("click");
 }
 
 function getRandomOpenAvatarShrineSetting(dataObject)
 {
-    $('#open_avatar_shrine').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
+    $('#open_avatar_shrine').prop('checked', getRandomTrueFalse(dataObject.random, 0.5)).triggerHandler("click");
 }
 
 function getRandomPlayerStartSetting(dataObject)
 {
-    $('#randomize_player_start').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
+    $('#randomize_player_start').prop('checked', getRandomTrueFalse(dataObject.random, 0.5)).triggerHandler("click");
 }
 
 function getRandomMoonOrbDestiantionsSetting(dataObject)
 {
-    $('#randomize_moonorb_destinations').prop('checked', getRandomTrueFalse(dataObject.random, 0.5));
+    $('#randomize_moonorb_destinations').prop('checked', getRandomTrueFalse(dataObject.random, 0.5)).triggerHandler("click");
 }
 
 function getRandomNPCRandomizationSetting(dataObject)
@@ -527,7 +527,7 @@ function getRandomNPCRandomizationSetting(dataObject)
         {choice:1, weight:10},
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
-    $('#select-npc-randomization').prop('value', weightedChoice.choice);
+    $('#select-npc-randomization').prop('value', weightedChoice.choice).triggerHandler("click");
 }
 
 function getRandomPartyMembersSetting(dataObject)
@@ -538,7 +538,7 @@ function getRandomPartyMembersSetting(dataObject)
 		{choice:3, weight:40},
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
-    $('#select-starting-party').prop('value', weightedChoice.choice);
+    $('#select-starting-party').prop('value', weightedChoice.choice).triggerHandler("click");
 }
 
 function getRandomJunkItemsSetting(dataObject)
@@ -549,7 +549,7 @@ function getRandomJunkItemsSetting(dataObject)
 		{choice:2, weight:20},
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
-    $('#select-junk-items').prop('value', weightedChoice.choice);
+    $('#select-junk-items').prop('value', weightedChoice.choice).triggerHandler("click");
 }
 
 function getRandomStartinInventorySetting(dataObject)
@@ -564,7 +564,7 @@ function getRandomStartinInventorySetting(dataObject)
         {choice:6, weight:10},
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
-    $('#select-starting-inventory').prop('value', weightedChoice.choice);
+    $('#select-starting-inventory').prop('value', weightedChoice.choice).triggerHandler("click");
 }
 
 function getRandomStartingGoldSetting(dataObject)
@@ -577,7 +577,7 @@ function getRandomStartingGoldSetting(dataObject)
         {choice:4, weight:40},
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
-    $('#select-starting-gold').prop('value', weightedChoice.choice);
+    $('#select-starting-gold').prop('value', weightedChoice.choice).triggerHandler("click");
 }
 
 function getRandomDayNightCycleSetting(dataObject)
@@ -589,7 +589,7 @@ function getRandomDayNightCycleSetting(dataObject)
         {choice:3, weight:20},
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
-    $('#select-day-night-cycle').prop('value', weightedChoice.choice);
+    $('#select-day-night-cycle').prop('value', weightedChoice.choice).triggerHandler("click");
 }
 
 function getRandomKarmaDifficultySetting(dataObject)
@@ -600,7 +600,7 @@ function getRandomKarmaDifficultySetting(dataObject)
 		{choice:2, weight:20},
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
-    $('#select-karma-difficulty').prop('value', weightedChoice.choice);
+    $('#select-karma-difficulty').prop('value', weightedChoice.choice).triggerHandler("click");
 }
 
 function getRandomItemDifficultySetting(dataObject)
@@ -611,7 +611,7 @@ function getRandomItemDifficultySetting(dataObject)
 		{choice:2, weight:20},
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
-    $('#select-item-difficulty').prop('value', weightedChoice.choice);
+    $('#select-item-difficulty').prop('value', weightedChoice.choice).triggerHandler("click");
 }
 
 function getRandomSpellLevelSetting(dataObject)
@@ -622,7 +622,7 @@ function getRandomSpellLevelSetting(dataObject)
 		//{choice:2, weight:20},
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
-    $('#select-spell-level').prop('value', weightedChoice.choice);
+    $('#select-spell-level').prop('value', weightedChoice.choice).triggerHandler("click");
 }
 
 function getRandomSpiritShrineSetting(dataObject)
@@ -633,7 +633,7 @@ function getRandomSpiritShrineSetting(dataObject)
 		{choice:3, weight:20},
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
-    $('#select-spiritshrine').prop('value', weightedChoice.choice);
+    $('#select-spiritshrine').prop('value', weightedChoice.choice).triggerHandler("click");
 }
 
 function getRandomPlacedRaftsSetting(dataObject)
@@ -644,5 +644,5 @@ function getRandomPlacedRaftsSetting(dataObject)
 		{choice:2, weight:10},
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
-    $('#select-placedrafts').prop('value', weightedChoice.choice);
+    $('#select-placedrafts').prop('value', weightedChoice.choice).triggerHandler("click");
 }

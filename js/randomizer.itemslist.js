@@ -579,7 +579,7 @@ var DATA_WORLD_LOCATIONS =
         location: "Tavern Mouse Hole Chest",
         name: "rune-valor", item_name: ["Rune of Valor","R. Valor"], id: [ITEM_RUNE_VALOR],
         offset: 0x10F4F, flags: [0xC0, 0xC0, 0x01],
-        restrictions: [ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPELLBOOK, ITEM_SPIDERSILK, ITEM_SLEEPING_POWDER, ITEM_POWDER_KEG, ITEM_ENERGY_WAND, ITEM_SPELL, ITEM_ODD_CHEESE, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_BOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD, ITEM_DRAGON_EGG],
+        restrictions: [ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPELLBOOK, ITEM_SPIDERSILK, ITEM_SLEEPING_POWDER, ITEM_POWDER_KEG, ITEM_ENERGY_WAND, ITEM_SPELL, ITEM_ODD_CHEESE, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_BOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD, ITEM_DRAGON_EGG, ITEM_KEY],
 		requires:[ITEM_ODD_CHEESE],
         type:"main", stolen:"no", hints:[13,20,25], progression_flags:0x01,
         location_types:["towns_oddcheese", "towns_virtue_oddcheese"]
@@ -600,7 +600,7 @@ var DATA_WORLD_LOCATIONS =
         location: "Tavern Mouse Hole Chest",
         name: "rune-valor", item_name: ["Rune of Valor","R. Valor"], id: [ITEM_RUNE_VALOR],
         offset: 0x10F4F, flags: [0xC0, 0xC0, 0x01],
-        restrictions: [ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPELLBOOK, ITEM_SPIDERSILK, ITEM_SLEEPING_POWDER, ITEM_POWDER_KEG, ITEM_ENERGY_WAND, ITEM_SPELL, ITEM_ODD_CHEESE, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_BOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD, ITEM_DRAGON_EGG],
+        restrictions: [ITEM_GOLD, ITEM_GOLD_NUGGET, ITEM_GEMS, ITEM_TORCH, ITEM_SPELLBOOK, ITEM_SPIDERSILK, ITEM_SLEEPING_POWDER, ITEM_POWDER_KEG, ITEM_ENERGY_WAND, ITEM_SPELL, ITEM_ODD_CHEESE, ITEM_OIL, ITEM_ARROW, ITEM_BOLT, ITEM_BOOK, SPELL_UNLOCK, SPELL_DISPEL_FIELD, ITEM_DRAGON_EGG, ITEM_KEY],
 		requires:[],
         type:"main", stolen:"no", hints:[13,20,25], progression_flags:0x01,
         location_types:["towns_no_oddcheese", "towns_virtue_no_oddcheese"]
