@@ -130,7 +130,8 @@ function writeTextToAddress(rom, inAddress, inLength, inText)
 	{
 		for (var i = 0; i < inLength; ++i)
 		{
-			rom[inAddress + i] = TEXT_MAPPING[" "];
+			//rom[inAddress + i] = TEXT_MAPPING[" "];
+			rom[inAddress + i] = 0x00;
 		}
 	}
 
@@ -332,6 +333,22 @@ function fixText(rom, itemsRandomized)
 	writeTextToAddress(rom, 0x0E225, 6, "R.Prot"); //Ring of Protection
 	writeTextToAddress(rom, 0x0E22C, 6, "R.Regn"); //Ring of Regeneration
 	writeTextToAddress(rom, 0x0E233, 6, "R.Invs"); //Ring of Invisibility
+	writeTextToAddress(rom, 0x0D044, 10, "M.Honesty"); //Moonstone of Honesty
+	rom.set([0x44, 0xD0], 0xDF7F); //Set item name pointer for Moonstone of Honesty
+	writeTextToAddress(rom, 0x0D04E, 13, "M.Compassion"); //Moonstone of Compassion
+	rom.set([0x4E, 0xD0], 0xDF81); //Set item name pointer for Moonstone of Compassion
+	writeTextToAddress(rom, 0x0D05B, 8, "M.Valor"); //Moonstone of Valor
+	rom.set([0x5B, 0xD0], 0xDF83); //Set item name pointer for Moonstone of Valor
+	writeTextToAddress(rom, 0x0D063, 10, "M.Justice"); //Moonstone of Justice
+	rom.set([0x63, 0xD0], 0xDF85); //Set item name pointer for Moonstone of Justice
+	writeTextToAddress(rom, 0x0D06D, 12, "M.Sacrifice"); //Moonstone of Sacrifice
+	rom.set([0x6D, 0xD0], 0xDF87); //Set item name pointer for Moonstone of Sacrifice
+	writeTextToAddress(rom, 0x0D079, 8, "M.Honor"); //Moonstone of Honor
+	rom.set([0x79, 0xD0], 0xDF89); //Set item name pointer for Moonstone of Honor
+	writeTextToAddress(rom, 0x0D081, 9, "M.Spirit"); //Moonstone of Spirituality
+	rom.set([0x81, 0xD0], 0xDF8B); //Set item name pointer for Moonstone of Spirituality
+	writeTextToAddress(rom, 0x0D08A, 11, "M.Humility"); //Moonstone of Humility
+	rom.set([0x8A, 0xD0], 0xDF8D); //Set item name pointer for Moonstone of Humility
 
 	if(itemsRandomized == true)
 	{

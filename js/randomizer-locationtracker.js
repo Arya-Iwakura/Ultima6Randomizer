@@ -1,5 +1,6 @@
 const TEXT_COLOR_OFF = "rgb(224, 192, 192)";
 const TEXT_COLOR_ON = "rgb(51, 51, 51)";
+const KEY_PREFIX = "locationtracker_"
 const ITEMS_LIST = [
 	"bookboardgames",
 	"bookoz",
@@ -42,7 +43,20 @@ const TRACKERS_LIST = [
 	"hint"
 ];
 
+const SPOTS_LIST = document.getElementsByClassName("spots");
+
+const CHECKBOX_LIST = document.querySelectorAll('input[type=checkbox]');
+
 function pageInit() {
+	for (var i = 0; i < CHECKBOX_LIST.length; i++) {
+		CHECKBOX_LIST[i].addEventListener('click', saveValueCheckbox, false);
+		if (typeof getValueCheckbox(CHECKBOX_LIST[i].id) != 'undefined') {
+			CHECKBOX_LIST[i].checked = getValueCheckbox(CHECKBOX_LIST[i].id);
+		} else {
+			CHECKBOX_LIST[i].checked = CHECKBOX_LIST[i].defaultChecked;
+		}
+	}
+
 	for (item in ITEMS_LIST) {
 		setItemStatus(ITEMS_LIST[item]);
 		setItemStatusOnClick(ITEMS_LIST[item]);
@@ -52,14 +66,61 @@ function pageInit() {
 		setLocationStatus(LOCATIONS_LIST[loc]);
 		setLocationStatusOnClick(LOCATIONS_LIST[loc]);
 	}
-	
+
 	for (tracker in TRACKERS_LIST) {
 		toggleTracker(TRACKERS_LIST[tracker]);
 		toggleSetup(TRACKERS_LIST[tracker]);
 	}
+
+	for (var i = 0; i < SPOTS_LIST.length; i++) {
+		SPOTS_LIST[i].addEventListener('click', setCoordinates, false);
+		SPOTS_LIST[i].addEventListener('contextmenu', undoCoordinates, false);
+		if (getValue(SPOTS_LIST[i].id)) {
+			SPOTS_LIST[i].textContent = getValue(SPOTS_LIST[i].id);
+		} else {
+			SPOTS_LIST[i].textContent = '     Click to enter coordinates';
+		}
+	}
+
+	document.getElementById('reset').addEventListener('click', resetTracker, false);
+	document.getElementById('save').addEventListener('click', saveToLocalStorage, false);
+	document.getElementById('restore').addEventListener('click', restoreFromLocalStorage, false);
+	document.getElementById('clear').addEventListener('click', clearLocalStorage, false);
+	document.getElementById('toggle_local_storage').addEventListener('click', toggleStorageOptions, false);
 }
 
 window.addEventListener('load', pageInit);
+
+function setValueCheckbox(key, value) {
+	var setKey = KEY_PREFIX + key;
+	sessionStorage.setItem(setKey, value);
+}
+
+function getValueCheckbox(key, value) {
+	var getKey = KEY_PREFIX + key;
+	newValue = sessionStorage.getItem(getKey);
+	if (newValue == 'true') {
+		return true;
+	} else if (newValue == 'false') {
+		return false;
+	}
+}
+
+function saveValueCheckbox(e) {
+	var checkboxId = e.target.id;
+	var checkboxValue = e.target.checked;
+	setValueCheckbox(checkboxId, checkboxValue);
+}
+
+function setValue(key, value) {
+	var setKey = KEY_PREFIX + key;
+	sessionStorage.setItem(setKey, value);
+}
+
+function getValue(key, value) {
+	var getKey = KEY_PREFIX + key;
+	return sessionStorage.getItem(getKey);
+}
 
 function setItemStatusOnClick(item) {
 	itemId = 'tracker_item_' + item;
@@ -147,5 +208,59 @@ function toggleTracker(tracker) {
 			content[i].style.display = 'none';
 			showHideLabel.innerHTML = '[show]';
 		}
+	}
+}
+
+function resetTracker() {
+	if (confirm('Are you sure you want to reset the tracker?') == true) {
+		for (var i = 0; i < CHECKBOX_LIST.length; i++) {
+			sessionStorage.removeItem(KEY_PREFIX + CHECKBOX_LIST[i].id);
+		}
+		for (var i = 0; i < SPOTS_LIST.length; i++) {
+			sessionStorage.removeItem(KEY_PREFIX + SPOTS_LIST[i].id);
+		}
+		pageInit();
+	}
+}
+
+function setCoordinates(e) {
+	if (e.target.textContent != '     Click to enter coordinates') {
+		if (confirm('You have already entered coordinates. Are you sure you want to change them?') == true) {
+			setValueCheckbox(e.target.id + '_old', e.target.textContent);
+			var newCoordinates = '     ' + prompt('Enter coordinates: ');
+			const re = /\s+$/;
+			if (re.test(newCoordinates) == true) {
+				newCoordinates = '     Click to enter coordinates';
+				e.target.textContent = newCoordinates;
+				setValueCheckbox(e.target.id, e.target.textContent);
+			} else {
+				e.target.textContent = newCoordinates;
+				setValueCheckbox(e.target.id, e.target.textContent);
+			}
+		}
+	} else {
+		var newCoordinates = '     ' + prompt('Enter coordinates: ');
+		const re = /\s+$/;
+		if (re.test(newCoordinates) == true) {
+			newCoordinates = '     Click to enter coordinates';
+			e.target.textContent = newCoordinates;
+			setValueCheckbox(e.target.id, e.target.textContent);
+		} else {
+			e.target.textContent = newCoordinates;
+			setValueCheckbox(e.target.id, e.target.textContent);
+		}
+	}
+}
+
+function undoCoordinates(e) {
+	if (e.target.textContent != 'Click to enter coordinates' &&
+		getValueCheckbox(e.target.id + '_old')) {
+		var temp = e.target.textContent;
+		e.target.textContent = getValueCheckbox(e.target.id + '_old');
+		setValueCheckbox(e.target.id + '_old', temp);
+		setValueCheckbox(e.target.id, e.target.textContent);
+		e.preventDefault();
+	} else {
+		e.preventDefault();
 	}
 }
