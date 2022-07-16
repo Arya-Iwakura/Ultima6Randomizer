@@ -754,7 +754,7 @@ function preset_some_caves() //some caves
   	$('#randomize_locations_joinable_jaana').prop('checked', true).triggerHandler("click");
   	$('#randomize_locations_joinable_julia').prop('checked', true).triggerHandler("click");
   	$('#randomize_locations_joinable_katrina').prop('checked', true).triggerHandler("click");
-  	$('#randomize_locations_joinable_leoden').prop('checked', true).triggerHandler("click");
+  	$('#randomize_locations_joinable_leodon').prop('checked', true).triggerHandler("click");
   	$('#randomize_locations_joinable_leonna').prop('checked', true).triggerHandler("click");
   	$('#randomize_locations_joinable_seggal').prop('checked', true).triggerHandler("click");
   	$('#randomize_locations_joinable_sentri').prop('checked', true).triggerHandler("click");
