@@ -44,6 +44,8 @@ var DATA_PLAYER_CHARACTERS =
     {"characterID":0x0F, "spriteID":0xC5, "paletteID":0x00, "sleepingID":0x07, "id":41, "name":"Z1 Link", "tags":["wild", "custom"]},
     {"characterID":0x0F, "spriteID":0xC6, "paletteID":0x00, "sleepingID":0x07, "id":42, "name":"Z2 Fairy", "tags":["wild", "custom"]},
     {"characterID":0x0F, "spriteID":0xC7, "paletteID":0x00, "sleepingID":0x07, "id":43, "name":"SMW Boo", "tags":["wild", "custom"]},
+    {"characterID":0x0F, "spriteID":0xC8, "paletteID":0x00, "sleepingID":0x07, "id":44, "name":"U6 Ghost", "tags":["wild", "custom"]},
+    {"characterID":0x0F, "spriteID":0xC9, "paletteID":0x00, "sleepingID":0x07, "id":45, "name":"U6 Rabbit", "tags":["wild", "custom"]},
 ];
 
 function getCharacterNameByOptionID(inID)
