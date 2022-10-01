@@ -1,0 +1,24 @@
+body
+{
+	padding-top: 50px;
+	padding-bottom: 20px;
+}
+
+.orb_grid td 
+{
+	height: 75px;
+	text-align: center;
+	vertical-align: middle !important;
+	padding: 0 !important;
+}
+
+.orb_grid .col-xs-2
+{
+	padding: 0 !important;
+}
+
+.outer_spot,
+.spot
+{
+	vertical-align: bottom !important;
+}
