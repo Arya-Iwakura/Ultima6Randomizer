@@ -226,39 +226,32 @@ function resetTracker() {
 function setCoordinates(e) {
 	if (e.target.textContent != '     Click to enter coordinates') {
 		if (confirm('You have already entered coordinates. Are you sure you want to change them?') == true) {
-			setValueCheckbox(e.target.id + '_old', e.target.textContent);
-			var newCoordinates = '     ' + prompt('Enter coordinates: ');
-			const re = /\s+$/;
-			if (re.test(newCoordinates) == true) {
-				newCoordinates = '     Click to enter coordinates';
-				e.target.textContent = newCoordinates;
-				setValueCheckbox(e.target.id, e.target.textContent);
-			} else {
-				e.target.textContent = newCoordinates;
-				setValueCheckbox(e.target.id, e.target.textContent);
+			var newCoordinates = prompt('Enter coordinates: ');
+			const re = /^\s+$/;
+			if (re.test(newCoordinates) == false && newCoordinates != null && newCoordinates.length > 0) {
+				setValue(e.target.id + '_old', e.target.textContent);
+				e.target.textContent = '     ' + newCoordinates;
+				setValue(e.target.id, e.target.textContent);
 			}
 		}
 	} else {
-		var newCoordinates = '     ' + prompt('Enter coordinates: ');
-		const re = /\s+$/;
-		if (re.test(newCoordinates) == true) {
-			newCoordinates = '     Click to enter coordinates';
-			e.target.textContent = newCoordinates;
-			setValueCheckbox(e.target.id, e.target.textContent);
-		} else {
-			e.target.textContent = newCoordinates;
-			setValueCheckbox(e.target.id, e.target.textContent);
+		var newCoordinates = prompt('Enter coordinates: ');
+		const re = /^\s+$/;
+		if (re.test(newCoordinates) == false && newCoordinates != null && newCoordinates.length > 0) {
+			setValue(e.target.id + '_old', e.target.textContent);
+			e.target.textContent = '     ' + newCoordinates;
+			setValue(e.target.id, e.target.textContent);
 		}
 	}
 }
 
 function undoCoordinates(e) {
 	if (e.target.textContent != 'Click to enter coordinates' &&
-		getValueCheckbox(e.target.id + '_old')) {
+		getValue(e.target.id + '_old')) {
 		var temp = e.target.textContent;
-		e.target.textContent = getValueCheckbox(e.target.id + '_old');
-		setValueCheckbox(e.target.id + '_old', temp);
-		setValueCheckbox(e.target.id, e.target.textContent);
+		e.target.textContent = getValue(e.target.id + '_old');
+		setValue(e.target.id + '_old', temp);
+		setValue(e.target.id, e.target.textContent);
 		e.preventDefault();
 	} else {
 		e.preventDefault();
