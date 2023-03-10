@@ -46,6 +46,7 @@ var DATA_PLAYER_CHARACTERS =
     {"characterID":0x0F, "spriteID":0xC7, "paletteID":0x00, "sleepingID":0x07, "id":43, "name":"SMW Boo", "tags":["wild", "custom"]},
     {"characterID":0x0F, "spriteID":0xC8, "paletteID":0x00, "sleepingID":0x07, "id":44, "name":"U6 Ghost", "tags":["wild", "custom"]},
     {"characterID":0x0F, "spriteID":0xC9, "paletteID":0x00, "sleepingID":0x07, "id":45, "name":"U6 Rabbit", "tags":["wild", "custom"]},
+	{"characterID":0x0F, "spriteID":0xCA, "paletteID":0x05, "sleepingID":0x07, "id":46, "name":"FF3 Devout", "tags":["wild","custom"]},
 ];
 
 function getCharacterNameByOptionID(inID)
@@ -152,7 +153,16 @@ function setCharacterSprite(buffer, seed, character_sprite, fire_flag, ghost_fla
         {
             selectedPaletteHex = customSprite.paletteNumber;
         }
-    }
+    } 
+	else 
+	{
+		// write default data back in case a custom sprite has altered it
+		console.log("WRITING DEFAULT SPRITE DATA BACK");
+        rom.set(DATA_DEFAULT_CHARACTER.spriteData, 0x7C800);
+		rom.set(DATA_DEFAULT_CHARACTER.sleepingData1, 0xEE5C0);
+		rom.set(DATA_DEFAULT_CHARACTER.sleepingData2, 0xEE7C0);
+        rom.set(DATA_DEFAULT_CHARACTER.invisData, 0xFE000);
+	}
 
     rom[spriteAddress] = selectedSpriteHex;
     rom[sleepingSpriteAddress] = selectedSleepingHex;
@@ -198,7 +208,16 @@ function setCustomSprite(rom, inSpriteID)
     {
         rom.set(customSprite.sleepingData1, 0xEE5C0);
         rom.set(customSprite.sleepingData2, 0xEE7C0);
-    }
+    } else {
+		rom.set(DATA_DEFAULT_CHARACTER.sleepingData1, 0xEE5C0);
+		rom.set(DATA_DEFAULT_CHARACTER.sleepingData2, 0xEE7C0);
+	}
+    if(customSprite.invisData.length > 1)
+    {
+        rom.set(customSprite.invisData, 0xFE000);
+    } else {
+        rom.set(DATA_DEFAULT_CHARACTER.invisData, 0xFE000);
+	}
     return customSprite;
 }
 
