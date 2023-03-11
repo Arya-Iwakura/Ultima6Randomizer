@@ -493,6 +493,150 @@ function countTotalPartyMembers(inList)
     return count;
 }
 
+function setPlayerClass(rom, random, selected_player_class)
+{
+    //base stats in U6 PC pre-class selection is is 0xF 0xF 0xF (15 15 15)
+    //PC selection results in 2 virtues taken once, 1 taken twice, 1 take three times, with the other 4 unaffected
+    //  PC choices - honesty(int+3) compassion(dex+3) valor(str+3)
+    //  PC choices - justice(int+1 dex+1) sacrifice(dex+1 str+1) honor (int+1 str+1)
+    //  PC choices - spirituality(int+1 str+1 dex+1) humility(0)
+    //SNES default stats 0x14 0x12 0x15 - 20 18 21
+    consoleLog("RANDOMIZING PLAYER CLASS");
+    if(selected_player_class == 1) //random
+    {
+        //chose random virtue 7 times(no virtue can be chosen more than 3 times)
+        //  create virtue array with each virtue represented 3 times
+        //  shuffle virtue array
+        //  pop off the first 7 elements and increase the stats depending on the virtue chosen
+        var class_virtues = ["compassion", "honesty", "honor", "humility", "justice", "sacrifice", "spirituality", "valor"];
+        class_virtues.shuffle(random);
+        setPlayerClassRandomStats(rom, class_virtues);
+    }
+    else if(selected_player_class == 2) //base stats only
+    {
+        setPlayerStats(rom, 15, 15, 15); //base stats only with no added virtue stat values
+    }
+    else if(selected_player_class == 3) //bard - compassion
+    {
+        var class_virtues = ["justice", "sacrifice", "spirituality"] //set virtues for this class
+        class_virtues.shuffle(random); //randomize class virtues
+        class_virtues.unshift("compassion"); //add core virtue first so that it is chosen 3 times
+        setPlayerClassRandomStats(rom, class_virtues);
+    }
+    else if(selected_player_class == 4) //druid - justice
+    {
+        var class_virtues = ["compassion", "honesty", "honor", "sacrifice", "spirituality"] //set virtues for this class
+        class_virtues.shuffle(random); //randomize class virtues
+        class_virtues = class_virtues.slice(0,3);
+        class_virtues.unshift("justice"); //add core virtue first so that it is chosen 3 times
+        setPlayerClassRandomStats(rom, class_virtues);
+    }
+    else if(selected_player_class == 5) //fighter - valor
+    {
+        var class_virtues = ["honor", "sacrifice", "spirituality"] //set virtues for this class
+        class_virtues.shuffle(random); //randomize class virtues
+        class_virtues.unshift("valor"); //add core virtue first so that it is chosen 3 times
+        setPlayerClassRandomStats(rom, class_virtues);
+    }
+    else if(selected_player_class == 6) //mage - honesty
+    {
+        var class_virtues = ["honor", "justice", "spirituality"];
+        class_virtues.shuffle(random); //randomize class virtues
+        class_virtues.unshift("honesty"); //add core virtue first so that it is chosen 3 times
+        setPlayerClassRandomStats(rom, class_virtues);
+    }
+    else if(selected_player_class == 7) //paladin - honor
+    {
+        var class_virtues = ["honesty", "justice", "sacrifice", "spirituality", "valor"];
+        class_virtues.shuffle(random); //randomize class virtues
+        class_virtues = class_virtues.slice(0,3);
+        class_virtues.unshift("honor"); //add core virtue first so that it is chosen 3 times
+        setPlayerClassRandomStats(rom, class_virtues);
+    }
+    else if(selected_player_class == 8) //ranger - spirituality
+    {
+        var class_virtues = ["compassion", "honesty", "honor", "justice", "sacrifice", "valor"];
+        class_virtues.shuffle(random); //randomize class virtues
+        class_virtues = class_virtues.slice(0,3);
+        class_virtues.unshift("spirituality"); //add core virtue first so that it is chosen 3 times
+        setPlayerClassRandomStats(rom, class_virtues);
+    }
+    else if(selected_player_class == 9) //shephard - humility
+    {
+        var class_virtues = ["honor", "justice", "sacrifice"];
+        class_virtues.shuffle(random); //randomize class virtues
+        class_virtues.unshift("humility"); //add core virtue first so that it is chosen 3 times
+        setPlayerClassRandomStats(rom, class_virtues);
+    }
+    else if(selected_player_class == 10) //tinker - sacrifice
+    {
+        var class_virtues = ["compassion", "honor", "justice", "spirituality", "valor"];
+        class_virtues.shuffle(random); //randomize class virtues
+        class_virtues = class_virtues.slice(0,3);
+        class_virtues.unshift("sacrifice"); //add core virtue first so that it is chosen 3 times
+        setPlayerClassRandomStats(rom, class_virtues);
+    }
+}
+
+function setPlayerClassRandomStats(rom, virtue_list)
+{
+    var randStr = 15;
+    var randDex = 15;
+    var randInt = 15;
+
+    for(var i = 0; i < 4; ++i)
+    {
+        var chosen_virtue = virtue_list.pop();
+        var multiplier = i; //two virtues once, one virtue twice, one virtue three times
+        if(i == 0)
+        {
+            multiplier = 1;
+        }
+        if(chosen_virtue == "compassion")           
+        {
+            randDex += 2 * multiplier;
+        }
+        else if(chosen_virtue == "honesty")
+        {
+            randInt += 2 * multiplier;
+        }
+        else if(chosen_virtue == "honor")
+        {
+            randStr += 1 * multiplier;
+            randInt += 1 * multiplier;
+        }
+        else if(chosen_virtue == "justice")
+        {
+            randDex += 1 * multiplier;
+            randInt += 1 * multiplier;
+        }
+        else if(chosen_virtue == "sacrifice")
+        {
+            randStr += 1 * multiplier;
+            randDex += 1 * multiplier;
+        }
+        else if(chosen_virtue == "spirituality")
+        {
+            randStr += 1 * multiplier;
+            randDex += 1 * multiplier;
+            randInt += 1 * multiplier;
+        }
+        else if(chosen_virtue == "valor")
+        {
+            randStr += 2 * multiplier;
+        }
+    }
+
+    setPlayerStats(rom, randStr, randDex, randInt);
+}
+
+function setPlayerStats(rom, str, dex, int)
+{
+    rom[0xEBF1] = str;    //player str 81EBF1 - EBF1 - 0x14 (20)
+    rom[0xECAD] = dex;    //player dex 81ECAD - ECAD - 0x12 (18)
+    rom[0xED69] = int;    //player int 81ED69 - ED6A - 0x15 (21)
+}
+
 function adjustDupreLZWScript(rom)
 {
     var lzwData = decompressDataFromLZW(rom, 0x48000);

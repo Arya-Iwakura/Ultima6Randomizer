@@ -92,6 +92,7 @@ function preset_overworld_easy() //easy
 	$('#randomize_moon_phases').prop('checked', true).triggerHandler("click");
 	$('#open_avatar_shrine').prop('checked', true).triggerHandler("click");
 	$('#skip_intro_cinematic').prop('checked', true).triggerHandler("click");
+	$('#select-playerclass-randomization').prop('value', 0).triggerHandler("click");
 
 	$('#select-junk-items').prop('value', 1).triggerHandler("click");
 	$('#select-starting-party').prop('value', 3).triggerHandler("click");
@@ -168,6 +169,7 @@ function preset_overworld_normal() //normal
 	$('#randomize_moon_phases').prop('checked', true).triggerHandler("click");
 	$('#open_avatar_shrine').prop('checked', false).triggerHandler("click");
 	$('#skip_intro_cinematic').prop('checked', true).triggerHandler("click");
+	$('#select-playerclass-randomization').prop('value', 0).triggerHandler("click");
 
 	$('#select-junk-items').prop('value', 1).triggerHandler("click");
 	$('#select-starting-party').prop('value', 3).triggerHandler("click");
@@ -245,6 +247,7 @@ function preset_overworld_hard() //hard
 	$('#randomize_moon_phases').prop('checked', true).triggerHandler("click");
 	$('#open_avatar_shrine').prop('checked', false).triggerHandler("click");
 	$('#skip_intro_cinematic').prop('checked', true).triggerHandler("click");
+	$('#select-playerclass-randomization').prop('value', 0).triggerHandler("click");
 
 	$('#select-junk-items').prop('value', 1).triggerHandler("click");
 	$('#select-starting-party').prop('value', 3).triggerHandler("click");
@@ -321,6 +324,7 @@ function preset_all_easy() //easy
 	$('#randomize_moon_phases').prop('checked', true).triggerHandler("click");
 	$('#open_avatar_shrine').prop('checked', true).triggerHandler("click");
 	$('#skip_intro_cinematic').prop('checked', true).triggerHandler("click");
+	$('#select-playerclass-randomization').prop('value', 0).triggerHandler("click");
 
 	$('#select-junk-items').prop('value', 1);	
 	$('#select-starting-party').prop('value', 3).triggerHandler("click");
@@ -396,6 +400,7 @@ function preset_all_normal() //normal
 	$('#randomize_moon_phases').prop('checked', true).triggerHandler("click");
 	$('#open_avatar_shrine').prop('checked', false).triggerHandler("click");
 	$('#skip_intro_cinematic').prop('checked', true).triggerHandler("click");
+	$('#select-playerclass-randomization').prop('value', 0).triggerHandler("click");
 
 	$('#select-junk-items').prop('value', 1).triggerHandler("click");
 	$('#select-starting-party').prop('value', 3).triggerHandler("click");
@@ -473,6 +478,7 @@ function preset_all_hard() //hard
 	$('#randomize_moon_phases').prop('checked', true).triggerHandler("click");
 	$('#open_avatar_shrine').prop('checked', false).triggerHandler("click");
 	$('#skip_intro_cinematic').prop('checked', true).triggerHandler("click");
+	$('#select-playerclass-randomization').prop('value', 0).triggerHandler("click");
 
 	$('#select-junk-items').prop('value', 1).triggerHandler("click");
 	$('#select-starting-party').prop('value', 3).triggerHandler("click");
@@ -549,6 +555,7 @@ function preset_underworld_easy() //easy
 	$('#randomize_moon_phases').prop('checked', true).triggerHandler("click");
 	$('#open_avatar_shrine').prop('checked', true).triggerHandler("click");
 	$('#skip_intro_cinematic').prop('checked', true).triggerHandler("click");
+	$('#select-playerclass-randomization').prop('value', 0).triggerHandler("click");
 
 	$('#select-junk-items').prop('value', 1).triggerHandler("click");
 	$('#select-starting-party').prop('value', 3).triggerHandler("click");
@@ -624,6 +631,7 @@ function preset_underworld_normal() //normal
 	$('#randomize_moon_phases').prop('checked', true).triggerHandler("click");
 	$('#open_avatar_shrine').prop('checked', false).triggerHandler("click");
 	$('#skip_intro_cinematic').prop('checked', true).triggerHandler("click");
+	$('#select-playerclass-randomization').prop('value', 0).triggerHandler("click");
 
 	$('#select-junk-items').prop('value', 1).triggerHandler("click");
 	$('#select-starting-party').prop('value', 3).triggerHandler("click");
@@ -701,6 +709,7 @@ function preset_underworld_hard() //hard
 	$('#randomize_moon_phases').prop('checked', true).triggerHandler("click");
 	$('#open_avatar_shrine').prop('checked', false).triggerHandler("click");
 	$('#skip_intro_cinematic').prop('checked', true).triggerHandler("click");
+	$('#select-playerclass-randomization').prop('value', 0).triggerHandler("click");
 
 	$('#select-junk-items').prop('value', 1).triggerHandler("click");
 	$('#select-starting-party').prop('value', 3).triggerHandler("click");
@@ -748,7 +757,7 @@ function preset_some_caves() //some caves
   	$('#randomize_locations_joinable_behlem').prop('checked', true).triggerHandler("click");
   	$('#randomize_locations_joinable_blaine').prop('checked', true).triggerHandler("click");
   	$('#randomize_locations_joinable_dupre').prop('checked', true).triggerHandler("click");
-        $('#randomize_locations_joinable_gorn').prop('checked', false).triggerHandler("click");
+	$('#randomize_locations_joinable_gorn').prop('checked', false).triggerHandler("click");
   	$('#randomize_locations_joinable_gwenno').prop('checked', true).triggerHandler("click");
   	$('#randomize_locations_joinable_iolo').prop('checked', true).triggerHandler("click");
   	$('#randomize_locations_joinable_jaana').prop('checked', true).triggerHandler("click");
@@ -809,6 +818,7 @@ function preset_some_caves() //some caves
 	$('#randomize_moon_phases').prop('checked', true).triggerHandler("click");
 	$('#open_avatar_shrine').prop('checked', true).triggerHandler("click");
 	$('#skip_intro_cinematic').prop('checked', true).triggerHandler("click");
+	$('#select-playerclass-randomization').prop('value', 0).triggerHandler("click");
 	$('#enable_add_potion_shop').prop('checked', true).triggerHandler("click");
 	$('#expanded_camping').prop('checked', true).triggerHandler("click");
 	$('#enable_fast_button_mapping').prop('checked', true).triggerHandler("click");

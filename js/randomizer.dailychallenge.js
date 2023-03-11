@@ -234,8 +234,9 @@ function setRandomChallengeSettings(dailySeed)
     getRandomMoonOrbDestiantionsSetting(dataObject);
     getRandomOpenAvatarShrineSetting(dataObject);
     getRandomJunkItemsSetting(dataObject);
-    getRandomStartinInventorySetting(dataObject);
+    getRandomStartingInventorySetting(dataObject);
     getRandomStartingGoldSetting(dataObject);
+    getRandomStartingPlayerClassSetting(dataObject);
     getRandomDayNightCycleSetting(dataObject);
     getRandomKarmaDifficultySetting(dataObject);
     getRandomItemDifficultySetting(dataObject);
@@ -524,7 +525,7 @@ function getRandomNPCRandomizationSetting(dataObject)
     var choices = [
 		{choice:0, weight:80},
 		{choice:1, weight:10},
-        {choice:1, weight:10},
+        {choice:2, weight:10},
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
     $('#select-npc-randomization').prop('value', weightedChoice.choice).triggerHandler("click");
@@ -533,9 +534,10 @@ function getRandomNPCRandomizationSetting(dataObject)
 function getRandomPartyMembersSetting(dataObject)
 {
     var choices = [
-		{choice:1, weight:10},
-		{choice:2, weight:10},
-		{choice:3, weight:40},
+		{choice:0, weight:10},
+        {choice:1, weight:20},
+		{choice:2, weight:20},
+		{choice:3, weight:80},
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
     $('#select-starting-party').prop('value', weightedChoice.choice).triggerHandler("click");
@@ -552,7 +554,7 @@ function getRandomJunkItemsSetting(dataObject)
     $('#select-junk-items').prop('value', weightedChoice.choice).triggerHandler("click");
 }
 
-function getRandomStartinInventorySetting(dataObject)
+function getRandomStartingInventorySetting(dataObject)
 {
     var choices = [
 		{choice:0, weight:10},
@@ -578,6 +580,25 @@ function getRandomStartingGoldSetting(dataObject)
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
     $('#select-starting-gold').prop('value', weightedChoice.choice).triggerHandler("click");
+}
+
+function getRandomStartingPlayerClassSetting(dataObject)
+{
+    var choices = [
+		{choice:0,  weight:2},
+		{choice:1,  weight:20},
+        {choice:2,  weight:1},
+        {choice:3,  weight:2},
+        {choice:4,  weight:2},
+        {choice:5,  weight:2},
+        {choice:6,  weight:2},
+        {choice:7,  weight:2},
+        {choice:8,  weight:2},
+        {choice:9,  weight:2},
+        {choice:10, weight:2},
+	];
+    var weightedChoice = dataObject.random.fromWeighted(choices);
+    $('#select-playerclass-randomization').prop('value', weightedChoice.choice).triggerHandler("click");
 }
 
 function getRandomDayNightCycleSetting(dataObject)
@@ -619,7 +640,6 @@ function getRandomSpellLevelSetting(dataObject)
     var choices = [
 		{choice:0, weight:40},
 		{choice:1, weight:40},
-		//{choice:2, weight:20},
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
     $('#select-spell-level').prop('value', weightedChoice.choice).triggerHandler("click");

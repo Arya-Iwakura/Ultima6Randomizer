@@ -1,4 +1,4 @@
-var VERSION_STRING = 'v0.8a';
+var VERSION_STRING = 'v0.8b';
 var BASE_CHECKSUM = 0x9277C9F7;
 
 const SUBSYSTEM_ITEMS = 0;
@@ -19,6 +19,7 @@ const SUBSYSTEM_PLAYER_GAMEPLAY = 14;
 const SUBSYSTEM_SOUND = 15;
 const SUBSYSTEM_PARTY = 16;
 const SUBSYSTEM_NPCS = 17;
+const SUBSYSTEM_PLAYER_STATS = 18;
 
 function randomizeROM(buffer, seed)
 {
@@ -123,21 +124,14 @@ function randomizeROM(buffer, seed)
 		setStartingInventory(rom, subSystemSeeds[SUBSYSTEM_PLAYER_INVENTORY], $('#select-starting-inventory').val()); //random inventory
 	}
 
-	if ($('#select-starting-gold').val() == 1)
+	if ($('#select-starting-gold').val() > 0)
 	{
-		setStartingGold(rom, 1, subSystemSeeds[SUBSYSTEM_PLAYER_INVENTORY]); //no gold
+		setStartingGold(rom, $('#select-starting-gold').val(), subSystemSeeds[SUBSYSTEM_PLAYER_INVENTORY]); //no gold
 	}
-	else if ($('#select-starting-gold').val() == 2)
+
+	if ($('#select-playerclass-randomization').val() > 0)
 	{
-		setStartingGold(rom, 2, subSystemSeeds[SUBSYSTEM_PLAYER_INVENTORY]); //2x gold
-	}
-	else if ($('#select-starting-gold').val() == 3)
-	{
-		setStartingGold(rom, 3, subSystemSeeds[SUBSYSTEM_PLAYER_INVENTORY]); //4x gold
-	}
-	else if ($('#select-starting-gold').val() == 4)
-	{
-		setStartingGold(rom, 4, subSystemSeeds[SUBSYSTEM_PLAYER_INVENTORY]); //random gold
+		setPlayerClass(rom, subSystemSeeds[SUBSYSTEM_PLAYER_STATS], $('#select-playerclass-randomization').val()); //player class selection
 	}
 
 	if ($('#select-placedrafts').val() == 1)

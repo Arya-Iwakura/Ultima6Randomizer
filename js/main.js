@@ -1313,6 +1313,175 @@ function checkStartingGoldStatus()
 	}
 }
 
+$('#select-playerclass-randomization').click(function(e)
+{
+	checkPlayerClassRandomizationStatus();
+});
+
+$('#select-playerclass-randomization').keyup(function(e)
+{
+	checkPlayerClassRandomizationStatus();
+});
+
+function checkPlayerClassRandomizationStatus()
+{
+	var selection = +$('#select-playerclass-randomization').val();
+	if (selection == 0)
+	{
+		$('#playerclass-randomization-tooltip-1').prop('hidden', false);
+		$('#playerclass-randomization-tooltip-2').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-3').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-4').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-5').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-6').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-7').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-8').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-9').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-10').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-11').prop('hidden', true);
+	}
+	else if (selection == 1)
+	{
+		$('#playerclass-randomization-tooltip-1').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-2').prop('hidden', false);
+		$('#playerclass-randomization-tooltip-3').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-4').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-5').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-6').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-7').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-8').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-9').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-10').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-11').prop('hidden', true);
+	}
+	else if (selection == 2)
+	{
+		$('#playerclass-randomization-tooltip-1').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-2').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-3').prop('hidden', false);
+		$('#playerclass-randomization-tooltip-4').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-5').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-6').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-7').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-8').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-9').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-10').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-11').prop('hidden', true);
+	}
+	else if (selection == 3)
+	{
+		$('#playerclass-randomization-tooltip-1').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-2').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-3').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-4').prop('hidden', false);
+		$('#playerclass-randomization-tooltip-5').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-6').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-7').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-8').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-9').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-10').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-11').prop('hidden', true);
+	}
+	else if (selection == 4)
+	{
+		$('#playerclass-randomization-tooltip-1').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-2').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-3').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-4').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-5').prop('hidden', false);
+		$('#playerclass-randomization-tooltip-6').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-7').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-8').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-9').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-10').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-11').prop('hidden', true);
+	}
+	else if (selection == 5)
+	{
+		$('#playerclass-randomization-tooltip-1').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-2').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-3').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-4').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-5').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-6').prop('hidden', false);
+		$('#playerclass-randomization-tooltip-7').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-8').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-9').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-10').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-11').prop('hidden', true);
+	}
+	else if (selection == 6)
+	{
+		$('#playerclass-randomization-tooltip-1').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-2').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-3').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-4').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-5').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-6').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-7').prop('hidden', false);
+		$('#playerclass-randomization-tooltip-8').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-9').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-10').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-11').prop('hidden', true);
+	}
+	else if (selection == 7)
+	{
+		$('#playerclass-randomization-tooltip-1').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-2').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-3').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-4').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-5').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-6').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-7').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-8').prop('hidden', false);
+		$('#playerclass-randomization-tooltip-9').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-10').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-11').prop('hidden', true);
+	}
+	else if (selection == 8)
+	{
+		$('#playerclass-randomization-tooltip-1').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-2').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-3').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-4').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-5').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-6').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-7').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-8').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-9').prop('hidden', false);
+		$('#playerclass-randomization-tooltip-10').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-11').prop('hidden', true);
+	}
+	else if (selection == 9)
+	{
+		$('#playerclass-randomization-tooltip-1').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-2').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-3').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-4').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-5').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-6').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-7').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-8').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-9').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-10').prop('hidden', false);
+		$('#playerclass-randomization-tooltip-11').prop('hidden', true);
+	}
+	else if (selection == 10)
+	{
+		$('#playerclass-randomization-tooltip-1').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-2').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-3').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-4').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-5').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-6').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-7').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-8').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-9').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-10').prop('hidden', true);
+		$('#playerclass-randomization-tooltip-11').prop('hidden', false);
+	}
+}
+
 $('#select-day-night-cycle').click(function(e)
 {
 	checkDayNightCycleStatus();
