@@ -71,7 +71,7 @@ $('#download-generated-rom').click(function(e)
 	var avatar_sprite = $('#select-avatar-sprite').val();
 	var fire_flag = ($('#avatar-sprite-fire-flag').is(':checked'));
 	var ghost_flag = ($('#dead-partymember-sprite-flag').is(':checked'));
-	if(avatar_sprite != 2 || fire_flag > 0){result.buffer = setCharacterSprite(result.buffer, result.seed, avatar_sprite, fire_flag, ghost_flag);}
+	result.buffer = setCharacterSprite(result.buffer, result.seed, avatar_sprite, fire_flag, ghost_flag);
 
 	var poison_flash = $('#poison_flash_options').val();
 	if(poison_flash > 0 ) {result.buffer = setPoisionFlash(result.buffer, poison_flash);}
