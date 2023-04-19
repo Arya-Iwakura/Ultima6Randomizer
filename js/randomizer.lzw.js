@@ -5,10 +5,10 @@
 
 //This produces slightly different compressed results to the Python version, but resolves many of the discrepancies between the ROM version and the re-compressed version.
 //Compared to the Python version's many discrepancies, this version only has discrepancies in the re-compressed versions of these files:
-//0x9f500	Differs from ROM. Exactly matches Python version
-//0xd6600	Differs from ROM. Exactly matches Python version
-//0xdc100	Differs from ROM. Exactly matches Python version
-//0xe1000	Differs from ROM & Python version
+//0x9f500    Differs from ROM. Exactly matches Python version
+//0xd6600    Differs from ROM. Exactly matches Python version
+//0xdc100    Differs from ROM. Exactly matches Python version
+//0xe1000    Differs from ROM & Python version
 
 var BASE_CW = 0x102;
 
@@ -259,85 +259,40 @@ function compressRLE(data)
 
 function compressLZW(data)
 {
-    function dataStartsWith(prefix)
-    {
-        if(data.length < prefix.length)
-        {
-            return false;
-        }
-        for(var i = 0; i < prefix.length; i++)
-        {
-            if(prefix[i] !== data[i])
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    var dictionary = []; // Array of Uint8Arrays
+    var dictionary = {}; // { Uint8Array.toString() : codeword offset, etc }
     var prev = data.subarray(0, 1);
-    var prevCw = 0;
-    var output = [];
-    // Initialize stream with a reinit command followed by a dictionary-oblivious char
-    output.push(0x100, data[0]);
+    var curr;
+    var next;
+    var cw = BASE_CW;
+    var output = [0x100]; // Start stream
 
-    data = data.subarray(1); // Advance by 1 byte
-    while(data.length > 0)
+    for (var i = 1; i < data.length; i++)
     {
-        var longestIdx = 0;
-        var longestLen = 0;
-        // Brute-force search for the longest dictionary entry that prefixes data
-        dictionary.forEach(function(entry, i)
+        if (cw == 0x1001) // Maximum dictionary size reached. Reinit the dictionary.
         {
-            if(entry.length > longestLen && dataStartsWith(entry))
-            {
-                longestIdx = i;
-                longestLen = entry.length;
-            }
-        });
-
-        // The decompressor supports a special case when cw == cw_next it repeats the
-        // last cw's string, then repeats the first byte of that string.
-        var special = concatByteArrays([prev, prev.subarray(0,1)]);
-
-        var string;
-        var cw;
-        if(special.length >= longestLen && dataStartsWith(special))
-        {
-            // The special case was better than a dictionary match, use it
-            string = special;
-            cw = BASE_CW + dictionary.length;
+            dictionary = {};
+            cw = BASE_CW;
+            output.push(0x100); // Reinit stream
         }
-        else if(longestLen > 0)
+
+        // Build up byte sequence until we find one without a dictionary entry 
+        curr = data.subarray(i,i+1);
+        next = concatByteArrays([prev,curr]);
+        if (dictionary[next] != null)
         {
-            // Found a good dictionary match
-            string = dictionary[longestIdx];
-            cw = BASE_CW + longestIdx;
+            prev = next;
         }
         else
         {
-            // No dictionary match - emit the raw value
-            string = data.subarray(0, 1);
-            cw = string[0];
-        }
-        output.push(cw);
-        dictionary.push(concatByteArrays([prev, string.subarray(0, 1)]));
-        prev = string;
-        prevCw = cw;
-        data = data.subarray(string.length);
-
-
-        if(dictionary.length + BASE_CW >= 0x1000 && data.length > 0)
-        {
-            // Exceeded maximum dictionary size. Reinit the stream.
-            prev = data.subarray(0, 1);
-            prevCw = 0;
-            output.push(0x100, data[0]);
-            dictionary = [];
-            data = data.subarray(1);
+            output.push(prev.length > 1 ? dictionary[prev] : prev[0]);
+            dictionary[next] = cw;
+            cw++;
+            prev = curr;
         }
     }
+
+    output.push(prev.length > 1 ? dictionary[prev] : prev[0]);
+
     output.push(0x101); // End stream
 
     return output;
