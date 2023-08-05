@@ -76,8 +76,13 @@ $(document).ready(function()
     toggleClassDisplayPropOnClick("#npctracker_dialogrewards", "dialogrewards_npc", "npc_location_dialogrewards");
     toggleClassDisplayPropOnClick("#npctracker_treasuremap", "treasuremap_npc", "npc_location_treasuremap");
     toggleClassDisplayPropOnClick("#npctracker_party", "joinablepartymembers_npc", "npc_location_joinablepartymembers");
+	toggleClassDisplayPropOnClick("#npctracker_otherimportant", "otherimportant_npc", "npc_location_otherimportant");
+	toggleClassDisplayPropOnClick("#npctracker_mages", "mages_npc", "npc_location_mages");
+	toggleClassDisplayPropOnClick("#npctracker_shipwrights", "shipwrights_npc", "npc_location_shipwrights");
+	toggleClassDisplayPropOnClick("#npctracker_shops", "shops_npc", "npc_location_shops");
+	toggleClassDisplayPropOnClick("#npctracker_smiths", "smiths_npc", "npc_location_smiths");
     toggleClassDisplayPropOnClick("#npctracker_healers", "healers_npc", "npc_location_healers");
-    toggleClassDisplayPropOnClick("#npctracker_inns", "inns_npc", "npc_location_inns");
+	toggleClassDisplayPropOnClick("#npctracker_inns", "inns_npc", "npc_location_inns");
     toggleClassDisplayPropOnClick("#npctracker_other", "other_npc", "npc_location_other");
 });
 
@@ -113,23 +118,9 @@ function toggleClassDisplayProp(inClickTarget, inClass, inLocationSet)
     for (var i = 0; i < all.length; i++)
     {
 		if (!$(inClickTarget).is(':checked')) {
-			if(all[i].style.display == "none")
-			{
-				all[i].style.display = "";
-			}
-			else
-			{
-				all[i].style.display = "none";
-			}
+			all[i].style.display = "none";
 		} else {
-			if(all[i].style.display == "none")
-			{
-				all[i].style.display = "none";
-			}
-			else
-			{
-				all[i].style.display = "";
-			}
+			all[i].style.display = "";
 		}
 	}
     checkHiddenElements(inClass, inLocationSet);
