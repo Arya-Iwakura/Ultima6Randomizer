@@ -268,7 +268,7 @@ function compressLZW(data)
 
     for (var i = 1; i < data.length; i++)
     {
-        if (cw == 0x1001) // Maximum dictionary size reached. Reinit the dictionary.
+        if (cw == 0x1000) // Maximum dictionary size reached. Reinit the dictionary.
         {
             dictionary = {};
             cw = BASE_CW;
