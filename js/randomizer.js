@@ -1,4 +1,4 @@
-var VERSION_STRING = 'v0.8b';
+var VERSION_STRING = 'v0.8c';
 var BASE_CHECKSUM = 0x9277C9F7;
 
 const SUBSYSTEM_ITEMS = 0;
@@ -174,10 +174,25 @@ function randomizeROM(buffer, seed)
 	var characterSpoilerList = [];
 	if ($('#select-npc-randomization').val() == 1)
 	{
+		var potionShopAdded = false;
+		if ($('#enable_add_potion_shop').is(':checked'))
+		{
+			potionShopAdded = true;
+		}
 		unrestrictNPCShuffleBehaviorChecks(rom);
-		characterSpoilerList = shuffleNPCSchedulesSimilar(rom, subSystemSeeds[SUBSYSTEM_NPCS]);
+		characterSpoilerList = shuffleNPCSchedulesSimilar(rom, subSystemSeeds[SUBSYSTEM_NPCS], potionShopAdded);
 	}
 	else if ($('#select-npc-randomization').val() == 2)
+	{
+		var potionShopAdded = false;
+		if ($('#enable_add_potion_shop').is(':checked'))
+		{
+			potionShopAdded = true;
+		}
+		unrestrictNPCShuffleBehaviorChecks(rom);
+		characterSpoilerList = shuffleNPCSchedulesPerArea(rom, subSystemSeeds[SUBSYSTEM_NPCS], potionShopAdded);
+	}
+	else if ($('#select-npc-randomization').val() == 3)
 	{
 		unrestrictNPCShuffleBehaviorChecks(rom);
 		characterSpoilerList = shuffleNPCSchedules(rom, subSystemSeeds[SUBSYSTEM_NPCS]);
@@ -186,6 +201,11 @@ function randomizeROM(buffer, seed)
 	if ($('#enable_add_potion_shop').is(':checked'))
 	{
 		addPotionShop(rom, subSystemSeeds[SUBSYSTEM_WORLD]);
+	}
+
+	if ($('#simplify_npc_schedules').is(':checked'))
+	{
+		simplifyNPCSchedules(rom, subSystemSeeds[SUBSYSTEM_NPCS]);
 	}
 
 	//---------items

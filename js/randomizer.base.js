@@ -246,11 +246,11 @@ var DATA_ENEMY_INVENTORY_DROPS_ANIMALS		= [0x40,0x44,0x47];
 //enemy drop classes - none, animal, creature, humanoid (used when believable flags are set)
 var DATA_ENEMY_DROP_CLASSES =
 [
-	03, 03, 03, 03, 03, 03, 03 ,03 ,03 ,03 ,03, 03, 03, 00, 00,
-	01, 00, 01, 00, 01, 02, 02, 02, 01, 01, 01, 01, 03, 03, 03, 01,
-	01, 01, 01, 01, 01, 03, 03, 02, 02, 03, 03, 02, 03, 03, 03, 03,
-	02, 02, 01, 03, 02, 03, 01, 01, 01, 01, 01
-];
+	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0,
+	1, 0, 1, 0, 1, 2, 2, 2, 1, 1, 1, 1, 3, 3, 3, 1,
+	1, 1, 1, 1, 1, 3, 3, 2, 2, 3, 3, 2, 3, 3, 3, 3,
+	2, 2, 1, 3, 2, 3, 1, 1, 1, 1, 1
+]
 
 var DATA_CASTLE_BRITANNIA_LOCATIONS =
 [
@@ -710,7 +710,7 @@ var DATA_NPCS =
 	{name:"Charlotte",		number:94,		group:0,	type:5},
 	{name:"Chuckles",		number:9,		group:0,	type:0},
 	{name:"Conor",			number:93,		group:0,	type:5},
-	{name:"Culham",			number:48,		group:0,	type:1},
+	{name:"Culham",			number:48,		group:0,	type:0},
 	{name:"Cullen",			number:24,		group:0,	type:0},
 	{name:"Dale",			number:69,		group:0,	type:4},
 	{name:"Dargoth",		number:36,		group:0,	type:4},

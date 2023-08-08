@@ -1,5 +1,3 @@
-//TODO : Add characters with less sprites, such as the boat and mouse
-
 var DATA_PLAYER_CHARACTERS =
 [
     {"characterID":0x0F, "spriteID":0x10, "paletteID":0x05, "sleepingID":0x06, "id":2, "name":"Avatar", "tags":["base", "realistic"]},
@@ -691,10 +689,14 @@ function adjustBehLemLZWScript(rom)
 //group - 0=none, 1=underground, 2=gargoyle, 3=norandom, 4=unlock
 //type - 0=none, 1=shops, 2=quests, 3=partymember, 4=services, 5=important
 //all values are -1 from the DATA_NPCS number values for each NPC 
-var undergroundNPCs = [169,170,171]; //F4 NPCs (Captain John, Ybarra, Gorn)
+var undergroundNPCs = [169,170,171]; //Dungeon Floor 4 (F4) NPCs (Captain John, Ybarra, Gorn)
 var gargoyleLandsNPCs = [172,173,174,175,176,177,178,179,180,181,182,183,184,185,186];
-var noRandomNPCs = [39,127,162,166,167,168]; //Penumbra, Sutek, Mandrake, Daros, Pushme Pullyu, Phoenix
-var unlockNPCs = [56,58]; //Boskin, Nicodemus
+var noRandomNPCs = [39,127,132,162,166,167,168];    //Penumbra, Sutek, Taynith, Mandrake, Daros, Pushme Pullyu, Phoenix
+                                                    //Penumbra is the only overworld NPC that requires just dispel field
+                                                    //Sutek is the only overworld NPC that requires dispel field and unlock
+                                                    //Taynith and Mandrake have horrible schedules and often break on SNES
+                                                    //Daros, Pushme Pullyu, and Phoenix are each alone on their respective dungeon floors and cannot be randomized
+var unlockNPCs = [56,58]; //Boskin, Nicodemus - These two NPCs only require unlock to access
 
 function shuffleNPCSchedules(rom, random)
 {
@@ -767,7 +769,7 @@ function shuffleNPCSchedules(rom, random)
 
 //group - 0=none, 1=underground, 2=gargoyle, 3=norandom, 4=unlock
 //type - 0=none, 1=shops, 2=quests, 3=partymember, 4=services, 5=important
-function shuffleNPCSchedulesSimilar(rom, random)
+function shuffleNPCSchedulesSimilar(rom, random, potionShopAdded)
 {
     consoleLog("SHUFFLING SIMILAR NPC SCHEDULES");
     var noneList = [];
@@ -801,8 +803,9 @@ function shuffleNPCSchedulesSimilar(rom, random)
             }
             else
             {
+                //process the noneList
                 var npc = getCharacterFromNumber(listEntry.number);
-                if(npc.type == 1)
+                if(npc.type == 1 || (potionShopAdded == true && listEntry.number == 48)) //special case for culham / senob
                 {
                     subShopsList.push(listEntry);
                 }
@@ -858,8 +861,9 @@ function shuffleNPCSchedulesSimilar(rom, random)
             }
             else
             {
+                //process the noneList
                 var npc = getCharacterFromNumber(i);
-                if(npc.type == 1)
+                if(npc.type == 1 || (potionShopAdded == true && i == 48)) //special case for culham / senob
                 {
                     npcShuffleListPop(rom, i, subShopsList, characterSpoilerList);
                 }
@@ -883,6 +887,244 @@ function shuffleNPCSchedulesSimilar(rom, random)
                 {
                     npcShuffleListPop(rom, i, noneList, characterSpoilerList);
                 }
+            }
+        }
+        else
+        {
+            var spoilerData = {"c1":getCharacterFromNumber(i), "c2":getCharacterFromNumber(i)};
+            characterSpoilerList.push(spoilerData);
+        }
+    }
+    return characterSpoilerList;
+}
+
+function shuffleNPCSchedulesPerArea(rom, random, potionShopAdded)
+{
+    consoleLog("SHUFFLING NPC SCHEDULES PER AREA");
+
+    //define which NPCs belong to what areas
+    //all values are -1 from the DATA_NPCS number values for each NPC 
+    var britainNPCs = [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,159,165];
+    var bucsdenNPCs = [109,110,111,112,113,114,115,116,117,118,119];
+    var coveNPCs = [120,121,122,123,124,125,126];
+    var empathabbeyNPCs = [142,143,144,145,146,147,160,161];
+    var jhelomNPCs = [41,42,43,44,45,46,48,49,50,51];
+    var minocNPCs = [61,62,63,64,65,66,67,68,69,70,71,72];
+    var moonglowNPCs = [31,32,33,34,35,36,37,38,40];
+    var newmaginciaNPCs = [90,91,92,93,94,95,96];
+    var overworldNPCs = [2,52,88,128,129,130,131,133,134,135,136,137,138,139,140,141];
+    var pawsNPCs = [97,98,99,100,101,102,103,104,105,106,107,108];
+    var serpentsholdNPCs = [148,149,150,151,152,153,154,155,156,157,158,164];
+    var skarabraeNPCs = [1,80,81,82,83,84,85,86,87,89];
+    var trinsicNPCs = [0,73,74,75,76,77,78,79];
+    var yewNPCs = [53,54,55,57,58,59,60,163];
+
+    if(potionShopAdded == true)
+    {
+        overworldNPCs.push(47);
+    }
+    else
+    {
+        jhelomNPCs.push(47);
+    }
+
+    var subBritainList = [];
+    var subBucsDenList = [];
+    var subCoveList = [];
+    var subEmpathAbbeyList = [];
+    var subJhelomList = [];
+    var subMinocList = [];
+    var subMoonglowList = [];
+    var subNewMaginciaList = [];
+    var subOverWorldList = [];
+    var subPawsList = [];
+    var subSerpentsHoldList = [];
+    var subSkaraBraeList = [];
+    var subTrinsicList = [];
+    var subYewList = [];
+    
+    var noneList = [];
+    var undergroundList = [];
+    var gargoyleLandsList = [];
+    var unlockList = [];
+    var characterSpoilerList = [];
+    for(var i = 1; i < 187; ++i)
+    {
+        if(noRandomNPCs.includes(i-1)==false)
+        {
+            var b1 = rom[0x18AC1 + (i*2)];
+            var b2 = rom[0x18AC1 + (i*2) + 1];
+            var listEntry = {"number": i, "byte1": b1, "byte2": b2};
+            if(undergroundNPCs.includes(i-1))
+            {
+                undergroundList.push(listEntry);
+            }
+            else if(gargoyleLandsNPCs.includes(i-1))
+            {
+                gargoyleLandsList.push(listEntry);
+            }
+            else if(unlockNPCs.includes(i-1))
+            {
+                unlockList.push(listEntry);
+            }
+            else if(britainNPCs.includes(i-1))
+            {
+                subBritainList.push(listEntry);
+            }
+            else if(bucsdenNPCs.includes(i-1))
+            {
+                subBucsDenList.push(listEntry);
+            }
+            else if(coveNPCs.includes(i-1))
+            {
+                subCoveList.push(listEntry);
+            }
+            else if(empathabbeyNPCs.includes(i-1))
+            {
+                subEmpathAbbeyList.push(listEntry);
+            }
+            else if(jhelomNPCs.includes(i-1))
+            {
+                subJhelomList.push(listEntry);
+            }
+            else if(minocNPCs.includes(i-1))
+            {
+                subMinocList.push(listEntry);
+            }
+            else if(moonglowNPCs.includes(i-1))
+            {
+                subMoonglowList.push(listEntry);
+            }
+            else if(newmaginciaNPCs.includes(i-1))
+            {
+                subNewMaginciaList.push(listEntry);
+            }
+            else if(overworldNPCs.includes(i-1))
+            {
+                subOverWorldList.push(listEntry);
+            }
+            else if(pawsNPCs.includes(i-1))
+            {
+                subPawsList.push(listEntry);
+            }
+            else if(serpentsholdNPCs.includes(i-1))
+            {
+                subSerpentsHoldList.push(listEntry);
+            }
+            else if(skarabraeNPCs.includes(i-1))
+            {
+                subSkaraBraeList.push(listEntry);
+            }
+            else if(trinsicNPCs.includes(i-1))
+            {
+                subTrinsicList.push(listEntry);
+            }
+            else if(yewNPCs.includes(i-1))
+            {
+                subYewList.push(listEntry);
+            }
+            else
+            {
+                noneList.push(listEntry);
+            }
+        }
+    }
+    
+    noneList.shuffle(random);
+    undergroundList.shuffle(random);
+    gargoyleLandsList.shuffle(random);
+    unlockList.shuffle(random);
+
+    subBritainList.shuffle(random);
+    subBucsDenList.shuffle(random);
+    subCoveList.shuffle(random);
+    subEmpathAbbeyList.shuffle(random);
+    subJhelomList.shuffle(random);
+    subMinocList.shuffle(random);
+    subMoonglowList.shuffle(random);
+    subNewMaginciaList.shuffle(random);
+    subOverWorldList.shuffle(random);
+    subPawsList.shuffle(random);
+    subSerpentsHoldList.shuffle(random);
+    subSkaraBraeList.shuffle(random);
+    subTrinsicList.shuffle(random);
+    subYewList.shuffle(random);
+    
+    for(var i = 1; i < 187; ++i)
+    {
+        if(noRandomNPCs.includes(i-1)==false)
+        {
+            if(undergroundNPCs.includes(i-1))
+            {
+                npcShuffleListPop(rom, i, undergroundList, characterSpoilerList);
+            }
+            else if(gargoyleLandsNPCs.includes(i-1))
+            {
+                npcShuffleListPop(rom, i, gargoyleLandsList, characterSpoilerList);
+            }
+            else if(unlockNPCs.includes(i-1))
+            {
+                npcShuffleListPop(rom, i, unlockList, characterSpoilerList);
+            }
+            else if(britainNPCs.includes(i-1))
+            {
+                npcShuffleListPop(rom, i, subBritainList, characterSpoilerList);
+            }
+            else if(bucsdenNPCs.includes(i-1))
+            {
+                npcShuffleListPop(rom, i, subBucsDenList, characterSpoilerList);
+            }
+            else if(coveNPCs.includes(i-1))
+            {
+                npcShuffleListPop(rom, i, subCoveList, characterSpoilerList);
+            }
+            else if(empathabbeyNPCs.includes(i-1))
+            {
+                npcShuffleListPop(rom, i, subEmpathAbbeyList, characterSpoilerList);
+            }
+            else if(jhelomNPCs.includes(i-1))
+            {
+                npcShuffleListPop(rom, i, subJhelomList, characterSpoilerList);
+            }
+            else if(minocNPCs.includes(i-1))
+            {
+                npcShuffleListPop(rom, i, subMinocList, characterSpoilerList);
+            }
+            else if(moonglowNPCs.includes(i-1))
+            {
+                npcShuffleListPop(rom, i, subMoonglowList, characterSpoilerList);
+            }
+            else if(newmaginciaNPCs.includes(i-1))
+            {
+                npcShuffleListPop(rom, i, subNewMaginciaList, characterSpoilerList);
+            }
+            else if(overworldNPCs.includes(i-1))
+            {
+                npcShuffleListPop(rom, i, subOverWorldList, characterSpoilerList);
+            }
+            else if(pawsNPCs.includes(i-1))
+            {
+                npcShuffleListPop(rom, i, subPawsList, characterSpoilerList);
+            }
+            else if(serpentsholdNPCs.includes(i-1))
+            {
+                npcShuffleListPop(rom, i, subSerpentsHoldList, characterSpoilerList);
+            }
+            else if(skarabraeNPCs.includes(i-1))
+            {
+                npcShuffleListPop(rom, i, subSkaraBraeList, characterSpoilerList);
+            }
+            else if(trinsicNPCs.includes(i-1))
+            {
+                npcShuffleListPop(rom, i, subTrinsicList, characterSpoilerList);
+            }
+            else if(yewNPCs.includes(i-1))
+            {
+                npcShuffleListPop(rom, i, subYewList, characterSpoilerList);
+            }
+            else
+            {
+                npcShuffleListPop(rom, i, noneList, characterSpoilerList);
             }
         }
         else
@@ -1023,6 +1265,12 @@ function unrestrictNPCShuffleBehaviorChecks(rom)
     lzwData.set([0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00], 0x31); //was 12 20 0E 51 48 02 08 10 FA 01 11 0B 01 04 - Enrik
     lzwData.set([0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00], 0x42); //was 12 20 0E 51 48 02 08 10 1B 02 11 0B 01 04 - Enrik
     lzwData.set([0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00, 0x00,0x00], 0x174E); //was 12 20 0E 51 48 02 06 10 C4 01 11 0B - Ruydom
+}
+
+function simplifyNPCSchedules(rom, random)
+{
+    //TODO - Add simplified NPC schedules.
+    //Goal - Simply more complex NPC schedules such that those NPCs can only appear in one of two places.
 }
 
 function addPotionShop(rom, random)

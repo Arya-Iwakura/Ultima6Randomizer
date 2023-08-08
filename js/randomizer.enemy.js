@@ -2,7 +2,7 @@ const TABLE_SPAWNER_START = 0x19804;
 const TABLE_SPAWNER_END = 0x19A3E;
 const TABLE_SPAWNER_ENTRIES = 286;
 const TABLE_STATS_ENTRIES = 58;
-//TODO - SEE HOW FAR THE TABLE EXTENDS - IT MAY EXTEND TO 839A3E (CHANGE EVERYTHING TO LORD BRITISH AND RUN AROUND THE GAME FOR A WHILE)
+
 function randomizeEnemySpawners(rom, random, monsterFlag, wildFlag, animalFlag, peopleFlag, addEnemiesFlag)
 {
     console.log("RANDOMIZING SPAWNERS");

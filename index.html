@@ -39,7 +39,7 @@
 				<div class="col-md-6">
 					<div class="float-left">
 						<h2 class="header">Ultima 6 SNES Randomizer
-							<span class="version-number"></span> <span class="beta">ALPHA</span></h2>
+							<span class="version-number"></span></h2>
 							<p>by <span id="squibbons"><a href="https://twitter.com/squibbons">squibbons</a></span></p>
 					</div>
 				</div>
@@ -85,6 +85,8 @@
 							<option value="8">Underworld Locations - Normal</option>
 							<option value="9">Underworld Locations - Hard</option>
 							<option value="13">Some Caves</option>
+							<option value="14">NPC Shuffle - Per Area</option>
+							<option value="15">NPC Shuffle - Standard</option>
 							<option value="10">Daily Challenge</option>
 							<option value="11">Random Challenge</option>
 						</select>
@@ -681,14 +683,16 @@
 						</div>
 						<select class="form-control , presetselect" id="select-npc-randomization">
 							<option value="0" selected="selected">Default</option>
-							<option value="1">Shuffle Similar</option>
-							<option value="2">Shuffle All</option>
+							<option value="1">Shuffle Similar Type</option>
+							<option value="2">Shuffle Per Area</option>
+							<option value="3">Shuffle All</option>
 						</select>
 					</div>
 					<div class="input-group-addon">
 						<small><i><span id="npc-randomization-tooltip-1">(Unchanged from base game)</span></small></i>
-						<small><i><span id="npc-randomization-tooltip-2" hidden>(NPCs have their schedules shuffled with similar NPCs)</span></small></i>
-						<small><i><span id="npc-randomization-tooltip-3" hidden>(All NPCs have their schedules shuffled)</span></small></i>
+						<small><i><span id="npc-randomization-tooltip-2" hidden>(NPCs shuffle their schedules with similar NPCs - shops, quests, etc)</span></small></i>
+						<small><i><span id="npc-randomization-tooltip-3" hidden>(NPCs shuffle their schedules within the same area)</span></small></i>
+						<small><i><span id="npc-randomization-tooltip-4" hidden>(All NPCs have their schedules shuffled)</span></small></i>
 					</div>
 					<div class="input-group top-spaced">
 						<div class="input-group-addon">
@@ -875,6 +879,12 @@
 						<label>
 							<input type="checkbox" id="enable_add_potion_shop" class="presetoption" checked>
 							Add Potion Shop <i><small>(Adds a potion shop)</small></i>
+						</label>
+					</div>
+					<div class="checkbox">
+						<label hidden>
+							<input type="checkbox" id="simplify_npc_schedules" class="presetoption">
+							Simplify NPC Schedules <i><small>(Most NPC schedules are greatly simplified)</small></i>
 						</label>
 					</div>
 					<div class="checkbox">

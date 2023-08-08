@@ -188,7 +188,6 @@ function setRandomChallengeSettings(dailySeed)
 {
     var random = new Random(dailySeed);
     var dataObject = {random:random};
-    //var day = 0; - TODO: get day of the week to determine weights
 
     $('#randomize_locations_advanced').prop('checked', false).triggerHandler("click");
 
@@ -220,6 +219,7 @@ function setRandomChallengeSettings(dailySeed)
     getRandomAIEquipmentSetting(dataObject);
     getRandomBelievableAISetting(dataObject);
 
+    //these options we set to fixed settings always and let the player decide if they want them or not
     $('#add_missing_enemies').prop('checked', true).triggerHandler("click");
 	$('#add_missing_ai_spells').prop('checked', true).triggerHandler("click");
     $('#remove_moonorb').prop('checked', false).triggerHandler("click");
@@ -228,7 +228,8 @@ function setRandomChallengeSettings(dailySeed)
 	$('#enable_expanded_armor_items').prop('checked', true).triggerHandler("click");
 	$('#randomize_moon_phases').prop('checked', true).triggerHandler("click");
     $('#skip_intro_cinematic').prop('checked', true).triggerHandler("click");
-	
+    $('#simplify_npc_schedules').prop('checked', false).triggerHandler("click");
+    	
     getRandomNPCRandomizationSetting(dataObject);
     getRandomPlayerStartSetting(dataObject);
     getRandomMoonOrbDestiantionsSetting(dataObject);
@@ -523,9 +524,10 @@ function getRandomMoonOrbDestiantionsSetting(dataObject)
 function getRandomNPCRandomizationSetting(dataObject)
 {
     var choices = [
-		{choice:0, weight:80},
+		{choice:0, weight:120},
 		{choice:1, weight:10},
         {choice:2, weight:10},
+        {choice:3, weight:10},
 	];
     var weightedChoice = dataObject.random.fromWeighted(choices);
     $('#select-npc-randomization').prop('value', weightedChoice.choice).triggerHandler("click");

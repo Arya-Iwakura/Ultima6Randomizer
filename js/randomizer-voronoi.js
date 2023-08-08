@@ -74,7 +74,7 @@ Voronoi.Halfedge object:
 TODO: Identify opportunities for performance improvement.
 
 TODO: Let the user close the Voronoi cells, do not do it automatically. Not only let
-      him close the cells, but also allow him to close more than once using a different
+      them close the cells, but also allow them to close more than once using a different
       bounding box for the same Voronoi diagram.
 */
 

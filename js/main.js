@@ -1112,18 +1112,28 @@ function checkNPCRandomizationStatus()
 		$('#npc-randomization-tooltip-1').prop('hidden', false);
 		$('#npc-randomization-tooltip-2').prop('hidden', true);
 		$('#npc-randomization-tooltip-3').prop('hidden', true);
+		$('#npc-randomization-tooltip-4').prop('hidden', true);
 	}
 	else if (selection == 1)
 	{
 		$('#npc-randomization-tooltip-1').prop('hidden', true);
 		$('#npc-randomization-tooltip-2').prop('hidden', false);
 		$('#npc-randomization-tooltip-3').prop('hidden', true);
+		$('#npc-randomization-tooltip-4').prop('hidden', true);
 	}
 	else if (selection == 2)
 	{
 		$('#npc-randomization-tooltip-1').prop('hidden', true);
 		$('#npc-randomization-tooltip-2').prop('hidden', true);
 		$('#npc-randomization-tooltip-3').prop('hidden', false);
+		$('#npc-randomization-tooltip-4').prop('hidden', true);
+	}
+	else if (selection == 3)
+	{
+		$('#npc-randomization-tooltip-1').prop('hidden', true);
+		$('#npc-randomization-tooltip-2').prop('hidden', true);
+		$('#npc-randomization-tooltip-3').prop('hidden', true);
+		$('#npc-randomization-tooltip-4').prop('hidden', false);
 	}
 }
 
