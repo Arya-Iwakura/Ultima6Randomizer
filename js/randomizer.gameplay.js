@@ -1308,6 +1308,32 @@ function randomizeSpellLevelRequirements(rom, random)
     }
 }
 
+function encode4BytePositionFromWorldCoords(inCoordinates)
+{
+    var inSuperChunkX = Math.floor(inCoordinates[0] / 256);
+    var inSuperChunkY = Math.floor(inCoordinates[1] / 256);
+    var inTileX = inCoordinates[0] - (inSuperChunkX * 256);
+    var inTileY = inCoordinates[1] - (inSuperChunkY * 256);
+    return [inTileX, inSuperChunkX, inTileY, inSuperChunkY];
+}
+
+function encode3BytePositionFromWorldCoords(inCoordinates)
+{
+    return encode3BytePosition(encode4BytePositionFromWorldCoords(inCoordinates));
+}
+
+function decode4BytePositionToWorldCoords(inCoordinates)
+{
+    var coordX = inCoordinates[0] + inCoordinates[1] * 256;
+    var coordY = inCoordinates[2] + inCoordinates[3] * 256;
+    return [coordX, coordY];
+}
+
+function decode3BytePositionToWorldCoords(inCoordinates)
+{
+    return decode4BytePositionToWorldCoords(decode3BytePosition(inCoordinates));
+}
+
 function encode3BytePositionToAddress(rom, startAddress, inTileX, inSuperChunkX, inTileY, inSuperChunkY)
 {
     rom.set(encode3BytePosition([inTileX, inSuperChunkX, inTileY, inSuperChunkY]), startAddress);
