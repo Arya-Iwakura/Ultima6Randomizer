@@ -235,7 +235,7 @@ function removeMusic(rom)
     rom[0x14537] = 0x00; //instruments - panpipes - this is an offset and (0x02) is default
     rom[0x18735] = 0x00; //instruments - harpsichord - this is an offset and (0x03) is default
     rom[0x1873B] = 0x00; //instruments - harp - this is an offset and (0x04) is default
-    removeSelganorMusic(rom);
+    //removeSelganorMusic(rom);
     writeTextToAddress(rom, 0xD753, 0x0D, "an instrument");
 }
 
@@ -1162,7 +1162,6 @@ function randomizeMoonOrbDestinations(rom, random, inStartPositionName)
             }
             else if(DATA_MOONORB_DESTINATIONS[i].types.includes("useful"))
             {
-                
                 initialChoices.push(DATA_MOONORB_DESTINATIONS[i]);
             }
         }

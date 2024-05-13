@@ -147,7 +147,7 @@ var PROGRESSION_SPELLS =
 ];
 
 //name is the unique identifier for each of this and must be unique
-//offest is the ROM address for the data or is 0x01, 0x02, 0x03... for all dialog items or other items that need LZW decompression or otherwise custom references
+//offset is the ROM address for the data or is 0x01, 0x02, 0x03... for all dialog items or other items that need LZW decompression or otherwise custom references
 //flags are [stolen, not stolen, quantity] and for shrine items(moonstones) are "on shrine / not on shrine". These apply to the item, and if the item is not marked as stolen, it will override the location flags
 //flags for spells are C0 +  the spell hex value and the quantity is the spell hex value
 //item is [long name, short name] which is used for text box updates requiring different name lengths (short has a max of 15 characters)
