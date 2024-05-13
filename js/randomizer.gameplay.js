@@ -212,7 +212,7 @@ function randomizeSelganorMusic(rom, random)
 function removeMusic(rom)
 {
     consoleLog("REMOVE MUSIC");
-    rom.set([0xEA,0xEA,0xEA,0xEA,0xEA,0xEA,0x6B], 0x30003); //disable all calls to the music functions
+    //rom.set([0xEA,0xEA,0xEA,0xEA,0xEA,0xEA,0x6B], 0x30003); //disable all calls to the music functions
     rom.set([0x00, 0x00, 0x00, 0x00], 0x0145); //oveworld themes
     rom[0x19B9C] = 0x00; //title music
     //rom[0x19BA5] = 0x00; //title music
@@ -228,15 +228,18 @@ function removeMusic(rom)
     rom[0x010C] = 0x00; //castle britannia theme
     rom[0x011C] = 0x00; //gargoyle theme
     rom[0x1AB81] = 0x00; //end credits music
-    rom[0x013C] = 0x00; //setting to check if other musics fail (defaults to 01 - set to 00 for no music)
-    rom[0x147D5] = 0x00; //instruments base offset
-    rom[0x18738] = 0x00; //instruments - xylophone - this is an offset and (0x00) is default
-    rom[0x1453B] = 0x00; //instruments - lute - this is an offset and (0x01) is default
-    rom[0x14537] = 0x00; //instruments - panpipes - this is an offset and (0x02) is default
-    rom[0x18735] = 0x00; //instruments - harpsichord - this is an offset and (0x03) is default
-    rom[0x1873B] = 0x00; //instruments - harp - this is an offset and (0x04) is default
+    //FIXME: Selganor with no music locks the game. To temp fix this we have done a horrible hack.
+    //       We should really find where the Selganor music calls happen and remove the calls to check for music completely
+    //       This is a horrible hack where we are calling to a corrupted music space as a backup, but it plays nothing.
+    rom[0x013C] = 0x14; //setting to check if other musics fail (defaults to 01 - set to 00 for no music)
+    //rom[0x147D5] = 0x00; //instruments base offset
+    //rom[0x18738] = 0x00; //instruments - xylophone - this is an offset and (0x00) is default
+    //rom[0x1453B] = 0x00; //instruments - lute - this is an offset and (0x01) is default
+    //rom[0x14537] = 0x00; //instruments - panpipes - this is an offset and (0x02) is default
+    //rom[0x18735] = 0x00; //instruments - harpsichord - this is an offset and (0x03) is default
+    //rom[0x1873B] = 0x00; //instruments - harp - this is an offset and (0x04) is default
     //removeSelganorMusic(rom);
-    writeTextToAddress(rom, 0xD753, 0x0D, "an instrument");
+    //writeTextToAddress(rom, 0xD753, 0x0D, "an instrument");
 }
 
 function removeSelganorMusic(rom)
