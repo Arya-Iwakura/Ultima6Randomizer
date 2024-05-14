@@ -143,7 +143,8 @@ function shuffleMusic(rom, random)
     rom[0x011C] = choices[10]; //gargoyle theme
     rom[0x1AB81] = choices[11]; //end credits music
 
-    shuffleSelganorMusic(rom, choices[12]);
+    //shuffleSelganorMusic(rom, choices[12]);
+    removeSelganorMusic(rom); //fix for music call locking the game when no-music is set
 
     rom[0x147D5] = 0x00; //instruments base offset (0x0D is default)
     rom[0x18738] = choices[13]; //instruments - xylophone - this is an offset and (0x00) is default
@@ -191,7 +192,8 @@ function randomizeMusic(rom, random)
     rom[0x14537] = random.nextIntRange(1,18); //instruments - panpipes - this is an offset and (0x02) is default
     rom[0x18735] = random.nextIntRange(1,18); //instruments - harpsichord - this is an offset and (0x03) is default
     rom[0x1873B] = random.nextIntRange(1,18); //instruments - harp - this is an offset and (0x04) is default
-    randomizeSelganorMusic(rom, random);
+    //randomizeSelganorMusic(rom, random);
+    removeSelganorMusic(rom); //fix for music call locking the game when no-music is set
 }
 
 function randomizeOverworldMusic(rom, random)
@@ -215,7 +217,6 @@ function removeMusic(rom)
     //rom.set([0xEA,0xEA,0xEA,0xEA,0xEA,0xEA,0x6B], 0x30003); //disable all calls to the music functions
     rom.set([0x00, 0x00, 0x00, 0x00], 0x0145); //oveworld themes
     rom[0x19B9C] = 0x00; //title music
-    //rom[0x19BA5] = 0x00; //title music
     rom[0x1B25C] = 0x00; //gem music
     rom[0x19C3F] = 0x00; //intro cutscene
     rom[0x123A5] = 0x00; //inventory
@@ -228,25 +229,26 @@ function removeMusic(rom)
     rom[0x010C] = 0x00; //castle britannia theme
     rom[0x011C] = 0x00; //gargoyle theme
     rom[0x1AB81] = 0x00; //end credits music
-    //FIXME: Selganor with no music locks the game. To temp fix this we have done a horrible hack.
-    //       We should really find where the Selganor music calls happen and remove the calls to check for music completely
-    //       This is a horrible hack where we are calling to a corrupted music space as a backup, but it plays nothing.
-    rom[0x013C] = 0x14; //setting to check if other musics fail (defaults to 01 - set to 00 for no music)
-    //rom[0x147D5] = 0x00; //instruments base offset
-    //rom[0x18738] = 0x00; //instruments - xylophone - this is an offset and (0x00) is default
-    //rom[0x1453B] = 0x00; //instruments - lute - this is an offset and (0x01) is default
-    //rom[0x14537] = 0x00; //instruments - panpipes - this is an offset and (0x02) is default
-    //rom[0x18735] = 0x00; //instruments - harpsichord - this is an offset and (0x03) is default
-    //rom[0x1873B] = 0x00; //instruments - harp - this is an offset and (0x04) is default
-    //removeSelganorMusic(rom);
-    //writeTextToAddress(rom, 0xD753, 0x0D, "an instrument");
+
+    rom[0x013C] = 0x00; //setting to check if other musics fail (defaults to 01 - set to 00 for no music)
+    
+    rom[0x147D5] = 0x00; //instruments base offset
+    rom[0x18738] = 0x00; //instruments - xylophone - this is an offset and (0x00) is default
+    rom[0x1453B] = 0x00; //instruments - lute - this is an offset and (0x01) is default
+    rom[0x14537] = 0x00; //instruments - panpipes - this is an offset and (0x02) is default
+    rom[0x18735] = 0x00; //instruments - harpsichord - this is an offset and (0x03) is default
+    rom[0x1873B] = 0x00; //instruments - harp - this is an offset and (0x04) is default
+    removeSelganorMusic(rom);
+    writeTextToAddress(rom, 0xD753, 0x0D, "an instrument");
 }
 
 function removeSelganorMusic(rom)
 {
     var lzwData = decompressDataFromLZW(rom, 0x53900);
-    lzwData[0x160F] = 0x00; //selganor stones song
-    lzwData[0x231E] = 0x00; //gwenno stones song
+    //lzwData[0x160F] = 0x00; //selganor stones song
+    //lzwData[0x231E] = 0x00; //gwenno stones song
+    lzwData.set([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00], 0x160E); //replace 0E 12 0D 03 0E 83 84 0D 04 5A with blank data
+    lzwData.set([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00], 0x231D); //replace 0E 12 0D 03 0E 83 84 0D 04 5A with blank data
 }
 
 function randomizeMoonPhases(rom, random)

@@ -1269,7 +1269,7 @@ function unrestrictNPCShuffleBehaviorChecks(rom)
 
 function simplifyNPCSchedules(rom, random)
 {
-    //TODO - Add simplified NPC schedules.
+    //TODO - Simplify NPC schedules.
     //Goal - Simply more complex NPC schedules such that those NPCs can only appear in one of two places.
 }
 
@@ -1301,7 +1301,8 @@ function addPotionShop(rom, random)
         0xF4, 0x02, //pointer to the end of the dialog section
         0x01, 0x03, //pointer to the bye dialog pointer
         0x10, 0xD2, 0x00, 0x11, //intro descripting text
-        0x0E, 0x0D, 0x0D, 0x03, 0x0E, 0x01, 0x0D, 0x04, 0x5A, //play xylophone music (second byte - 0x0D)
+        //0x0E, 0x0D, 0x0D, 0x03, 0x0E, 0x01, 0x0D, 0x04, 0x5A, //play xylophone music (second byte - 0x0D)
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, //fix for music call locking the game when no-music is set
         0x3F, 0x40, 0x27, 0x02, 0x07, //branch depending on if we have met the player before
         0x10, 0xE3, 0x00, 0x11, 0x01, 0x08, //intro dialog if we have met
         0x10, 0x0E, 0x01, 0x11, 0x3F, 0x40, 0x24, //intro dialog if we have not met
