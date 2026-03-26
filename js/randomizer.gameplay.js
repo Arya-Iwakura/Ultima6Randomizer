@@ -251,6 +251,19 @@ function removeSelganorMusic(rom)
     lzwData.set([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00], 0x231D); //replace 0E 12 0D 03 0E 83 84 0D 04 5A with blank data
 }
 
+function repairMusic(rom)
+{
+    var correctedMusicAddress = [0x31, 0x81, 0x00];
+    rom.set(correctedMusicAddress, 0x4897);
+    rom.set(correctedMusicAddress, 0x4A55);
+    rom.set(correctedMusicAddress, 0x8823);
+    rom.set(correctedMusicAddress, 0x123A7);
+    rom.set(correctedMusicAddress, 0x147E1);
+    rom.set(correctedMusicAddress, 0x19C41);
+    rom.set(correctedMusicAddress, 0x1AB83);
+    rom.set(correctedMusicAddress, 0x1B25E);
+}
+
 function randomizeMoonPhases(rom, random)
 {
     //randomize the moon phase table by shifting the table or flipping the moon rotations or lengthening the phase lengths
@@ -288,6 +301,25 @@ function addCustomSherryItem(rom, canPlaceItems)
         var lzwData = decompressDataFromLZW(rom, 0x9D000);
 	    lzwData[0x27EB] = 0x42; //add sherry chest (magic lock)
     	rom.set([0x19, 0x8D, 0x80, oddCheeseHex], 0x117CA); //convert spring water to cheese for sherry chest
+    }
+
+}
+
+function addCustomPocketWatchItem(rom, canPlaceItems)
+{
+    rom.set([0x30, 0x4F, 0x43, 0x4B, 0x45, 0x54, 0x37, 0x41, 0x54, 0x43, 0x48], 0xE40A) //change text WOOD LADDER to POCKETWATCH
+    rom[0xFA53] = 0x02; //change data (setting to 02 sets the item to not be droppable)
+    rom[0xFC25] = 0x01; //change weight
+    rom.set([0x88, 0x11, 0x89, 0x11, 0x98, 0x11, 0x9B, 0x11],0x13B17); //convert unused Wood Ladder item sprite into custom Pocket Watch item sprite(item 6F)
+
+    if (canPlaceItems == false)
+    {
+        //var lzwData = decompressDataFromLZW(rom, 0x58000);
+        //writeTextToAddress(lzwData, 0x42B0, 58, "There was a peculiar Odd Cheese kept in the nearby cellar."); //change Dezana CHAT text to Cheese hint
+//
+        //var lzwData = decompressDataFromLZW(rom, 0x9D000);
+	    //lzwData[0x27EB] = 0x42; //add sherry chest (magic lock)
+    	//rom.set([0x19, 0x8D, 0x80, oddCheeseHex], 0x117CA); //convert spring water to cheese for sherry chest
     }
 
 }

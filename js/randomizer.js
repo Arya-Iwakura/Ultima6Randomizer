@@ -66,6 +66,8 @@ function randomizeROM(buffer, seed)
 	//---------gameplay and other
 	setIntroData(rom);
 
+	repairMusic(rom);
+
 	if ($('#music_options').val() == 1)
 	{
 		randomizeMusic(rom, subSystemSeeds[SUBSYSTEM_SOUND]);
@@ -215,6 +217,9 @@ function randomizeROM(buffer, seed)
 	selectedLocations = removePartyMemberLocations(selectedLocations, partyMembers);
 	var canPlaceItems = false;
 	if(selectedLocations.length > requiredProgressionItems.length){canPlaceItems = true;}
+
+	//TODO : Move this into a game option
+	//addCustomPocketWatchItem(rom, canPlaceItems);
 
 	if ($('#add_sherry_item').is(':checked'))
 	{

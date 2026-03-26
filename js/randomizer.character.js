@@ -473,7 +473,16 @@ function getRandomPartyMembers(random)
     members.push(DATA_PARTY_MEMBERS[choices[1]]);
     members.push(DATA_PARTY_MEMBERS[choices[2]]);
 
+    members.sort(partyMembersSortCompare);
+
     return members;
+}
+
+function partyMembersSortCompare(a,b)
+{
+    if( a.idoffset[0] < b.idoffset[0] ){return -1;}
+    if( a.idoffset[0] > b.idoffset[0] ){return 1;}
+    return 0;
 }
 
 function countTotalPartyMembers(inList)
@@ -1267,10 +1276,109 @@ function unrestrictNPCShuffleBehaviorChecks(rom)
     lzwData.set([0x00,0x00,0x00,0x00,0x00, 0x00,0x00,0x00,0x00,0x00, 0x00,0x00], 0x174E); //was 12 20 0E 51 48 02 06 10 C4 01 11 0B - Ruydom
 }
 
+function debugLogScheduleData(inDataString)
+{
+    var subStrings = inDataString.split(' ');
+    var hexValues = [];
+    for(var i = 0; i < subStrings.length; ++i)
+    {
+        hexValues.push("0x" + subStrings[i]);
+    }
+    subStrings.length = 0;
+
+    //read first schedule value to see how many entries there are
+    //each entry is 5 bytes long - 1byte for hour, 1byte for behavior, 3 bytes for coordinates
+    var hexColors = ['#FF0000', '#FFE700', '#00FF00', '#00E7FF', '#0000FF', '#FF00FF'];
+    var numEntries = Number(hexValues[0] ^ 0x80); //xor 0x80 to correct for multi-day entries
+    for(var i = 1; i < hexValues.length; i+=5)
+    {
+        var worldCoords = decode3BytePositionToWorldCoords([hexValues[i+2], hexValues[i+3], hexValues[i+4]]);
+        console.log("Hour: " + Number(hexValues[i]) + " Behavior: " + hexValues[i+1] + " Position: " + worldCoords);
+
+        var canvas = document.getElementById('testMap01');
+        var ctx = canvas.getContext('2d');
+        ctx.globalAlpha = 1;
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = hexColors[(i-1) / 5];
+        ctx.fillRect(worldCoords[0],worldCoords[1],1,1);
+
+        var canvas = document.getElementById('testMap02');
+        var ctx = canvas.getContext('2d');
+        ctx.beginPath();
+        ctx.rect(worldCoords[0],worldCoords[1],1,1);
+        ctx.strokeStyle = hexColors[(i-1) / 5];
+        ctx.stroke();
+    }
+}
+
 function simplifyNPCSchedules(rom, random)
 {
+    //Test coordinates
+    //debugLogScheduleData("03 01 60 6C 8D 06 02 52 63 91 06 08 51 7B 59 06");
+
     //TODO - Simplify NPC schedules.
     //Goal - Simply more complex NPC schedules such that those NPCs can only appear in one of two places.
+    //  rom.set([04 06 51 5C E9 05 0C 60 7C 4D 06 0E 51 5D E5 05 11 52 55 B5 06], 0x18D54); //Max
+    //  rom.set([04 05 51 67 39 06 06 5A 67 39 06 13 61 7D 61 06 17 52 54 AD 06], 0x18D89); //Daver McCord
+    //  rom.set([05 09 51 08 4D 06 0C 60 0B 75 06 0E 51 08 4D 06 13 60 0B 75 06 15 52 0A 71 06], 0x18DAE); //Rufus
+    //  rom.set([05 07 50 06 29 06 0D 60 0C 75 06 0E 50 06 29 06 14 60 0C 75 06 15 52 0A 69 06], 0x18DC8); //Nema
+    //  rom.set([04 08 51 19 AD 06 0B 51 19 E9 06 0D 51 1D C1 06 13 52 14 B5 06], 0x18E02); //Wilbur
+    //rom.set([04 06 61 72 21 06 0E 62 7C 89 05 10 61 72 21 06 14 52 7A 95 05], 0x18E27); //Lynn
+    //rom.set([05 08 47 4A 2D 06 0A 51 47 35 06 0C 5E 81 69 06 0E 51 47 35 06 11 52 73 49 05], 0x18E3C); //Terri
+    //rom.set([05 07 4C 1D 69 06 0C 60 3E B1 05 10 51 21 61 06 13 60 83 5D 06 17 52 13 09 05], 0x18E56); //Kytyn
+    //rom.set([04 08 61 76 F3 06 0F 50 7B B3 06 13 61 92 77 06 15 52 92 6B 06], 0x18E7B); //Mariah
+    //rom.set([04 05 52 B1 3B 06 0C 50 BB 53 06 14 5F B6 4F 06 15 4A BE 27 06], 0x18EA0); //Ephemerides
+    //rom.set([04 0C 65 9D 33 08 0E 5E A6 57 08 10 50 8E 6F 08 15 52 7E 13 08], 0x18EDB); //Lord Aganar
+    //rom.set([04 09 51 A3 73 08 0B 47 A1 4B 08 10 49 A3 73 08 15 52 A5 67 08], 0x18EF0); //Manrel
+    //rom.set([05 06 51 83 2C 0E 0E 51 7A 30 0E 12 49 A3 3C 0D 14 5B A3 3C 0D 17 52 74 08 0E], 0x18F30); //Nomaan
+    //rom.set([04 01 52 8D 94 0D 0A 51 A0 28 0D 0C 4E A6 40 0D 17 51 9F 28 0D], 0x18F7A); //Andy
+    //rom.set([05 01 52 8B 98 0D 09 49 9F 34 0D 0D 51 A0 28 0D 14 4E A4 34 0D 17 51 A0 28 0D], 0x18FAF); //Arvin
+    //rom.set([05 08 63 EA 64 02 0C 51 E8 5C 02 0E 50 F3 A0 02 12 49 E8 5C 02 17 52 E9 10 02], 0x19046); //Jaana
+    //rom.set([04 07 51 6B 56 01 10 5E 6B 4A 01 12 5E 4C 1A 01 15 52 4A 0A 01], 0x19070); //Selganor
+    //rom.set([05 0A 50 74 8A 01 0C 50 4B 2E 01 0E 50 4B 8E 01 10 64 6C 46 01 15 52 35 46 01], 0x19095); //Gwenno
+    //rom.set([04 08 5E 7B 36 01 0E 51 6C 56 01 11 5E 7B 36 01 14 52 7F 26 01], 0x190AF); //Julia
+    //rom.set([04 08 51 A6 8E 01 0E 50 9B 0E 01 10 51 A4 8E 01 13 52 A1 82 01)], 0x190D4); //Aaron
+    //rom.set([05 08 50 52 D2 01 0D 50 41 AE 01 0F 50 52 D2 01 13 4A 3C AA 01 15 52 3B BA 01], 0x19109); //Trebor
+    //rom.set([04 08 4C 57 7A 01 0B 4E 6E 5A 01 0D 4C 57 7A 01 13 52 5C 72 01], 0x19123); //Troy
+    //rom.set([04 09 50 9A 8D 0B 0B 64 AB 75 0B 0D 50 BA 99 0B 13 52 92 8D 0B], 0x1914E); //Lord Whitsaber
+    //rom.set([05 07 51 A3 A9 0B 0C 62 A9 7D 0B 0D 51 A3 A9 0B 13 62 A9 7D 0B 17 52 92 6D 0C], 0x1916E); //Harold
+    //rom.set([05 08 51 AB C1 0B 0C 47 A3 6D 0B 0E 51 AB C1 0B 12 47 A3 6D 0B 17 52 A4 39 0C], 0x19188); //Brandon
+    //rom.set([04 09 50 9E 7D 0C 0B 4A A5 69 0B 0E 50 9C 75 0C 14 52 A3 65 0C], 0x191A2); //Immanuelle
+    //rom.set([04 08 51 4B 70 08 0C 51 4B 4C 08 11 51 4B 74 08 13 52 4B 38 08], 0x191DD); //Stivius
+    //rom.set([04 06 51 43 B4 07 0C 62 55 B0 07 0E 50 40 BC 07 13 52 44 F4 07], 0x191FD); //Jorl
+    //rom.set([04 08 51 5B EC 07 0B 5F 5C D4 07 0C 51 5B EC 07 16 52 5B CC 07], 0x19212); //Dezana
+    //rom.set([04 08 51 53 B0 07 0C 62 54 B0 07 0E 51 53 B0 07 14 52 51 A8 07], 0x19232); //Marney
+    //rom.set([04 07 5E DB 9E 0A 0C 5F E1 D2 0A 0E 5E DB 9E 0A 14 52 D9 B6 0A], 0x19262); //Antonio
+    //rom.set([04 (06 55 - FB 42 0A) (0C 65 - E5 D2 0A) (0E 55 - EB 46 0A) (14 52 - F2 2A 0A)], 0x19277); //William
+    //rom.set([04 (08 50 - F3 32 0B) (0C 61 - E5 CE 0A) (0E 50 - F3 2A 0B) (14 52 - EC 0A 0B)], 0x1928C); //Conor Starfalcon
+    //rom.set([06 (07 5E - E1 7A 0A) (0A 5E - E4 76 0A) (0B 51 - E7 76 0A) (0E 63 - E1 CE 0A) (10 51- E7 76 0A) (14 52 - EC 72 0A)], 0x192A1); //Charlotte Weaver
+    //rom.set([04 (08 4C - E2 D6 0A) (0D 51 - EB D2 0A) (12 4D - E3 CA 0A) (17 52 - ED C6 0A)], 0x192C0); //Dunbar
+    //rom.set([04 0A 47 94 2D 09 0C 64 9A 25 09 14 47 94 2D 09 17 52 83 C5 09], 0x192F0); //Patrick
+    //rom.set([05 08 5E 96 71 09 0B 63 9B 35 09 0D 5E 96 71 09 F3 63 9B 35 09 14 52 96 4D 09], 0x19305); //Thindle
+    //rom.set([04 06 51 82 59 09 0D 62 99 39 09 0F 51 84 69 09 14 52 82 45 09], 0x1932F); //Marissa
+    //rom.set([04 07 50 8D 25 09 0E 50 66 C5 09 10 50 9C 8D 09 12 52 6D D5 09], 0x1936F); //Merideth Cassandra Lamby
+    //rom.set([05 07 51 7C 71 09 0C 4A 97 29 09 0F 51 7C 71 09 12 4A 97 29 09 16 52 81 11 09], 0x19384); //Hendle
+    //rom.set([05 08 51 67 8D 09 0A 51 6A 49 09 10 51 67 91 09 13 62 98 39 09 14 52 7C 19 09], 0x1939E); //Ubermon Kalbmilch
+    //rom.set([06 01 52 8B 09 09 0B 51 94 19 09 0C 51 9A 2D 09 11 51 94 25 09 14 49 95 25 09 17 51 93 19 09], 0x193C8); //Dr Cat
+    //rom.set([05 00 52 29 8A 09 0A 4A 38 8A 09 0C 64 39 8A 09 0E 4A 38 8A 09 12 64 39 8A 09], 0x19447); //Johann
+    //rom.set([04 00 5B 3B 8A 09 01 52 24 EE 09 09 51 22 D2 09 13 4A 38 96 09], 0x19481); //Enrik
+    //rom.set([04 08 4E 3D F2 09 0D 4A 38 92 09 0F 51 3B F6 09 13 52 39 F2 09], 0x19496); //Fentrissa
+    //rom.set([04 06 47 2F 6A 05 0A 51 3C AE 05 12 5F 24 72 05 14 52 22 6A 05], 0x194CB); //Ahrmaand
+    //rom.set([04 09 51 45 56 05 0C 49 3B AE 05 0D 51 45 56 05 14 52 43 72 05], 0x194E0); //Rudyom
+    rom.set([0x82, 0x4b, 0x50, 0x01, 0xa1, 0x02, 0xcd, 0x50, 0x82, 0x7d, 0x06], 0x19504); //Zoltan
+    rom.set([0x82, 0x4b, 0x50, 0xff, 0x9c, 0x02, 0xcd, 0x50, 0x7e, 0x7d, 0x06], 0x19514); //Karina
+    rom.set([0x82, 0x4b, 0x50, 0x01, 0x99, 0x02, 0xcd, 0x50, 0x82, 0x89, 0x06], 0x19524); //Dog
+    rom.set([0x82, 0x4b, 0x50, 0xfd, 0x9c, 0x02, 0xcd, 0x50, 0x80, 0x81, 0x06], 0x19534); //Taynith
+    rom.set([0x82, 0x4b, 0x50, 0x00, 0x99, 0x02, 0xcd, 0x50, 0x7f, 0x7d, 0x06], 0x19549); //Blaine
+    //rom.set([04 07 51 7A 0C 03 0C 48 99 6C 03 0E 51 7A 0C 03 14 52 73 0C 03], 0x195CC); //Stephanie
+    //rom.set([04 09 50 1B AA 0E 0D 5F 21 92 0E 10 5E 4D 9A 0E 17 52 09 FA 0E], 0x19628); //Sir Caradon
+    //rom.set([04 0A 60 4D 8E 0E 0D 5E 23 9A 0E 0F 51 2C AA 0E 17 52 09 EE 0E], 0x1964D); //Baron de Hugh
+    //rom.set([04 08 50 25 BE 0E 0D 61 25 92 0E 0F 51 53 7A 0E 16 52 09 E2 0E], 0x19672); //Koranada
+    //rom.set([04 08 60 22 8A 0E 0B 62 29 C2 0E 0D 60 22 8A 0E 15 52 1C BE 0E], 0x19687); //Simon
+    //rom.set([04 08 60 24 8A 0E 0B 62 28 C2 0E 0D 60 24 8A 0E 15 52 1C BA 0E], 0x1969C); //Tessa
+    //rom.set([04 0B 5F 51 96 0E 0D 61 25 96 0E 0F 5F 51 96 0E 16 52 0D FA 0E], 0x196B1); //Seggal
+    //rom.set([05 00 48 88 28 03 03 52 63 38 03 0C 51 98 6C 03 10 62 7D 18 03 14 5E 64 2C 03], 0x196E1); //Sionnach
+    rom.set([0x82, 0x4b, 0x50, 0x7f, 0x5d, 0x06, 0x8c, 0x50, 0x95, 0x35, 0x09], 0x196FB); //Mandrake
 }
 
 function addPotionShop(rom, random)
